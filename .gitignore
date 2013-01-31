@@ -1,0 +1,13 @@
+*.[doa]
+*.swp
+*.mk
+*.pyc
+.lock-*
+.cproject
+.project
+.waf*/
+waf-*/
+build/
+__pycache__/
+.depproj/
+gainput_2008.*
