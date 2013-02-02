@@ -51,7 +51,9 @@ public:
 InputMap::InputMap(const InputManager& manager, Allocator& allocator) :
 	allocator_(allocator),
 	manager_(manager),
+	userButtons_(allocator_),
 	nextUserButtonId_(0),
+	gestures_(allocator_),
 	listeners_(allocator_)
 {
 
@@ -65,7 +67,7 @@ InputMap::~InputMap()
 void
 InputMap::Clear()
 {
-	for (std::map<UserButtonId, UserButton*>::iterator it = userButtons_.begin();
+	for (UserButtonMap::iterator it = userButtons_.begin();
 			it != userButtons_.end();
 			++it)
 	{
@@ -258,7 +260,7 @@ InputMap::GetFloat(UserButtonId userButton) const
 UserButton*
 InputMap::GetUserButton(UserButtonId userButton)
 {
-	std::map<UserButtonId, UserButton*>::iterator it = userButtons_.find(userButton);
+	UserButtonMap::iterator it = userButtons_.find(userButton);
 	if (it == userButtons_.end())
 	{
 		return 0;
@@ -269,7 +271,7 @@ InputMap::GetUserButton(UserButtonId userButton)
 const UserButton*
 InputMap::GetUserButton(UserButtonId userButton) const
 {
-	std::map<UserButtonId, UserButton*>::const_iterator it = userButtons_.find(userButton);
+	UserButtonMap::const_iterator it = userButtons_.find(userButton);
 	if (it == userButtons_.end())
 	{
 		return 0;

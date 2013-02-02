@@ -26,9 +26,12 @@
 #define GAINPUT_ASSERT assert
 #define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
 
+//#define GAINPUT_DEBUG
+
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <new>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	#include <X11/Xlib.h>

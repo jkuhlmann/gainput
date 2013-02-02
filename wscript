@@ -15,6 +15,7 @@ def options(opt):
 	opt.load('msvs')
 
 def configure(cnf):
+	cnf.setenv('debug')
 	cnf.load('compiler_cxx')
 	cnf.define('GAINPUT_LIB_BUILD', None)
 	cnf.env.CXXFLAGS = ['-g', '-Wall']
@@ -33,6 +34,10 @@ def configure(cnf):
 	        	  lib='Xinput',
 		          mandatory=True, 
 		          uselib_store='XINPUT')
+	
+	cnf.setenv('release', env=cnf.env.derive())
+	cnf.load('compiler_cxx')
+	cnf.env.CXXFLAGS = ['-O2']
 
 def build(bld):
 	lib_sources = bld.path.ant_glob('lib/source/gainput/*.cpp')
@@ -54,4 +59,14 @@ def build(bld):
 		target='basicsample',
 		use = usethese,
 		uselib=['LIBX11', 'LIBGL'])
+
+from waflib.Build import BuildContext, CleanContext, \
+        InstallContext, UninstallContext
+
+for x in 'debug release'.split():
+        for y in (BuildContext, CleanContext, InstallContext, UninstallContext):
+                name = y.__name__.replace('Context','').lower()
+                class tmp(y):
+                        cmd = name + '_' + x
+                        variant = x
 

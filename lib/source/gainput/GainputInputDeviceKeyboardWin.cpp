@@ -22,7 +22,8 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	textInputEnabled(_true),
 	state_(0),
 	previousState_(0),
-	delta_(0)
+	delta_(0),
+	dialect_(manager_.GetAllocator())
 {
 	dialect_[VK_ESCAPE] = KEY_ESCAPE;
 	dialect_[VK_F1] = KEY_F1;

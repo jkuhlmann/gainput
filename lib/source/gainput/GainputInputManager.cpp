@@ -14,6 +14,7 @@ namespace gainput
 
 InputManager::InputManager(Allocator& allocator) :
 		allocator_(allocator),
+		devices_(allocator_),
 		nextDeviceId_(0),
 		listeners_(allocator_),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_))

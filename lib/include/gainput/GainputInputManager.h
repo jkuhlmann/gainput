@@ -2,7 +2,6 @@
 #ifndef GAINPUTINPUTMANAGER_H_
 #define GAINPUTINPUTMANAGER_H_
 
-#include <map>
 
 namespace gainput
 {
@@ -85,7 +84,8 @@ public:
 private:
 	Allocator& allocator_;
 
-	typedef std::map<DeviceId, InputDevice*> DeviceMap;
+	//typedef std::map<DeviceId, InputDevice*> DeviceMap;
+	typedef HashMap<DeviceId, InputDevice*> DeviceMap;
 	DeviceMap devices_;
 	unsigned nextDeviceId_;
 

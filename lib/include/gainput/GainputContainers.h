@@ -2,7 +2,6 @@
 #ifndef GAINPUTCONTAINERS_H_
 #define GAINPUTCONTAINERS_H_
 
-#include <map>
 
 namespace gainput
 {
@@ -124,6 +123,18 @@ public:
 	iterator end() { return data_ + size_; }
 	const_iterator end() const { return data_ + size_; }
 
+	T& operator[] (unsigned i)
+	{
+		GAINPUT_ASSERT(i < size_);
+		return data_[i];
+	}
+
+	const T& operator[] (unsigned i) const
+	{
+		GAINPUT_ASSERT(i < size_);
+		return data_[i];
+	}
+
 	void push_back(const value_type& val)
 	{
 		if (size_ + 1 > capacity_)
@@ -145,15 +156,192 @@ public:
 		capacity_ = capacity;
 	}
 
+	void swap(Array<T>& x)
+	{
+		GAINPUT_ASSERT(&allocator_ == &x.allocator_);
+		
+		const unsigned size = size_;
+		const unsigned capacity = capacity_;
+		T* data = data_;
+
+		size_ = x.size_;
+		capacity_ = x.capacity_;
+		data_ = x.data_;
+
+		x.size_ = size;
+		x.capacity_ = capacity;
+		x.data_ = data;
+	}
+
 	void clear() { size_ = 0; }
 
 	bool empty() const { return size_ == 0; }
+	unsigned size() const { return size_; }
 
 private:
 	Allocator& allocator_;
 	unsigned size_;
 	unsigned capacity_;
 	T* data_;
+};
+
+template<class K, class V>
+class HashMap
+{
+public:
+	static const unsigned Seed = 329856235;
+	//static const unsigned InvalidKey = -1;
+	enum { InvalidKey = unsigned(-1) };
+
+	struct Node
+	{
+		K first;
+		V second;
+		uint32_t next;
+	};
+
+	typedef Node* iterator;
+	typedef const Node* const_iterator;
+
+
+	HashMap(Allocator& allocator) :
+		allocator_(allocator),
+		keys_(allocator_),
+		values_(allocator_)
+	{ }
+
+	iterator begin() { return values_.begin(); }
+	const_iterator begin() const { return values_.begin(); }
+	iterator end() { return values_.begin() + values_.size(); }
+	const_iterator end() const { return values_.begin() + values_.size(); }
+
+	unsigned count(const K& k)
+	{
+		return find(k) != end() ? 1 : 0;
+	}
+
+	iterator find(const K& k)
+	{
+		if (keys_.empty() || values_.empty())
+			return end();
+		uint32_t h;
+		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
+		const uint32_t ha = h % keys_.size();
+		uint32_t vi = keys_[ha];
+		while (vi != InvalidKey)
+		{
+			if (values_[vi].first == k)
+			{
+				return &values_[vi];
+			}
+			vi = values_[vi].next;
+		}
+		return end();
+	}
+	
+	const_iterator find(const K& k) const
+	{
+		if (keys_.empty() || values_.empty())
+			return end();
+		uint32_t h;
+		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
+		const uint32_t ha = h % keys_.size();
+		uint32_t vi = keys_[ha];
+		while (vi != InvalidKey)
+		{
+			if (values_[vi].first == k)
+			{
+				return &values_[vi];
+			}
+			vi = values_[vi].next;
+		}
+		return end();
+	}
+
+	iterator insert(const K& k, const V& v)
+	{
+		if (keys_.size() + 1 >= values_.size())
+		{
+			Rehash(values_.size()*2 + 10);
+		}
+
+		uint32_t h;
+		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
+		const uint32_t ha = h % keys_.size();
+		uint32_t vi = keys_[ha];
+
+		if (vi == InvalidKey)
+		{
+			keys_[ha] = values_.size();
+		}
+		else
+		{
+			for (;;)
+			{
+				if (values_[vi].next == InvalidKey)
+				{
+					values_[vi].next = values_.size();
+					break;
+				}
+				else
+				{
+					vi = values_[vi].next;
+				}
+			}
+		}
+
+		Node node;
+		node.first = k;
+		node.second = v;
+		node.next = InvalidKey;
+		values_.push_back(node);
+
+		return &values_[values_.size()-1];
+	}
+
+	V& operator[] (const K& k)
+	{
+		iterator it = find(k);
+		if (it == end())
+		{
+			return insert(k, V())->second;
+		}
+		else
+		{
+			return it->second;
+		}
+	}
+
+	void clear()
+	{
+		keys_.clear();
+		values_.clear();
+	}
+
+private:
+	Allocator& allocator_;
+	Array<uint32_t> keys_;
+	Array<Node> values_;
+
+	void Rehash(unsigned newSize)
+	{
+		Array<uint32_t> keys(allocator_, newSize);
+		Array<Node> values(allocator_, values_.size());
+
+		for (unsigned i = 0; i < newSize; ++i)
+			keys.push_back(InvalidKey);
+
+		keys_.swap(keys);
+		values_.swap(values);
+
+		for (typename Array<Node>::const_iterator it = values.begin();
+				it != values.end();
+				++it)
+		{
+			insert(it->first, it->second);
+		}
+	}
+
 };
 
 template<int N, class T>
@@ -194,8 +382,12 @@ private:
 
 
 template<class K>
-class DialectTable : public std::map<K, DeviceButtonId>
+//class DialectTable : public std::map<K, DeviceButtonId>
+class DialectTable : public HashMap<K, DeviceButtonId>
 {
+public:
+	DialectTable(Allocator& allocator) : HashMap<K, DeviceButtonId>(allocator) { }
+
 
 };
 

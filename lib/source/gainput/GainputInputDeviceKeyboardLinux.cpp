@@ -23,7 +23,8 @@ public:
 	InputDeviceKeyboardImpl(InputManager& manager, DeviceId device) :
 		manager_(manager),
 		device_(device),
-		textInputEnabled_(true)
+		textInputEnabled_(true),
+		dialect_(manager_.GetAllocator())
 	{
 		// Cf. <X11/keysymdef.h>
 
@@ -159,7 +160,7 @@ public:
 					KeySym keySym = XKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0);
 					const bool pressed = event.type == KeyPress;
 
-#if 0
+#ifdef GAINPUT_DEBUG
 					char* str = XKeysymToString(keySym);
 					std::cout << "KEY | keycode: " << keyEvent.keycode
 							<< ", keysym: " << keySym
@@ -171,6 +172,9 @@ public:
 					{
 						const DeviceButtonId buttonId = dialect_[keySym];
 						state.Set(buttonId, pressed);
+#ifdef GAINPUT_DEBUG
+						std::cout << "buttonId: " << buttonId << std::endl;
+#endif
 
 						if (delta)
 						{

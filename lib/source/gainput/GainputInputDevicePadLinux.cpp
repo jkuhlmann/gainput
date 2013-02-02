@@ -120,7 +120,8 @@ public:
 	InputDevicePadImpl(InputManager& manager, DeviceId device) :
 		manager_(manager),
 		device_(device),
-		state_(InputDevice::DS_UNAVAILABLE)
+		state_(InputDevice::DS_UNAVAILABLE),
+		buttonDialect_(manager_.GetAllocator())
 	{
 		unsigned padIndex = manager_.GetDeviceCountByType(InputDevice::DT_PAD);
 		GAINPUT_ASSERT(padIndex < MaxPadCount);
