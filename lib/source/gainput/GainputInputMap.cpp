@@ -30,17 +30,10 @@ typedef Array<MappedInput> MappedInputList;
 class UserButton
 {
 public:
-	enum UserButtonPolicy
-	{
-		UBP_FIRST_DOWN,
-		UBP_MAX,
-		UBP_MIN,
-		UBP_AVERAGE
-	};
 
 	UserButtonId userButton;
 	MappedInputList inputs;
-	UserButtonPolicy policy;
+	InputMap::UserButtonPolicy policy;
 
 	UserButton(Allocator& allocator) :
 		inputs(allocator)
@@ -87,7 +80,7 @@ InputMap::MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId devic
 		ub = allocator_.New<UserButton>(allocator_);
 		GAINPUT_ASSERT(ub);
 		ub->userButton = nextUserButtonId_++;
-		ub->policy = UserButton::UBP_FIRST_DOWN;
+		ub->policy = UBP_FIRST_DOWN;
 		userButtons_[userButton] = ub;
 	}
 
@@ -101,9 +94,52 @@ InputMap::MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId devic
 }
 
 bool
+InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton, float min, float max)
+{
+	UserButton* ub = GetUserButton(userButton);
+
+	if (!ub)
+	{
+		ub = allocator_.New<UserButton>(allocator_);
+		GAINPUT_ASSERT(ub);
+		ub->userButton = nextUserButtonId_++;
+		ub->policy = UBP_FIRST_DOWN;
+		userButtons_[userButton] = ub;
+	}
+
+	MappedInput mi;
+	mi.mappedType = MappedInput::MT_DEVICE_BUTTON;
+	mi.device = device;
+	mi.deviceButton = deviceButton;
+	mi.rangeMin = min;
+	mi.rangeMax = max;
+	ub->inputs.push_back(mi);
+
+	return true;
+}
+
+void
+InputMap::Unmap(UserButtonId userButton)
+{
+	userButtons_.erase(userButton);
+}
+
+bool
 InputMap::IsMapped(UserButtonId userButton) const
 {
 	return GetUserButton(userButton) != 0;
+}
+
+bool
+InputMap::SetUserButtonPolicy(UserButtonId userButton, UserButtonPolicy policy)
+{
+	UserButton* ub = GetUserButton(userButton);
+	if (!ub)
+	{
+		return false;
+	}
+	ub->policy = policy;
+	return true;
 }
 
 bool
@@ -207,10 +243,8 @@ InputMap::GetFloat(UserButtonId userButton) const
 		float deviceValue = 0.0f;
 		if (device->GetButtonType(mi.deviceButton) == BT_BOOL)
 		{
-			deviceValue = device->GetBool(mi.deviceButton)
-					? mi.rangeMax
-					: mi.rangeMin;
 			down = device->GetBool(mi.deviceButton);
+			deviceValue = down ? mi.rangeMax : mi.rangeMin;
 		}
 		else if (device->GetFloat(mi.deviceButton) != 0.0f)
 		{
@@ -222,16 +256,16 @@ InputMap::GetFloat(UserButtonId userButton) const
 		if (down)
 		{
 			++downCount;
-			if (ub->policy == UserButton::UBP_FIRST_DOWN)
+			if (ub->policy == UBP_FIRST_DOWN)
 			{
 				value = deviceValue;
 				break;
 			}
-			else if (ub->policy == UserButton::UBP_MAX)
+			else if (ub->policy == UBP_MAX)
 			{
 				value = std::max(value, deviceValue);
 			}
-			else if (ub->policy == UserButton::UBP_MIN)
+			else if (ub->policy == UBP_MIN)
 			{
 				if (downCount == 1)
 				{
@@ -242,19 +276,92 @@ InputMap::GetFloat(UserButtonId userButton) const
 					value = std::min(value, deviceValue);
 				}
 			}
-			else if (ub->policy == UserButton::UBP_AVERAGE)
+			else if (ub->policy == UBP_AVERAGE)
 			{
 				value += deviceValue;
 			}
 		}
 	}
 
-	if (ub->policy == UserButton::UBP_AVERAGE && downCount)
+	if (ub->policy == UBP_AVERAGE && downCount)
 	{
 		value /= float(downCount);
 	}
 
 	return value;
+}
+
+float
+InputMap::GetFloatPrevious(UserButtonId userButton) const
+{
+	float value = 0.0f;
+	int downCount = 0;
+	const UserButton* ub = GetUserButton(userButton);
+	GAINPUT_ASSERT(ub);
+	for (MappedInputList::const_iterator it = ub->inputs.begin();
+			it != ub->inputs.end();
+			++it)
+	{
+		const MappedInput& mi= *it;
+		const InputDevice* device = manager_.GetDevice(mi.device);
+		GAINPUT_ASSERT(device);
+
+		bool down = false;
+		float deviceValue = 0.0f;
+		if (device->GetButtonType(mi.deviceButton) == BT_BOOL)
+		{
+			down = device->GetBoolPrevious(mi.deviceButton);
+			deviceValue = down ? mi.rangeMax : mi.rangeMin;
+		}
+		else if (device->GetFloatPrevious(mi.deviceButton) != 0.0f)
+		{
+			GAINPUT_ASSERT(device->GetButtonType(mi.deviceButton) == BT_FLOAT);
+			deviceValue = mi.rangeMin + device->GetFloatPrevious(mi.deviceButton)*mi.rangeMax;
+			down = true;
+		}
+
+		if (down)
+		{
+			++downCount;
+			if (ub->policy == UBP_FIRST_DOWN)
+			{
+				value = deviceValue;
+				break;
+			}
+			else if (ub->policy == UBP_MAX)
+			{
+				value = std::max(value, deviceValue);
+			}
+			else if (ub->policy == UBP_MIN)
+			{
+				if (downCount == 1)
+				{
+					value = deviceValue;
+				}
+				else
+				{
+					value = std::min(value, deviceValue);
+				}
+			}
+			else if (ub->policy == UBP_AVERAGE)
+			{
+				value += deviceValue;
+			}
+		}
+	}
+
+	if (ub->policy == UBP_AVERAGE && downCount)
+	{
+		value /= float(downCount);
+	}
+
+	return value;
+}
+
+float
+InputMap::GetFloatDelta(UserButtonId userButton) const
+{
+	return GetFloat(userButton) - GetFloatPrevious(userButton);
 }
 
 UserButton*

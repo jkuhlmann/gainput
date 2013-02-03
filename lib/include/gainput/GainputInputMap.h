@@ -28,7 +28,7 @@ public:
 	void Clear();
 	
 	/// Returns the input manager this input map uses.
-	const InputManager& GetManager() const;
+	const InputManager& GetManager() const { return manager_; }
 
 	GestureId AddGesture(InputGesture* gesture);
 	InputGesture* GetGesture(GestureId gesture);
@@ -45,17 +45,6 @@ public:
 	 * \return true if the mapping was created.
 	 */
 	bool MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton);
-	/// Maps a bool-type button to a float range.
-	/**
-	 * \param userButton The user ID for this mapping.
-	 * \param device The device's ID of the device button to be mapped.
-	 * \param deviceButton The ID of the device button to be mapped.
-	 * \param min The float-type value if the device button is up (false).
-	 * \param max The float-type value if the device button is down (true).
-	 * \return true if the mapping was created.
-	 */
-	bool MapBoolToRange(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton,
-			float min, float max);
 	/// Maps a float-type button, possibly to a custom range.
 	/**
 	 * \param userButton The user ID for this mapping.
@@ -65,13 +54,27 @@ public:
 	 * \param max The maximum value of the mapped button.
 	 * \return true if the mapping was created.
 	 */
-	bool MapRange(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton,
+	bool MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton,
 			float min = 0.0f, float max = 1.0f);
 	bool MapGesture(UserButtonId userButton, GestureId gesture, DeviceButtonId gestureButton);
 	/// Removes all mappings for the given user button.
 	void Unmap(UserButtonId userButton);
 	/// Returns if the given user button has any mappings.
 	bool IsMapped(UserButtonId userButton) const;
+	
+	/// Policy for how multiple device buttons are summarized in one user button.
+	enum UserButtonPolicy
+	{
+		UBP_FIRST_DOWN,		///< The first device buttons that is down (or not 0.0f) determines the result.
+		UBP_MAX,		///< The maximum of all device button states is the result.
+		UBP_MIN,		///< The minimum of all device button states is the result.
+		UBP_AVERAGE		///< The average of all device button states is the result.
+	};
+	/// Sets how a user button handles inputs from multiple device buttons.
+	/**
+	 * \return true if the policy was set, false otherwise (i.e. the user button doesn't exist).
+	 */
+	bool SetUserButtonPolicy(UserButtonId userButton, UserButtonPolicy policy);
 
 	/// Returns the bool state of a user button.
 	bool GetBool(UserButtonId userButton) const;
@@ -105,6 +108,11 @@ private:
 
 	UserButton* GetUserButton(UserButtonId userButton);
 	const UserButton* GetUserButton(UserButtonId userButton) const;
+
+	// Do not copy.
+	InputMap(const InputMap &);
+	InputMap& operator=(const InputMap &);
+
 };
 
 }

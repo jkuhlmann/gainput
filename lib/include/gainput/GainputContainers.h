@@ -173,6 +173,19 @@ public:
 		x.data_ = data;
 	}
 
+#if 0
+	// Untested
+	iterator erase(iterator pos)
+	{
+		if (size_ == 0)
+			return end();
+		GAINPUT_ASSERT(pos >= begin() && pos < end());
+		memcpy(pos, pos+1, sizeof(T)*(end()-(pos+1)));
+		--size_;
+		return pos;
+	}
+#endif
+
 	void clear() { size_ = 0; }
 
 	bool empty() const { return size_ == 0; }
@@ -310,6 +323,38 @@ public:
 		{
 			return it->second;
 		}
+	}
+
+	unsigned erase(const K& k)
+	{
+		if (keys_.empty())
+			return 0;
+		uint32_t h;
+		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
+		const uint32_t ha = h % keys_.size();
+		uint32_t vi = keys_[ha];
+		uint32_t prevVi = InvalidKey;
+		while (vi != InvalidKey)
+		{
+			if (values_[vi].first == k)
+			{
+				if (prevVi == InvalidKey)
+				{
+					keys_[ha] = values_[vi].next;
+				}
+				else
+				{
+					values_[prevVi].next = values_[vi].next;
+				}
+				values_[vi].first = K();
+				values_[vi].second = V();
+				values_[vi].next = InvalidKey;
+				return 1;
+			}
+			prevVi = vi;
+			vi = values_[vi].next;
+		}
+		return 0;
 	}
 
 	void clear()

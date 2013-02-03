@@ -100,6 +100,10 @@ private:
 	int displayWidth_;
 	int displayHeight_;
 
+	// Do not copy.
+	InputManager(const InputManager &);
+	InputManager& operator=(const InputManager &);
+
 };
 
 
