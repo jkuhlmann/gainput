@@ -96,12 +96,10 @@ private:
 	Allocator& allocator_;
 	const InputManager& manager_;
 
-	//std::map<UserButtonId, UserButton*> userButtons_;
 	typedef HashMap<UserButtonId, UserButton*> UserButtonMap;
 	UserButtonMap userButtons_;
 	UserButtonId nextUserButtonId_;
 
-	//std::map<GestureId, InputGesture*> gestures_;
 	typedef HashMap<GestureId, InputGesture*> GestureMap;
 	GestureMap gestures_;
 	Array<InputListener*> listeners_;

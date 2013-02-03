@@ -84,7 +84,6 @@ public:
 private:
 	Allocator& allocator_;
 
-	//typedef std::map<DeviceId, InputDevice*> DeviceMap;
 	typedef HashMap<DeviceId, InputDevice*> DeviceMap;
 	DeviceMap devices_;
 	unsigned nextDeviceId_;

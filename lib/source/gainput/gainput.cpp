@@ -22,11 +22,19 @@ enum Button
 gainput::InputManager manager;
 const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 
+// On Linux only:
+manager.SetXDisplay(xDisplay, width, height);
+// On Windows only:
+manager.SetDisplaySize(width, height);
+
 gainput::InputMap map(manager);
 map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 
 // Call every frame
 manager.Update();
+
+// On Windows only, for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL:
+manager.HandleMessage(msg);
 
 // Check button state
 if (map.GetBoolWasDown(ButtonConfirm))
@@ -56,13 +64,13 @@ GetLibName()
 unsigned
 GetLibVersion()
 {
-	return 1;
+	return 0;
 }
 
 const char*
 GetLibVersionString()
 {
-	return "1";
+	return "0";
 }
 
 }

@@ -219,7 +219,7 @@ private:
 	DeviceId device_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
-	DialectTable<unsigned> dialect_;
+	HashMap<unsigned, DeviceButtonId> dialect_;
 };
 
 

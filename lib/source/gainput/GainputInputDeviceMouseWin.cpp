@@ -155,9 +155,11 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 		state_->Set(MOUSE_AXIS_X, x);
 		state_->Set(MOUSE_AXIS_Y, y);
 
+#ifdef GAINPUT_DEBUG
 		char buf[256];
 		sprintf(buf, "Mouse: %f, %f\n", x, y);
 		OutputDebugStringA(buf);
+#endif
 
 		if (delta_)
 		{
@@ -177,9 +179,11 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	{
 		state_->Set(buttonId, pressed);
 
+#ifdef GAINPUT_DEBUG
 		char buf[256];
 		sprintf(buf, "Button: %i\n", buttonId);
 		OutputDebugStringA(buf);
+#endif
 
 		if (delta)
 		{
@@ -252,3 +256,4 @@ InputDeviceMouse::GetButtonType(DeviceButtonId deviceButton) const
 }
 
 #endif
+

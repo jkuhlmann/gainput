@@ -25,19 +25,19 @@ const int height = 600;
 #if defined(GAINPUT_PLATFORM_LINUX)
 int main(int argc, char** argv)
 {
-	
+
 	gainput::InputManager manager;
 	gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
-	
+
 	gainput::InputMap map(manager);
 	map.MapBool(ButtonMenu, keyboardId, gainput::KEY_ESCAPE);
 	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 
 	static int attributeListDbl[] = {      GLX_RGBA,      GLX_DOUBLEBUFFER, /*In case single buffering is not supported*/      GLX_RED_SIZE,   1,      GLX_GREEN_SIZE, 1,      GLX_BLUE_SIZE,  1,
-			None };
+		None };
 
 	Display* xDisplay = XOpenDisplay(0);
 	if (xDisplay == 0)
@@ -62,12 +62,12 @@ int main(int argc, char** argv)
 		| PointerMotionMask | ButtonPressMask | ButtonReleaseMask;
 
 	Window xWindow = XCreateWindow(
-		xDisplay, root,
-		0, 0, width, height, 0,
-		CopyFromParent, InputOutput,
-		CopyFromParent, CWEventMask,
-		&swa
-		);
+			xDisplay, root,
+			0, 0, width, height, 0,
+			CopyFromParent, InputOutput,
+			CopyFromParent, CWEventMask,
+			&swa
+			);
 
 
 	/* connect the context to the window */
@@ -81,9 +81,9 @@ int main(int argc, char** argv)
 
 	XMapWindow(xDisplay, xWindow);
 	XStoreName(xDisplay, xWindow, windowName);
-	
+
 	manager.SetXDisplay(xDisplay, width, height);
-	
+
 	for (;;)
 	{
 		manager.Update();
@@ -113,10 +113,10 @@ int main(int argc, char** argv)
 		}
 
 	}
-	
+
 	XDestroyWindow(xDisplay, xWindow);
 	XCloseDisplay(xDisplay);
-	
+
 	return 0;
 }
 #endif
@@ -130,83 +130,83 @@ static char szTitle[] = "Gainput basic sample";
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    PAINTSTRUCT ps;
-    HDC hdc;
-    char greeting[] = "Hello, World!";
+	PAINTSTRUCT ps;
+	HDC hdc;
+	char greeting[] = "Hello, World!";
 
-    switch (message)
-    {
-    case WM_PAINT:
-        hdc = BeginPaint(hWnd, &ps);
-        TextOut(hdc, 5, 5, greeting, strlen(greeting));
-        EndPaint(hWnd, &ps);
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-        break;
-    }
+	switch (message)
+	{
+		case WM_PAINT:
+			hdc = BeginPaint(hWnd, &ps);
+			TextOut(hdc, 5, 5, greeting, strlen(greeting));
+			EndPaint(hWnd, &ps);
+			break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+			break;
+	}
 
-    return 0;
+	return 0;
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    WNDCLASSEX wcex;
+	WNDCLASSEX wcex;
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = NULL;
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style          = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc    = WndProc;
+	wcex.cbClsExtra     = 0;
+	wcex.cbWndExtra     = 0;
+	wcex.hInstance      = hInstance;
+	wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszMenuName   = NULL;
+	wcex.lpszClassName  = szWindowClass;
+	wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
 
-    if (!RegisterClassEx(&wcex))
-    {
-        MessageBox(NULL, "Call to RegisterClassEx failed!", "Gainput basic sample", NULL);
-        return 1;
-    }
+	if (!RegisterClassEx(&wcex))
+	{
+		MessageBox(NULL, "Call to RegisterClassEx failed!", "Gainput basic sample", NULL);
+		return 1;
+	}
 
-    HWND hWnd = CreateWindow(
-        szWindowClass,
-        windowName,
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT,
-        width, height,
-        NULL,
-        NULL,
-        hInstance,
-        NULL
-    );
+	HWND hWnd = CreateWindow(
+			szWindowClass,
+			windowName,
+			WS_OVERLAPPEDWINDOW,
+			CW_USEDEFAULT, CW_USEDEFAULT,
+			width, height,
+			NULL,
+			NULL,
+			hInstance,
+			NULL
+			);
 
-    if (!hWnd)
-    {
-        MessageBox(NULL, "Call to CreateWindow failed!", "Gainput basic sample", NULL);
-        return 1;
-    }
+	if (!hWnd)
+	{
+		MessageBox(NULL, "Call to CreateWindow failed!", "Gainput basic sample", NULL);
+		return 1;
+	}
 
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
 	gainput::InputManager manager;
 	manager.SetDisplaySize(width, height);
 	gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
-	
+
 	gainput::InputMap map(manager);
 	map.MapBool(ButtonMenu, keyboardId, gainput::KEY_ESCAPE);
 	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
-    
+
 	// Main message loop:
 	for (;;)
 	{

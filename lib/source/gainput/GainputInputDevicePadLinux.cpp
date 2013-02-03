@@ -240,7 +240,7 @@ private:
 	DeviceId device_;
 	InputDevice::DeviceState state_;
 	int fd_;
-	DialectTable<unsigned> buttonDialect_;
+	HashMap<unsigned, DeviceButtonId> buttonDialect_;
 };
 
 
