@@ -7,8 +7,10 @@
 #ifndef GAINPUT_H_
 #define GAINPUT_H_
 
-
-#if defined(__linux) || defined(__linux__) || defined(linux) || defined(LINUX)
+#if defined(__ANDROID__) || defined(ANDROID)
+	#define GAINPUT_PLATFORM_ANDROID
+	#define GAINPUT_LIBEXPORT
+#elif defined(__linux) || defined(__linux__) || defined(linux) || defined(LINUX)
 	#define GAINPUT_PLATFORM_LINUX
 	#define GAINPUT_LIBEXPORT
 #elif defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER)
@@ -29,14 +31,15 @@
 //#define GAINPUT_DEBUG
 
 #include <cassert>
-#include <cstdlib>
 #include <cstring>
 #include <new>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
+	#include <cstdlib>
 	#include <X11/Xlib.h>
 	#include <stdint.h>
 #elif defined(GAINPUT_PLATFORM_WIN)
+	#include <cstdlib>
 	#define WIN32_LEAN_AND_MEAN
 	#define NOMINMAX
 	#include <windows.h>
@@ -44,6 +47,11 @@
 	typedef unsigned char uint8_t;
 	typedef unsigned long uint32_t;
 	typedef unsigned __int64 uint64_t;
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	#include <stdint.h>
+	#include <android/sensor.h>
+	#include <android/native_activity.h>
+	struct android_app;
 #endif
 
 
@@ -85,6 +93,7 @@ class InputListener;
 #include <gainput/GainputInputDeviceMouse.h>
 #include <gainput/GainputInputDeviceKeyboard.h>
 #include <gainput/GainputInputDevicePad.h>
+#include <gainput/GainputInputDeviceTouch.h>
 
 #endif
 

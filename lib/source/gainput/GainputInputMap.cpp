@@ -1,8 +1,16 @@
 
 #include <gainput/gainput.h>
 
-#include <iostream>
 
+#ifdef GAINPUT_DEBUG
+#include <iostream>
+#endif
+
+namespace
+{
+	template<class T> T Min(const T&a, const T& b) { return a < b ? a : b; }
+	template<class T> T Max(const T&a, const T& b) { return a < b ? b : a; }
+}
 
 namespace gainput
 {
@@ -263,7 +271,7 @@ InputMap::GetFloat(UserButtonId userButton) const
 			}
 			else if (ub->policy == UBP_MAX)
 			{
-				value = std::max(value, deviceValue);
+				value = Max(value, deviceValue);
 			}
 			else if (ub->policy == UBP_MIN)
 			{
@@ -273,7 +281,7 @@ InputMap::GetFloat(UserButtonId userButton) const
 				}
 				else
 				{
-					value = std::min(value, deviceValue);
+					value = Min(value, deviceValue);
 				}
 			}
 			else if (ub->policy == UBP_AVERAGE)
@@ -330,7 +338,7 @@ InputMap::GetFloatPrevious(UserButtonId userButton) const
 			}
 			else if (ub->policy == UBP_MAX)
 			{
-				value = std::max(value, deviceValue);
+				value = Max(value, deviceValue);
 			}
 			else if (ub->policy == UBP_MIN)
 			{
@@ -340,7 +348,7 @@ InputMap::GetFloatPrevious(UserButtonId userButton) const
 				}
 				else
 				{
-					value = std::min(value, deviceValue);
+					value = Min(value, deviceValue);
 				}
 			}
 			else if (ub->policy == UBP_AVERAGE)

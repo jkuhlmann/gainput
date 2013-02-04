@@ -24,9 +24,9 @@ public:
 	enum DeviceType
 	{
 		DT_MOUSE,		///< A mouse/cursor input device featuring one pointer.
-		DT_KEYBOARD,	///< A keyboard input device.
+		DT_KEYBOARD,		///< A keyboard input device.
 		DT_PAD,			///< A joypad/gamepad input device.
-		DT_MULTI_TOUCH,	///< A touch-sensitive input device support multiple simultaneous pointers.
+		DT_TOUCH,		///< A touch-sensitive input device supporting multiple simultaneous pointers.
 		DT_REMOTE,		///< A generic networked input device.
 		DT_COUNT		///< The count of input device types.
 	};
@@ -35,8 +35,8 @@ public:
 	enum DeviceState
 	{
 		DS_OK,			///< Everything is okay.
-		DS_LOW_BATTERY,	///< The input device is low on battery.
-		DS_UNAVAILABLE	///< The input device is currently not available.
+		DS_LOW_BATTERY,		///< The input device is low on battery.
+		DS_UNAVAILABLE		///< The input device is currently not available.
 	};
 
 

@@ -6,6 +6,9 @@
 #if defined(GAINPUT_PLATFORM_WIN)
 #include "GainputInputDeviceKeyboardWin.h"
 #include "GainputInputDeviceMouseWin.h"
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+#include "GainputInputDeviceTouchAndroid.h"
+#include <android_native_app_glue.h>
 #endif
 
 
@@ -86,6 +89,27 @@ InputManager::HandleMessage(const MSG& msg)
 			mouseImpl->HandleMessage(msg);
 		}
 	}
+}
+#endif
+
+#if defined(GAINPUT_PLATFORM_ANDROID)
+int32_t
+InputManager::HandleInput(AInputEvent* event)
+{
+	int handled = 0;
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		if (it->second->GetType() == InputDevice::DT_TOUCH)
+		{
+			InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);
+			InputDeviceTouchImpl* touchImpl = touch->GetPimpl();
+			GAINPUT_ASSERT(touchImpl);
+			handled |= touchImpl->HandleInput(event);
+		}
+	}
+	return handled;
 }
 #endif
 

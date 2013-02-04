@@ -11,3 +11,5 @@ build/
 __pycache__/
 .depproj/
 gainput_2008.*
+docs/
+

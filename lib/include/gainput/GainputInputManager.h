@@ -25,11 +25,17 @@ public:
 	/// [LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.
 	void SetXDisplay(Display* xDisplay, int width, int height) { xDisplay_ = xDisplay; displayWidth_ = width; displayHeight_ = height; }
 #endif
-#if defined(GAINPUT_PLATFORM_WIN)
-	/// [WINDOWS ONLY] Sets the window resolution.
+#if defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_ANDROID)
+	/// [WINDOWS/ANDROID ONLY] Sets the window resolution.
 	void SetDisplaySize(int width, int height) { displayWidth_ = width; displayHeight_ = height; }
+#endif
+#if defined(GAINPUT_PLATFORM_WIN)
 	/// [WINDOWS ONLY] Lets the InputManager handle the given Windows message.
 	void HandleMessage(const MSG& msg);
+#endif
+#if defined(GAINPUT_PLATFORM_ANDROID)
+	/// [ANDROID ONLY] Lets the InputManager handle the given input event.
+	int32_t HandleInput(AInputEvent* event);
 #endif
 
 	/// Destructs the manager.
