@@ -104,6 +104,8 @@ private:
 	GestureMap gestures_;
 	Array<InputListener*> listeners_;
 
+	float GetFloatState(UserButtonId userButton, bool previous) const;
+
 	UserButton* GetUserButton(UserButtonId userButton);
 	const UserButton* GetUserButton(UserButtonId userButton) const;
 

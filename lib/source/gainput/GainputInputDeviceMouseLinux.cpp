@@ -49,7 +49,7 @@ DeviceButtonInfo deviceButtonInfos[] =
 }
 
 
-const unsigned MouseButtonCount = 20;
+const unsigned MouseButtonCount = 21;
 const unsigned MouseAxisCount = 2;
 
 class InputDeviceMouseImpl

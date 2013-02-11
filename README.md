@@ -21,22 +21,27 @@ Gainput is currently in development and **should NOT be used yet**.
 Building
 --------
 
-Windows, Linux:
+By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make sure you have recent version of [Python](http://www.python.org/) installed.
 
-1. Make sure you have python installed.
-1. Run waf configure.
-1. Run waf build\_debug or waf build\_release.
-1. The executables should be in build/debug/ or build/release/ respectively.
+### Windows & Linux
 
-Android:
+1. Run `waf configure`
+1. Run `waf build_debug` or `waf build_release`
+1. The executables should be in `build/debug/` or `build/release/` respectively.
 
-1. waf configure --cross-android --cross-android-ndk=.../android-ndk-r8d/
-1. waf build\_debug or waf build\_release
-1. cp build/debug/libbasicsample.so samples/android/libs/armeabi/
-1. cd samples/android/
-1. android-sdk-linux/tools/android update project -p . -s --target android-17
-1. ant debug
-1. android-sdk-linux/platform-tools/adb install bin/Gainput-simple-debug.apk
+### Android NDK
+
+Building for Android is little more complicated at the moment, but here you go:
+
+1. Run `waf configure --cross-android --cross-android-ndk=ANDROID_NDK_PATH`
+1. Run `waf build_debug` or `waf build_release`
+1. Do `cp build/debug/libbasicsample.so samples/android/libs/armeabi/`
+1. Do `cd samples/android/`
+1. Run `ANDROID_SDK_PATH/tools/android update project -p . -s --target android-17`
+1. Run `ant debug`
+1. Run `ANDROID_SDK_PATH/platform-tools/adb install bin/Gainput-simple-debug.apk`
+
+Replace `ANDROID_NDK_PATH` and `ANDROID_SDK_PATH` with your local paths.
 
 Alternatives
 ------------
