@@ -31,7 +31,7 @@ By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make
 
 ### Android NDK
 
-Building for Android is little more complicated at the moment, but here you go:
+Building for Android is a little more complicated at the moment, but here you go:
 
 1. Run `waf configure --cross-android --cross-android-ndk=ANDROID_NDK_PATH`
 1. Run `waf build_debug` or `waf build_release`

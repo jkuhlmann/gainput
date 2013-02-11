@@ -117,6 +117,11 @@ def build(bld):
 		includes='lib/include/', 
 		use=usetheselib,
 		target='gainput')
+	bld.stlib(features='cxx cxxstlib',
+		source=lib_sources, 
+		includes='lib/include/', 
+		use=usetheselib,
+		target='gainputstatic')
 	basic_sources = bld.path.ant_glob('samples/basic/*.cpp')
 	if bld.env.cross == 'android':
 		basic_sources += [bld.root.make_node(os.path.join(bld.env.cross_android_ndk, 'sources/android/native_app_glue/android_native_app_glue.c'))]
