@@ -108,7 +108,7 @@ public:
 
 	bool GetAnyButtonDown(DeviceButtonId& outButtonId) const;
 
-	void GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
+	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 
 	/// Enables the rumble feature of the pad.

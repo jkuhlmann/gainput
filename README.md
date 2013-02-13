@@ -18,6 +18,7 @@ Gainput is an input library for games:
 
 Gainput is currently in development and **should NOT be used yet**.
 
+
 Building
 --------
 
@@ -43,10 +44,29 @@ Building for Android is a little more complicated at the moment, but here you go
 
 Replace `ANDROID_NDK_PATH` and `ANDROID_SDK_PATH` with your local paths.
 
+
+Dependencies
+------------
+
+Gainput has minimal number of external dependencies to make it as self-contained as possible. It doesn't use any STL containers.
+
+- Windows:
+  - the Win32 message loop for keyboard and mouse
+  - XINPUT for pads
+- Linux:
+  - the X11 message loop for keyboard and mouse
+  - the kernel's joystick API for pads
+
+
 Alternatives
 ------------
 
 - [OIS](https://github.com/wgois/Object-oriented-Input-System--OIS-)
 - [SDL](http://www.libsdl.org/)
 
+
+History
+-------
+
+*No releases yet.*
 

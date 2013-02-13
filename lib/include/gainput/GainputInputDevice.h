@@ -79,8 +79,9 @@ public:
 	 * \param deviceButton ID of the button.
 	 * \param buffer A char-buffer to receive the button name.
 	 * \param bufferLength Length of the buffer receiving the button name in bytes.
+	 * \return The number of bytes written to buffer (includes the trailing \0).
 	 */
-	virtual void GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const = 0;
+	virtual size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const = 0;
 	/// Returns the type of the given button.
 	virtual ButtonType GetButtonType(DeviceButtonId deviceButton) const = 0;
 

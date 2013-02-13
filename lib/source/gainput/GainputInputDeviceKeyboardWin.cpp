@@ -184,14 +184,14 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 	{
 		if (pressed)
 		{
-            if (GetKeyState(VK_LSHIFT) & 0x8000)
+			if (GetKeyState(VK_LSHIFT) & 0x8000)
 			{
-                winKey = VK_LSHIFT;
-            }
+				winKey = VK_LSHIFT;
+			}
 			else if (GetKeyState(VK_RSHIFT) & 0x8000)
 			{
-                winKey = VK_RSHIFT;
-            }
+				winKey = VK_RSHIFT;
+			}
 			else
 			{
 				OutputDebugStringA("WHAT HAPPEND\n");
@@ -201,12 +201,12 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 		{
 			if (previousState->GetBool(KEY_SHIFT_L) && !(GetKeyState(VK_LSHIFT) & 0x8000))
 			{
-                winKey = VK_LSHIFT;
-            } 
+				winKey = VK_LSHIFT;
+			} 
 			else if (previousState->GetBool(KEY_SHIFT_R) && !(GetKeyState(VK_RSHIFT) & 0x8000))
 			{
-                winKey = VK_RSHIFT;
-            }
+				winKey = VK_RSHIFT;
+			}
 			else
 			{
 				OutputDebugStringA("WHAT HAPPEND\n");
@@ -270,11 +270,17 @@ InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonId& outButtonId) const
 	return false;
 }
 
-void
+size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-	// TODO
+	if (bufferLength > 1 && deviceButton >= KEY_SPACE && deviceButton <= KEY_GRAVE)
+	{
+		buffer[0] = deviceButton;
+		buffer[1] = 0;
+		return 2;
+	}
+	return 0;
 }
 
 ButtonType

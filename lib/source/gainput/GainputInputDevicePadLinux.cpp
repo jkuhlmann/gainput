@@ -281,11 +281,14 @@ InputDevicePad::GetAnyButtonDown(DeviceButtonId& outButtonId) const
 	return false; // TODO
 }
 
-void
+size_t
 InputDevicePad::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
+	buffer[bufferLength-1] = 0;
+	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
+	return nameLen >= bufferLength ? bufferLength : nameLen+1;
 }
 
 ButtonType

@@ -254,11 +254,17 @@ InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonId& outButtonId) const
 	return false; // TODO
 }
 
-void
+size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-	// TODO
+	if (bufferLength > 1 && deviceButton >= KEY_SPACE && deviceButton <= KEY_GRAVE)
+	{
+		buffer[0] = deviceButton;
+		buffer[1] = 0;
+		return 2;
+	}
+	return 0;
 }
 
 ButtonType

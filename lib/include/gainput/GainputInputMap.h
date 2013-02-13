@@ -92,6 +92,15 @@ public:
 	/// Returns the delta between the previous and the current frame of the float state of the given user button.
 	float GetFloatDelta(UserButtonId userButton) const;
 
+	/// Gets the name of the device button mapped to the given user button.
+	/**
+	 * \param userButton ID of the user button.
+	 * \param buffer A char-buffer to receive the button name.
+	 * \param bufferLength Length of the buffer receiving the button name in bytes.
+	 * \return The number of bytes written to buffer (includes the trailing \0).
+	 */
+	size_t GetUserButtonName(UserButtonId userButton, char* buffer, size_t bufferLength) const;
+
 private:
 	Allocator& allocator_;
 	const InputManager& manager_;

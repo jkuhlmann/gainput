@@ -68,6 +68,9 @@ typedef unsigned int UserButtonId;
 /// ID of a registered gesture.
 typedef unsigned int GestureId;
 
+/// An invalid user button ID.
+static const UserButtonId InvalidUserButtonId = -1;
+
 /// Returns the name of the library, should be "Gainput".
 const char* GetLibName();
 /// Returns the version number of the library.

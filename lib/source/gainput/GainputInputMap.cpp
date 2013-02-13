@@ -321,6 +321,23 @@ InputMap::GetFloatState(UserButtonId userButton, bool previous) const
 	return value;
 }
 
+size_t
+InputMap::GetUserButtonName(UserButtonId userButton, char* buffer, size_t bufferLength) const
+{
+	const UserButton* ub = GetUserButton(userButton);
+	GAINPUT_ASSERT(ub);
+	for (MappedInputList::const_iterator it = ub->inputs.begin();
+			it != ub->inputs.end();
+			++it)
+	{
+		const MappedInput& mi= *it;
+		const InputDevice* device = manager_.GetDevice(mi.device);
+		GAINPUT_ASSERT(device);
+		return device->GetButtonName(mi.deviceButton, buffer, bufferLength);
+	}
+	return 0;
+}
+
 UserButton*
 InputMap::GetUserButton(UserButtonId userButton)
 {
