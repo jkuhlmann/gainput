@@ -24,7 +24,7 @@ public:
 	 * \param oldValue Previous state of the button.
 	 * \param newValue New state of the button.
 	 */
-	virtual void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldvalue, float newValue) { }
+	virtual void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue) { }
 
 	//virtual void OnMapButtonBool(UserButtonId userButton, ListenEvent event, bool value) { }
 	//virtual void OnMapButtonFloat(UserButtonId userButton, ListenEvent event, float value) { }

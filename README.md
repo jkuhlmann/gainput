@@ -14,10 +14,12 @@ Gainput is an input library for games:
   - keyboard
   - mouse
   - pad
+  - multi-touch
 - open source (MIT license)
 
 Gainput is currently in development and **should NOT be used yet**.
 
+The generated [API documentation is here](http://jkuhlmann.github.com/gainput/api/).
 
 Building
 --------
