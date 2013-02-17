@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include "GainputInputDeltaState.h"
-
+#include "GainputKeyboardKeyNames.h"
 
 
 namespace gainput
@@ -24,10 +24,12 @@ public:
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
-		dialect_(manager_.GetAllocator())
+		dialect_(manager_.GetAllocator()),
+		keyNames_(manager_.GetAllocator())
 	{
-		// Cf. <X11/keysymdef.h>
+		GetKeyboardKeyNames(keyNames_);
 
+		// Cf. <X11/keysymdef.h>
 		dialect_[XK_Escape] = KEY_ESCAPE;
 		dialect_[XK_F1] = KEY_F1;
 		dialect_[XK_F2] = KEY_F2;
@@ -201,8 +203,20 @@ public:
 		}
 	}
 
-	bool IsTextInputEnabled() const { return textInputEnabled_; }
+	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
+	{
+		HashMap<Key, const char*>::const_iterator it = keyNames_.find(Key(deviceButton));
+		if (it == keyNames_.end())
+		{
+			return 0;
+		}
+		strncpy(buffer, it->second, bufferLength);
+		buffer[bufferLength-1] = 0;
+		const size_t nameLen = strlen(it->second);
+		return nameLen >= bufferLength ? bufferLength : nameLen+1;
+	}
 
+	bool IsTextInputEnabled() const { return textInputEnabled_; }
 	void SetTextInputEnabled(bool enabled) { textInputEnabled_ = enabled; }
 
 	char GetNextCharacter()
@@ -220,6 +234,7 @@ private:
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;
+	HashMap<Key, const char*> keyNames_;
 };
 
 
@@ -258,13 +273,7 @@ size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-	if (bufferLength > 1 && deviceButton >= KEY_SPACE && deviceButton <= KEY_GRAVE)
-	{
-		buffer[0] = deviceButton;
-		buffer[1] = 0;
-		return 2;
-	}
-	return 0;
+	return impl_->GetKeyName(deviceButton, buffer, bufferLength);
 }
 
 ButtonType

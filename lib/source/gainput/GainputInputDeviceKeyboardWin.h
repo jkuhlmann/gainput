@@ -14,8 +14,9 @@ public:
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
-	bool IsTextInputEnabled() const { return textInputEnabled_; }
+	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 
+	bool IsTextInputEnabled() const { return textInputEnabled_; }
 	void SetTextInputEnabled(bool enabled) { textInputEnabled_ = enabled; }
 
 	char GetNextCharacter()
@@ -35,6 +36,7 @@ private:
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;
+	HashMap<Key, const char*> keyNames_;
 	InputState* state_;
 	InputState* previousState_;
 	InputDeltaState* delta_;
@@ -43,4 +45,5 @@ private:
 
 }
 
-#endif /* GAINPUTINPUTDEVICEKEYBOARDWIN_H_ */
+#endif
+

@@ -4,6 +4,7 @@
 #if defined(GAINPUT_PLATFORM_WIN)
 #include "GainputInputDeviceKeyboardWin.h"
 #include "GainputInputDeltaState.h"
+#include "GainputKeyboardKeyNames.h"
 #include <windows.h>
 #include <Windowsx.h>
 #include <iostream>
@@ -20,11 +21,14 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	manager_(manager),
 	device_(device),
 	textInputEnabled(_true),
+	dialect_(manager_.GetAllocator()),
+	keyNames_(manager_.GetAllocator()),
 	state_(0),
 	previousState_(0),
-	delta_(0),
-	dialect_(manager_.GetAllocator())
+	delta_(0)
 {
+	GetKeyboardKeyNames(keyNames_);
+
 	dialect_[VK_ESCAPE] = KEY_ESCAPE;
 	dialect_[VK_F1] = KEY_F1;
 	dialect_[VK_F2] = KEY_F2;
@@ -237,6 +241,20 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 	}
 }
 
+size_t
+InputDeviceKeyboardImpl::GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
+{
+	HashMap<Key, const char*>::const_iterator it = keyNames_.find(Key(deviceButton));
+	if (it == keyNames_.end())
+	{
+		return 0;
+	}
+	strncpy(buffer, it->second, bufferLength);
+	buffer[bufferLength-1] = 0;
+	const size_t nameLen = strlen(it->second);
+	return nameLen >= bufferLength ? bufferLength : nameLen+1;
+}
+
 
 
 
@@ -267,6 +285,7 @@ InputDeviceKeyboard::Update(InputDeltaState* delta)
 bool
 InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonId& outButtonId) const
 {
+	// TODO
 	return false;
 }
 
@@ -274,13 +293,7 @@ size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-	if (bufferLength > 1 && deviceButton >= KEY_SPACE && deviceButton <= KEY_GRAVE)
-	{
-		buffer[0] = deviceButton;
-		buffer[1] = 0;
-		return 2;
-	}
-	return 0;
+	return impl_->GetKeyName(deviceButton, buffer, bufferLength);
 }
 
 ButtonType
