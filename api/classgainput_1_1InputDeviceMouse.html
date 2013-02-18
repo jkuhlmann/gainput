@@ -132,9 +132,9 @@ Public Member Functions</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#ab73755329c865d2a7551af37c04c435d">IsValidButtonId</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton) const </td></tr>
 <tr class="memdesc:ab73755329c865d2a7551af37c04c435d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if the given button is valid for this device. <br/></td></tr>
 <tr class="separator:ab73755329c865d2a7551af37c04c435d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b4afbdca05d6a38147acd0f8e2733d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#a2b4afbdca05d6a38147acd0f8e2733d6">GetAnyButtonDown</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> &amp;outButtonId) const </td></tr>
-<tr class="memdesc:a2b4afbdca05d6a38147acd0f8e2733d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any button is down.  <a href="#a2b4afbdca05d6a38147acd0f8e2733d6"></a><br/></td></tr>
-<tr class="separator:a2b4afbdca05d6a38147acd0f8e2733d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7826261dd4614a8b77ddd9d24a09e16"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#aa7826261dd4614a8b77ddd9d24a09e16">GetAnyButtonDown</a> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount) const </td></tr>
+<tr class="memdesc:aa7826261dd4614a8b77ddd9d24a09e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any button is down.  <a href="#aa7826261dd4614a8b77ddd9d24a09e16"></a><br/></td></tr>
+<tr class="separator:aa7826261dd4614a8b77ddd9d24a09e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f5c75395ddd05c193264dce31285394"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#a5f5c75395ddd05c193264dce31285394">GetButtonName</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton, char *buffer, size_t bufferLength) const </td></tr>
 <tr class="memdesc:a5f5c75395ddd05c193264dce31285394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the given button.  <a href="#a5f5c75395ddd05c193264dce31285394"></a><br/></td></tr>
 <tr class="separator:a5f5c75395ddd05c193264dce31285394"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,6 +193,10 @@ Additional Inherited Members</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a39157bf78af48ac2c0cb4482c81716aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of an input device.  <a href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">More...</a><br/></td></tr>
 <tr class="separator:a39157bf78af48ac2c0cb4482c81716aa inherit pub_types_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classgainput_1_1InputDevice"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classgainput_1_1InputDevice')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classgainput_1_1InputDevice.html">gainput::InputDevice</a></td></tr>
+<tr class="memitem:a8784e3b6d1201472c4d5acfea6c5eb24 inherit pro_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8784e3b6d1201472c4d5acfea6c5eb24"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown</b> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount, unsigned start, unsigned end, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device) const </td></tr>
+<tr class="separator:a8784e3b6d1201472c4d5acfea6c5eb24 inherit pro_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classgainput_1_1InputDevice"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classgainput_1_1InputDevice')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classgainput_1_1InputDevice.html">gainput::InputDevice</a></td></tr>
 <tr class="memitem:a04fcc65b25f8aad9618a66510e9a3bdf inherit pro_attribs_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fcc65b25f8aad9618a66510e9a3bdf"></a>
 <a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a04fcc65b25f8aad9618a66510e9a3bdf">state_</a></td></tr>
@@ -242,7 +246,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a2b4afbdca05d6a38147acd0f8e2733d6"></a>
+<a class="anchor" id="aa7826261dd4614a8b77ddd9d24a09e16"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -250,11 +254,21 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool gainput::InputDeviceMouse::GetAnyButtonDown </td>
+          <td class="memname">size_t gainput::InputDeviceMouse::GetAnyButtonDown </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> &amp;&#160;</td>
-          <td class="paramname"><em>outButtonId</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype"><a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *&#160;</td>
+          <td class="paramname"><em>outButtons</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxButtonCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -267,13 +281,14 @@ Additional Inherited Members</h2></td></tr>
 <p>Returns true if any button is down. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">outButtonId</td><td>The ID of the first button found that is down. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outButtons</td><td>An array with maxButtonCount fields to receive the device buttons that are down. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">maxButtonCount</td><td>The number of fields in outButtons. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if any button is down. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of device buttons written to outButtons. </dd></dl>
 
-<p>Implements <a class="el" href="classgainput_1_1InputDevice.html#a9e53a543d1bb4cf89929c8da1ffde5dd">gainput::InputDevice</a>.</p>
+<p>Implements <a class="el" href="classgainput_1_1InputDevice.html#a0212580ab41ef7b18c2ad52a7453e4c9">gainput::InputDevice</a>.</p>
 
 </div>
 </div>
@@ -370,7 +385,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 14 2013 00:00:27 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

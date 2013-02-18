@@ -153,9 +153,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a1f5f80a39db725403e9620ba5197a914">RemoveListener</a> (<a class="el" href="classgainput_1_1InputListener.html">InputListener</a> *listener)</td></tr>
 <tr class="memdesc:a1f5f80a39db725403e9620ba5197a914"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-registers the given listener. <br/></td></tr>
 <tr class="separator:a1f5f80a39db725403e9620ba5197a914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc022c685bbce65129017de42e8bc653"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#abc022c685bbce65129017de42e8bc653">GetAnyButtonDown</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> &amp;outDeviceId, <a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> &amp;outButtonId) const </td></tr>
-<tr class="memdesc:abc022c685bbce65129017de42e8bc653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if any button on any device is down.  <a href="#abc022c685bbce65129017de42e8bc653"></a><br/></td></tr>
-<tr class="separator:abc022c685bbce65129017de42e8bc653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3a2692dc1096ab410a0f1f9b63057ee"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#ab3a2692dc1096ab410a0f1f9b63057ee">GetAnyButtonDown</a> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount) const </td></tr>
+<tr class="memdesc:ab3a2692dc1096ab410a0f1f9b63057ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if any button on any device is down.  <a href="#ab3a2692dc1096ab410a0f1f9b63057ee"></a><br/></td></tr>
+<tr class="separator:ab3a2692dc1096ab410a0f1f9b63057ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79258ac1239bde9c8b071f8a9dbdceab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79258ac1239bde9c8b071f8a9dbdceab"></a>
 unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a79258ac1239bde9c8b071f8a9dbdceab">GetDeviceCountByType</a> (<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">InputDevice::DeviceType</a> type) const </td></tr>
 <tr class="memdesc:a79258ac1239bde9c8b071f8a9dbdceab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of devices with the given type. <br/></td></tr>
@@ -254,21 +254,21 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="abc022c685bbce65129017de42e8bc653"></a>
+<a class="anchor" id="ab3a2692dc1096ab410a0f1f9b63057ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool gainput::InputManager::GetAnyButtonDown </td>
+          <td class="memname">size_t gainput::InputManager::GetAnyButtonDown </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> &amp;&#160;</td>
-          <td class="paramname"><em>outDeviceId</em>, </td>
+          <td class="paramtype"><a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *&#160;</td>
+          <td class="paramname"><em>outButtons</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> &amp;&#160;</td>
-          <td class="paramname"><em>outButtonId</em>&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxButtonCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -281,12 +281,12 @@ template&lt;class T &gt; </div>
 <p>Checks if any button on any device is down. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">outDeviceId</td><td>If a button is down, this is set to the device's ID. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outButtonId</td><td>If a button is down, this is set to the device button's ID. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outButtons</td><td>An array with maxButtonCount fields to receive the device buttons that are down. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">maxButtonCount</td><td>The number of fields in outButtons. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if any button is down, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of device buttons written to outButtons. </dd></dl>
 
 </div>
 </div>
@@ -350,7 +350,7 @@ template&lt;class T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 14 2013 00:00:27 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

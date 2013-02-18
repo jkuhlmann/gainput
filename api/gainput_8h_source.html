@@ -144,41 +144,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">   63</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">   65</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">   67</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060" title="ID of a user-defined, mapped button.">UserButtonId</a>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="namespacegainput.html#affb286d7dde24bf77a8c1fec7ebf480d">   69</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#affb286d7dde24bf77a8c1fec7ebf480d" title="ID of a registered gesture.">GestureId</a>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060" title="ID of a user-defined, mapped button.">UserButtonId</a> InvalidUserButtonId = -1;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacegainput.html#a43f6880e8d185275c2168d31f12c82a1" title="Returns the name of the library, should be &quot;Gainput&quot;.">GetLibName</a>();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="namespacegainput.html#adac6e560d0fb6196f73459deff7d27d0" title="Returns the version number of the library.">GetLibVersion</a>();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacegainput.html#ad0a7cdee1c76603bcb263f6e4a6e18b2" title="Returns the version number of the library as a printable string.">GetLibVersionString</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="structgainput_1_1DeviceButtonSpec.html">   68</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgainput_1_1DeviceButtonSpec.html" title="Describes a device button on a specific device.">DeviceButtonSpec</a></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="structgainput_1_1DeviceButtonSpec.html#a039b7862767c74358d3256a0a110b41b">   71</a></span>&#160;    <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a> <a class="code" href="structgainput_1_1DeviceButtonSpec.html#a039b7862767c74358d3256a0a110b41b" title="ID of the input device.">deviceId</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="structgainput_1_1DeviceButtonSpec.html#a77202a8efc1fc1f635aa6a3c029071b0">   73</a></span>&#160;    <a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> <a class="code" href="structgainput_1_1DeviceButtonSpec.html#a77202a8efc1fc1f635aa6a3c029071b0" title="ID of the button on the given input device.">buttonId</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">   77</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060" title="ID of a user-defined, mapped button.">UserButtonId</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="namespacegainput.html#affb286d7dde24bf77a8c1fec7ebf480d">   79</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespacegainput.html#affb286d7dde24bf77a8c1fec7ebf480d" title="ID of a registered gesture.">GestureId</a>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">class </span>InputDeltaState;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">class </span><a class="code" href="classgainput_1_1InputListener.html" title="Listener interface that allows to receive notifications when button states change.">InputListener</a>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060" title="ID of a user-defined, mapped button.">UserButtonId</a> InvalidUserButtonId = -1;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputAllocator.h&gt;</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputContainers.h&gt;</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputState.h&gt;</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDevice.h&gt;</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputGesture.h&gt;</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputListener.h&gt;</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputManager.h&gt;</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputMap.h&gt;</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacegainput.html#a43f6880e8d185275c2168d31f12c82a1" title="Returns the name of the library, should be &quot;Gainput&quot;.">GetLibName</a>();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="namespacegainput.html#adac6e560d0fb6196f73459deff7d27d0" title="Returns the version number of the library.">GetLibVersion</a>();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacegainput.html#ad0a7cdee1c76603bcb263f6e4a6e18b2" title="Returns the version number of the library as a printable string.">GetLibVersionString</a>();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">class </span>InputDeltaState;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">class </span><a class="code" href="classgainput_1_1InputListener.html" title="Listener interface that allows to receive notifications when button states change.">InputListener</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceMouse.h&gt;</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceKeyboard.h&gt;</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDevicePad.h&gt;</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceTouch.h&gt;</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputAllocator.h&gt;</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputContainers.h&gt;</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputState.h&gt;</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDevice.h&gt;</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputGesture.h&gt;</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputListener.h&gt;</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputManager.h&gt;</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputMap.h&gt;</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceMouse.h&gt;</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceKeyboard.h&gt;</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDevicePad.h&gt;</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#include &lt;gainput/GainputInputDeviceTouch.h&gt;</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 14 2013 00:00:27 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
