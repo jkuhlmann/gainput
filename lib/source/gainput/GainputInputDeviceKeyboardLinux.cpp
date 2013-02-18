@@ -6,7 +6,9 @@
 
 #include <X11/Xutil.h>
 
+#ifdef GAINPUT_DEBUG
 #include <iostream>
+#endif
 
 #include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
@@ -203,6 +205,8 @@ public:
 		}
 	}
 
+	DeviceId GetDevice() const { return device_; }
+
 	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 	{
 		HashMap<Key, const char*>::const_iterator it = keyNames_.find(Key(deviceButton));
@@ -263,10 +267,10 @@ InputDeviceKeyboard::Update(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
-bool
-InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	return false; // TODO
+	return CheckAllButtonsDown(outButtons, maxButtonCount, 0, KeyboardButtonCount, impl_->GetDevice());
 }
 
 size_t

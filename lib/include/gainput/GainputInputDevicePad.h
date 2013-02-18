@@ -106,7 +106,7 @@ public:
 	DeviceState GetState() const;
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX; }
 
-	bool GetAnyButtonDown(DeviceButtonId& outButtonId) const;
+	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;

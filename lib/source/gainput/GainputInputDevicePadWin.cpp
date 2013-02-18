@@ -239,6 +239,8 @@ public:
 		}
 	}
 
+	DeviceId GetDevice() const { return device_; }
+
 	InputDevice::DeviceState GetState() const
 	{
 		return deviceState_;
@@ -297,10 +299,10 @@ InputDevicePad::GetState() const
 	return impl_->GetState();
 }
 
-bool
-InputDevicePad::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDevicePad::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	return false;
+	return CheckAllButtonsDown(outButtons, maxButtonCount, PAD_BUTTON_LEFT_STICK_X, PAD_BUTTON_MAX, impl_->GetDevice());
 }
 
 size_t

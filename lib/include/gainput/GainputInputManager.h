@@ -74,11 +74,11 @@ public:
 
 	/// Checks if any button on any device is down.
 	/**
-	 * \param[out] outDeviceId If a button is down, this is set to the device's ID.
-	 * \param[out] outButtonId If a button is down, this is set to the device button's ID.
-	 * \return true if any button is down, false otherwise.
+	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are down.
+	 * \param[out] maxButtonCount The number of fields in outButtons.
+	 * \return The number of device buttons written to outButtons.
 	 */
-	bool GetAnyButtonDown(DeviceId& outDeviceId, DeviceButtonId& outButtonId) const;
+	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
 	/// Returns the number of devices with the given type.
 	unsigned GetDeviceCountByType(InputDevice::DeviceType type) const;

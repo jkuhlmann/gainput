@@ -4,8 +4,12 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
+#ifdef GAINPUT_DEBUG
 #include <iostream>
+#endif
+
 #include <fcntl.h>
+#include <unistd.h>
 #include <linux/joystick.h>
 
 #include "GainputInputDeltaState.h"
@@ -134,6 +138,7 @@ public:
 		}
 		GAINPUT_ASSERT(fd_ >= 0);
 
+#ifdef GAINPUT_DEBUG
 		char axesCount;
 		ioctl(fd_, JSIOCGAXES, &axesCount);
 		std::cout << "Axes count: " << int(axesCount) << std::endl;
@@ -141,11 +146,14 @@ public:
 		int driverVersion;
 		ioctl(fd_, JSIOCGVERSION, &driverVersion);
 		std::cout << "Driver version: " << driverVersion << std::endl;
+#endif
 
 		char name[128];
 		if (ioctl(fd_, JSIOCGNAME(sizeof(name)), name) < 0)
 			strncpy(name, "Unknown", sizeof(name));
+#ifdef GAINPUT_DEBUG
 		std::cout << "Name: " << name << std::endl;
+#endif
 
 		if (strcmp(name, "Sony PLAYSTATION(R)3 Controller") == 0)
 		{
@@ -220,14 +228,18 @@ public:
 						}
 					}
 				}
+#ifdef GAINPUT_DEBUG
 				else
 				{
-					//std::cout << "Unknown pad button #" << int(event.number) << ": " << event.value << std::endl;
+					std::cout << "Unknown pad button #" << int(event.number) << ": " << event.value << std::endl;
 				}
+#endif
 			}
 		}
 		GAINPUT_ASSERT(c == -1);
 	}
+
+	DeviceId GetDevice() const { return device_; }
 
 	InputDevice::DeviceState GetState() const
 	{
@@ -275,10 +287,10 @@ InputDevicePad::GetState() const
 	return impl_->GetState();
 }
 
-bool
-InputDevicePad::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDevicePad::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	return false; // TODO
+	return CheckAllButtonsDown(outButtons, maxButtonCount, PAD_BUTTON_LEFT_STICK_X, PAD_BUTTON_MAX, impl_->GetDevice());
 }
 
 size_t

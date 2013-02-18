@@ -110,11 +110,10 @@ InputDeviceTouch::Update(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
-bool
-InputDeviceTouch::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	// TODO
-	return false;
+	return CheckAllButtonsDown(outButtons, maxButtonCount, TOUCH_0_DOWN, TOUCH_COUNT, impl_->GetDevice());
 }
 
 size_t

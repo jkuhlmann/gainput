@@ -15,6 +15,8 @@ public:
 
 	void HandleMessage(const MSG& msg);
 
+	DeviceId GetDevice() const { return device_; }
+
 private:
 	InputManager& manager_;
 	DeviceId device_;

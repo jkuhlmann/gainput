@@ -69,10 +69,11 @@ public:
 
 	/// Returns true if any button is down.
 	/**
-	 * \param[out] outButtonId The ID of the first button found that is down.
-	 * \return true if any button is down.
+	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are down.
+	 * \param[out] maxButtonCount The number of fields in outButtons.
+	 * \return The number of device buttons written to outButtons.
 	 */
-	virtual bool GetAnyButtonDown(DeviceButtonId& outButtonId) const = 0;
+	virtual size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const = 0;
 
 	/// Gets the name of the given button.
 	/**
@@ -90,6 +91,8 @@ protected:
 	InputState* state_;
 	/// The previous state of this device.
 	InputState* previousState_;
+
+	size_t CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end, DeviceId device) const;
 };
 
 

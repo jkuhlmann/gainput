@@ -5,9 +5,9 @@
 #include "GainputInputDeviceKeyboardWin.h"
 #include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
+
 #include <windows.h>
 #include <Windowsx.h>
-#include <iostream>
 
 
 namespace gainput
@@ -282,11 +282,10 @@ InputDeviceKeyboard::Update(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
-bool
-InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	// TODO
-	return false;
+	return CheckAllButtonsDown(outButtons, maxButtonCount, 0, KeyboardButtonCount, impl_->GetDevice());
 }
 
 size_t

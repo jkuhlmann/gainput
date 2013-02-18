@@ -5,9 +5,9 @@
 
 #include "GainputInputDeviceMouseWin.h"
 #include "GainputInputDeltaState.h"
+
 #include <windows.h>
 #include <Windowsx.h>
-#include <iostream>
 
 
 namespace gainput
@@ -223,20 +223,10 @@ InputDeviceMouse::Update(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
-bool
-InputDeviceMouse::GetAnyButtonDown(DeviceButtonId& outButtonId) const
+size_t
+InputDeviceMouse::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	for (unsigned i = MOUSE_BUTTON_0; i < MOUSE_BUTTON_MAX; ++i)
-	{
-		DeviceButtonId id(i);
-		if (GetButtonType(id) == BT_BOOL
-				&& GetBool(id))
-		{
-			outButtonId = id;
-			return true;
-		}
-	}
-	return false;
+	return CheckAllButtonsDown(outButtons, maxButtonCount, MOUSE_BUTTON_0, MOUSE_BUTTON_MAX, impl_->GetDevice());
 }
 
 size_t

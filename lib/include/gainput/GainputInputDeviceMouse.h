@@ -64,7 +64,7 @@ public:
 	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= MOUSE_BUTTON_0 && deviceButton <= MOUSE_BUTTON_COUNT; }
 
-	bool GetAnyButtonDown(DeviceButtonId& outButtonId) const;
+	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;

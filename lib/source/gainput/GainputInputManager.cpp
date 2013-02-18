@@ -49,6 +49,19 @@ InputManager::Update()
 	}
 }
 
+size_t
+InputManager::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
+{
+	size_t buttonsFound = 0;
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end() && maxButtonCount > buttonsFound;
+			++it)
+	{
+		buttonsFound += it->second->GetAnyButtonDown(outButtons+buttonsFound, maxButtonCount-buttonsFound);
+	}
+	return buttonsFound;
+}
+
 unsigned
 InputManager::GetDeviceCountByType(InputDevice::DeviceType type) const
 {

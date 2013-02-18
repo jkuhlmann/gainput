@@ -63,6 +63,16 @@ namespace gainput
 typedef unsigned int DeviceId;
 /// ID of a specific button unique to an input device.
 typedef unsigned int DeviceButtonId;
+
+/// Describes a device button on a specific device.
+struct DeviceButtonSpec
+{
+	/// ID of the input device.
+	DeviceId deviceId;
+	/// ID of the button on the given input device.
+	DeviceButtonId buttonId;
+};
+
 /// ID of a user-defined, mapped button.
 typedef unsigned int UserButtonId;
 /// ID of a registered gesture.

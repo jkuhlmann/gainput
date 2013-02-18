@@ -14,6 +14,8 @@ public:
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
+	DeviceId GetDevice() const { return device_; }
+
 	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 
 	bool IsTextInputEnabled() const { return textInputEnabled_; }
