@@ -66,16 +66,16 @@ public:
 
 	/// Registers a listener to be notified when a button state changes.
 	/**
-	 * If there are listeners registered, all input devices will have to record their state changes. This causes extra runtime costs.
+	 * If there are listeners registered, all input devices will have to record their state changes. This incurs extra runtime costs.
 	 */
-	void AddListener(InputListener* listener);
+	ListenerId AddListener(InputListener* listener);
 	/// De-registers the given listener.
-	void RemoveListener(InputListener* listener);
+	void RemoveListener(ListenerId listenerId);
 
 	/// Checks if any button on any device is down.
 	/**
 	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are down.
-	 * \param[out] maxButtonCount The number of fields in outButtons.
+	 * \param maxButtonCount The number of fields in outButtons.
 	 * \return The number of device buttons written to outButtons.
 	 */
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
@@ -94,7 +94,9 @@ private:
 	DeviceMap devices_;
 	unsigned nextDeviceId_;
 
-	Array<InputListener*> listeners_;
+	HashMap<ListenerId, InputListener*> listeners_;
+	unsigned nextListenerId_;
+
 	InputDeltaState* deltaState_;
 
 #if defined(GAINPUT_PLATFORM_LINUX)

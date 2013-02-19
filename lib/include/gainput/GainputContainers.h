@@ -232,13 +232,17 @@ public:
 	HashMap(Allocator& allocator) :
 		allocator_(allocator),
 		keys_(allocator_),
-		values_(allocator_)
+		values_(allocator_),
+		size_(0)
 	{ }
 
 	iterator begin() { return values_.begin(); }
 	const_iterator begin() const { return values_.begin(); }
 	iterator end() { return values_.begin() + values_.size(); }
 	const_iterator end() const { return values_.begin() + values_.size(); }
+
+	size_t size() const { return size_; }
+	bool empty() const { return size_ == 0; }
 
 	unsigned count(const K& k)
 	{
@@ -321,6 +325,8 @@ public:
 		node.next = InvalidKey;
 		values_.push_back(node);
 
+		++size_;
+
 		return &values_[values_.size()-1];
 	}
 
@@ -361,6 +367,7 @@ public:
 				values_[vi].first = K();
 				values_[vi].second = V();
 				values_[vi].next = InvalidKey;
+				--size_;
 				return 1;
 			}
 			prevVi = vi;
@@ -379,6 +386,7 @@ private:
 	Allocator& allocator_;
 	Array<uint32_t> keys_;
 	Array<Node> values_;
+	size_t size_;
 
 	void Rehash(unsigned newSize)
 	{

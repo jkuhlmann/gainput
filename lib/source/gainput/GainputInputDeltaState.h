@@ -35,7 +35,7 @@ public:
 	/**
 	 * \param listeners A list of input listeners to notify.
 	 */
-	void NotifyListeners(Array<InputListener*>& listeners) const;
+	void NotifyListeners(HashMap<ListenerId, InputListener*>& listeners) const;
 
 private:
 	struct Change

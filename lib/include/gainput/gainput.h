@@ -75,6 +75,8 @@ struct DeviceButtonSpec
 
 /// ID of a user-defined, mapped button.
 typedef unsigned int UserButtonId;
+/// ID of an input listener.
+typedef unsigned int ListenerId;
 /// ID of a registered gesture.
 typedef unsigned int GestureId;
 

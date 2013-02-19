@@ -20,6 +20,7 @@ InputManager::InputManager(Allocator& allocator) :
 		devices_(allocator_),
 		nextDeviceId_(0),
 		listeners_(allocator_),
+		nextListenerId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_))
 {
 
@@ -47,6 +48,19 @@ InputManager::Update()
 		ds->NotifyListeners(listeners_);
 		ds->Clear();
 	}
+}
+
+unsigned
+InputManager::AddListener(InputListener* listener)
+{
+	listeners_[nextListenerId_] = listener;
+	return nextListenerId_++;
+}
+
+void
+InputManager::RemoveListener(unsigned listenerId)
+{
+	listeners_.erase(listenerId);
 }
 
 size_t

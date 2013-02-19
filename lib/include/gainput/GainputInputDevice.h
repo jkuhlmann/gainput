@@ -70,7 +70,7 @@ public:
 	/// Returns true if any button is down.
 	/**
 	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are down.
-	 * \param[out] maxButtonCount The number of fields in outButtons.
+	 * \param maxButtonCount The number of fields in outButtons.
 	 * \return The number of device buttons written to outButtons.
 	 */
 	virtual size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const = 0;

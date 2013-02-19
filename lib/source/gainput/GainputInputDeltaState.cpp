@@ -42,24 +42,24 @@ InputDeltaState::Clear()
 }
 
 void
-InputDeltaState::NotifyListeners(Array<InputListener*>& listeners) const
+InputDeltaState::NotifyListeners(HashMap<ListenerId, InputListener*>& listeners) const
 {
 	for (Array<Change>::const_iterator it = changes_.begin();
 			it != changes_.end();
 			++it)
 	{
 		const Change& change = *it;
-		for (Array<InputListener*>::iterator it2 = listeners.begin();
+		for (HashMap<ListenerId, InputListener*>::iterator it2 = listeners.begin();
 				it2 != listeners.end();
 				++it2)
 		{
 			if (change.type == BT_BOOL)
 			{
-				(*it2)->OnDeviceButtonBool(change.device, change.deviceButton, change.oldValue.b, change.newValue.b);
+				it2->second->OnDeviceButtonBool(change.device, change.deviceButton, change.oldValue.b, change.newValue.b);
 			}
 			else if (change.type == BT_FLOAT)
 			{
-				(*it2)->OnDeviceButtonFloat(change.device, change.deviceButton, change.oldValue.f, change.newValue.f);
+				it2->second->OnDeviceButtonFloat(change.device, change.deviceButton, change.oldValue.f, change.newValue.f);
 			}
 		}
 	}
