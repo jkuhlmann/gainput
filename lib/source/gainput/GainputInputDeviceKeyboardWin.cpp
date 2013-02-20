@@ -14,13 +14,13 @@ namespace gainput
 {
 
 const unsigned KeyboardButtonCount = KEY_COUNT_;
-const unsigned LParamExtendedKeymask= 1 << 24;
+const unsigned LParamExtendedKeymask = 1 << 24;
 
 
 InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId device) :
 	manager_(manager),
 	device_(device),
-	textInputEnabled(_true),
+	textInputEnabled_(true),
 	dialect_(manager_.GetAllocator()),
 	keyNames_(manager_.GetAllocator()),
 	state_(0),
@@ -152,9 +152,11 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 		}
 		const char charKey = key;
 		textBuffer_.Put(charKey);
+#ifdef GAINPUT_DEBUG
 		char buf[256];
 		sprintf(buf, "Text: %c\n", charKey);
 		OutputDebugStringA(buf);
+#endif
 		return;
 	}
 
@@ -196,41 +198,49 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 			{
 				winKey = VK_RSHIFT;
 			}
+#ifdef GAINPUT_DEBUG
 			else
 			{
-				OutputDebugStringA("WHAT HAPPEND\n");
+				OutputDebugStringA("Not sure which shift this is.\n");
 			}
+#endif
 		}
 		else
 		{
-			if (previousState->GetBool(KEY_SHIFT_L) && !(GetKeyState(VK_LSHIFT) & 0x8000))
+			if (previousState_->GetBool(KEY_SHIFT_L) && !(GetKeyState(VK_LSHIFT) & 0x8000))
 			{
 				winKey = VK_LSHIFT;
 			} 
-			else if (previousState->GetBool(KEY_SHIFT_R) && !(GetKeyState(VK_RSHIFT) & 0x8000))
+			else if (previousState_->GetBool(KEY_SHIFT_R) && !(GetKeyState(VK_RSHIFT) & 0x8000))
 			{
 				winKey = VK_RSHIFT;
 			}
+#ifdef GAINPUT_DEBUG
 			else
 			{
-				OutputDebugStringA("WHAT HAPPEND\n");
+				OutputDebugStringA("Not sure which shift this is.\n");
 			}
+#endif
 		}
 	}
 	// TODO handle l/r alt properly
 
+#ifdef GAINPUT_DEBUG
 	char buf[256];
 	sprintf(buf, "Keyboard: %d, %i\n", winKey, pressed);
 	OutputDebugStringA(buf);
+#endif
 
 	if (dialect_.count(winKey))
 	{
 		const DeviceButtonId buttonId = dialect_[winKey];
+#ifdef GAINPUT_DEBUG
 		sprintf(buf, " --> Mapped to: %d\n", buttonId);
 		OutputDebugStringA(buf);
+#endif
 		state_->Set(buttonId, pressed);
 
-		if (delta)
+		if (delta_)
 		{
 			const bool oldValue = previousState_->GetBool(buttonId);
 			if (oldValue != pressed)

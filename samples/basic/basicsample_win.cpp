@@ -4,12 +4,18 @@
 #if defined(GAINPUT_PLATFORM_WIN)
 
 #include <windows.h>
+#include <iostream>
+
+#define LOG(...) {char buf[256]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
+
 
 // Define your user buttons
 enum Button
 {
 	ButtonMenu,
-	ButtonConfirm
+	ButtonConfirm,
+	MouseX,
+	MouseY
 };
 
 
@@ -17,6 +23,7 @@ static char szWindowClass[] = "win32app";
 const char* windowName = "Gainput basic sample";
 const int width = 800;
 const int height = 600;
+bool doExit = false;
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -34,6 +41,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
+			doExit = true;
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -97,9 +105,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	gainput::InputMap map(manager);
 	map.MapBool(ButtonMenu, keyboardId, gainput::KEY_ESCAPE);
 	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
+	map.MapFloat(MouseX, mouseId, gainput::MOUSE_AXIS_X);
+	map.MapFloat(MouseY, mouseId, gainput::MOUSE_AXIS_Y);
 	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 
-	for (;;)
+	while (!doExit)
 	{
 		// Update Gainput
 		manager.Update();
@@ -124,6 +134,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			gainput::InputDevicePad* pad = static_cast<gainput::InputDevicePad*>(manager.GetDevice(padId));
 			pad->Vibrate(0.0f, 0.0f);
+		}
+
+		if (map.GetBoolWasDown(ButtonMenu))
+		{
+			LOG("Open Menu!!\n");
+		}
+		if (map.GetBoolWasDown(ButtonConfirm))
+		{
+			LOG("Confirmed!!\n");
+		}
+
+		if (map.GetFloatDelta(MouseX) != 0.0f || map.GetFloatDelta(MouseY) != 0.0f)
+		{
+			LOG("Mouse: %f, %f\n", map.GetFloat(MouseX), map.GetFloat(MouseY));
 		}
 	}
 

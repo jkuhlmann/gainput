@@ -111,7 +111,7 @@ public:
 		hasBattery_(false)
 	{
 		padIndex_ = manager.GetDeviceCountByType(InputDevice::DT_PAD);
-		GAINPUT_ASSERT(padIndex_ < GAINPUT_MAX_PAD_COUNT);
+		GAINPUT_ASSERT(padIndex_ < MaxPadCount);
 
 #if 0
 		XINPUT_BATTERY_INFORMATION xbattery;
@@ -161,13 +161,13 @@ public:
 		}
 #endif
 
-		if (xstate.dwPacketNumber == lastPacketNumber)
+		if (xstate.dwPacketNumber == lastPacketNumber_)
 		{
 			// Not changed
 			return;
 		}
 
-		lastPacketNumber = xstate.dwPacketNumber;
+		lastPacketNumber_ = xstate.dwPacketNumber;
 
 		HandleButton(state, previousState, delta, PAD_BUTTON_UP, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
 		HandleButton(state, previousState, delta, PAD_BUTTON_DOWN, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
@@ -196,19 +196,21 @@ public:
 	{
 		state.Set(buttonId, value);
 		
+#ifdef GAINPUT_DEBUG
 		if (value != previousState.GetBool(buttonId))
 		{
 			char buf[256];
 			sprintf(buf, "Pad changed: %d, %i\n", buttonId, value);
 			OutputDebugStringA(buf);
 		}
+#endif
 
 		if (delta)
 		{
 			const bool oldValue = previousState.GetBool(buttonId);
 			if (value != oldValue)
 			{
-				delta->AddChange(device, buttonId, oldValue, value);
+				delta->AddChange(device_, buttonId, oldValue, value);
 			}
 		}
 	}
@@ -222,12 +224,14 @@ public:
 
 		state.Set(buttonId, value);
 		
+#ifdef GAINPUT_DEBUG
 		if (value != previousState.GetFloat(buttonId))
 		{
 			char buf[256];
 			sprintf(buf, "Pad changed: %d, %f\n", buttonId, value);
 			OutputDebugStringA(buf);
 		}
+#endif
 
 		if (delta)
 		{

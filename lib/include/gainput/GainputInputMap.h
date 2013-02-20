@@ -20,7 +20,7 @@ public:
 	 * \param manager The input manager used to get device inputs.
 	 * \param allocator The allocator to be used for all memory allocations.
 	 */
-	InputMap(const InputManager& manager, Allocator& allocator = defaultAllocator);
+	InputMap(const InputManager& manager, Allocator& allocator = GetDefaultAllocator());
 	/// Unitializes the map.
 	~InputMap();
 

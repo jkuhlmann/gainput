@@ -45,6 +45,7 @@
 	#include <windows.h>
 
 	typedef unsigned char uint8_t;
+	typedef char int8_t;
 	typedef unsigned long uint32_t;
 	typedef unsigned __int64 uint64_t;
 #elif defined(GAINPUT_PLATFORM_ANDROID)
@@ -108,7 +109,10 @@ class InputListener;
 #include <gainput/GainputInputDeviceMouse.h>
 #include <gainput/GainputInputDeviceKeyboard.h>
 #include <gainput/GainputInputDevicePad.h>
-#include <gainput/GainputInputDeviceTouch.h>
+
+#if defined(GAINPUT_PLATFORM_ANDROID)
+	#include <gainput/GainputInputDeviceTouch.h>
+#endif
 
 #endif
 

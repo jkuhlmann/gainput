@@ -17,7 +17,7 @@ public:
 	 * \see SetXDisplay
 	 * \see SetDisplaySize
 	 */
-	InputManager(Allocator& allocator = defaultAllocator);
+	InputManager(Allocator& allocator = GetDefaultAllocator());
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	/// [LINUX ONLY] Returns the XDisplay used to acquire keyboard and mouse inputs.

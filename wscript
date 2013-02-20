@@ -33,7 +33,7 @@ def options(opt):
 def configure(cnf):
 	cnf.setenv('debug')
 	cnf.define('GAINPUT_LIB_BUILD', 1)
-	cnf.env.CXXFLAGS += ['-g', '-Wall', '-fno-rtti', '-fno-exceptions']
+	cnf.env.CXXFLAGS += []
 	
 	cnf.env.cross = 'none'
 	if cnf.options.cross == 'android':
@@ -86,8 +86,9 @@ def configure(cnf):
 	cnf.load('compiler_cxx')
 
 	if cnf.options.cross == 'android':
-		pass
+		cnf.env.CXXFLAGS += ['-Wall', '-g', '-fno-rtti', '-fno-exceptions']
 	elif sys.platform.startswith('linux'):
+		cnf.env.CXXFLAGS += ['-Wall', '-g', '-fno-rtti', '-fno-exceptions']
 		cnf.check(compiler='cxx',
 		          lib='X11',
 	        	  mandatory=True, 

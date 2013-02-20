@@ -86,7 +86,8 @@ public:
 	}
 };
 
-extern GAINPUT_LIBEXPORT DefaultAllocator defaultAllocator;
+
+GAINPUT_LIBEXPORT DefaultAllocator& GetDefaultAllocator();
 
 }
 

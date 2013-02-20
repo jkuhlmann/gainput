@@ -74,8 +74,8 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 	delta_ = delta;
 
 	// Reset mouse wheel buttons
-	state_.Set(MOUSE_BUTTON_3, false);
-	state_.Set(MOUSE_BUTTON_4, false);
+	state_->Set(MOUSE_BUTTON_3, false);
+	state_->Set(MOUSE_BUTTON_4, false);
 	// TODO respect delta
 }
 
@@ -185,7 +185,7 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 		OutputDebugStringA(buf);
 #endif
 
-		if (delta)
+		if (delta_)
 		{
 			const bool oldValue = previousState_->GetBool(buttonId);
 			if (oldValue != pressed)
