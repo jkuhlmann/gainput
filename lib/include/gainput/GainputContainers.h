@@ -97,7 +97,6 @@ inline void MurmurHash3_x86_32(const void * key, int len,
 
 // -- MurmurHash3 end --
 
-
 /// A std::vector-like data container for POD-types.
 /**
  * \tparam T A POD-type to hold in this container.
@@ -149,6 +148,12 @@ public:
 			reserve(size_ + 1);
 		}
 		data_[size_++] = val;
+	}
+
+	void pop_back()
+	{
+		if (size_ > 0)
+			--size_;
 	}
 
 	void reserve(unsigned capacity)
@@ -205,6 +210,7 @@ private:
 	T* data_;
 };
 
+
 /// A hash table mapping keys to POD-type values.
 /**
  * \tparam K The key pointing to a value.
@@ -229,7 +235,7 @@ public:
 	typedef const Node* const_iterator;
 
 
-	HashMap(Allocator& allocator) :
+	HashMap(Allocator& allocator = GetDefaultAllocator()) :
 		allocator_(allocator),
 		keys_(allocator_),
 		values_(allocator_),
@@ -289,7 +295,7 @@ public:
 
 	iterator insert(const K& k, const V& v)
 	{
-		if (keys_.size() + 1 >= values_.size())
+		if (values_.size() >= 0.6f*keys_.size())
 		{
 			Rehash(values_.size()*2 + 10);
 		}
@@ -364,11 +370,37 @@ public:
 				{
 					values_[prevVi].next = values_[vi].next;
 				}
-				values_[vi].first = K();
-				values_[vi].second = V();
-				values_[vi].next = InvalidKey;
+
 				--size_;
-				return 1;
+				if (vi == values_.size() - 1)
+				{
+					values_.pop_back();
+					return 1;
+				}
+				else
+				{
+					uint32_t lastVi = values_.size()-1;
+					values_[vi] = values_[lastVi];
+					values_.pop_back();
+					
+					for (typename Array<uint32_t>::iterator it = keys_.begin(); it != keys_.end(); ++it)
+					{
+						if (*it == lastVi)
+						{
+							*it = vi;
+							break;
+						}
+					}
+					for (typename Array<Node>::iterator it = values_.begin(); it != values_.end(); ++it)
+					{
+						if (it->next == lastVi)
+						{
+							it->next = vi;
+							break;
+						}
+					}
+					return 1;
+				}
 			}
 			prevVi = vi;
 			vi = values_[vi].next;
@@ -398,6 +430,7 @@ private:
 
 		keys_.swap(keys);
 		values_.swap(values);
+		size_ = 0;
 
 		for (typename Array<Node>::const_iterator it = values.begin();
 				it != values.end();
@@ -408,6 +441,7 @@ private:
 	}
 
 };
+
 
 
 /// A ring buffer.
