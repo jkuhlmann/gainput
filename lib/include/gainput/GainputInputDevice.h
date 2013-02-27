@@ -67,7 +67,7 @@ public:
 	/// Returns the previous state of the given button.
 	virtual float GetFloatPrevious(DeviceButtonId deviceButton) const;
 
-	/// Returns true if any button is down.
+	/// Checks if any button on this device is down.
 	/**
 	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are down.
 	 * \param maxButtonCount The number of fields in outButtons.

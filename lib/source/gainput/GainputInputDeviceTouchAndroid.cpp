@@ -6,10 +6,11 @@
 #include "GainputInputDeviceTouchAndroid.h"
 #include "GainputInputDeltaState.h"
 
+#ifdef GAINPUT_DEBUG
 #include <android/log.h>
-
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "gainput", __VA_ARGS__))
+#endif
 
 
 namespace gainput
@@ -25,14 +26,42 @@ struct DeviceButtonInfo
 
 DeviceButtonInfo deviceButtonInfos[] =
 {
-		{ BT_BOOL, "touch_0_down" },
-		{ BT_FLOAT, "touch_0_x" },
-		{ BT_FLOAT, "touch_0_y" },
-		{ BT_FLOAT, "touch_0_pressure" }
+	{ BT_BOOL, "touch_0_down" },
+	{ BT_FLOAT, "touch_0_x" },
+	{ BT_FLOAT, "touch_0_y" },
+	{ BT_FLOAT, "touch_0_pressure" },
+	{ BT_BOOL, "touch_1_down" },
+	{ BT_FLOAT, "touch_1_x" },
+	{ BT_FLOAT, "touch_1_y" },
+	{ BT_FLOAT, "touch_1_pressure" },
+	{ BT_BOOL, "touch_2_down" },
+	{ BT_FLOAT, "touch_2_x" },
+	{ BT_FLOAT, "touch_2_y" },
+	{ BT_FLOAT, "touch_2_pressure" },
+	{ BT_BOOL, "touch_3_down" },
+	{ BT_FLOAT, "touch_3_x" },
+	{ BT_FLOAT, "touch_3_y" },
+	{ BT_FLOAT, "touch_3_pressure" },
+	{ BT_BOOL, "touch_4_down" },
+	{ BT_FLOAT, "touch_4_x" },
+	{ BT_FLOAT, "touch_4_y" },
+	{ BT_FLOAT, "touch_4_pressure" },
+	{ BT_BOOL, "touch_5_down" },
+	{ BT_FLOAT, "touch_5_x" },
+	{ BT_FLOAT, "touch_5_y" },
+	{ BT_FLOAT, "touch_5_pressure" },
+	{ BT_BOOL, "touch_6_down" },
+	{ BT_FLOAT, "touch_6_x" },
+	{ BT_FLOAT, "touch_6_y" },
+	{ BT_FLOAT, "touch_6_pressure" },
+	{ BT_BOOL, "touch_7_down" },
+	{ BT_FLOAT, "touch_7_x" },
+	{ BT_FLOAT, "touch_7_y" },
+	{ BT_FLOAT, "touch_7_pressure" }
 };
 }
 
-const unsigned TouchPointCount = 16;
+const unsigned TouchPointCount = 8;
 const unsigned TouchDataElems = 4;
 
 
@@ -70,8 +99,10 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 	{
 		return 0;
 	}
+
 	for (unsigned i = 0; i < AMotionEvent_getPointerCount(event) && i < TouchPointCount; ++i)
 	{
+		GAINPUT_ASSERT(i < TouchPointCount);
 		const float x = AMotionEvent_getX(event, i);
 		const float y = AMotionEvent_getY(event, i);
 		const int32_t w = manager_.GetDisplayWidth();
@@ -80,8 +111,11 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 		state_->Set(TOUCH_0_Y + i*TouchDataElems, y/float(h));
 		state_->Set(TOUCH_0_DOWN + i*TouchDataElems, true);
 		state_->Set(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
+#ifdef GAINPUT_DEBUG
 		LOGI("%i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
+#endif
 	}
+
 	return 1;
 }
 

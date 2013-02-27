@@ -45,6 +45,7 @@ void android_main(struct android_app* state)
 	// Set up Gainput
 	gainput::InputManager manager;
 	const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch>();
+	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 
 	// Make sure the app frowards input events to Gainput
 	state->userData = &manager;

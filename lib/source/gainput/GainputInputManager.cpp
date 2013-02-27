@@ -7,8 +7,8 @@
 #include "GainputInputDeviceKeyboardWin.h"
 #include "GainputInputDeviceMouseWin.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
+#include "GainputInputDeviceKeyboardAndroid.h"
 #include "GainputInputDeviceTouchAndroid.h"
-#include <android_native_app_glue.h>
 #endif
 
 
@@ -134,6 +134,13 @@ InputManager::HandleInput(AInputEvent* event)
 			InputDeviceTouchImpl* touchImpl = touch->GetPimpl();
 			GAINPUT_ASSERT(touchImpl);
 			handled |= touchImpl->HandleInput(event);
+		}
+		else if (it->second->GetType() == InputDevice::DT_KEYBOARD)
+		{
+			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
+			InputDeviceKeyboardImpl* keyboardImpl = keyboard->GetPimpl();
+			GAINPUT_ASSERT(keyboardImpl);
+			handled |= keyboardImpl->HandleInput(event);
 		}
 	}
 	return handled;

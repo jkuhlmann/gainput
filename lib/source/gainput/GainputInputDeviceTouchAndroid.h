@@ -13,6 +13,8 @@ public:
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
+	DeviceId GetDevice() const { return device_; }
+
 	int32_t HandleInput(AInputEvent* event);
 
 private:
