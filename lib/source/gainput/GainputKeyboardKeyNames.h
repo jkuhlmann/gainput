@@ -114,6 +114,38 @@ GetKeyboardKeyNames(HashMap<Key, const char*>& names)
 	names[KEY_MENU] = "menu";
 	names[KEY_CTRL_R] = "ctrl_r";
 	names[KEY_SHIFT_R] = "shift_r";
+	names[KEY_BACK] = "back";
+	names[KEY_SOFT_LEFT] = "soft_left";
+	names[KEY_SOFT_RIGHT] = "soft_right";
+	names[KEY_CALL] = "call";
+	names[KEY_ENDCALL] = "endcall";
+	names[KEY_STAR] = "star";
+	names[KEY_POUND] = "pound";
+	names[KEY_DPAD_CENTER] = "dpad_center";
+	names[KEY_VOLUME_UP] = "volume_up";
+	names[KEY_VOLUME_DOWN] = "volume_down";
+	names[KEY_POWER] = "power";
+	names[KEY_CAMERA] = "camera";
+	names[KEY_CLEAR] = "clear";
+	names[KEY_SYM] = "sym";
+	names[KEY_EXPLORER] = "explorer";
+	names[KEY_ENVELOPE] = "envelope";
+	names[KEY_EQUALS] = "equals";
+	names[KEY_AT] = "at";
+	names[KEY_HEADSETHOOK] = "headsethook";
+	names[KEY_FOCUS] = "focus";
+	names[KEY_PLUS] = "plus";
+	names[KEY_NOTIFICATION] = "notification";
+	names[KEY_SEARCH] = "search";
+	names[KEY_MEDIA_PLAY_PAUSE] = "media_play_pause";
+	names[KEY_MEDIA_STOP] = "media_stop";
+	names[KEY_MEDIA_NEXT] = "media_next";
+	names[KEY_MEDIA_PREVIOUS] = "media_previous";
+	names[KEY_MEDIA_REWIND] = "media_rewind";
+	names[KEY_MEDIA_FAST_FORWARD] = "media_fast_forward";
+	names[KEY_MUTE] = "mute";
+	names[KEY_PICTSYMBOLS] = "pictsymbols";
+	names[KEY_SWITCH_CHARSET] = "switch_charset";
 }
 
 
