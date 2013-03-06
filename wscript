@@ -148,10 +148,13 @@ def build(bld):
 from waflib.Build import BuildContext, CleanContext, \
         InstallContext, UninstallContext
 
+contexts = (BuildContext, CleanContext, InstallContext, UninstallContext)
 for x in 'debug release'.split():
-        for y in (BuildContext, CleanContext, InstallContext, UninstallContext):
-                name = y.__name__.replace('Context','').lower()
-                class tmp(y):
-                        cmd = name + '_' + x
-                        variant = x
-
+	for y in contexts:
+		name = y.__name__.replace('Context','').lower()
+		class tmp(y):
+			cmd = name + '_' + x
+			variant = x
+	for y in contexts:
+		class tmp(y):
+			variant = 'release'
