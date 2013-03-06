@@ -143,6 +143,26 @@ public:
 		dialect_[XK_Menu] = KEY_MENU;
 		dialect_[XK_Control_R] = KEY_CTRL_R;
 		dialect_[XK_Shift_R] = KEY_SHIFT_R;
+
+		dialect_[XK_dead_circumflex] = KEY_CIRCUMFLEX;
+		dialect_[XK_ssharp] = KEY_SSHARP;
+		dialect_[XK_dead_acute] = KEY_ACUTE;
+		dialect_[XK_ISO_Level3_Shift] = KEY_ALT_GR;
+		dialect_[XK_plus] = KEY_PLUS;
+		dialect_[XK_numbersign] = KEY_NUMBERSIGN;
+		dialect_[XK_udiaeresis] = KEY_UDIAERESIS;
+		dialect_[XK_adiaeresis] = KEY_ADIAERESIS;
+		dialect_[XK_odiaeresis] = KEY_ODIAERESIS;
+		dialect_[XK_section] = KEY_SECTION;
+		dialect_[XK_aring] = KEY_ARING;
+		dialect_[XK_dead_diaeresis] = KEY_DIAERESIS;
+		dialect_[XK_twosuperior] = KEY_TWOSUPERIOR;
+		dialect_[XK_parenright] = KEY_RIGHT_PARENTHESIS;
+		dialect_[XK_dollar] = KEY_DOLLAR;
+		dialect_[XK_ugrave] = KEY_UGRAVE;
+		dialect_[XK_asterisk] = KEY_ASTERISK;
+		dialect_[XK_colon] = KEY_COLON;
+		dialect_[XK_exclam] = KEY_EXCLAM;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
@@ -159,11 +179,6 @@ public:
 					XKeyEvent& keyEvent = event.xkey;
 					KeySym keySym = XKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0);
 					const bool pressed = event.type == KeyPress;
-
-#ifdef GAINPUT_DEBUG
-					char* str = XKeysymToString(keySym);
-					GAINPUT_LOG("KEY | keycode: %d, keysym: %s, str: %s\n", keyEvent.keycode, keySym, str);
-#endif
 
 					if (dialect_.count(keySym))
 					{
@@ -182,6 +197,15 @@ public:
 							}
 						}
 					}
+#ifdef GAINPUT_DEBUG
+					else
+					{
+						char* str = XKeysymToString(keySym);
+						GAINPUT_LOG("Unmapped key >> keycode: %d, keysym: %d, str: %s\n", keyEvent.keycode, int(keySym), str);
+					}
+#endif
+
+
 
 					if (textInputEnabled_)
 					{

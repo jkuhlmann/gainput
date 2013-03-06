@@ -72,10 +72,22 @@ public:
 		// Reset mouse wheel buttons
 		for (unsigned i = 0; i < MouseButtonCount; ++i)
 		{
-			if (isWheel_[i])
+			const DeviceButtonId buttonId = i;
+			const bool oldValue = previousState.GetBool(buttonId);
+			if (isWheel_[i] && oldValue)
 			{
-				state.Set(i, false);
-				// TODO respect delta
+				const bool pressed = false;
+				state.Set(buttonId, pressed);
+#ifdef GAINPUT_DEBUG
+				GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
+#endif
+				if (delta)
+				{
+					if (oldValue != pressed)
+					{
+						delta->AddChange(device_, buttonId, oldValue, pressed);
+					}
+				}
 			}
 		}
 
@@ -116,7 +128,7 @@ public:
 				{
 					const XButtonEvent& buttonEvent = event.xbutton;
 					GAINPUT_ASSERT(buttonEvent.button > 0);
-					DeviceButtonId buttonId = buttonEvent.button-1;
+					const DeviceButtonId buttonId = buttonEvent.button-1;
 					GAINPUT_ASSERT(buttonId <= MOUSE_BUTTON_MAX);
 					const bool pressed = event.type == ButtonPress;
 
@@ -129,6 +141,10 @@ public:
 					else if (buttonEvent.button < MouseButtonCount)
 					{
 						state.Set(buttonId, pressed);
+
+#ifdef GAINPUT_DEBUG
+						GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
+#endif
 
 						if (delta)
 						{

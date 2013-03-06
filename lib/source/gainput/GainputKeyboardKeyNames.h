@@ -154,6 +154,24 @@ GetKeyboardKeyNames(HashMap<Key, const char*>& names)
 	names[KEY_EXTRA_5] = "extra_5";
 	names[KEY_EXTRA_6] = "extra_6";
 	names[KEY_FN] = "fn";
+	names[KEY_CIRCUMFLEX] = "circumflex";
+	names[KEY_SSHARP] = "ssharp";
+	names[KEY_ACUTE] = "acute";
+	names[KEY_ALT_GR] = "alt_gr";
+	names[KEY_NUMBERSIGN] = "numbersign";
+	names[KEY_UDIAERESIS] = "udiaeresis";
+	names[KEY_ADIAERESIS] = "adiaeresis";
+	names[KEY_ODIAERESIS] = "odiaeresis";
+	names[KEY_SECTION] = "section";
+	names[KEY_ARING] = "aring";
+	names[KEY_DIAERESIS] = "diaeresis";
+	names[KEY_TWOSUPERIOR] = "twosuperior";
+	names[KEY_RIGHT_PARENTHESIS] = "right_parenthesis";
+	names[KEY_DOLLAR] = "dollar";
+	names[KEY_UGRAVE] = "ugrave";
+	names[KEY_ASTERISK] = "asterisk";
+	names[KEY_COLON] = "colon";
+	names[KEY_EXCLAM] = "exclam";
 }
 
 

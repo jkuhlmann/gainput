@@ -196,6 +196,10 @@ public:
 				const float value = float(event.value)/MaxAxisValue;
 				state.Set(buttonId, value);
 
+#ifdef GAINPUT_DEBUG
+					GAINPUT_LOG("Pad axis: %i, %f\n", buttonId, value);
+#endif
+
 				if (delta)
 				{
 					const float oldValue = previousState.GetFloat(buttonId);
@@ -214,6 +218,10 @@ public:
 					DeviceButtonId buttonId = buttonDialect_[event.number];
 					const bool value(event.value);
 					state.Set(buttonId, value);
+
+#ifdef GAINPUT_DEBUG
+					GAINPUT_LOG("Pad button: %i, %d\n", buttonId, value);
+#endif
 
 					if (delta)
 					{
