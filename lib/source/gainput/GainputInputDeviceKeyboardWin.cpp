@@ -113,6 +113,24 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	dialect_[VK_APPS] = KEY_MENU;
 	dialect_[VK_RCONTROL] = KEY_CTRL_R;
 	dialect_[VK_RSHIFT] = KEY_SHIFT_R;
+
+	dialect_[VK_VOLUME_MUTE] = KEY_MUTE;
+	dialect_[VK_VOLUME_DOWN] = KEY_VOLUME_DOWN;
+	dialect_[VK_VOLUME_UP] = KEY_VOLUME_UP;
+	dialect_[VK_SNAPSHOT] = KEY_PRINT;
+	dialect_[VK_OEM_4] = KEY_EXTRA_1;
+	dialect_[VK_OEM_6] = KEY_EXTRA_2;
+	dialect_[VK_BROWSER_BACK] = KEY_BACK;
+	dialect_[VK_BROWSER_FORWARD] = KEY_FORWARD;
+	dialect_[VK_OEM_MINUS] = KEY_MINUS;
+	dialect_[VK_OEM_PERIOD] = KEY_PERIOD;
+	dialect_[VK_OEM_2] = KEY_EXTRA_3;
+	dialect_[VK_OEM_PLUS] = KEY_PLUS;
+	dialect_[VK_OEM_7] = KEY_EXTRA_4;
+	dialect_[VK_OEM_3] = KEY_EXTRA_5;
+	dialect_[VK_OEM_1] = KEY_EXTRA_6;
+
+	dialect_[0xff] = KEY_FN; // Marked as "reserved".
 }
 
 InputDeviceKeyboardImpl::~InputDeviceKeyboardImpl()
@@ -153,9 +171,7 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 		const char charKey = key;
 		textBuffer_.Put(charKey);
 #ifdef GAINPUT_DEBUG
-		char buf[256];
-		sprintf(buf, "Text: %c\n", charKey);
-		OutputDebugStringA(buf);
+		GAINPUT_LOG("Text: %c\n", charKey);
 #endif
 		return;
 	}
@@ -201,7 +217,7 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 #ifdef GAINPUT_DEBUG
 			else
 			{
-				OutputDebugStringA("Not sure which shift this is.\n");
+				GAINPUT_LOG("Not sure which shift this is.\n");
 			}
 #endif
 		}
@@ -218,7 +234,7 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 #ifdef GAINPUT_DEBUG
 			else
 			{
-				OutputDebugStringA("Not sure which shift this is.\n");
+				GAINPUT_LOG("Not sure which shift this is.\n");
 			}
 #endif
 		}
@@ -226,17 +242,14 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 	// TODO handle l/r alt properly
 
 #ifdef GAINPUT_DEBUG
-	char buf[256];
-	sprintf(buf, "Keyboard: %d, %i\n", winKey, pressed);
-	OutputDebugStringA(buf);
+	GAINPUT_LOG("Keyboard: %d, %i\n", winKey, pressed);
 #endif
 
 	if (dialect_.count(winKey))
 	{
 		const DeviceButtonId buttonId = dialect_[winKey];
 #ifdef GAINPUT_DEBUG
-		sprintf(buf, " --> Mapped to: %d\n", buttonId);
-		OutputDebugStringA(buf);
+		GAINPUT_LOG(" --> Mapped to: %d\n", buttonId);
 #endif
 		state_->Set(buttonId, pressed);
 

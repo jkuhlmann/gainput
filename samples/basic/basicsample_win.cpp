@@ -3,9 +3,7 @@
 
 #if defined(GAINPUT_PLATFORM_WIN)
 
-#include <windows.h>
-#include <iostream>
-
+#include <stdio.h>
 #define LOG(...) {char buf[256]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
 
 

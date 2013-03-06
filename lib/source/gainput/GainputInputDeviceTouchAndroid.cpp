@@ -6,13 +6,6 @@
 #include "GainputInputDeviceTouchAndroid.h"
 #include "GainputInputDeltaState.h"
 
-#ifdef GAINPUT_DEBUG
-#include <android/log.h>
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "gainput", __VA_ARGS__))
-#endif
-
-
 namespace gainput
 {
 
@@ -112,7 +105,7 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 		state_->Set(TOUCH_0_DOWN + i*TouchDataElems, true);
 		state_->Set(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
 #ifdef GAINPUT_DEBUG
-		LOGI("%i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
+		GAINPUT_LOG("%i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
 #endif
 	}
 

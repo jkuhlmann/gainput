@@ -6,10 +6,6 @@
 
 #include <X11/Xutil.h>
 
-#ifdef GAINPUT_DEBUG
-#include <iostream>
-#endif
-
 #include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
 
@@ -166,10 +162,7 @@ public:
 
 #ifdef GAINPUT_DEBUG
 					char* str = XKeysymToString(keySym);
-					std::cout << "KEY | keycode: " << keyEvent.keycode
-							<< ", keysym: " << keySym
-							<< ", str: " << str
-							<< std::endl;
+					GAINPUT_LOG("KEY | keycode: %d, keysym: %s, str: %s\n", keyEvent.keycode, keySym, str);
 #endif
 
 					if (dialect_.count(keySym))
@@ -177,7 +170,7 @@ public:
 						const DeviceButtonId buttonId = dialect_[keySym];
 						state.Set(buttonId, pressed);
 #ifdef GAINPUT_DEBUG
-						std::cout << "buttonId: " << buttonId << std::endl;
+						GAINPUT_LOG("buttonId: %d\n", buttonId);
 #endif
 
 						if (delta)

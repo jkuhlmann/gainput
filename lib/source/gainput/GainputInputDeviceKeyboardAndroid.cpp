@@ -5,12 +5,6 @@
 #include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
 
-#ifdef GAINPUT_DEBUG
-#include <android/log.h>
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "gainput", __VA_ARGS__))
-#endif
-
 
 namespace gainput
 {
@@ -161,7 +155,7 @@ InputDeviceKeyboardImpl::HandleInput(AInputEvent* event)
 		const DeviceButtonId buttonId = dialect_[keyCode];
 
 #ifdef GAINPUT_DEBUG
-		LOGI("%d --> %d: %d\n", keyCode, buttonId, pressed);
+		GAINPUT_LOG("%d --> %d: %d\n", keyCode, buttonId, pressed);
 #endif
 		state_->Set(buttonId, pressed);
 

@@ -1,11 +1,6 @@
 
 #include <gainput/gainput.h>
 
-
-#ifdef GAINPUT_DEBUG
-#include <iostream>
-#endif
-
 namespace
 {
 	template<class T> T Min(const T&a, const T& b) { return a < b ? a : b; }

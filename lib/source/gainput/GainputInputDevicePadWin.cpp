@@ -199,9 +199,7 @@ public:
 #ifdef GAINPUT_DEBUG
 		if (value != previousState.GetBool(buttonId))
 		{
-			char buf[256];
-			sprintf(buf, "Pad changed: %d, %i\n", buttonId, value);
-			OutputDebugStringA(buf);
+			GAINPUT_LOG("Pad changed: %d, %i\n", buttonId, value);
 		}
 #endif
 
@@ -227,9 +225,7 @@ public:
 #ifdef GAINPUT_DEBUG
 		if (value != previousState.GetFloat(buttonId))
 		{
-			char buf[256];
-			sprintf(buf, "Pad changed: %d, %f\n", buttonId, value);
-			OutputDebugStringA(buf);
+			GAINPUT_LOG("Pad changed: %d, %f\n", buttonId, value);
 		}
 #endif
 

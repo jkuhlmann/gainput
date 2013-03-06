@@ -35,24 +35,48 @@
 #include <new>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
-	#include <cstdlib>
-	#include <X11/Xlib.h>
-	#include <stdint.h>
+
+#include <cstdlib>
+#include <X11/Xlib.h>
+#include <stdint.h>
+
+#ifdef GAINPUT_DEBUG
+	#include <stdio.h>
+	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
+#endif
+
 #elif defined(GAINPUT_PLATFORM_WIN)
-	#include <cstdlib>
+
+#include <cstdlib>
+
+#ifndef GAINPUT_NO_WINDOWS_H
 	#define WIN32_LEAN_AND_MEAN
 	#define NOMINMAX
 	#include <windows.h>
+#endif
 
-	typedef unsigned char uint8_t;
-	typedef char int8_t;
-	typedef unsigned long uint32_t;
+namespace gainput {
+	typedef unsigned __int8 uint8_t;
+	typedef __int8 int8_t;
+	typedef unsigned __int32 uint32_t;
 	typedef unsigned __int64 uint64_t;
+}
+
+#ifdef GAINPUT_DEBUG
+	#include <stdio.h>
+	#define GAINPUT_LOG(...) { char buf[1024]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
+#endif
+
 #elif defined(GAINPUT_PLATFORM_ANDROID)
-	#include <stdint.h>
-	#include <android/sensor.h>
-	#include <android/native_activity.h>
-	struct android_app;
+
+#include <stdint.h>
+#include <android/sensor.h>
+#include <android/native_activity.h>
+
+#ifdef GAINPUT_DEBUG
+	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
+#endif
+
 #endif
 
 

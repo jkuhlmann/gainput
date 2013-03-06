@@ -146,6 +146,14 @@ GetKeyboardKeyNames(HashMap<Key, const char*>& names)
 	names[KEY_MUTE] = "mute";
 	names[KEY_PICTSYMBOLS] = "pictsymbols";
 	names[KEY_SWITCH_CHARSET] = "switch_charset";
+	names[KEY_FORWARD] = "forward";
+	names[KEY_EXTRA_1] = "extra_1";
+	names[KEY_EXTRA_2] = "extra_2";
+	names[KEY_EXTRA_3] = "extra_3";
+	names[KEY_EXTRA_4] = "extra_4";
+	names[KEY_EXTRA_5] = "extra_5";
+	names[KEY_EXTRA_6] = "extra_6";
+	names[KEY_FN] = "fn";
 }
 
 

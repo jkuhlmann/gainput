@@ -4,10 +4,6 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
-#ifdef GAINPUT_DEBUG
-#include <iostream>
-#endif
-
 #include <fcntl.h>
 #include <unistd.h>
 #include <linux/joystick.h>
@@ -141,18 +137,18 @@ public:
 #ifdef GAINPUT_DEBUG
 		char axesCount;
 		ioctl(fd_, JSIOCGAXES, &axesCount);
-		std::cout << "Axes count: " << int(axesCount) << std::endl;
+		GAINPUT_LOG("Axes count: %d\n", int(axesCount));
 
 		int driverVersion;
 		ioctl(fd_, JSIOCGVERSION, &driverVersion);
-		std::cout << "Driver version: " << driverVersion << std::endl;
+		GAINPUT_LOG("Driver version: %d\n", driverVersion);
 #endif
 
 		char name[128];
 		if (ioctl(fd_, JSIOCGNAME(sizeof(name)), name) < 0)
 			strncpy(name, "Unknown", sizeof(name));
 #ifdef GAINPUT_DEBUG
-		std::cout << "Name: " << name << std::endl;
+		GAINPUT_LOG("Name: %s\n", name);
 #endif
 
 		if (strcmp(name, "Sony PLAYSTATION(R)3 Controller") == 0)
@@ -231,7 +227,7 @@ public:
 #ifdef GAINPUT_DEBUG
 				else
 				{
-					std::cout << "Unknown pad button #" << int(event.number) << ": " << event.value << std::endl;
+					GAINPUT_LOG("Unknown pad button #%d: %d\n", int(event.number), event.value);
 				}
 #endif
 			}
