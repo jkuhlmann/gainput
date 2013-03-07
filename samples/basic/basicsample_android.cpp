@@ -25,6 +25,8 @@ enum Button
 };
 
 
+static bool doExit = false;
+
 static int32_t MyHandleInput(struct android_app* app, AInputEvent* event)
 {
 	// Forward input events to Gainput
@@ -38,6 +40,26 @@ static int32_t MyHandleInput(struct android_app* app, AInputEvent* event)
 	return inputManager->HandleInput(event);
 }
 
+static void MyHandleCmd(struct android_app* app, int32_t cmd)
+{
+	switch (cmd)
+	{
+		case APP_CMD_SAVE_STATE:
+			break;
+		case APP_CMD_INIT_WINDOW:
+			break;
+		case APP_CMD_TERM_WINDOW:
+			doExit = true;
+			break;
+		case APP_CMD_LOST_FOCUS:
+			doExit = true;
+			break;
+		case APP_CMD_GAINED_FOCUS:
+			// bring back a certain functionality, like monitoring the accelerometer
+			break;
+	}
+}
+
 void android_main(struct android_app* state)
 {
 	app_dummy();
@@ -46,12 +68,14 @@ void android_main(struct android_app* state)
 	gainput::InputManager manager;
 	const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch>();
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
+	const gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
 
 	// Make sure the app frowards input events to Gainput
 	state->userData = &manager;
 	state->onInputEvent = &MyHandleInput;
+	state->onAppCmd = &MyHandleCmd;
 
-	for (;;)
+	while (!doExit)
 	{
 		// Update Gainput
 		manager.Update();
@@ -60,7 +84,7 @@ void android_main(struct android_app* state)
 		int events;
 		struct android_poll_source* source;
 
-		while ((ident=ALooper_pollAll(-1, NULL, &events, (void**)&source)) >= 0)
+		while ((ident=ALooper_pollAll(0, NULL, &events, (void**)&source)) >= 0)
 		{
 			if (source != NULL)
 			{
@@ -73,6 +97,8 @@ void android_main(struct android_app* state)
 			}
 		}
 	}
+
+	ANativeActivity_finish(state->activity);
 }
 
 

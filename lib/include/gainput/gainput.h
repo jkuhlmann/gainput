@@ -72,6 +72,7 @@ namespace gainput {
 #include <stdint.h>
 #include <android/sensor.h>
 #include <android/native_activity.h>
+#include <android/log.h>
 
 #ifdef GAINPUT_DEBUG
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))

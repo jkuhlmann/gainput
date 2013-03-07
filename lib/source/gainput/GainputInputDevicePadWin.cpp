@@ -57,39 +57,43 @@ DeviceButtonInfo deviceButtonInfos[] =
 		{ BT_FLOAT, "pad_axis_29" },
 		{ BT_FLOAT, "pad_axis_30" },
 		{ BT_FLOAT, "pad_axis_31" },
-		{ BT_FLOAT, "pad_button_start"},
-		{ BT_FLOAT, "pad_button_select"},
-		{ BT_FLOAT, "pad_button_left"},
-		{ BT_FLOAT, "pad_button_right"},
-		{ BT_FLOAT, "pad_button_up"},
-		{ BT_FLOAT, "pad_button_down"},
-		{ BT_FLOAT, "pad_button_a"},
-		{ BT_FLOAT, "pad_button_b"},
-		{ BT_FLOAT, "pad_button_x"},
-		{ BT_FLOAT, "pad_button_y"},
-		{ BT_FLOAT, "pad_button_l1"},
-		{ BT_FLOAT, "pad_button_r1"},
-		{ BT_FLOAT, "pad_button_l2"},
-		{ BT_FLOAT, "pad_button_r2"},
-		{ BT_FLOAT, "pad_button_l3"},
-		{ BT_FLOAT, "pad_button_r3"},
-		{ BT_FLOAT, "pad_button_home"},
-		{ BT_FLOAT, "pad_button_17"},
-		{ BT_FLOAT, "pad_button_18"},
-		{ BT_FLOAT, "pad_button_19"},
-		{ BT_FLOAT, "pad_button_20"},
-		{ BT_FLOAT, "pad_button_21"},
-		{ BT_FLOAT, "pad_button_22"},
-		{ BT_FLOAT, "pad_button_23"},
-		{ BT_FLOAT, "pad_button_24"},
-		{ BT_FLOAT, "pad_button_25"},
-		{ BT_FLOAT, "pad_button_26"},
-		{ BT_FLOAT, "pad_button_27"},
-		{ BT_FLOAT, "pad_button_28"},
-		{ BT_FLOAT, "pad_button_29"},
-		{ BT_FLOAT, "pad_button_30"},
-		{ BT_FLOAT, "pad_button_31"}
+		{ BT_FLOAT, "pad_acceleration_x" },
+		{ BT_FLOAT, "pad_acceleration_y" },
+		{ BT_FLOAT, "pad_acceleration_z" },
+		{ BT_BOOL, "pad_button_start"},
+		{ BT_BOOL, "pad_button_select"},
+		{ BT_BOOL, "pad_button_left"},
+		{ BT_BOOL, "pad_button_right"},
+		{ BT_BOOL, "pad_button_up"},
+		{ BT_BOOL, "pad_button_down"},
+		{ BT_BOOL, "pad_button_a"},
+		{ BT_BOOL, "pad_button_b"},
+		{ BT_BOOL, "pad_button_x"},
+		{ BT_BOOL, "pad_button_y"},
+		{ BT_BOOL, "pad_button_l1"},
+		{ BT_BOOL, "pad_button_r1"},
+		{ BT_BOOL, "pad_button_l2"},
+		{ BT_BOOL, "pad_button_r2"},
+		{ BT_BOOL, "pad_button_l3"},
+		{ BT_BOOL, "pad_button_r3"},
+		{ BT_BOOL, "pad_button_home"},
+		{ BT_BOOL, "pad_button_17"},
+		{ BT_BOOL, "pad_button_18"},
+		{ BT_BOOL, "pad_button_19"},
+		{ BT_BOOL, "pad_button_20"},
+		{ BT_BOOL, "pad_button_21"},
+		{ BT_BOOL, "pad_button_22"},
+		{ BT_BOOL, "pad_button_23"},
+		{ BT_BOOL, "pad_button_24"},
+		{ BT_BOOL, "pad_button_25"},
+		{ BT_BOOL, "pad_button_26"},
+		{ BT_BOOL, "pad_button_27"},
+		{ BT_BOOL, "pad_button_28"},
+		{ BT_BOOL, "pad_button_29"},
+		{ BT_BOOL, "pad_button_30"},
+		{ BT_BOOL, "pad_button_31"}
 };
+
 }
 
 const float MaxTriggerValue = 255.0f;
@@ -192,7 +196,7 @@ public:
 		HandleAxis(state, previousState, delta, PAD_BUTTON_RIGHT_STICK_Y, float(xstate.Gamepad.sThumbRY)/MaxAxisValue);
 	}
 
-	inline void HandleButton(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
+	void HandleButton(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
 	{
 		state.Set(buttonId, value);
 		
@@ -213,7 +217,7 @@ public:
 		}
 	}
 
-	inline void HandleAxis(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
+	void HandleAxis(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
 	{
 		if (value < -1.0f) // Because theoretical min value is -32768
 		{
