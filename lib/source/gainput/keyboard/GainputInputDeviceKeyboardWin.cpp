@@ -3,8 +3,8 @@
 
 #if defined(GAINPUT_PLATFORM_WIN)
 #include "GainputInputDeviceKeyboardWin.h"
-#include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
+#include "../GainputInputDeltaState.h"
 
 #include <windows.h>
 #include <Windowsx.h>

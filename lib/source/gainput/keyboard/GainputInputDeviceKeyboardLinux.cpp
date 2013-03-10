@@ -6,7 +6,7 @@
 
 #include <X11/Xutil.h>
 
-#include "GainputInputDeltaState.h"
+#include "../GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
 
 

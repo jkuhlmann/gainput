@@ -4,7 +4,7 @@
 #if defined(GAINPUT_PLATFORM_WIN)
 
 #include "GainputInputDeviceMouseWin.h"
-#include "GainputInputDeltaState.h"
+#include "../GainputInputDeltaState.h"
 
 #include <windows.h>
 #include <Windowsx.h>

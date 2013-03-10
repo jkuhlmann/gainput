@@ -2,9 +2,17 @@
 #include <gainput/gainput.h>
 
 
-#if defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX)
 
-#include "GainputInputDeltaState.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <linux/joystick.h>
+
+#include "../GainputInputDeltaState.h"
+
+
+// Cf. http://www.kernel.org/doc/Documentation/input/joystick-api.txt
+// Cf. http://ps3.jim.sh/sixaxis/usb/
 
 
 namespace gainput
@@ -92,7 +100,22 @@ DeviceButtonInfo deviceButtonInfos[] =
 
 const unsigned PadButtonCount = PAD_BUTTON_COUNT;
 const unsigned PadAxisCount = PAD_BUTTON_AXIS_COUNT;
+/// Maximum negative and positive value for an axis.
+const float MaxAxisValue = 32767.0f;
 
+static const char* PadDeviceIds[MaxPadCount] =
+{
+	"/dev/input/js0",
+	"/dev/input/js1",
+	"/dev/input/js2",
+	"/dev/input/js3",
+	"/dev/input/js4",
+	"/dev/input/js5",
+	"/dev/input/js6",
+	"/dev/input/js7",
+	"/dev/input/js8",
+	"/dev/input/js9"
+};
 
 class InputDevicePadImpl
 {
@@ -103,52 +126,124 @@ public:
 		state_(InputDevice::DS_UNAVAILABLE),
 		buttonDialect_(manager_.GetAllocator())
 	{
-		ALooper* looper = ALooper_forThread();
-		if (!looper)
-			looper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
-		sensorManager_ = ASensorManager_getInstance();
-		accelerometerSensor_ = ASensorManager_getDefaultSensor(sensorManager_, ASENSOR_TYPE_ACCELEROMETER);
-		sensorEventQueue_ = ASensorManager_createEventQueue(sensorManager_, looper, ALOOPER_POLL_CALLBACK, NULL, NULL);
-		ASensorEventQueue_setEventRate(sensorEventQueue_, accelerometerSensor_, ASensor_getMinDelay(accelerometerSensor_));
-		ASensorEventQueue_enableSensor(sensorEventQueue_, accelerometerSensor_);
+		unsigned padIndex = manager_.GetDeviceCountByType(InputDevice::DT_PAD);
+		GAINPUT_ASSERT(padIndex < MaxPadCount);
+
+		fd_ = open(PadDeviceIds[padIndex], O_RDONLY | O_NONBLOCK);
+		if (fd_ < 0)
+		{
+			state_ = InputDevice::DS_UNAVAILABLE;
+			return;
+		}
+		GAINPUT_ASSERT(fd_ >= 0);
+
+#ifdef GAINPUT_DEBUG
+		char axesCount;
+		ioctl(fd_, JSIOCGAXES, &axesCount);
+		GAINPUT_LOG("Axes count: %d\n", int(axesCount));
+
+		int driverVersion;
+		ioctl(fd_, JSIOCGVERSION, &driverVersion);
+		GAINPUT_LOG("Driver version: %d\n", driverVersion);
+#endif
+
+		char name[128];
+		if (ioctl(fd_, JSIOCGNAME(sizeof(name)), name) < 0)
+			strncpy(name, "Unknown", sizeof(name));
+#ifdef GAINPUT_DEBUG
+		GAINPUT_LOG("Name: %s\n", name);
+#endif
+
+		if (strcmp(name, "Sony PLAYSTATION(R)3 Controller") == 0)
+		{
+			buttonDialect_[0] = PAD_BUTTON_SELECT;
+			buttonDialect_[1] = PAD_BUTTON_L3;
+			buttonDialect_[2] = PAD_BUTTON_R3;
+			buttonDialect_[3] = PAD_BUTTON_START;
+			buttonDialect_[4] = PAD_BUTTON_UP;
+			buttonDialect_[5] = PAD_BUTTON_RIGHT;
+			buttonDialect_[6] = PAD_BUTTON_DOWN;
+			buttonDialect_[7] = PAD_BUTTON_LEFT;
+			buttonDialect_[8] = PAD_BUTTON_L2;
+			buttonDialect_[9] = PAD_BUTTON_R2;
+			buttonDialect_[10] = PAD_BUTTON_L1;
+			buttonDialect_[11] = PAD_BUTTON_R1;
+			buttonDialect_[12] = PAD_BUTTON_Y;
+			buttonDialect_[13] = PAD_BUTTON_B;
+			buttonDialect_[14] = PAD_BUTTON_A;
+			buttonDialect_[15] = PAD_BUTTON_X;
+			buttonDialect_[16] = PAD_BUTTON_HOME;
+		}
+
 		state_ = InputDevice::DS_OK;
 	}
 
 	~InputDevicePadImpl()
 	{
+		close(fd_);
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
 	{
-		ASensorEvent event;
+		js_event event;
+		int c;
 
-		while (ASensorEventQueue_getEvents(sensorEventQueue_, &event, 1) > 0)
+		while ( (c = read(fd_, &event, sizeof(js_event))) == sizeof(js_event))
 		{
-			HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_X, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-			HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_Y, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-			HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_Z, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
-		}
-	}
+			event.type &= ~JS_EVENT_INIT;
+			if (event.type == JS_EVENT_AXIS)
+			{
+				GAINPUT_ASSERT(event.number >= PAD_BUTTON_LEFT_STICK_X);
+				GAINPUT_ASSERT(event.number < PAD_BUTTON_AXIS_COUNT);
+				DeviceButtonId buttonId = event.number;
+				const float value = float(event.value)/MaxAxisValue;
+				state.Set(buttonId, value);
 
-	void HandleFloat(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
-	{
-		state.Set(buttonId, value);
-		
 #ifdef GAINPUT_DEBUG
-		if (value != previousState.GetFloat(buttonId))
-		{
-			GAINPUT_LOG("Pad changed: %d, %f\n", buttonId, value);
-		}
+				GAINPUT_LOG("Pad axis: %i, %f\n", buttonId, value);
 #endif
 
-		if (delta)
-		{
-			const float oldValue = previousState.GetFloat(buttonId);
-			if (value != oldValue)
+				if (delta)
+				{
+					const float oldValue = previousState.GetFloat(buttonId);
+					if (oldValue != value)
+					{
+						delta->AddChange(device_, buttonId, oldValue, value);
+					}
+				}
+			}
+			else if (event.type == JS_EVENT_BUTTON)
 			{
-				delta->AddChange(device_, buttonId, oldValue, value);
+				GAINPUT_ASSERT(event.number >= 0);
+				GAINPUT_ASSERT(event.number < PAD_BUTTON_COUNT);
+				if (buttonDialect_.count(event.number))
+				{
+					DeviceButtonId buttonId = buttonDialect_[event.number];
+					const bool value(event.value);
+					state.Set(buttonId, value);
+
+#ifdef GAINPUT_DEBUG
+					GAINPUT_LOG("Pad button: %i, %d\n", buttonId, value);
+#endif
+
+					if (delta)
+					{
+						const bool oldValue = previousState.GetBool(buttonId);
+						if (oldValue != value)
+						{
+							delta->AddChange(device_, buttonId, oldValue, value);
+						}
+					}
+				}
+#ifdef GAINPUT_DEBUG
+				else
+				{
+					GAINPUT_LOG("Unknown pad button #%d: %d\n", int(event.number), event.value);
+				}
+#endif
 			}
 		}
+		GAINPUT_ASSERT(c == -1);
 	}
 
 	DeviceId GetDevice() const { return device_; }
@@ -158,14 +253,13 @@ public:
 		return state_;
 	}
 
+
 private:
 	InputManager& manager_;
 	DeviceId device_;
 	InputDevice::DeviceState state_;
+	int fd_;
 	HashMap<unsigned, DeviceButtonId> buttonDialect_;
-	ASensorManager* sensorManager_;
-	const ASensor* accelerometerSensor_;
-	ASensorEventQueue* sensorEventQueue_;
 };
 
 
@@ -226,7 +320,7 @@ InputDevicePad::GetButtonType(DeviceButtonId deviceButton) const
 bool
 InputDevicePad::Vibrate(float leftMotor, float rightMotor)
 {
-	return false;
+	return false; // TODO
 }
 
 }

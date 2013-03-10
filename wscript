@@ -109,7 +109,7 @@ def configure(cnf):
 	cnf.env.CXXFLAGS = ['-O2']
 
 def build(bld):
-	lib_sources = bld.path.ant_glob('lib/source/gainput/*.cpp')
+	lib_sources = bld.path.ant_glob('lib/source/gainput/**/*.cpp')
 	usetheselib = ''
 	if (sys.platform.startswith('win')):
 		usetheselib = 'KERNEL32 USER32 GDI32 XINPUT'

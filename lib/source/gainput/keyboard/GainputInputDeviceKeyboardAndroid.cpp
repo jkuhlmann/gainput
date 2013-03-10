@@ -2,8 +2,8 @@
 
 #if defined(GAINPUT_PLATFORM_ANDROID)
 #include "GainputInputDeviceKeyboardAndroid.h"
-#include "GainputInputDeltaState.h"
 #include "GainputKeyboardKeyNames.h"
+#include "../GainputInputDeltaState.h"
 
 
 namespace gainput

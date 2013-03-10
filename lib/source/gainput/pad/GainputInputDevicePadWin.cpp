@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <XInput.h>
 
-#include "GainputInputDeltaState.h"
+#include "../GainputInputDeltaState.h"
 
 
 namespace gainput

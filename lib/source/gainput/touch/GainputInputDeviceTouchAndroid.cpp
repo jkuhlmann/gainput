@@ -4,7 +4,7 @@
 #if defined(GAINPUT_PLATFORM_ANDROID)
 
 #include "GainputInputDeviceTouchAndroid.h"
-#include "GainputInputDeltaState.h"
+#include "../GainputInputDeltaState.h"
 
 namespace gainput
 {

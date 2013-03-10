@@ -4,11 +4,11 @@
 #include "GainputInputDeltaState.h"
 
 #if defined(GAINPUT_PLATFORM_WIN)
-#include "GainputInputDeviceKeyboardWin.h"
-#include "GainputInputDeviceMouseWin.h"
+#include "keyboard/GainputInputDeviceKeyboardWin.h"
+#include "mouse/GainputInputDeviceMouseWin.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
-#include "GainputInputDeviceKeyboardAndroid.h"
-#include "GainputInputDeviceTouchAndroid.h"
+#include "keyboard/GainputInputDeviceKeyboardAndroid.h"
+#include "touch/GainputInputDeviceTouchAndroid.h"
 #endif
 
 
