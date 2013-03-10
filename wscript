@@ -126,9 +126,10 @@ def build(bld):
 	basic_sources = bld.path.ant_glob('samples/basic/*.cpp')
 	if bld.env.cross == 'android':
 		basic_sources += [bld.root.make_node(os.path.join(bld.env.cross_android_ndk, 'sources/android/native_app_glue/android_native_app_glue.c'))]
-		usetheselib='stlport_static'
+		usetheselib='stlport_static gainputstatic'
 		bld.shlib(features='cxx cxxshlib',
-			source=lib_sources+basic_sources, 
+			#source=lib_sources+basic_sources, 
+			source=basic_sources, 
 			includes='lib/include/', 
 			use=usetheselib,
 			target='basicsample',
@@ -142,7 +143,7 @@ def build(bld):
 			includes='lib/include/', 
 			target='basicsample',
 			use = usethese,
-			uselib=['LIBX11', 'LIBGL']#,linkflags='-lstdc++ -landroid -llog -frtti -fexceptions'
+			uselib=['LIBX11', 'LIBGL']
 			)
 
 from waflib.Build import BuildContext, CleanContext, \
@@ -158,3 +159,4 @@ for x in 'debug release'.split():
 	for y in contexts:
 		class tmp(y):
 			variant = 'release'
+
