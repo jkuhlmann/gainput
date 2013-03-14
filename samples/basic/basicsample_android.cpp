@@ -84,7 +84,7 @@ void android_main(struct android_app* state)
 		int events;
 		struct android_poll_source* source;
 
-		while ((ident=ALooper_pollAll(0, NULL, &events, (void**)&source)) >= 0)
+		while (!doExit && (ident=ALooper_pollAll(0, NULL, &events, (void**)&source)) >= 0)
 		{
 			if (source != NULL)
 			{
@@ -93,7 +93,7 @@ void android_main(struct android_app* state)
 
 			if (state->destroyRequested != 0)
 			{
-				return;
+				doExit = true;
 			}
 		}
 	}
