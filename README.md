@@ -1,25 +1,46 @@
 Gainput
 =======
 
-Gainput is an input library for games:
-
-- written in C++
-- clean codebase
-- easy to use
-- cross-platform
-  - Windows
-  - Linux
-  - Android NDK
-- support for different devices
-  - keyboard
-  - mouse
-  - pad
-  - multi-touch
-- open source (MIT license)
-
 Gainput is currently in development and **should NOT be used yet**.
 
+Gainput is the new awesome C++ input library for your game:
+
+- clean, lightweight, and easy to use
+- cross-platform: Windows, Linux, Android NDK
+- devices: keyboard, mouse, pad, multi-touch
+- open source (MIT license)
+
 The generated [API documentation is here](http://jkuhlmann.github.com/gainput/api/).
+
+
+Usage
+-----
+
+```cpp
+#include <gainput/gainput.h>
+
+enum Button
+{
+	ButtonConfirm
+};
+
+gainput::InputManager manager;
+const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
+const gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
+
+gainput::InputMap map(manager);
+map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
+map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
+
+// May need some more platform-specific setup
+
+// Check button state
+if (map.GetBoolWasDown(ButtonConfirm))
+{
+	// Confirmed!
+}
+```
+
 
 Building
 --------
@@ -50,7 +71,7 @@ Replace `ANDROID_NDK_PATH` and `ANDROID_SDK_PATH` with your local paths.
 Dependencies
 ------------
 
-Gainput has minimal number of external dependencies to make it as self-contained as possible. It doesn't use any STL containers.
+Gainput has minimal number of external dependencies to make it as self-contained as possible. It doesn't use any STL.
 
 - Windows:
   - the Win32 message loop for keyboard and mouse
@@ -58,6 +79,8 @@ Gainput has minimal number of external dependencies to make it as self-contained
 - Linux:
   - the X11 message loop for keyboard and mouse
   - the kernel's joystick API for pads
+
+[Python](http://www.python.org/) is needed for building.
 
 
 Alternatives
