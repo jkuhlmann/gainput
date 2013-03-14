@@ -15,6 +15,7 @@ public:
 
 	void HandleMessage(const MSG& msg);
 
+	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
 
 private:

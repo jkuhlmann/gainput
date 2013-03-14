@@ -13,6 +13,7 @@ public:
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
+	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
 
 	int32_t HandleInput(AInputEvent* event);

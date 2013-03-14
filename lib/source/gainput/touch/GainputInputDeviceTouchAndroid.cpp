@@ -113,21 +113,21 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 }
 
 
-InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device) :
-	impl_(new InputDeviceTouchImpl(manager, device))
+InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device)
 {
+	impl_ = manager.GetAllocator().New<InputDeviceTouchImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);
-	state_ = new InputState(manager.GetAllocator(), TouchPointCount*TouchDataElems);
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
 	GAINPUT_ASSERT(state_);
-	previousState_ = new InputState(manager.GetAllocator(), TouchPointCount*TouchDataElems);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
 	GAINPUT_ASSERT(previousState_);
 }
 
 InputDeviceTouch::~InputDeviceTouch()
 {
-	delete state_;
-	delete previousState_;
-	delete impl_;
+	impl_->GetManager().GetAllocator().Delete(state_);
+	impl_->GetManager().GetAllocator().Delete(previousState_);
+	impl_->GetManager().GetAllocator().Delete(impl_);
 }
 
 void

@@ -127,6 +127,7 @@ public:
 		}
 	}
 
+	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
 
 private:
@@ -137,21 +138,21 @@ private:
 
 
 
-InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
-	impl_(new InputDeviceMouseImpl(manager, device))
+InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device)
 {
+	impl_ = manager.GetAllocator().New<InputDeviceMouseImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);
-	state_ = new InputState(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
 	GAINPUT_ASSERT(state_);
-	previousState_ = new InputState(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
 	GAINPUT_ASSERT(previousState_);
 }
 
 InputDeviceMouse::~InputDeviceMouse()
 {
-	delete state_;
-	delete previousState_;
-	delete impl_;
+	impl_->GetManager().GetAllocator().Delete(state_);
+	impl_->GetManager().GetAllocator().Delete(previousState_);
+	impl_->GetManager().GetAllocator().Delete(impl_);
 }
 
 void

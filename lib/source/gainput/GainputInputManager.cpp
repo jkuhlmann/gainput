@@ -29,6 +29,13 @@ InputManager::InputManager(Allocator& allocator) :
 InputManager::~InputManager()
 {
 	allocator_.Delete(deltaState_);
+
+	for (DeviceMap::iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		allocator_.Delete(it->second);
+	}
 }
 
 void

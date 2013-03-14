@@ -281,21 +281,21 @@ InputDeviceKeyboardImpl::GetKeyName(DeviceButtonId deviceButton, char* buffer, s
 
 
 
-InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device) :
-	impl_(new InputDeviceKeyboardImpl(manager, device))
+InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device)
 {
+	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);
-	state_ = new InputState(manager.GetAllocator(), KeyboardButtonCount);
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), KeyboardButtonCount);
 	GAINPUT_ASSERT(state_);
-	previousState_ = new InputState(manager.GetAllocator(), KeyboardButtonCount);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), KeyboardButtonCount);
 	GAINPUT_ASSERT(previousState_);
 }
 
 InputDeviceKeyboard::~InputDeviceKeyboard()
 {
-	delete state_;
-	delete previousState_;
-	delete impl_;
+	impl_->GetManager().GetAllocator().Delete(state_);
+	impl_->GetManager().GetAllocator().Delete(previousState_);
+	impl_->GetManager().GetAllocator().Delete(impl_);
 }
 
 void

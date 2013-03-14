@@ -148,6 +148,7 @@ public:
 		}
 	}
 
+	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
 
 	InputDevice::DeviceState GetState() const
@@ -169,21 +170,21 @@ private:
 
 
 
-InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device) :
-	impl_(new InputDevicePadImpl(manager, device))
+InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device)
 {
+	impl_ = manager.GetAllocator().New<InputDevicePadImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);
-	state_ = new InputState(manager.GetAllocator(), PadButtonCount + PadAxisCount);
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
 	GAINPUT_ASSERT(state_);
-	previousState_ = new InputState(manager.GetAllocator(), PadButtonCount + PadAxisCount);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
 	GAINPUT_ASSERT(previousState_);
 }
 
 InputDevicePad::~InputDevicePad()
 {
-	delete state_;
-	delete previousState_;
-	delete impl_;
+	impl_->GetManager().GetAllocator().Delete(state_);
+	impl_->GetManager().GetAllocator().Delete(previousState_);
+	impl_->GetManager().GetAllocator().Delete(impl_);
 }
 
 void

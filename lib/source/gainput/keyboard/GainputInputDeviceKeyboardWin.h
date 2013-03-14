@@ -14,6 +14,7 @@ public:
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
+	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
 
 	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;

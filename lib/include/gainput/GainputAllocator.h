@@ -53,6 +53,16 @@ public:
 		return new (Allocate(sizeof(T))) T(p0, p1);
 	}
 
+	/// An operator new-like function that allocates memory and calls T's constructor with two parameters.
+	/**
+	 * \return A pointer to an initialized instance of T.
+	 */
+	template <class T, class P0, class P1>
+	T* New(P0& p0, const P1& p1)
+	{
+		return new (Allocate(sizeof(T))) T(p0, p1);
+	}
+
 	/// An operator delete-like function that calls ptr's constructor and deallocates the memory.
 	/**
 	 * \param ptr The object to destruct and deallocate.
