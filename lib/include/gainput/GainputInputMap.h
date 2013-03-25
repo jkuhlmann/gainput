@@ -62,6 +62,15 @@ public:
 	/// Returns if the given user button has any mappings.
 	bool IsMapped(UserButtonId userButton) const;
 	
+	/// Gets all device buttons mapped to the given user button.
+	/**
+	 * \param userButton The user button ID of the button to return all mappings for.
+	 * \param[out] outButtons An array with maxButtonCount fields to receive the device buttons that are mapped.
+	 * \param maxButtonCount The number of fields in outButtons.
+	 * \return The number of device buttons written to outButtons.
+	 */
+	size_t GetMappings(UserButtonId userButton, DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
+	
 	/// Policy for how multiple device buttons are summarized in one user button.
 	enum UserButtonPolicy
 	{

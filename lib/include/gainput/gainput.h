@@ -106,6 +106,8 @@ typedef unsigned int ListenerId;
 /// ID of a registered gesture.
 typedef unsigned int GestureId;
 
+/// An invalid device button ID.
+static const DeviceButtonId InvalidDeviceButtonId = -1;
 /// An invalid user button ID.
 static const UserButtonId InvalidUserButtonId = -1;
 

@@ -5,7 +5,7 @@
 
 namespace gainput
 {
-	
+
 class InputDeviceKeyboardImpl
 {
 public:
@@ -18,6 +18,7 @@ public:
 	DeviceId GetDevice() const { return device_; }
 
 	size_t GetKeyName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
+	DeviceButtonId GetButtonByName(const char* name) const;
 
 	bool IsTextInputEnabled() const { return textInputEnabled_; }
 	void SetTextInputEnabled(bool enabled) { textInputEnabled_ = enabled; }

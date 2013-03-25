@@ -215,6 +215,7 @@ public:
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
+	DeviceButtonId GetButtonByName(const char* name) const;
 
 	/// Returns if text input is enabled.
 	bool IsTextInputEnabled() const;

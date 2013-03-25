@@ -133,6 +133,23 @@ InputMap::IsMapped(UserButtonId userButton) const
 	return GetUserButton(userButton) != 0;
 }
 
+size_t
+InputMap::GetMappings(UserButtonId userButton, DeviceButtonSpec* outButtons, size_t maxButtonCount) const
+{
+	size_t buttonCount = 0;
+	const UserButton* ub = GetUserButton(userButton);
+	GAINPUT_ASSERT(ub);
+	for (MappedInputList::const_iterator it = ub->inputs.begin();
+			it != ub->inputs.end() && buttonCount < maxButtonCount;
+			++it, ++buttonCount)
+	{
+		const MappedInput& mi = *it;
+		outButtons[buttonCount].deviceId = mi.device;
+		outButtons[buttonCount].buttonId = mi.deviceButton;
+	}
+	return buttonCount;
+}
+
 bool
 InputMap::SetUserButtonPolicy(UserButtonId userButton, UserButtonPolicy policy)
 {
@@ -154,7 +171,7 @@ InputMap::GetBool(UserButtonId userButton) const
 			it != ub->inputs.end();
 			++it)
 	{
-		const MappedInput& mi= *it;
+		const MappedInput& mi = *it;
 		const InputDevice* device = manager_.GetDevice(mi.device);
 		GAINPUT_ASSERT(device);
 		if (device->GetBool(mi.deviceButton))

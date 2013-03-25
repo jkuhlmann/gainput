@@ -71,6 +71,7 @@ public:
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
+	DeviceButtonId GetButtonByName(const char* name) const;
 
 	/// Returns the platform-specific implementation of this device.
 	InputDeviceTouchImpl* GetPimpl() { return impl_; }

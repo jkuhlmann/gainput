@@ -203,6 +203,19 @@ InputDeviceMouse::GetButtonType(DeviceButtonId deviceButton) const
 	return deviceButtonInfos[deviceButton].type;
 }
 
+DeviceButtonId
+InputDeviceMouse::GetButtonByName(const char* name) const
+{
+	for (unsigned i = 0; i < MouseButtonCount + MouseAxisCount; ++i)
+	{
+		if (strcmp(name, deviceButtonInfos[i].name) == 0)
+		{
+			return DeviceButtonId(i);
+		}
+	}
+	return InvalidDeviceButtonId;
+}
+
 }
 
 #endif

@@ -160,6 +160,19 @@ InputDeviceTouch::GetButtonType(DeviceButtonId deviceButton) const
 	return deviceButtonInfos[deviceButton].type;
 }
 
+DeviceButtonId
+InputDeviceTouch::GetButtonByName(const char* name) const
+{
+	for (unsigned i = 0; i < TouchPointCount*TouchDataElems; ++i)
+	{
+		if (strcmp(name, deviceButtonInfos[i].name) == 0)
+		{
+			return DeviceButtonId(i);
+		}
+	}
+	return InvalidDeviceButtonId;
+}
+
 }
 
 #endif

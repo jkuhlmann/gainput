@@ -238,6 +238,21 @@ public:
 		return nameLen >= bufferLength ? bufferLength : nameLen+1;
 	}
 
+	DeviceButtonId
+	GetButtonByName(const char* name) const
+	{
+		for (HashMap<Key, const char*>::const_iterator it = keyNames_.begin();
+				it != keyNames_.end();
+				++it)
+		{
+			if (strcmp(name, it->second) == 0)
+			{
+				return it->first;
+			}
+		}
+		return InvalidDeviceButtonId;
+	}
+
 	bool IsTextInputEnabled() const { return textInputEnabled_; }
 	void SetTextInputEnabled(bool enabled) { textInputEnabled_ = enabled; }
 
@@ -303,6 +318,12 @@ InputDeviceKeyboard::GetButtonType(DeviceButtonId deviceButton) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	return BT_BOOL;
+}
+
+DeviceButtonId
+InputDeviceKeyboard::GetButtonByName(const char* name) const
+{
+	return impl_->GetButtonByName(name);
 }
 
 bool

@@ -86,6 +86,13 @@ public:
 	/// Returns the type of the given button.
 	virtual ButtonType GetButtonType(DeviceButtonId deviceButton) const = 0;
 
+	/// Returns the button's ID if the name is of this device's buttons.
+	/**
+	 * \param name Name of the device button to look for.
+	 * \return The device button ID.
+	 */
+	virtual DeviceButtonId GetButtonByName(const char* name) const = 0;
+
 protected:
 	/// The current state of this device.
 	InputState* state_;
