@@ -84,8 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">gainput Namespace Reference</div>  </div>
 </div><!--header-->
@@ -159,6 +158,10 @@ typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class
 typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a></td></tr>
 <tr class="memdesc:a855e3ec6f7e3fa3a6145994800e08060"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of a user-defined, mapped button. <br/></td></tr>
 <tr class="separator:a855e3ec6f7e3fa3a6145994800e08060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf8159c0645b08a803bf9dfc974011a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf8159c0645b08a803bf9dfc974011a3"></a>
+typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a></td></tr>
+<tr class="memdesc:aaf8159c0645b08a803bf9dfc974011a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of an input listener. <br/></td></tr>
+<tr class="separator:aaf8159c0645b08a803bf9dfc974011a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affb286d7dde24bf77a8c1fec7ebf480d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affb286d7dde24bf77a8c1fec7ebf480d"></a>
 typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#affb286d7dde24bf77a8c1fec7ebf480d">GestureId</a></td></tr>
 <tr class="memdesc:affb286d7dde24bf77a8c1fec7ebf480d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of a registered gesture. <br/></td></tr>
@@ -304,6 +307,78 @@ Enumerations</h2></td></tr>
 <b>KEY_CTRL_R</b>, 
 <br/>
 &#160;&#160;<b>KEY_SHIFT_R</b>, 
+<b>KEY_BACK</b>, 
+<b>KEY_SOFT_LEFT</b>, 
+<b>KEY_SOFT_RIGHT</b>, 
+<br/>
+&#160;&#160;<b>KEY_CALL</b>, 
+<b>KEY_ENDCALL</b>, 
+<b>KEY_STAR</b>, 
+<b>KEY_POUND</b>, 
+<br/>
+&#160;&#160;<b>KEY_DPAD_CENTER</b>, 
+<b>KEY_VOLUME_UP</b>, 
+<b>KEY_VOLUME_DOWN</b>, 
+<b>KEY_POWER</b>, 
+<br/>
+&#160;&#160;<b>KEY_CAMERA</b>, 
+<b>KEY_CLEAR</b>, 
+<b>KEY_SYM</b>, 
+<b>KEY_EXPLORER</b>, 
+<br/>
+&#160;&#160;<b>KEY_ENVELOPE</b>, 
+<b>KEY_EQUALS</b>, 
+<b>KEY_AT</b>, 
+<b>KEY_HEADSETHOOK</b>, 
+<br/>
+&#160;&#160;<b>KEY_FOCUS</b>, 
+<b>KEY_PLUS</b>, 
+<b>KEY_NOTIFICATION</b>, 
+<b>KEY_SEARCH</b>, 
+<br/>
+&#160;&#160;<b>KEY_MEDIA_PLAY_PAUSE</b>, 
+<b>KEY_MEDIA_STOP</b>, 
+<b>KEY_MEDIA_NEXT</b>, 
+<b>KEY_MEDIA_PREVIOUS</b>, 
+<br/>
+&#160;&#160;<b>KEY_MEDIA_REWIND</b>, 
+<b>KEY_MEDIA_FAST_FORWARD</b>, 
+<b>KEY_MUTE</b>, 
+<b>KEY_PICTSYMBOLS</b>, 
+<br/>
+&#160;&#160;<b>KEY_SWITCH_CHARSET</b>, 
+<b>KEY_FORWARD</b>, 
+<b>KEY_EXTRA_1</b>, 
+<b>KEY_EXTRA_2</b>, 
+<br/>
+&#160;&#160;<b>KEY_EXTRA_3</b>, 
+<b>KEY_EXTRA_4</b>, 
+<b>KEY_EXTRA_5</b>, 
+<b>KEY_EXTRA_6</b>, 
+<br/>
+&#160;&#160;<b>KEY_FN</b>, 
+<b>KEY_CIRCUMFLEX</b>, 
+<b>KEY_SSHARP</b>, 
+<b>KEY_ACUTE</b>, 
+<br/>
+&#160;&#160;<b>KEY_ALT_GR</b>, 
+<b>KEY_NUMBERSIGN</b>, 
+<b>KEY_UDIAERESIS</b>, 
+<b>KEY_ADIAERESIS</b>, 
+<br/>
+&#160;&#160;<b>KEY_ODIAERESIS</b>, 
+<b>KEY_SECTION</b>, 
+<b>KEY_ARING</b>, 
+<b>KEY_DIAERESIS</b>, 
+<br/>
+&#160;&#160;<b>KEY_TWOSUPERIOR</b>, 
+<b>KEY_RIGHT_PARENTHESIS</b>, 
+<b>KEY_DOLLAR</b>, 
+<b>KEY_UGRAVE</b>, 
+<br/>
+&#160;&#160;<b>KEY_ASTERISK</b>, 
+<b>KEY_COLON</b>, 
+<b>KEY_EXCLAM</b>, 
 <b>KEY_COUNT_</b>
 <br/>
  }</td></tr>
@@ -396,47 +471,58 @@ Enumerations</h2></td></tr>
 <b>PAD_BUTTON_AXIS_30</b>, 
 <b>PAD_BUTTON_AXIS_31</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_START</b>, 
+&#160;&#160;<b>PAD_BUTTON_ACCELERATION_X</b>, 
+<b>PAD_BUTTON_ACCELERATION_Y</b>, 
+<b>PAD_BUTTON_ACCELERATION_Z</b>, 
+<b>PAD_BUTTON_GYROSCOPE_X</b>, 
+<br/>
+&#160;&#160;<b>PAD_BUTTON_GYROSCOPE_Y</b>, 
+<b>PAD_BUTTON_GYROSCOPE_Z</b>, 
+<b>PAD_BUTTON_MAGNETICFIELD_X</b>, 
+<b>PAD_BUTTON_MAGNETICFIELD_Y</b>, 
+<br/>
+&#160;&#160;<b>PAD_BUTTON_MAGNETICFIELD_Z</b>, 
+<b>PAD_BUTTON_START</b>, 
 <b>PAD_BUTTON_AXIS_COUNT</b> = PAD_BUTTON_START, 
 <b>PAD_BUTTON_SELECT</b>, 
-<b>PAD_BUTTON_LEFT</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_RIGHT</b>, 
+&#160;&#160;<b>PAD_BUTTON_LEFT</b>, 
+<b>PAD_BUTTON_RIGHT</b>, 
 <b>PAD_BUTTON_UP</b>, 
 <b>PAD_BUTTON_DOWN</b>, 
-<b>PAD_BUTTON_A</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_B</b>, 
+&#160;&#160;<b>PAD_BUTTON_A</b>, 
+<b>PAD_BUTTON_B</b>, 
 <b>PAD_BUTTON_X</b>, 
 <b>PAD_BUTTON_Y</b>, 
-<b>PAD_BUTTON_L1</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_R1</b>, 
+&#160;&#160;<b>PAD_BUTTON_L1</b>, 
+<b>PAD_BUTTON_R1</b>, 
 <b>PAD_BUTTON_L2</b>, 
 <b>PAD_BUTTON_R2</b>, 
-<b>PAD_BUTTON_L3</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_R3</b>, 
+&#160;&#160;<b>PAD_BUTTON_L3</b>, 
+<b>PAD_BUTTON_R3</b>, 
 <b>PAD_BUTTON_HOME</b>, 
 <b>PAD_BUTTON_17</b>, 
-<b>PAD_BUTTON_18</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_19</b>, 
+&#160;&#160;<b>PAD_BUTTON_18</b>, 
+<b>PAD_BUTTON_19</b>, 
 <b>PAD_BUTTON_20</b>, 
 <b>PAD_BUTTON_21</b>, 
-<b>PAD_BUTTON_22</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_23</b>, 
+&#160;&#160;<b>PAD_BUTTON_22</b>, 
+<b>PAD_BUTTON_23</b>, 
 <b>PAD_BUTTON_24</b>, 
 <b>PAD_BUTTON_25</b>, 
-<b>PAD_BUTTON_26</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_27</b>, 
+&#160;&#160;<b>PAD_BUTTON_26</b>, 
+<b>PAD_BUTTON_27</b>, 
 <b>PAD_BUTTON_28</b>, 
 <b>PAD_BUTTON_29</b>, 
-<b>PAD_BUTTON_30</b>, 
 <br/>
-&#160;&#160;<b>PAD_BUTTON_31</b>, 
+&#160;&#160;<b>PAD_BUTTON_30</b>, 
+<b>PAD_BUTTON_31</b>, 
 <b>PAD_BUTTON_MAX</b>, 
 <b>PAD_BUTTON_COUNT</b> = PAD_BUTTON_MAX - PAD_BUTTON_AXIS_COUNT
 <br/>
@@ -448,6 +534,41 @@ Enumerations</h2></td></tr>
 <b>TOUCH_0_X</b>, 
 <b>TOUCH_0_Y</b>, 
 <b>TOUCH_0_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_1_DOWN</b>, 
+<b>TOUCH_1_X</b>, 
+<b>TOUCH_1_Y</b>, 
+<b>TOUCH_1_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_2_DOWN</b>, 
+<b>TOUCH_2_X</b>, 
+<b>TOUCH_2_Y</b>, 
+<b>TOUCH_2_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_3_DOWN</b>, 
+<b>TOUCH_3_X</b>, 
+<b>TOUCH_3_Y</b>, 
+<b>TOUCH_3_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_4_DOWN</b>, 
+<b>TOUCH_4_X</b>, 
+<b>TOUCH_4_Y</b>, 
+<b>TOUCH_4_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_5_DOWN</b>, 
+<b>TOUCH_5_X</b>, 
+<b>TOUCH_5_Y</b>, 
+<b>TOUCH_5_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_6_DOWN</b>, 
+<b>TOUCH_6_X</b>, 
+<b>TOUCH_6_Y</b>, 
+<b>TOUCH_6_PRESSURE</b>, 
+<br/>
+&#160;&#160;<b>TOUCH_7_DOWN</b>, 
+<b>TOUCH_7_X</b>, 
+<b>TOUCH_7_Y</b>, 
+<b>TOUCH_7_PRESSURE</b>, 
 <br/>
 &#160;&#160;<b>TOUCH_COUNT</b>
 <br/>
@@ -469,6 +590,10 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#ad0a7cdee1c76603bcb263f6e4a6e18b2">GetLibVersionString</a> ()</td></tr>
 <tr class="memdesc:ad0a7cdee1c76603bcb263f6e4a6e18b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version number of the library as a printable string. <br/></td></tr>
 <tr class="separator:ad0a7cdee1c76603bcb263f6e4a6e18b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0fe77c7e298a795417319ff58a9eb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa0fe77c7e298a795417319ff58a9eb2"></a>
+GAINPUT_LIBEXPORT <br class="typebreak"/>
+<a class="el" href="classgainput_1_1DefaultAllocator.html">DefaultAllocator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetDefaultAllocator</b> ()</td></tr>
+<tr class="separator:aaa0fe77c7e298a795417319ff58a9eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8eb4771d0811471b22f66b8e60701c98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8eb4771d0811471b22f66b8e60701c98"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>rotl32</b> (uint32_t x, int8_t r)</td></tr>
 <tr class="separator:a8eb4771d0811471b22f66b8e60701c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -481,12 +606,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>fmix</b> (uint32_
 <tr class="memitem:af9f6f4212eef68b18b487316a81c4ef1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#af9f6f4212eef68b18b487316a81c4ef1">MurmurHash3_x86_32</a> (const void *key, int len, uint32_t seed, void *out)</td></tr>
 <tr class="memdesc:af9f6f4212eef68b18b487316a81c4ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates MurmurHash3 for the given key.  <a href="#af9f6f4212eef68b18b487316a81c4ef1"></a><br/></td></tr>
 <tr class="separator:af9f6f4212eef68b18b487316a81c4ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aa51699740700dfbe8df6ce622e598cab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa51699740700dfbe8df6ce622e598cab"></a>
-GAINPUT_LIBEXPORT <a class="el" href="classgainput_1_1DefaultAllocator.html">DefaultAllocator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>defaultAllocator</b></td></tr>
-<tr class="separator:aa51699740700dfbe8df6ce622e598cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains all Gainput related classes, types, and functions. </p>
@@ -579,7 +698,7 @@ GAINPUT_LIBEXPORT <a class="el" href="classgainput_1_1DefaultAllocator.html">Def
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 21:58:50 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -112,9 +112,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3ef52b5173cf3b3b5a8d914c85ac4794"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a3ef52b5173cf3b3b5a8d914c85ac4794">InputMap</a> (const <a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=defaultAllocator)</td></tr>
-<tr class="memdesc:a3ef52b5173cf3b3b5a8d914c85ac4794"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the map.  <a href="#a3ef52b5173cf3b3b5a8d914c85ac4794"></a><br/></td></tr>
-<tr class="separator:a3ef52b5173cf3b3b5a8d914c85ac4794"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a2f45070d13aa1ecc8b514b5434dbd38c">InputMap</a> (const <a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=GetDefaultAllocator())</td></tr>
+<tr class="memdesc:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the map.  <a href="#a2f45070d13aa1ecc8b514b5434dbd38c"></a><br/></td></tr>
+<tr class="separator:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4388beac031131b5aee399d32f81aa16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4388beac031131b5aee399d32f81aa16"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a4388beac031131b5aee399d32f81aa16">~InputMap</a> ()</td></tr>
 <tr class="memdesc:a4388beac031131b5aee399d32f81aa16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unitializes the map. <br/></td></tr>
@@ -159,6 +159,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a60baa179288e5d7aaa2b1c212093a28c">IsMapped</a> (<a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> userButton) const </td></tr>
 <tr class="memdesc:a60baa179288e5d7aaa2b1c212093a28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if the given user button has any mappings. <br/></td></tr>
 <tr class="separator:a60baa179288e5d7aaa2b1c212093a28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6589a914bee0da7cbc942bf527579ebf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a6589a914bee0da7cbc942bf527579ebf">GetMappings</a> (<a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> userButton, <a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount) const </td></tr>
+<tr class="memdesc:a6589a914bee0da7cbc942bf527579ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all device buttons mapped to the given user button.  <a href="#a6589a914bee0da7cbc942bf527579ebf"></a><br/></td></tr>
+<tr class="separator:a6589a914bee0da7cbc942bf527579ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dbe4f6c75f59b6b863adf68def5d1fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a0dbe4f6c75f59b6b863adf68def5d1fc">SetUserButtonPolicy</a> (<a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> userButton, <a class="el" href="classgainput_1_1InputMap.html#ad7b64fc71b671e72d220eb3d319c76d6">UserButtonPolicy</a> policy)</td></tr>
 <tr class="memdesc:a0dbe4f6c75f59b6b863adf68def5d1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets how a user button handles inputs from multiple device buttons.  <a href="#a0dbe4f6c75f59b6b863adf68def5d1fc"></a><br/></td></tr>
 <tr class="separator:a0dbe4f6c75f59b6b863adf68def5d1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,7 +232,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3ef52b5173cf3b3b5a8d914c85ac4794"></a>
+<a class="anchor" id="a2f45070d13aa1ecc8b514b5434dbd38c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -243,7 +246,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;&#160;</td>
-          <td class="paramname"><em>allocator</em> = <code>defaultAllocator</code>&#160;</td>
+          <td class="paramname"><em>allocator</em> = <code>GetDefaultAllocator()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -265,6 +268,49 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6589a914bee0da7cbc942bf527579ebf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t gainput::InputMap::GetMappings </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a>&#160;</td>
+          <td class="paramname"><em>userButton</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *&#160;</td>
+          <td class="paramname"><em>outButtons</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxButtonCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets all device buttons mapped to the given user button. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">userButton</td><td>The user button ID of the button to return all mappings for. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outButtons</td><td>An array with maxButtonCount fields to receive the device buttons that are mapped. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">maxButtonCount</td><td>The number of fields in outButtons. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of device buttons written to outButtons. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aa8b981002134eb9d81580dd1ab5a662c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -443,7 +489,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 21:58:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

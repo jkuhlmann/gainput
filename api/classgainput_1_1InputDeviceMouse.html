@@ -133,7 +133,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:ab73755329c865d2a7551af37c04c435d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if the given button is valid for this device. <br/></td></tr>
 <tr class="separator:ab73755329c865d2a7551af37c04c435d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7826261dd4614a8b77ddd9d24a09e16"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#aa7826261dd4614a8b77ddd9d24a09e16">GetAnyButtonDown</a> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount) const </td></tr>
-<tr class="memdesc:aa7826261dd4614a8b77ddd9d24a09e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any button is down.  <a href="#aa7826261dd4614a8b77ddd9d24a09e16"></a><br/></td></tr>
+<tr class="memdesc:aa7826261dd4614a8b77ddd9d24a09e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if any button on this device is down.  <a href="#aa7826261dd4614a8b77ddd9d24a09e16"></a><br/></td></tr>
 <tr class="separator:aa7826261dd4614a8b77ddd9d24a09e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f5c75395ddd05c193264dce31285394"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#a5f5c75395ddd05c193264dce31285394">GetButtonName</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton, char *buffer, size_t bufferLength) const </td></tr>
 <tr class="memdesc:a5f5c75395ddd05c193264dce31285394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the given button.  <a href="#a5f5c75395ddd05c193264dce31285394"></a><br/></td></tr>
@@ -142,6 +142,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed">ButtonType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#ad6642f977a3b6bd7cac3e92a573be72a">GetButtonType</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton) const </td></tr>
 <tr class="memdesc:ad6642f977a3b6bd7cac3e92a573be72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of the given button. <br/></td></tr>
 <tr class="separator:ad6642f977a3b6bd7cac3e92a573be72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae750fa2ab92ffa601947a5c660acb7a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#ae750fa2ab92ffa601947a5c660acb7a3">GetButtonByName</a> (const char *name) const </td></tr>
+<tr class="memdesc:ae750fa2ab92ffa601947a5c660acb7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the button's ID if the name is of this device's buttons.  <a href="#ae750fa2ab92ffa601947a5c660acb7a3"></a><br/></td></tr>
+<tr class="separator:ae750fa2ab92ffa601947a5c660acb7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5728cabdb17e9378cdb9d6883db4439"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5728cabdb17e9378cdb9d6883db4439"></a>
 InputDeviceMouseImpl *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDeviceMouse.html#aa5728cabdb17e9378cdb9d6883db4439">GetPimpl</a> ()</td></tr>
 <tr class="memdesc:aa5728cabdb17e9378cdb9d6883db4439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the platform-specific implementation of this device. <br/></td></tr>
@@ -278,7 +281,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown
 </table>
 </div><div class="memdoc">
 
-<p>Returns true if any button is down. </p>
+<p>Checks if any button on this device is down. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">outButtons</td><td>An array with maxButtonCount fields to receive the device buttons that are down. </td></tr>
@@ -289,6 +292,41 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown
 <dl class="section return"><dt>Returns</dt><dd>The number of device buttons written to outButtons. </dd></dl>
 
 <p>Implements <a class="el" href="classgainput_1_1InputDevice.html#a0212580ab41ef7b18c2ad52a7453e4c9">gainput::InputDevice</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae750fa2ab92ffa601947a5c660acb7a3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> gainput::InputDeviceMouse::GetButtonByName </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the button's ID if the name is of this device's buttons. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the device button to look for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The device button ID. </dd></dl>
+
+<p>Implements <a class="el" href="classgainput_1_1InputDevice.html#af169bc9c8939506d82bdee0da498d5a1">gainput::InputDevice</a>.</p>
 
 </div>
 </div>
@@ -385,7 +423,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 21:58:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

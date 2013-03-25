@@ -169,7 +169,7 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memdesc:a20c348efe171c56accf4cd578624f83b inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the previous state of the given button. <br/></td></tr>
 <tr class="separator:a20c348efe171c56accf4cd578624f83b inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0212580ab41ef7b18c2ad52a7453e4c9 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a0212580ab41ef7b18c2ad52a7453e4c9">GetAnyButtonDown</a> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount) const =0</td></tr>
-<tr class="memdesc:a0212580ab41ef7b18c2ad52a7453e4c9 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any button is down.  <a href="#a0212580ab41ef7b18c2ad52a7453e4c9"></a><br/></td></tr>
+<tr class="memdesc:a0212580ab41ef7b18c2ad52a7453e4c9 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if any button on this device is down.  <a href="#a0212580ab41ef7b18c2ad52a7453e4c9"></a><br/></td></tr>
 <tr class="separator:a0212580ab41ef7b18c2ad52a7453e4c9 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb05a41029167f702a68ccb262489cc2 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#aeb05a41029167f702a68ccb262489cc2">GetButtonName</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton, char *buffer, size_t bufferLength) const =0</td></tr>
 <tr class="memdesc:aeb05a41029167f702a68ccb262489cc2 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the given button.  <a href="#aeb05a41029167f702a68ccb262489cc2"></a><br/></td></tr>
@@ -178,6 +178,9 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 virtual <a class="el" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed">ButtonType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ab346dfaa04721a4944eeeae89d6b0fd4">GetButtonType</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton) const =0</td></tr>
 <tr class="memdesc:ab346dfaa04721a4944eeeae89d6b0fd4 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of the given button. <br/></td></tr>
 <tr class="separator:ab346dfaa04721a4944eeeae89d6b0fd4 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af169bc9c8939506d82bdee0da498d5a1 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#af169bc9c8939506d82bdee0da498d5a1">GetButtonByName</a> (const char *name) const =0</td></tr>
+<tr class="memdesc:af169bc9c8939506d82bdee0da498d5a1 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the button's ID if the name is of this device's buttons.  <a href="#af169bc9c8939506d82bdee0da498d5a1"></a><br/></td></tr>
+<tr class="separator:af169bc9c8939506d82bdee0da498d5a1 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classgainput_1_1InputDevice"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classgainput_1_1InputDevice')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classgainput_1_1InputDevice.html">gainput::InputDevice</a></td></tr>
 <tr class="memitem:a8784e3b6d1201472c4d5acfea6c5eb24 inherit pro_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8784e3b6d1201472c4d5acfea6c5eb24"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown</b> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount, unsigned start, unsigned end, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device) const </td></tr>
@@ -200,7 +203,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 21:58:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

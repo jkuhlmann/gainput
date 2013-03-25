@@ -212,48 +212,110 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    KEY_CTRL_R,</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    KEY_SHIFT_R,</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    KEY_COUNT_</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;};</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">class </span>InputDeviceKeyboardImpl;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html">  134</a></span>&#160;<span class="keyword">class </span>GAINPUT_LIBEXPORT <a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a> : <span class="keyword">public</span> <a class="code" href="classgainput_1_1InputDevice.html" title="Interface for all input devices.">InputDevice</a></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>(<a class="code" href="classgainput_1_1InputManager.html" title="Manages all input devices and misc stuff.">InputManager</a>&amp; manager, <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a> device);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    ~<a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>();</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">void</span> Update(InputDeltaState* delta);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc">  149</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a" title="Type of an input device.">DeviceType</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc" title="Returns DT_KEYBOARD.">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DT_KEYBOARD; }</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c">  150</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c" title="Returns the device state.">GetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DS_OK; }</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c">  151</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton &gt;= 0 &amp;&amp; deviceButton &lt; KEY_COUNT_; }</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">size_t</span> GetAnyButtonDown(<a class="code" href="structgainput_1_1DeviceButtonSpec.html" title="Describes a device button on a specific device.">DeviceButtonSpec</a>* outButtons, <span class="keywordtype">size_t</span> maxButtonCount) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">size_t</span> GetButtonName(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">size_t</span> bufferLength) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> GetButtonType(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordtype">bool</span> IsTextInputEnabled() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordtype">void</span> SetTextInputEnabled(<span class="keywordtype">bool</span> enabled);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">char</span> GetNextCharacter();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00166"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71">  166</a></span>&#160;    InputDeviceKeyboardImpl* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71" title="Returns the platform-specific implementation of this device.">GetPimpl</a>() { <span class="keywordflow">return</span> impl_; }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    InputDeviceKeyboardImpl* impl_;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;};</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    KEY_BACK,</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    KEY_SOFT_LEFT,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    KEY_SOFT_RIGHT,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    KEY_CALL,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    KEY_ENDCALL,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    KEY_STAR,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    KEY_POUND,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    KEY_DPAD_CENTER,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    KEY_VOLUME_UP,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    KEY_VOLUME_DOWN,</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    KEY_POWER,</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    KEY_CAMERA,</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    KEY_CLEAR,</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    KEY_SYM,</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    KEY_EXPLORER,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    KEY_ENVELOPE,</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    KEY_EQUALS,</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    KEY_AT,</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    KEY_HEADSETHOOK,</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    KEY_FOCUS,</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    KEY_PLUS,</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    KEY_NOTIFICATION,</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    KEY_SEARCH,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    KEY_MEDIA_PLAY_PAUSE,</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    KEY_MEDIA_STOP,</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    KEY_MEDIA_NEXT,</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    KEY_MEDIA_PREVIOUS,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    KEY_MEDIA_REWIND,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    KEY_MEDIA_FAST_FORWARD,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    KEY_MUTE,</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    KEY_PICTSYMBOLS,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    KEY_SWITCH_CHARSET,</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    KEY_FORWARD,</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    KEY_EXTRA_1,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    KEY_EXTRA_2,</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    KEY_EXTRA_3,</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    KEY_EXTRA_4,</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    KEY_EXTRA_5,</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    KEY_EXTRA_6,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    KEY_FN,</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    KEY_CIRCUMFLEX,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    KEY_SSHARP,</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    KEY_ACUTE,</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    KEY_ALT_GR,</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    KEY_NUMBERSIGN,</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    KEY_UDIAERESIS,</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    KEY_ADIAERESIS,</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    KEY_ODIAERESIS,</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    KEY_SECTION,</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    KEY_ARING,</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    KEY_DIAERESIS,</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    KEY_TWOSUPERIOR,</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    KEY_RIGHT_PARENTHESIS,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    KEY_DOLLAR,</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    KEY_UGRAVE,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    KEY_ASTERISK,</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    KEY_COLON,</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    KEY_EXCLAM,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    KEY_COUNT_</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;};</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="keyword">class </span>InputDeviceKeyboardImpl;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html">  195</a></span>&#160;<span class="keyword">class </span>GAINPUT_LIBEXPORT <a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a> : <span class="keyword">public</span> <a class="code" href="classgainput_1_1InputDevice.html" title="Interface for all input devices.">InputDevice</a></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;{</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>(<a class="code" href="classgainput_1_1InputManager.html" title="Manages all input devices and misc stuff.">InputManager</a>&amp; manager, <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a> device);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    ~<a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">void</span> Update(InputDeltaState* delta);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc">  210</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a" title="Type of an input device.">DeviceType</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc" title="Returns DT_KEYBOARD.">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DT_KEYBOARD; }</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c">  211</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c" title="Returns the device state.">GetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DS_OK; }</div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c">  212</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton &gt;= 0 &amp;&amp; deviceButton &lt; KEY_COUNT_; }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordtype">size_t</span> GetAnyButtonDown(<a class="code" href="structgainput_1_1DeviceButtonSpec.html" title="Describes a device button on a specific device.">DeviceButtonSpec</a>* outButtons, <span class="keywordtype">size_t</span> maxButtonCount) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordtype">size_t</span> GetButtonName(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">size_t</span> bufferLength) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> GetButtonType(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> GetButtonByName(<span class="keyword">const</span> <span class="keywordtype">char</span>* name) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">bool</span> IsTextInputEnabled() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordtype">void</span> SetTextInputEnabled(<span class="keywordtype">bool</span> enabled);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">char</span> GetNextCharacter();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71">  228</a></span>&#160;    InputDeviceKeyboardImpl* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71" title="Returns the platform-specific implementation of this device.">GetPimpl</a>() { <span class="keywordflow">return</span> impl_; }</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    InputDeviceKeyboardImpl* impl_;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;};</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 18 2013 20:59:51 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 21:58:50 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
