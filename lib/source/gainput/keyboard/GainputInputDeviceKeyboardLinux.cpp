@@ -171,52 +171,45 @@ public:
 		XEvent event;
 		while (XCheckMaskEvent(manager_.GetXDisplay(), eventMask, &event))
 		{
-			switch (event.type)
+			if (event.type == KeyPress || event.type == KeyRelease)
 			{
-			case KeyPress:
-			case KeyRelease:
+				XKeyEvent& keyEvent = event.xkey;
+				KeySym keySym = XKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0);
+				const bool pressed = event.type == KeyPress;
+
+				if (dialect_.count(keySym))
 				{
-					XKeyEvent& keyEvent = event.xkey;
-					KeySym keySym = XKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0);
-					const bool pressed = event.type == KeyPress;
-
-					if (dialect_.count(keySym))
-					{
-						const DeviceButtonId buttonId = dialect_[keySym];
-						state.Set(buttonId, pressed);
+					const DeviceButtonId buttonId = dialect_[keySym];
+					state.Set(buttonId, pressed);
 #ifdef GAINPUT_DEBUG
-						GAINPUT_LOG("buttonId: %d\n", buttonId);
+					GAINPUT_LOG("buttonId: %d\n", buttonId);
 #endif
 
-						if (delta)
+					if (delta)
+					{
+						const bool oldValue = previousState.GetBool(buttonId);
+						if (oldValue != pressed)
 						{
-							const bool oldValue = previousState.GetBool(buttonId);
-							if (oldValue != pressed)
-							{
-								delta->AddChange(device_, buttonId, oldValue, pressed);
-							}
+							delta->AddChange(device_, buttonId, oldValue, pressed);
 						}
 					}
+				}
 #ifdef GAINPUT_DEBUG
-					else
-					{
-						char* str = XKeysymToString(keySym);
-						GAINPUT_LOG("Unmapped key >> keycode: %d, keysym: %d, str: %s\n", keyEvent.keycode, int(keySym), str);
-					}
+				else
+				{
+					char* str = XKeysymToString(keySym);
+					GAINPUT_LOG("Unmapped key >> keycode: %d, keysym: %d, str: %s\n", keyEvent.keycode, int(keySym), str);
+				}
 #endif
 
-
-
-					if (textInputEnabled_)
+				if (textInputEnabled_)
+				{
+					char buf[32];
+					int len = XLookupString(&keyEvent, buf, 32, 0, 0);
+					if (len == 1)
 					{
-						char buf[32];
-						int len = XLookupString(&keyEvent, buf, 32, 0, 0);
-						if (len == 1)
-						{
-							textBuffer_.Put(buf[0]);
-						}
+						textBuffer_.Put(buf[0]);
 					}
-					break;
 				}
 			}
 		}
@@ -310,6 +303,8 @@ size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
 	return impl_->GetKeyName(deviceButton, buffer, bufferLength);
 }
 
@@ -323,6 +318,7 @@ InputDeviceKeyboard::GetButtonType(DeviceButtonId deviceButton) const
 DeviceButtonId
 InputDeviceKeyboard::GetButtonByName(const char* name) const
 {
+	GAINPUT_ASSERT(name);
 	return impl_->GetButtonByName(name);
 }
 

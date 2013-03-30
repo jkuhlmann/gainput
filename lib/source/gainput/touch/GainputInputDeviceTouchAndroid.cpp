@@ -67,10 +67,6 @@ InputDeviceTouchImpl::InputDeviceTouchImpl(InputManager& manager, DeviceId devic
 {
 }
 
-InputDeviceTouchImpl::~InputDeviceTouchImpl()
-{
-}
-
 void
 InputDeviceTouchImpl::Update(InputState& state, InputState& previousState, InputDeltaState* delta)
 {
@@ -81,13 +77,17 @@ InputDeviceTouchImpl::Update(InputState& state, InputState& previousState, Input
 	// Reset downs
 	for (unsigned i = 0; i < TouchPointCount; ++i)
 	{
-		state_->Set(i*TouchDataElems, false);
+		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, false);
 	}
 }
 
 int32_t
 InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 {
+	GAINPUT_ASSERT(state_);
+	GAINPUT_ASSERT(previousState_);
+	GAINPUT_ASSERT(event);
+
 	if (AInputEvent_getType(event) != AINPUT_EVENT_TYPE_MOTION)
 	{
 		return 0;
@@ -100,16 +100,51 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 		const float y = AMotionEvent_getY(event, i);
 		const int32_t w = manager_.GetDisplayWidth();
 		const int32_t h = manager_.GetDisplayHeight();
-		state_->Set(TOUCH_0_X + i*TouchDataElems, x/float(w));
-		state_->Set(TOUCH_0_Y + i*TouchDataElems, y/float(h));
-		state_->Set(TOUCH_0_DOWN + i*TouchDataElems, true);
-		state_->Set(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
+		HandleFloat(TOUCH_0_X + i*TouchDataElems, x/float(w));
+		HandleFloat(TOUCH_0_Y + i*TouchDataElems, y/float(h));
+		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, true);
+		HandleFloat(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
 #ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("%i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
+		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
 #endif
 	}
 
 	return 1;
+}
+
+void
+InputDeviceTouchImpl::HandleBool(DeviceButtonId buttonId, bool value)
+{
+	state_->Set(buttonId, value);
+
+	if (delta_)
+	{
+		const bool oldValue = previousState_->GetBool(buttonId);
+		if (value != oldValue)
+		{
+			delta_->AddChange(device_, buttonId, oldValue, value);
+		}
+	}
+}
+
+void
+InputDeviceTouchImpl::HandleFloat(DeviceButtonId buttonId, float value)
+{
+	if (value < -1.0f) // Because theoretical min value is -32768
+	{
+		value = -1.0f;
+	}
+
+	state_->Set(buttonId, value);
+
+	if (delta_)
+	{
+		const float oldValue = previousState_->GetFloat(buttonId);
+		if (value != oldValue)
+		{
+			delta_->AddChange(device_, buttonId, oldValue, value);
+		}
+	}
 }
 
 
@@ -140,6 +175,8 @@ InputDeviceTouch::Update(InputDeltaState* delta)
 size_t
 InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
+	GAINPUT_ASSERT(outButtons);
+	GAINPUT_ASSERT(maxButtonCount > 0);
 	return CheckAllButtonsDown(outButtons, maxButtonCount, TOUCH_0_DOWN, TOUCH_COUNT, impl_->GetDevice());
 }
 
@@ -147,6 +184,8 @@ size_t
 InputDeviceTouch::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
 	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
 	buffer[bufferLength-1] = 0;
 	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
@@ -163,6 +202,7 @@ InputDeviceTouch::GetButtonType(DeviceButtonId deviceButton) const
 DeviceButtonId
 InputDeviceTouch::GetButtonByName(const char* name) const
 {
+	GAINPUT_ASSERT(name);
 	for (unsigned i = 0; i < TouchPointCount*TouchDataElems; ++i)
 	{
 		if (strcmp(name, deviceButtonInfos[i].name) == 0)

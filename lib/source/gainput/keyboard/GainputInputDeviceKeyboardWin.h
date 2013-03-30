@@ -10,7 +10,6 @@ class InputDeviceKeyboardImpl
 {
 public:
 	InputDeviceKeyboardImpl(InputManager& manager, DeviceId device);
-	~InputDeviceKeyboardImpl();
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 

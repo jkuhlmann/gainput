@@ -11,6 +11,7 @@ InputState::InputState(Allocator& allocator, unsigned int buttonCount) :
 {
 	const size_t size = sizeof(Button) * buttonCount_;
 	buttons_ = static_cast<Button*>(allocator_.Allocate(size));
+	GAINPUT_ASSERT(buttons_);
 	memset(buttons_, 0, size);
 }
 

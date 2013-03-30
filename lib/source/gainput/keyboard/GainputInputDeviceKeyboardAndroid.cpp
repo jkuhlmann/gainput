@@ -128,10 +128,6 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	dialect_[AKEYCODE_SWITCH_CHARSET] = KEY_SWITCH_CHARSET;
 }
 
-InputDeviceKeyboardImpl::~InputDeviceKeyboardImpl()
-{
-}
-
 void
 InputDeviceKeyboardImpl::Update(InputState& state, InputState& previousState, InputDeltaState* delta)
 {
@@ -143,6 +139,9 @@ InputDeviceKeyboardImpl::Update(InputState& state, InputState& previousState, In
 int32_t
 InputDeviceKeyboardImpl::HandleInput(AInputEvent* event)
 {
+	GAINPUT_ASSERT(event);
+	GAINPUT_ASSERT(state_);
+
 	if (AInputEvent_getType(event) != AINPUT_EVENT_TYPE_KEY)
 	{
 		return 0;
@@ -161,6 +160,7 @@ InputDeviceKeyboardImpl::HandleInput(AInputEvent* event)
 
 		if (delta_)
 		{
+			GAINPUT_ASSERT(previousState_);
 			const bool oldValue = previousState_->GetBool(buttonId);
 			if (oldValue != pressed)
 			{
@@ -234,6 +234,8 @@ InputDeviceKeyboard::Update(InputDeltaState* delta)
 size_t
 InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
+	GAINPUT_ASSERT(outButtons);
+	GAINPUT_ASSERT(maxButtonCount > 0);
 	return CheckAllButtonsDown(outButtons, maxButtonCount, 0, KeyboardButtonCount, impl_->GetDevice());
 }
 
@@ -241,6 +243,8 @@ size_t
 InputDeviceKeyboard::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
 	return impl_->GetKeyName(deviceButton, buffer, bufferLength);
 }
 
@@ -254,6 +258,7 @@ InputDeviceKeyboard::GetButtonType(DeviceButtonId deviceButton) const
 DeviceButtonId
 InputDeviceKeyboard::GetButtonByName(const char* name) const
 {
+	GAINPUT_ASSERT(name);
 	return impl_->GetButtonByName(name);
 }
 

@@ -20,6 +20,7 @@ public:
 	{
 		const size_t size = sizeof(bool)*MouseButtonCount;
 		isWheel_ = static_cast<bool*>(manager_.GetAllocator().Allocate(size));
+		GAINPUT_ASSERT(isWheel_);
 		memset(isWheel_, 0, size);
 	}
 
@@ -93,8 +94,7 @@ public:
 					GAINPUT_ASSERT(buttonId <= MOUSE_BUTTON_MAX);
 					const bool pressed = event.type == ButtonPress;
 
-					if (!pressed
-							&& pressedThisFrame[buttonId])
+					if (!pressed && pressedThisFrame[buttonId])
 					{
 						// This is a mouse wheel button. Ignore release now, reset next frame.
 						isWheel_[buttonId] = true;
@@ -165,6 +165,8 @@ InputDeviceMouse::Update(InputDeltaState* delta)
 size_t
 InputDeviceMouse::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
+	GAINPUT_ASSERT(outButtons);
+	GAINPUT_ASSERT(maxButtonCount > 0);
 	return CheckAllButtonsDown(outButtons, maxButtonCount, MOUSE_BUTTON_0, MOUSE_BUTTON_MAX, impl_->GetDevice());
 }
 
@@ -172,6 +174,8 @@ size_t
 InputDeviceMouse::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
 	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
 	buffer[bufferLength-1] = 0;
 	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
@@ -188,6 +192,7 @@ InputDeviceMouse::GetButtonType(DeviceButtonId deviceButton) const
 DeviceButtonId
 InputDeviceMouse::GetButtonByName(const char* name) const
 {
+	GAINPUT_ASSERT(name);
 	for (unsigned i = 0; i < MouseButtonCount + MouseAxisCount; ++i)
 	{
 		if (strcmp(name, deviceButtonInfos[i].name) == 0)

@@ -51,7 +51,6 @@ public:
 		fd_ = open(PadDeviceIds[padIndex], O_RDONLY | O_NONBLOCK);
 		if (fd_ < 0)
 		{
-			state_ = InputDevice::DS_UNAVAILABLE;
 			return;
 		}
 		GAINPUT_ASSERT(fd_ >= 0);
@@ -68,7 +67,9 @@ public:
 
 		char name[128];
 		if (ioctl(fd_, JSIOCGNAME(sizeof(name)), name) < 0)
+		{
 			strncpy(name, "Unknown", sizeof(name));
+		}
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG("Name: %s\n", name);
 #endif
@@ -107,7 +108,7 @@ public:
 		js_event event;
 		int c;
 
-		while ( (c = read(fd_, &event, sizeof(js_event))) == sizeof(js_event))
+		while ( (c = read(fd_, &event, sizeof(js_event))) == sizeof(js_event) )
 		{
 			event.type &= ~JS_EVENT_INIT;
 			if (event.type == JS_EVENT_AXIS)
@@ -217,6 +218,8 @@ InputDevicePad::GetState() const
 size_t
 InputDevicePad::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
+	GAINPUT_ASSERT(outButtons);
+	GAINPUT_ASSERT(maxButtonCount > 0);
 	return CheckAllButtonsDown(outButtons, maxButtonCount, PAD_BUTTON_LEFT_STICK_X, PAD_BUTTON_MAX, impl_->GetDevice());
 }
 
@@ -224,6 +227,8 @@ size_t
 InputDevicePad::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
 {
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
 	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
 	buffer[bufferLength-1] = 0;
 	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
@@ -240,6 +245,7 @@ InputDevicePad::GetButtonType(DeviceButtonId deviceButton) const
 DeviceButtonId
 InputDevicePad::GetButtonByName(const char* name) const
 {
+	GAINPUT_ASSERT(name);
 	for (unsigned i = 0; i < PadButtonCount + PadAxisCount; ++i)
 	{
 		if (strcmp(name, deviceButtonInfos[i].name) == 0)

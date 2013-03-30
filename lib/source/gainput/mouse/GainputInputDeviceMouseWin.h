@@ -9,7 +9,6 @@ class InputDeviceMouseImpl
 {
 public:
 	InputDeviceMouseImpl(InputManager& manager, DeviceId device);
-	~InputDeviceMouseImpl();
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 

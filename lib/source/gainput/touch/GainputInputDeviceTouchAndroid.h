@@ -9,7 +9,6 @@ class InputDeviceTouchImpl
 {
 public:
 	InputDeviceTouchImpl(InputManager& manager, DeviceId device);
-	~InputDeviceTouchImpl();
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
 
@@ -24,6 +23,9 @@ private:
 	InputState* state_;
 	InputState* previousState_;
 	InputDeltaState* delta_;
+
+	void HandleBool(DeviceButtonId buttonId, bool value);
+	void HandleFloat(DeviceButtonId buttonId, float value);
 };
 
 }
