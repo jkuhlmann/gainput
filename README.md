@@ -55,17 +55,10 @@ By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make
 
 ### Android NDK
 
-Building for Android is a little more complicated at the moment, but here you go:
-
 1. Run `waf configure --cross-android --cross-android-ndk=ANDROID_NDK_PATH`
 1. Run `waf build_debug` or `waf build_release`
-1. Do `cp build/debug/libbasicsample.so samples/android/libs/armeabi/`
-1. Do `cd samples/android/`
-1. Run `ANDROID_SDK_PATH/tools/android update project -p . -s --target android-17`
-1. Run `ant debug`
-1. Run `ANDROID_SDK_PATH/platform-tools/adb install bin/Gainput-simple-debug.apk`
 
-Replace `ANDROID_NDK_PATH` and `ANDROID_SDK_PATH` with your local paths.
+Replace `ANDROID_NDK_PATH` with your local path.
 
 
 Dependencies
