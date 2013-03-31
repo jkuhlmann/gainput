@@ -165,6 +165,11 @@ public:
 		return deviceState_;
 	}
 
+	bool IsValidButton(DeviceButtonId deviceButton) const
+	{
+		return deviceButton < PAD_BUTTON_AXIS_4 || (deviceButton >= PAD_BUTTON_START && deviceButton <= PAD_BUTTON_R3);
+	}
+
 	bool Vibrate(float leftMotor, float rightMotor)
 	{
 		GAINPUT_ASSERT(leftMotor >= 0.0f && leftMotor <= 1.0f);
@@ -216,6 +221,12 @@ InputDevice::DeviceState
 InputDevicePad::GetState() const
 {
 	return impl_->GetState();
+}
+
+bool
+InputDevicePad::IsValidButtonId(DeviceButtonId deviceButton) const
+{
+	return impl_->IsValidButton(deviceButton);
 }
 
 size_t

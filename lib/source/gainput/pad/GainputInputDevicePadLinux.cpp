@@ -174,6 +174,25 @@ public:
 		return state_;
 	}
 
+	bool IsValidButton(DeviceButtonId deviceButton) const
+	{
+		if (buttonDialect_.empty())
+		{
+			return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX;
+		}
+
+		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();
+				it != buttonDialect_.end();
+				++it)
+		{
+			if (it->second == deviceButton)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 private:
 	InputManager& manager_;
@@ -213,6 +232,12 @@ InputDevice::DeviceState
 InputDevicePad::GetState() const
 {
 	return impl_->GetState();
+}
+
+bool
+InputDevicePad::IsValidButtonId(DeviceButtonId deviceButton) const
+{
+	return impl_->IsValidButton(deviceButton);
 }
 
 size_t

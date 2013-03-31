@@ -160,6 +160,26 @@ public:
 		return state_;
 	}
 
+	bool IsValidButton(DeviceButtonId deviceButton) const
+	{
+		if (deviceButton >= PAD_BUTTON_ACCELERATION_X && deviceButton <= PAD_BUTTON_ACCELERATION_Z && accelerometerSensor_)
+		{
+			return true;
+		}
+		
+		if (deviceButton >= PAD_BUTTON_GYROSCOPE_X && deviceButton <= PAD_BUTTON_GYROSCOPE_Z && gyroscopeSensor_)
+		{
+			return true;
+		}
+
+		if (deviceButton >= PAD_BUTTON_MAGNETICFIELD_X && deviceButton <= PAD_BUTTON_MAGNETICFIELD_Z && magneticFieldSensor_)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 private:
 	InputManager& manager_;
 	DeviceId device_;
@@ -202,6 +222,12 @@ InputDevice::DeviceState
 InputDevicePad::GetState() const
 {
 	return impl_->GetState();
+}
+
+bool
+InputDevicePad::IsValidButtonId(DeviceButtonId deviceButton) const
+{
+	return impl_->IsValidButton(deviceButton);
 }
 
 size_t

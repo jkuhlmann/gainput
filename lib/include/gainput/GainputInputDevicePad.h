@@ -113,7 +113,7 @@ public:
 	/// Returns DT_PAD.
 	DeviceType GetType() const { return DT_PAD; }
 	DeviceState GetState() const;
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const;
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
