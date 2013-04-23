@@ -30,10 +30,6 @@ public:
 	/// Returns the input manager this input map uses.
 	const InputManager& GetManager() const { return manager_; }
 
-	GestureId AddGesture(InputGesture* gesture);
-	InputGesture* GetGesture(GestureId gesture);
-	void RemoveGesture(GestureId gesture);
-
 	void AddListener(InputListener* listener);
 	void RemoveListener(InputListener* listener);
 
@@ -56,7 +52,6 @@ public:
 	 */
 	bool MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton,
 			float min = 0.0f, float max = 1.0f);
-	bool MapGesture(UserButtonId userButton, GestureId gesture, DeviceButtonId gestureButton);
 	/// Removes all mappings for the given user button.
 	void Unmap(UserButtonId userButton);
 	/// Returns if the given user button has any mappings.
@@ -118,8 +113,6 @@ private:
 	UserButtonMap userButtons_;
 	UserButtonId nextUserButtonId_;
 
-	typedef HashMap<GestureId, InputGesture*> GestureMap;
-	GestureMap gestures_;
 	Array<InputListener*> listeners_;
 
 	float GetFloatState(UserButtonId userButton, bool previous) const;

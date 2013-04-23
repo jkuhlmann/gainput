@@ -97,6 +97,10 @@ def configure(cnf):
 	        	  lib='GL',
 		          mandatory=True, 
 		          uselib_store='LIBGL')
+		cnf.check(compiler='cxx',
+	        	  lib='rt',
+		          mandatory=True, 
+		          uselib_store='LIBRT')
 	else:
 		cnf.check_libs_msvc('kernel32 user32 gdi32')
 		cnf.check(compiler='cxx',
@@ -143,7 +147,7 @@ def build(bld):
 			includes='lib/include/', 
 			target='basicsample',
 			use = usethese,
-			uselib=['LIBX11', 'LIBGL']
+			uselib=['LIBX11', 'LIBGL', 'LIBRT']
 			)
 
 from waflib.Build import BuildContext, CleanContext, \

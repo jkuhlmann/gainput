@@ -45,7 +45,7 @@ if (map.GetBoolWasDown(ButtonConfirm))
 Building
 --------
 
-By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make sure you have recent version of [Python](http://www.python.org/) installed.
+By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make sure you have a recent version of [Python](http://www.python.org/) installed.
 
 ### Windows & Linux
 
@@ -64,7 +64,7 @@ Replace `ANDROID_NDK_PATH` with your local path.
 Dependencies
 ------------
 
-Gainput has minimal number of external dependencies to make it as self-contained as possible. It doesn't use any STL.
+Gainput has a minimal number of external dependencies to make it as self-contained as possible. It doesn't use any STL.
 
 - Windows:
   - the Win32 message loop for keyboard and mouse

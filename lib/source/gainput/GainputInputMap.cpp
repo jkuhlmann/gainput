@@ -13,14 +13,6 @@ namespace gainput
 class MappedInput
 {
 public:
-	enum MappedType
-	{
-		MT_DEVICE_BUTTON,
-		MT_GESTURE_BUTTON
-	};
-
-	MappedType mappedType;
-
 	DeviceId device;
 	DeviceButtonId deviceButton;
 
@@ -49,7 +41,6 @@ InputMap::InputMap(const InputManager& manager, Allocator& allocator) :
 	manager_(manager),
 	userButtons_(allocator_),
 	nextUserButtonId_(0),
-	gestures_(allocator_),
 	listeners_(allocator_)
 {
 
@@ -88,7 +79,6 @@ InputMap::MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId devic
 	}
 
 	MappedInput mi;
-	mi.mappedType = MappedInput::MT_DEVICE_BUTTON;
 	mi.device = device;
 	mi.deviceButton = deviceButton;
 	ub->inputs.push_back(mi);
@@ -111,7 +101,6 @@ InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId devi
 	}
 
 	MappedInput mi;
-	mi.mappedType = MappedInput::MT_DEVICE_BUTTON;
 	mi.device = device;
 	mi.deviceButton = deviceButton;
 	mi.rangeMin = min;

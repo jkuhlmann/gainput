@@ -29,6 +29,7 @@
 #define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
 
 //#define GAINPUT_DEBUG
+#define GAINPUT_ENABLE_ALL_GESTURES
 
 #include <cassert>
 #include <cstring>
@@ -55,7 +56,8 @@
 	#include <windows.h>
 #endif
 
-namespace gainput {
+namespace gainput
+{
 	typedef unsigned __int8 uint8_t;
 	typedef __int8 int8_t;
 	typedef unsigned __int32 uint32_t;
@@ -103,8 +105,6 @@ struct DeviceButtonSpec
 typedef unsigned int UserButtonId;
 /// ID of an input listener.
 typedef unsigned int ListenerId;
-/// ID of a registered gesture.
-typedef unsigned int GestureId;
 
 /// An invalid device button ID.
 static const DeviceButtonId InvalidDeviceButtonId = -1;
@@ -121,6 +121,7 @@ const char* GetLibVersionString();
 class InputDeltaState;
 class InputListener;
 
+template <class T> T Abs(T a) { return a < T() ? -a : a; }
 }
 
 
@@ -128,7 +129,6 @@ class InputListener;
 #include <gainput/GainputContainers.h>
 #include <gainput/GainputInputState.h>
 #include <gainput/GainputInputDevice.h>
-#include <gainput/GainputInputGesture.h>
 #include <gainput/GainputInputListener.h>
 #include <gainput/GainputInputManager.h>
 #include <gainput/GainputInputMap.h>
@@ -136,6 +136,8 @@ class InputListener;
 #include <gainput/GainputInputDeviceMouse.h>
 #include <gainput/GainputInputDeviceKeyboard.h>
 #include <gainput/GainputInputDevicePad.h>
+
+#include <gainput/gestures/GainputGestures.h>
 
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	#include <gainput/GainputInputDeviceTouch.h>

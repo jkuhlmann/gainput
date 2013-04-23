@@ -3,7 +3,9 @@
 #include <gainput/gainput.h>
 #include "GainputInputDeltaState.h"
 
-#if defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX)
+#include <time.h>
+#elif defined(GAINPUT_PLATFORM_WIN)
 #include "keyboard/GainputInputDeviceKeyboardWin.h"
 #include "mouse/GainputInputDeviceMouseWin.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
@@ -55,6 +57,23 @@ InputManager::Update()
 		ds->NotifyListeners(listeners_);
 		ds->Clear();
 	}
+}
+
+uint64_t
+InputManager::GetTime() const
+{
+#if defined(GAINPUT_PLATFORM_LINUX)
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
+	{
+		return -1;
+	}
+
+	uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
+	return t;
+#else
+#error No time support
+#endif
 }
 
 unsigned

@@ -47,6 +47,9 @@ public:
 	/// Returns the allocator to be used by for memory allocations.
 	Allocator& GetAllocator() { return allocator_; }
 
+	/// Returns a monotonic time in milliseconds.
+	uint64_t GetTime() const;
+
 	/// Creates an input device and registers it with the manager.
 	/**
 	 * \tparam T The input device class, muste be derived from InputDevice.
