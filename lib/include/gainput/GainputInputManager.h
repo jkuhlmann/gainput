@@ -140,6 +140,7 @@ InputManager::CreateAndGetDevice()
 {
 	T* device = allocator_.New<T>(*this, nextDeviceId_);
 	devices_[nextDeviceId_] = device;
+	++nextDeviceId_;
 	return device;
 }
 
