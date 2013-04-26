@@ -269,7 +269,8 @@ private:
 
 
 
-InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device)
+InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device) :
+	InputDevice(device)
 {
 	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);

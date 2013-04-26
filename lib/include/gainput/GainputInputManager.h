@@ -56,6 +56,12 @@ public:
 	 * \return The ID of the newly created input device.
 	 */
 	template<class T> DeviceId CreateDevice();
+	/// Creates an input device, registers it with the manager and returns it.
+	/**
+	 * \tparam T The input device class, muste be derived from InputDevice.
+	 * \return The newly created input device.
+	 */
+	template<class T> T* CreateAndGetDevice();
 	/// Returns the input device with the given ID.
 	/**
 	 * \return The input device or 0 if it doesn't exist.
@@ -125,6 +131,16 @@ InputManager::CreateDevice()
 	T* device = allocator_.New<T>(*this, nextDeviceId_);
 	devices_[nextDeviceId_] = device;
 	return nextDeviceId_++;
+}
+
+template<class T>
+inline
+T*
+InputManager::CreateAndGetDevice()
+{
+	T* device = allocator_.New<T>(*this, nextDeviceId_);
+	devices_[nextDeviceId_] = device;
+	return device;
 }
 
 inline

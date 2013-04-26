@@ -4,6 +4,12 @@
 namespace gainput
 {
 
+
+InputDevice::InputDevice(DeviceId device) :
+	deviceId_(device)
+{
+}
+
 size_t
 InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end, DeviceId device) const
 {

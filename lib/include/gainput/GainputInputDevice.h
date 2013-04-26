@@ -40,6 +40,8 @@ public:
 		DS_UNAVAILABLE		///< The input device is currently not available.
 	};
 
+	/// Initializes the input device.
+	InputDevice(DeviceId device);
 
 	/// Empty virtual destructor.
 	virtual ~InputDevice() { }
@@ -49,6 +51,9 @@ public:
 	 * \param delta The delta state to add changes to.
 	 */
 	virtual void Update(InputDeltaState* delta) = 0;
+
+	/// Returns this device's ID.
+	DeviceId GetDeviceId() const { return deviceId_; }
 
 	/// Returns the device type.
 	virtual DeviceType GetType() const = 0;
@@ -95,6 +100,9 @@ public:
 	virtual DeviceButtonId GetButtonByName(const char* name) const { return InvalidDeviceButtonId; }
 
 protected:
+	/// The ID of this device.
+	DeviceId deviceId_;
+
 	/// The current state of this device.
 	InputState* state_;
 	/// The previous state of this device.

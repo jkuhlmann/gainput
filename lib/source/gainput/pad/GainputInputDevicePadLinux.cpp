@@ -204,7 +204,8 @@ private:
 
 
 
-InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device)
+InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device) :
+	InputDevice(device)
 {
 	impl_ = manager.GetAllocator().New<InputDevicePadImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);

@@ -165,7 +165,8 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 
 
 
-InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device)
+InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
+	InputDevice(device)
 {
 	impl_ = manager.GetAllocator().New<InputDeviceMouseImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);
