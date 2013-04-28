@@ -14,6 +14,20 @@ enum DoubleClickAction
 };
 
 /// A double-click gesture.
+/**
+ * This gesture implements the classic double-click functionality. Its only device button ::DoubleClickTriggered is
+ * true for one frame after the specified button has been active for a specified number of times in a given
+ * time frame. It's also possible to disallow the pointer from travelling too far between and during clicks.
+ *
+ * After instantiating the gesture like any other input device, call one of the Initialize() functions to properly
+ * set it up.
+ *
+ * In order for this gesture to be available, Gainput must be built with \c GAINPUT_ENABLE_ALL_GESTURES or
+ * \c GAINPUT_ENABLE_DOUBLE_CLICK_GESTURE defined.
+ *
+ * \sa Initialize
+ * \sa SetClicksTargetCount
+ */
 class GAINPUT_LIBEXPORT DoubleClickGesture : public InputDevice
 {
 public:

@@ -52,9 +52,6 @@ inline void MurmurHash3_x86_32(const void * key, int len,
 	const uint32_t c1 = 0xcc9e2d51;
 	const uint32_t c2 = 0x1b873593;
 
-	//----------
-	// body
-
 	const uint32_t * blocks = (const uint32_t *)(data + nblocks*4);
 
 	for(int i = -nblocks; i; i++)
@@ -70,9 +67,6 @@ inline void MurmurHash3_x86_32(const void * key, int len,
 		h1 = h1*5+0xe6546b64;
 	}
 
-	//----------
-	// tail
-
 	const uint8_t * tail = (const uint8_t*)(data + nblocks*4);
 
 	uint32_t k1 = 0;
@@ -85,9 +79,6 @@ inline void MurmurHash3_x86_32(const void * key, int len,
 			k1 *= c1; k1 = rotl32(k1,15); k1 *= c2; h1 ^= k1;
 	};
 
-	//----------
-	// finalization
-
 	h1 ^= len;
 
 	h1 = fmix(h1);
@@ -96,6 +87,7 @@ inline void MurmurHash3_x86_32(const void * key, int len,
 }
 
 // -- MurmurHash3 end --
+
 
 /// A std::vector-like data container for POD-types.
 /**

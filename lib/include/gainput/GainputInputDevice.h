@@ -46,7 +46,7 @@ public:
 	/// Empty virtual destructor.
 	virtual ~InputDevice() { }
 
-	/// Update this device.
+	/// Update this device, internally called by InputManager.
 	/**
 	 * \param delta The delta state to add changes to.
 	 */

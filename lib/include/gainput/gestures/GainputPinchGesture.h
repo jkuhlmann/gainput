@@ -14,7 +14,20 @@ enum PinchAction
 	PinchScale		///< The current pinch scale value if pinching is active.
 };
 
-/// A pinch gesture.
+/// A multi-touch pinch-to-scale gesture.
+/**
+ * This gesture, mainly meant for multi-touch devices, triggers (::PinchTriggered is down) when both specified 
+ * source buttons are down. It will then determine the distance between the two 2D touch points and report 
+ * any change in distance as a factor of the initial distance using ::PinchScale.
+ *
+ * After instantiating the gesture like any other input device, call Initialize() to properly
+ * set it up.
+ *
+ * In order for this gesture to be available, Gainput must be built with \c GAINPUT_ENABLE_ALL_GESTURES or
+ * \c GAINPUT_ENABLE_PINCH_GESTURE defined.
+ *
+ * \sa Initialize
+ */
 class GAINPUT_LIBEXPORT PinchGesture : public InputDevice
 {
 public:
@@ -23,7 +36,7 @@ public:
 	/// Uninitializes the gesture.
 	~PinchGesture();
 
-	/// Sets up the gesture for operation with the given axes and button.
+	/// Sets up the gesture for operation with the given axes and buttons.
 	/**
 	 * \param downDevice ID of the input device containing the first touch button.
 	 * \param downButton ID of the device button to be used as the first touch button.

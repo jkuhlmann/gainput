@@ -14,6 +14,19 @@ enum HoldAction
 };
 
 /// A hold-to-trigger gesture.
+/**
+ * This gesture, mainly meant for touch devices, triggers after the specified button has been down for at least
+ * the specified amount of time. Its button ::HoldTriggered is then either active for one frame or as long as
+ * the source button is down.
+ *
+ * After instantiating the gesture like any other input device, call one of the Initialize() functions to properly
+ * set it up.
+ *
+ * In order for this gesture to be available, Gainput must be built with \c GAINPUT_ENABLE_ALL_GESTURES or
+ * \c GAINPUT_ENABLE_HOLD_GESTURE defined.
+ *
+ * \sa Initialize
+ */
 class GAINPUT_LIBEXPORT HoldGesture : public InputDevice
 {
 public:
@@ -26,7 +39,7 @@ public:
 	/**
 	 * \param actionButtonDevice ID of the input device containing the action button.
 	 * \param actionButton ID of the device button to be used as the action button.
-	 * \param oneShot Specifies if the gesture triggers only once after the given time or if it triggers indefinitely.
+	 * \param oneShot Specifies if the gesture triggers only once after the given time or if it triggers as long as the source button is down.
 	 * \param timeSpan Time in milliseconds the user needs to hold in order to trigger the gesture.
 	 */
 	void Initialize(DeviceId actionButtonDevice, DeviceButtonId actionButton, bool oneShot = true, uint64_t timeSpan = 800);
@@ -40,7 +53,7 @@ public:
 	 * \param yAxisDevice ID of the input device containing the Y coordinate of the pointer.
 	 * \param yAxis ID of the device button/axis to be used for the Y coordinate of the pointer.
 	 * \param yTolerance The amount the pointer may travel in the Y coordinate to still be valid.
-	 * \param oneShot Specifies if the gesture triggers only once after the given time or if it triggers indefinitely.
+	 * \param oneShot Specifies if the gesture triggers only once after the given time or if it triggers as long as the source button is down.
 	 * \param timeSpan Time in milliseconds the user needs to hold in order to trigger the gesture.
 	 */
 	void Initialize(DeviceId actionButtonDevice, DeviceButtonId actionButton, 

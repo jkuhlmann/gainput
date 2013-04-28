@@ -10,11 +10,24 @@ namespace gainput
 /// Buttons provided by the RotateGesture.
 enum RotateAction
 {
-	RotateTriggered,		///< The button that triggers when both pinch buttons are down.
-	RotateAngle			///< The current pinch scale value if pinching is active.
+	RotateTriggered,		///< The button that triggers when both rotate buttons are down.
+	RotateAngle			///< The current rotation angle in radians if rotation is triggered (::RotateTriggered).
 };
 
-/// A pinch gesture.
+/// A multi-touch rotate gesture.
+/**
+ * This gesture, mainly meant for multi-touch devices, triggers (::RotateTriggered is down) when both specified
+ * source buttons are down. It then determines the angle between the two specified 2D touch points and reports any
+ * change in angle using ::RotateAngle. The initial angle between the two points is defined as no rotation.
+ *
+ * After instantiating the gesture like any other input device, call Initialize() to properly
+ * set it up.
+ *
+ * In order for this gesture to be available, Gainput must be built with \c GAINPUT_ENABLE_ALL_GESTURES or
+ * \c GAINPUT_ENABLE_ROTATE_GESTURE defined.
+ *
+ * \sa Initialize
+ */
 class GAINPUT_LIBEXPORT RotateGesture : public InputDevice
 {
 public:
@@ -23,7 +36,7 @@ public:
 	/// Uninitializes the gesture.
 	~RotateGesture();
 
-	/// Sets up the gesture for operation with the given axes and button.
+	/// Sets up the gesture for operation with the given axes and buttons.
 	/**
 	 * \param downDevice ID of the input device containing the first touch button.
 	 * \param downButton ID of the device button to be used as the first touch button.

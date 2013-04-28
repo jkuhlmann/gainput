@@ -6,7 +6,22 @@
 namespace gainput
 {
 
-/// Manages all input devices and misc stuff.
+/// Manages all input devices and some other helpful stuff.
+/**
+ * This manager takes care of all device-related things. Normally, you should only need one that contains
+ * all your input devices.
+ *
+ * After instantiating an InputManager, you probably have to call some platform-specific function 
+ * (see SetXDisplay(), SetDisplaySize()). You should also create some input devices using the template
+ * function CreateDevice() which returns the device ID that is needed to do anything further with the
+ * device (for example, see InputMap).
+ *
+ * The manager has to be updated every frame by calling Update(). Depending on the platform,
+ * you may have to call another function as part of your message handling code (see HandleMessage(), HandleInput()).
+ *
+ * Note that destruction of an InputManager invalidates all input maps based on it and all devices created
+ * through it.
+ */
 class GAINPUT_LIBEXPORT InputManager
 {
 public:

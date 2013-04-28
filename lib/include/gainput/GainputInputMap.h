@@ -9,8 +9,16 @@ class UserButton;
 
 /// Maps user buttons to device buttons.
 /**
- * This is the interface that should be used to get input. You can have several maps that you use depending on game state.
- * The user button IDs have to be unique per input map.
+ * This is the interface that should be used to get input. You can have several maps that are used
+ * simultaneously or use different ones depending on game state. The user button IDs have to be unique per input map.
+ *
+ * InputMap uses the provided InputManager to get devices inputs and process them into user-mapped inputs. After creating 
+ * an InputMap, you should map some device buttons to user buttons (using MapBool() or MapFloat()). User buttons are identified 
+ * by an ID provided by you. In order to ensure their uniqueness, it's a good idea to define an enum containing all your user buttons
+ * for any given InputMap. It's of course possible to map multiple different device button to one user button.
+ *
+ * After a user button has been mapped, you can query its state by calling one of the several GetBool* and GetFloat* functions. The
+ * result will depend on the mapped device button(s) and the policy (set using SetUserButtonPolicy()).
  */
 class GAINPUT_LIBEXPORT InputMap
 {
