@@ -76,7 +76,7 @@ PinchGesture::Update(InputDeltaState* delta)
 
 	const InputDevice* downDevice2 = manager_.GetDevice(downButton2_.deviceId);
 	GAINPUT_ASSERT(downDevice2);
-	const bool isDown2 = true; //downDevice2->GetBool(downButton2_.buttonId);
+	const bool isDown2 = downDevice2->GetBool(downButton2_.buttonId);
 
 	if (!isDown || !isDown2)
 	{
@@ -96,10 +96,10 @@ PinchGesture::Update(InputDeltaState* delta)
 
 	const InputDevice* xAxis2Device = manager_.GetDevice(xAxis2_.deviceId);
 	GAINPUT_ASSERT(xAxis2Device);
-	const float posX2 = 0;//xAxis2Device->GetFloat(xAxis2_.buttonId);
+	const float posX2 = xAxis2Device->GetFloat(xAxis2_.buttonId);
 	const InputDevice* yAxis2Device = manager_.GetDevice(yAxis2_.deviceId);
 	GAINPUT_ASSERT(yAxis2Device);
-	const float posY2 = 0;//yAxis2Device->GetFloat(yAxis2_.buttonId);
+	const float posY2 = yAxis2Device->GetFloat(yAxis2_.buttonId);
 
 	const float xd = posX - posX2;
 	const float yd = posY - posY2;
