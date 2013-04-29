@@ -8,7 +8,7 @@ namespace gainput
 {
 
 TapGesture::TapGesture(InputManager& manager, DeviceId device) :
-	InputDevice(device),
+	InputGesture(device),
 	manager_(manager),
 	firstDownTime_(0)
 {

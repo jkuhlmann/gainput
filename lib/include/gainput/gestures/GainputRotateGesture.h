@@ -28,7 +28,7 @@ enum RotateAction
  *
  * \sa Initialize
  */
-class GAINPUT_LIBEXPORT RotateGesture : public InputDevice
+class GAINPUT_LIBEXPORT RotateGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.

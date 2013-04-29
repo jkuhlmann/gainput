@@ -10,7 +10,7 @@ namespace gainput
 {
 
 PinchGesture::PinchGesture(InputManager& manager, DeviceId device) :
-	InputDevice(device),
+	InputGesture(device),
 	manager_(manager),
 	pinching_(false)
 {

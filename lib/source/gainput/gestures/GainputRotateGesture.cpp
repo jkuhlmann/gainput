@@ -10,7 +10,7 @@ namespace gainput
 {
 
 RotateGesture::RotateGesture(InputManager& manager, DeviceId device) :
-	InputDevice(device),
+	InputGesture(device),
 	manager_(manager),
 	rotating_(false)
 {

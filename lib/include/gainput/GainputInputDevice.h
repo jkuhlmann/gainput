@@ -16,7 +16,21 @@ enum ButtonType
 };
 
 
-/// Interface for all input devices.
+/// Interface for anything that provides device inputs.
+/**
+ * An InputDevice can be anything from a physical device, like a mouse or keyboard, to the more abstract
+ * concept of gestures that in turn themselves depend on other InputDevices. What they have in common is
+ * that they provide a number of device buttons (identified by a DeviceButtonId) which can be queried for
+ * their state.
+ *
+ * Note that you may not instantiate an InputDevice (or any derived implementation) directly. Instead you
+ * have to call InputManager::CreateDevice() or InputManager::CreateAndGetDevice() with the device you want
+ * to instantiate as the template parameter. That way the device will be properly registered with the
+ * InputManager and continuously updated.
+ *
+ * Normally, you won't interact with an InputDevice directly, but instead use its device ID and its device
+ * buttons' IDs to map the device buttons to user buttons (see InputMap).
+ */
 class GAINPUT_LIBEXPORT InputDevice
 {
 public:
@@ -41,6 +55,9 @@ public:
 	};
 
 	/// Initializes the input device.
+	/**
+	 * Do not instantiate any input device directly. Call InputManager::CreateDevice() instead.
+	 */
 	InputDevice(DeviceId device);
 
 	/// Empty virtual destructor.

@@ -28,7 +28,7 @@ enum DoubleClickAction
  * \sa Initialize
  * \sa SetClicksTargetCount
  */
-class GAINPUT_LIBEXPORT DoubleClickGesture : public InputDevice
+class GAINPUT_LIBEXPORT DoubleClickGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
@@ -68,9 +68,6 @@ public:
 
 	void Update(InputDeltaState* delta);
 
-	/// Returns DT_GESTURE.
-	DeviceType GetType() const { return DT_GESTURE; }
-	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == DoubleClickTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }

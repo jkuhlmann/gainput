@@ -10,6 +10,26 @@
 #define GAINPUT_ENABLE_TAP_GESTURE
 #endif
 
+
+namespace gainput
+{
+
+/// Common functionality for all input gestures.
+class InputGesture : public InputDevice
+{
+public:
+	/// Returns DT_GESTURE.
+	DeviceType GetType() const { return DT_GESTURE; }
+	DeviceState GetState() const { return DS_OK; }
+
+protected:
+	InputGesture(DeviceId device) : InputDevice(device) { }
+
+};
+
+}
+
+
 #include <gainput/gestures/GainputDoubleClickGesture.h>
 #include <gainput/gestures/GainputHoldGesture.h>
 #include <gainput/gestures/GainputPinchGesture.h>

@@ -8,7 +8,7 @@ namespace gainput
 {
 
 DoubleClickGesture::DoubleClickGesture(InputManager& manager, DeviceId device) :
-	InputDevice(device),
+	InputGesture(device),
 	manager_(manager),
 	clicksRegistered_(0),
 	clicksTargetCount_(2)

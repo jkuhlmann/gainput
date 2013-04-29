@@ -27,7 +27,7 @@ enum HoldAction
  *
  * \sa Initialize
  */
-class GAINPUT_LIBEXPORT HoldGesture : public InputDevice
+class GAINPUT_LIBEXPORT HoldGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.

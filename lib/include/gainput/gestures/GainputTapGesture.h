@@ -26,7 +26,7 @@ enum TapAction
  *
  * \sa Initialize
  */
-class GAINPUT_LIBEXPORT TapGesture : public InputDevice
+class GAINPUT_LIBEXPORT TapGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.

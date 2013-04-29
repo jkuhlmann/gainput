@@ -185,13 +185,20 @@ enum Key
 	KEY_COLON,
 	KEY_EXCLAM,
 
-	KEY_COUNT_
+	KEY_COUNT_		///< Bigger by one than the biggest keyboard device button ID.
 };
 
 
 class InputDeviceKeyboardImpl;
 
 /// A keyboard input device.
+/**
+ * This input device provides support for standard keyboard devices. The valid device buttons are defined
+ * in the ::Key enum.
+ *
+ * This device is currently implemented for Android NDK, Linux, and Windows. Note that no support for
+ * virtual keyboards (on-screen) is present.
+ */
 class GAINPUT_LIBEXPORT InputDeviceKeyboard : public InputDevice
 {
 public:

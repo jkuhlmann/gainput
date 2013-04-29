@@ -28,7 +28,7 @@ enum PinchAction
  *
  * \sa Initialize
  */
-class GAINPUT_LIBEXPORT PinchGesture : public InputDevice
+class GAINPUT_LIBEXPORT PinchGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
