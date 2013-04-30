@@ -4,7 +4,7 @@
 
 namespace gainput
 {
-	
+
 class InputDeviceMouseImpl
 {
 public:

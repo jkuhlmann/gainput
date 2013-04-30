@@ -1,6 +1,6 @@
 
-#ifndef GAINPUTPADINFO_H_
-#define GAINPUTPADINFO_H_
+#ifndef GAINPUTPADCOMMON_H_
+#define GAINPUTPADCOMMON_H_
 
 namespace gainput
 {
@@ -88,6 +88,84 @@ DeviceButtonInfo deviceButtonInfos[] =
 const unsigned PadButtonCount = PAD_BUTTON_COUNT;
 const unsigned PadAxisCount = PAD_BUTTON_AXIS_COUNT;
 
+
+InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device) :
+	InputDevice(device)
+{
+	impl_ = manager.GetAllocator().New<InputDevicePadImpl>(manager, device);
+	GAINPUT_ASSERT(impl_);
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
+	GAINPUT_ASSERT(state_);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
+	GAINPUT_ASSERT(previousState_);
+}
+
+InputDevicePad::~InputDevicePad()
+{
+	impl_->GetManager().GetAllocator().Delete(state_);
+	impl_->GetManager().GetAllocator().Delete(previousState_);
+	impl_->GetManager().GetAllocator().Delete(impl_);
+}
+
+void
+InputDevicePad::Update(InputDeltaState* delta)
+{
+	*previousState_ = *state_;
+	impl_->Update(*state_, *previousState_, delta);
+}
+
+InputDevice::DeviceState
+InputDevicePad::GetState() const
+{
+	return impl_->GetState();
+}
+
+bool
+InputDevicePad::IsValidButtonId(DeviceButtonId deviceButton) const
+{
+	return impl_->IsValidButton(deviceButton);
+}
+
+size_t
+InputDevicePad::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
+{
+	GAINPUT_ASSERT(outButtons);
+	GAINPUT_ASSERT(maxButtonCount > 0);
+	return CheckAllButtonsDown(outButtons, maxButtonCount, PAD_BUTTON_LEFT_STICK_X, PAD_BUTTON_MAX, impl_->GetDevice());
+}
+
+size_t
+InputDevicePad::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
+{
+	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	GAINPUT_ASSERT(buffer);
+	GAINPUT_ASSERT(bufferLength > 0);
+	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
+	buffer[bufferLength-1] = 0;
+	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
+	return nameLen >= bufferLength ? bufferLength : nameLen+1;
+}
+
+ButtonType
+InputDevicePad::GetButtonType(DeviceButtonId deviceButton) const
+{
+	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+	return deviceButtonInfos[deviceButton].type;
+}
+
+DeviceButtonId
+InputDevicePad::GetButtonByName(const char* name) const
+{
+	GAINPUT_ASSERT(name);
+	for (unsigned i = 0; i < PadButtonCount + PadAxisCount; ++i)
+	{
+		if (strcmp(name, deviceButtonInfos[i].name) == 0)
+		{
+			return DeviceButtonId(i);
+		}
+	}
+	return InvalidDeviceButtonId;
+}
 }
 
 #endif

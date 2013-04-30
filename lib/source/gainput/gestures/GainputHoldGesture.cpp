@@ -73,7 +73,8 @@ HoldGesture::Update(InputDeltaState* delta)
 	GAINPUT_ASSERT(actionDevice);
 
 	bool positionValid = false;
-	float posX, posY;
+	float posX = 0.0f;
+	float posY = 0.0f;
 	if (xAxis_.buttonId != InvalidDeviceButtonId && yAxis_.buttonId != InvalidDeviceButtonId)
 	{
 		const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);

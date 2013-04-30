@@ -70,7 +70,8 @@ DoubleClickGesture::Update(InputDeltaState* delta)
 	GAINPUT_ASSERT(actionDevice);
 
 	bool positionValid = false;
-	float clickX, clickY;
+	float clickX = 0.0f;
+	float clickY = 0.0f;
 	if (xAxis_.buttonId != InvalidDeviceButtonId && yAxis_.buttonId != InvalidDeviceButtonId)
 	{
 		const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);
