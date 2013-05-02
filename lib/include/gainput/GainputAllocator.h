@@ -6,6 +6,13 @@ namespace gainput
 {
 
 /// Interface used to pass custom allocators to the library.
+/**
+ * If you want the library to use your custom allocator you should implement this interface.
+ * Specifically, you should provide implementations for the Allocate() and Deallocate()
+ * functions. All other (template) member functions are simply based on those two functions.
+ *
+ * \sa DefaultAllocator
+ */
 class GAINPUT_LIBEXPORT Allocator
 {
 public:
@@ -80,7 +87,8 @@ public:
 
 /// The default allocator used by the library.
 /**
- * Uses malloc and free.
+ * Any allocation/deallocation calls are simply forwarded to \c malloc and \c free. Any
+ * requested alignment is ignored.
  */
 class GAINPUT_LIBEXPORT DefaultAllocator : public Allocator
 {

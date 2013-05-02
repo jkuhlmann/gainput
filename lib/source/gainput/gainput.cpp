@@ -9,7 +9,6 @@ Gainput is an input library for games. This is its API documentation.
 \section using Using Gainput
 
 \code
-// Don't forget to include
 #include <gainput/gainput.h>
 
 // Define your user buttons somewhere global

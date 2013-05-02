@@ -27,6 +27,7 @@ enum RotateAction
  * \c GAINPUT_ENABLE_ROTATE_GESTURE defined.
  *
  * \sa Initialize
+ * \sa InputManager::CreateDevice
  */
 class GAINPUT_LIBEXPORT RotateGesture : public InputGesture
 {
@@ -60,9 +61,6 @@ public:
 
 	void Update(InputDeltaState* delta);
 
-	/// Returns DT_GESTURE.
-	DeviceType GetType() const { return DT_GESTURE; }
-	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == RotateTriggered || deviceButton == RotateAngle; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return deviceButton == RotateTriggered ? BT_BOOL : BT_FLOAT; }

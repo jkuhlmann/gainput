@@ -5,7 +5,7 @@
 namespace gainput
 {
 
-/// All valid device buttons for the mouse device.
+/// All valid device buttons for InputDeviceMouse.
 enum MouseButton
 {
 	MOUSE_BUTTON_0 = 0,
@@ -45,11 +45,19 @@ enum MouseButton
 class InputDeviceMouseImpl;
 
 /// A mouse input device.
+/**
+ * This input device provides support for standard mouse devices. The valid device buttons are defined
+ * in the ::MouseButton enum.
+ *
+ * This device is implemented on Linux and Windows.
+ */
 class GAINPUT_LIBEXPORT InputDeviceMouse : public InputDevice
 {
 public:
 	/// Initializes the device.
 	/**
+	 * Instantiate the device using InputManager::CreateDevice().
+	 *
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
@@ -70,7 +78,7 @@ public:
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 	DeviceButtonId GetButtonByName(const char* name) const;
 
-	/// Returns the platform-specific implementation of this device.
+	/// Returns the platform-specific implementation of this device (internal use only).
 	InputDeviceMouseImpl* GetPimpl() { return impl_; }
 
 private:

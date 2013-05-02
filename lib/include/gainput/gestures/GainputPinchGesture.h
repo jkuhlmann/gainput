@@ -27,6 +27,7 @@ enum PinchAction
  * \c GAINPUT_ENABLE_PINCH_GESTURE defined.
  *
  * \sa Initialize
+ * \sa InputManager::CreateDevice
  */
 class GAINPUT_LIBEXPORT PinchGesture : public InputGesture
 {
@@ -60,9 +61,6 @@ public:
 
 	void Update(InputDeltaState* delta);
 
-	/// Returns DT_GESTURE.
-	DeviceType GetType() const { return DT_GESTURE; }
-	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == PinchTriggered || deviceButton == PinchScale; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return deviceButton == PinchTriggered ? BT_BOOL : BT_FLOAT; }

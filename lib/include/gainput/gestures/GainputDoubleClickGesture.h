@@ -27,6 +27,7 @@ enum DoubleClickAction
  *
  * \sa Initialize
  * \sa SetClicksTargetCount
+ * \sa InputManager::CreateDevice
  */
 class GAINPUT_LIBEXPORT DoubleClickGesture : public InputGesture
 {

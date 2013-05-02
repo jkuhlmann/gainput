@@ -8,7 +8,7 @@ namespace gainput
 /// The maximum number of pads supported.
 enum { MaxPadCount = 10 };
 
-/// All valid device buttons for the pad device.
+/// All valid device buttons for InputDevicePad.
 enum PadButton
 {
 	PAD_BUTTON_LEFT_STICK_X,
@@ -92,6 +92,15 @@ enum PadButton
 class InputDevicePadImpl;
 
 /// A pad input device.
+/**
+ * This input device provides support for gamepad devices. The valid device buttons are defined
+ * in the ::PadButton enum.
+ *
+ * This device is implemented on Android NDK, Linux and Windows.
+ *
+ * Note that the Android implementation does not support any external pads, but only internal
+ * sensors (acceleration, gyroscope, magnetic field).
+ */
 class GAINPUT_LIBEXPORT InputDevicePad : public InputDevice
 {
 public:
@@ -101,6 +110,8 @@ public:
 
 	/// Initializes the device.
 	/**
+	 * Instantiate the device using InputManager::CreateDevice().
+	 *
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */

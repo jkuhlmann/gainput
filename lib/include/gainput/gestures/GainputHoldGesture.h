@@ -26,6 +26,7 @@ enum HoldAction
  * \c GAINPUT_ENABLE_HOLD_GESTURE defined.
  *
  * \sa Initialize
+ * \sa InputManager::CreateDevice
  */
 class GAINPUT_LIBEXPORT HoldGesture : public InputGesture
 {
@@ -64,9 +65,6 @@ public:
 
 	void Update(InputDeltaState* delta);
 
-	/// Returns DT_GESTURE.
-	DeviceType GetType() const { return DT_GESTURE; }
-	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == HoldTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }

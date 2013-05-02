@@ -5,7 +5,7 @@
 namespace gainput
 {
 
-/// All valid device buttons for the keyboard device.
+/// All valid device buttons for InputDeviceKeyboard.
 enum Key
 {
 	KEY_ESCAPE,
@@ -185,7 +185,7 @@ enum Key
 	KEY_COLON,
 	KEY_EXCLAM,
 
-	KEY_COUNT_		///< Bigger by one than the biggest keyboard device button ID.
+	KEY_COUNT_
 };
 
 
@@ -196,7 +196,7 @@ class InputDeviceKeyboardImpl;
  * This input device provides support for standard keyboard devices. The valid device buttons are defined
  * in the ::Key enum.
  *
- * This device is currently implemented for Android NDK, Linux, and Windows. Note that no support for
+ * This device is implemented on Android NDK, Linux, and Windows. Note that no support for
  * virtual keyboards (on-screen) is present.
  */
 class GAINPUT_LIBEXPORT InputDeviceKeyboard : public InputDevice
@@ -204,6 +204,8 @@ class GAINPUT_LIBEXPORT InputDeviceKeyboard : public InputDevice
 public:
 	/// Initializes the device.
 	/**
+	 * Instantiate the device using InputManager::CreateDevice().
+	 *
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
@@ -231,7 +233,7 @@ public:
 	/// Returns the next pending input character if text input is enabled.
 	char GetNextCharacter();
 
-	/// Returns the platform-specific implementation of this device.
+	/// Returns the platform-specific implementation of this device (internal use only).
 	InputDeviceKeyboardImpl* GetPimpl() { return impl_; }
 
 private:

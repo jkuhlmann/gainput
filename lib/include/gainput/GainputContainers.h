@@ -41,8 +41,7 @@ inline uint32_t fmix(uint32_t h)
  * \param seed Seed for the hash.
  * \param[out] out The hash value, a uint32_t in this case.
  */
-inline void MurmurHash3_x86_32(const void * key, int len,
-		uint32_t seed, void * out)
+inline void MurmurHash3_x86_32(const void * key, int len, uint32_t seed, void * out)
 {
 	const uint8_t * data = (const uint8_t*)key;
 	const int nblocks = len / 4;
@@ -97,13 +96,13 @@ template<class T>
 class Array
 {
 public:
-	static const unsigned DefaultCapacity = 8;
+	static const size_t DefaultCapacity = 8;
 
 	typedef T* iterator;
 	typedef const T* const_iterator;
 	typedef T value_type;
 
-	Array(Allocator& allocator, unsigned capacity = DefaultCapacity) :
+	Array(Allocator& allocator, size_t capacity = DefaultCapacity) :
 		allocator_(allocator),
 		size_(0),
 		capacity_(capacity)
@@ -164,8 +163,8 @@ public:
 	{
 		GAINPUT_ASSERT(&allocator_ == &x.allocator_);
 		
-		const unsigned size = size_;
-		const unsigned capacity = capacity_;
+		const size_t size = size_;
+		const size_t capacity = capacity_;
 		T* data = data_;
 
 		size_ = x.size_;
@@ -193,12 +192,12 @@ public:
 	void clear() { size_ = 0; }
 
 	bool empty() const { return size_ == 0; }
-	unsigned size() const { return size_; }
+	size_t size() const { return size_; }
 
 private:
 	Allocator& allocator_;
-	unsigned size_;
-	unsigned capacity_;
+	size_t size_;
+	size_t capacity_;
 	T* data_;
 };
 
@@ -412,12 +411,12 @@ private:
 	Array<Node> values_;
 	size_t size_;
 
-	void Rehash(unsigned newSize)
+	void Rehash(size_t newSize)
 	{
 		Array<uint32_t> keys(allocator_, newSize);
 		Array<Node> values(allocator_, values_.size());
 
-		for (unsigned i = 0; i < newSize; ++i)
+		for (size_t i = 0; i < newSize; ++i)
 			keys.push_back(InvalidKey);
 
 		keys_.swap(keys);

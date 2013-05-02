@@ -5,7 +5,7 @@
 namespace gainput
 {
 
-/// All valid touches for a touch device.
+/// All valid device inputs for InputDeviceTouch.
 enum TouchButton
 {
 	TOUCH_0_DOWN,
@@ -48,11 +48,25 @@ enum TouchButton
 class InputDeviceTouchImpl;
 
 /// A touch input device.
+/**
+ * This input device provides support for touch screen/surface devices. The valid device buttons are defined
+ * in the ::TouchButton enum. For each touch point, there is a boolean input (TOUCH_*_DOWN) showing if the
+ * touch point is active, two float inputs (TOUCH_*_X, TOUCH_*_Y) showing the touch point's position, and a
+ * float input (TOUCH_*_PRESSURE) showing the touch's pressure.
+ *
+ * Not all touch points must be numbered consecutively, i.e. point #2 may be down even though #0 and #1 are not.
+ *
+ * The number of simultaneously possible touch points is implementaion-dependent.
+ *
+ * This device is implemented on Android NDK.
+ */
 class GAINPUT_LIBEXPORT InputDeviceTouch : public InputDevice
 {
 public:
 	/// Initializes the device.
 	/**
+	 * Instantiate the device using InputManager::CreateDevice().
+	 *
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
