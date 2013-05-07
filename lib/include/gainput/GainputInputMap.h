@@ -88,6 +88,18 @@ public:
 	 */
 	bool SetUserButtonPolicy(UserButtonId userButton, UserButtonPolicy policy);
 
+	/// Sets a dead zone for a float-type button.
+	/**
+	 * If a dead zone is set for a button anything less or equal to the given value will be treated
+	 * as 0.0f. The absolute input value is used in order to determine if the input value falls within the dead
+	 * zone (i.e. with a dead zone of 0.2f, both -0.1f and 0.1f will result in 0.0f).
+	 *
+	 * \param userButton The user button's ID.
+	 * \param deadZone The dead zone to be set.
+	 * \return true if the dead zone was set, false otherwise (i.e. the user button doesn't exist).
+	 */
+	bool SetDeadZone(UserButtonId userButton, float deadZone);
+
 	/// Returns the bool state of a user button.
 	bool GetBool(UserButtonId userButton) const;
 	/// Returns if the user button is newly down.

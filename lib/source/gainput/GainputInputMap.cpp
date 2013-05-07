@@ -29,9 +29,11 @@ public:
 	UserButtonId userButton;
 	MappedInputList inputs;
 	InputMap::UserButtonPolicy policy;
+	float deadZone;
 
 	UserButton(Allocator& allocator) :
-		inputs(allocator)
+		inputs(allocator),
+		deadZone(0.0f)
 	{ }
 };
 
@@ -148,6 +150,18 @@ InputMap::SetUserButtonPolicy(UserButtonId userButton, UserButtonPolicy policy)
 		return false;
 	}
 	ub->policy = policy;
+	return true;
+}
+
+bool
+InputMap::SetDeadZone(UserButtonId userButton, float deadZone)
+{
+	UserButton* ub = GetUserButton(userButton);
+	if (!ub)
+	{
+		return false;
+	}
+	ub->deadZone = deadZone;
 	return true;
 }
 
@@ -317,6 +331,11 @@ InputMap::GetFloatState(UserButtonId userButton, bool previous) const
 	if (ub->policy == UBP_AVERAGE && downCount)
 	{
 		value /= float(downCount);
+	}
+
+	if (Abs(value) <= ub->deadZone)
+	{
+		value = 0.0f;
 	}
 
 	return value;
