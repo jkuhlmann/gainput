@@ -4,6 +4,7 @@
 
 #ifdef GAINPUT_ENABLE_ROTATE_GESTURE
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 namespace gainput
