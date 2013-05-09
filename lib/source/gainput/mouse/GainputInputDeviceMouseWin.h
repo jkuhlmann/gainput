@@ -22,6 +22,7 @@ private:
 	DeviceId device_;
 	InputState* state_;
 	InputState* previousState_;
+	InputState nextState_;
 	InputDeltaState* delta_;
 };
 
