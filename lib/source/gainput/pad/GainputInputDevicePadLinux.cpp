@@ -9,6 +9,7 @@
 #include <linux/joystick.h>
 
 #include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 
 // Cf. http://www.kernel.org/doc/Documentation/input/joystick-api.txt
@@ -73,6 +74,11 @@ public:
 		GAINPUT_LOG("Name: %s\n", name);
 #endif
 
+		for (unsigned i = PAD_BUTTON_LEFT_STICK_X; i < PAD_BUTTON_AXIS_COUNT; ++i)
+		{
+			axisDialect_[i] = i;
+		}
+
 		if (strcmp(name, "Sony PLAYSTATION(R)3 Controller") == 0)
 		{
 			buttonDialect_[0] = PAD_BUTTON_SELECT;
@@ -92,6 +98,33 @@ public:
 			buttonDialect_[14] = PAD_BUTTON_A;
 			buttonDialect_[15] = PAD_BUTTON_X;
 			buttonDialect_[16] = PAD_BUTTON_HOME;
+		}
+		else if (strcmp(name, "Microsoft X-Box 360 pad") == 0)
+		{
+			buttonDialect_[6] = PAD_BUTTON_SELECT;
+			buttonDialect_[9] = PAD_BUTTON_L3;
+			buttonDialect_[10] = PAD_BUTTON_R3;
+			buttonDialect_[7] = PAD_BUTTON_START;
+			//buttonDialect_[4] = PAD_BUTTON_UP;
+			//buttonDialect_[5] = PAD_BUTTON_RIGHT;
+			//buttonDialect_[6] = PAD_BUTTON_DOWN;
+			//buttonDialect_[7] = PAD_BUTTON_LEFT;
+			//buttonDialect_[8] = PAD_BUTTON_L2;
+			//buttonDialect_[9] = PAD_BUTTON_R2;
+			buttonDialect_[4] = PAD_BUTTON_L1;
+			buttonDialect_[5] = PAD_BUTTON_R1;
+			buttonDialect_[3] = PAD_BUTTON_Y;
+			buttonDialect_[1] = PAD_BUTTON_B;
+			buttonDialect_[0] = PAD_BUTTON_A;
+			buttonDialect_[2] = PAD_BUTTON_X;
+			buttonDialect_[8] = PAD_BUTTON_HOME;
+
+			axisDialect_[3] = PAD_BUTTON_RIGHT_STICK_X;
+			axisDialect_[4] = PAD_BUTTON_RIGHT_STICK_Y;
+			axisDialect_[2] = PAD_BUTTON_AXIS_4;
+			axisDialect_[5] = PAD_BUTTON_AXIS_5;
+			axisDialect_[7] = PAD_BUTTON_UP;
+			axisDialect_[6] = PAD_BUTTON_LEFT;
 		}
 
 		state_ = InputDevice::DS_OK;
@@ -115,20 +148,27 @@ public:
 				GAINPUT_ASSERT(event.number >= PAD_BUTTON_LEFT_STICK_X);
 				GAINPUT_ASSERT(event.number < PAD_BUTTON_AXIS_COUNT);
 				DeviceButtonId buttonId = event.number;
+
 				const float value = float(event.value)/MaxAxisValue;
-				state.Set(buttonId, value);
 
-#ifdef GAINPUT_DEBUG
-				GAINPUT_LOG("Pad axis: %i, %f\n", buttonId, value);
-#endif
-
-				if (delta)
+				if (axisDialect_.count(buttonId))
 				{
-					const float oldValue = previousState.GetFloat(buttonId);
-					if (oldValue != value)
-					{
-						delta->AddChange(device_, buttonId, oldValue, value);
-					}
+					buttonId = axisDialect_[buttonId];
+				}
+
+				if (buttonId == PAD_BUTTON_UP)
+				{
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_UP, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_DOWN, value > 0.0f);
+				}
+				else if (buttonId == PAD_BUTTON_LEFT)
+				{
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_LEFT, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_RIGHT, value > 0.0f);
+				}
+				else
+				{
+					HandleAxis(device_, state, previousState, delta, buttonId, value);
 				}
 			}
 			else if (event.type == JS_EVENT_BUTTON)
@@ -141,18 +181,7 @@ public:
 					const bool value(event.value);
 					state.Set(buttonId, value);
 
-#ifdef GAINPUT_DEBUG
-					GAINPUT_LOG("Pad button: %i, %d\n", buttonId, value);
-#endif
-
-					if (delta)
-					{
-						const bool oldValue = previousState.GetBool(buttonId);
-						if (oldValue != value)
-						{
-							delta->AddChange(device_, buttonId, oldValue, value);
-						}
-					}
+					HandleButton(device_, state, previousState, delta, buttonId, value);
 				}
 #ifdef GAINPUT_DEBUG
 				else
@@ -199,6 +228,7 @@ private:
 	InputDevice::DeviceState state_;
 	int fd_;
 	HashMap<unsigned, DeviceButtonId> buttonDialect_;
+	HashMap<unsigned, DeviceButtonId> axisDialect_;
 };
 
 }

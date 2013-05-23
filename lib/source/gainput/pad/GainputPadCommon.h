@@ -83,6 +83,7 @@ DeviceButtonInfo deviceButtonInfos[] =
 		{ BT_BOOL, "pad_button_30"},
 		{ BT_BOOL, "pad_button_31"}
 };
+
 }
 
 const unsigned PadButtonCount = PAD_BUTTON_COUNT;
