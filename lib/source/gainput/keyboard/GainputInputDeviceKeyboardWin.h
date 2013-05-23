@@ -42,6 +42,7 @@ private:
 	HashMap<Key, const char*> keyNames_;
 	InputState* state_;
 	InputState* previousState_;
+	InputState nextState_;
 	InputDeltaState* delta_;
 };
 

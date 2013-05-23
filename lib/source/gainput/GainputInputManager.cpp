@@ -71,6 +71,17 @@ InputManager::GetTime() const
 
 	uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
 	return t;
+#elif defined(GAINPUT_PLATFORM_WIN)
+	static LARGE_INTEGER perfFreq = { 0 };
+	if (perfFreq.QuadPart == 0)
+	{
+		QueryPerformanceFrequency(&perfFreq);
+		GAINPUT_ASSERT(perfFreq.QuadPart != 0);
+	}
+	LARGE_INTEGER count;
+	QueryPerformanceCounter(&count);
+	double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
+	return t;
 #else
 #error No time support
 #endif

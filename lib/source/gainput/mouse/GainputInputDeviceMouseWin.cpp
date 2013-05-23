@@ -20,6 +20,7 @@ InputDeviceMouseImpl::InputDeviceMouseImpl(InputManager& manager, DeviceId devic
 	device_(device),
 	state_(0),
 	previousState_(0),
+	nextState_(manager.GetAllocator(), MouseButtonCount + MouseAxisCount),
 	delta_(0)
 {
 }
@@ -32,8 +33,8 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 	delta_ = delta;
 
 	// Reset mouse wheel buttons
-	state_->Set(MOUSE_BUTTON_3, false);
-	state_->Set(MOUSE_BUTTON_4, false);
+	nextState_.Set(MOUSE_BUTTON_3, false);
+	nextState_.Set(MOUSE_BUTTON_4, false);
 	
 	if (delta)
 	{
@@ -48,6 +49,8 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 			delta->AddChange(device_, MOUSE_BUTTON_4, oldValue, false);
 		}
 	}
+
+	*state_ = nextState_;
 }
 
 void
@@ -123,8 +126,8 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	{
 		float x = float(ax)/float(manager_.GetDisplayWidth());
 		float y = float(ay)/float(manager_.GetDisplayHeight());
-		state_->Set(MOUSE_AXIS_X, x);
-		state_->Set(MOUSE_AXIS_Y, y);
+		nextState_.Set(MOUSE_AXIS_X, x);
+		nextState_.Set(MOUSE_AXIS_Y, y);
 
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG("Mouse: %f, %f\n", x, y);
@@ -146,10 +149,10 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	}
 	else
 	{
-		state_->Set(buttonId, pressed);
+		nextState_.Set(buttonId, pressed);
 
 #ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("Button: %i\n", buttonId);
+		GAINPUT_LOG("Button: %i: %i\n", buttonId, pressed);
 #endif
 
 		if (delta_)

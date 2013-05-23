@@ -25,6 +25,7 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	keyNames_(manager_.GetAllocator()),
 	state_(0),
 	previousState_(0),
+	nextState_(manager.GetAllocator(), KeyboardButtonCount),
 	delta_(0)
 {
 	GetKeyboardKeyNames(keyNames_);
@@ -139,6 +140,8 @@ InputDeviceKeyboardImpl::Update(InputState& state, InputState& previousState, In
 	state_ = &state;
 	previousState_ = &previousState;
 	delta_ = delta;
+
+	*state_ = nextState_;
 }
 
 void
@@ -247,7 +250,7 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG(" --> Mapped to: %d\n", buttonId);
 #endif
-		state_->Set(buttonId, pressed);
+		nextState_.Set(buttonId, pressed);
 
 		if (delta_)
 		{
