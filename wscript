@@ -149,6 +149,7 @@ def build(bld):
 			use = usethese,
 			uselib=['LIBX11', 'LIBGL', 'LIBRT']
 			)
+	bld.recurse('samples/dynamic/')
 
 from waflib.Build import BuildContext, CleanContext, \
         InstallContext, UninstallContext
