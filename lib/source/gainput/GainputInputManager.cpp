@@ -9,6 +9,7 @@
 #include "keyboard/GainputInputDeviceKeyboardWin.h"
 #include "mouse/GainputInputDeviceMouseWin.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
+#include <time.h>
 #include "keyboard/GainputInputDeviceKeyboardAndroid.h"
 #include "touch/GainputInputDeviceTouchAndroid.h"
 #endif
@@ -62,7 +63,7 @@ InputManager::Update()
 uint64_t
 InputManager::GetTime() const
 {
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) or defined(GAINPUT_PLATFORM_ANDROID)
 	struct timespec ts;
 	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
 	{

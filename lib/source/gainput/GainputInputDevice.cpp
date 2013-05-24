@@ -17,7 +17,7 @@ InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonC
 	for (unsigned i = start; i < end; ++i)
 	{
 		DeviceButtonId id(i);
-		if (GetButtonType(id) == BT_BOOL && GetBool(id))
+		if (IsValidButtonId(id) && GetButtonType(id) == BT_BOOL && GetBool(id))
 		{
 			outButtons[buttonsFound].deviceId = device;
 			outButtons[buttonsFound].buttonId = id;
