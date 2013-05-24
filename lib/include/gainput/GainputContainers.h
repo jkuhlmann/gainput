@@ -457,7 +457,8 @@ public:
 
 	unsigned GetCount() const
 	{
-		return nextWrite_ - nextRead_;
+		const unsigned d = nextWrite_ - nextRead_;
+		return d > N ? N : d;
 	}
 
 	T Get()
@@ -468,6 +469,8 @@ public:
 	void Put(T d)
 	{
 		buf_[(nextWrite_++) % N] = d;
+		while (nextRead_ + N < nextWrite_)
+			++nextRead_;
 	}
 
 private:
