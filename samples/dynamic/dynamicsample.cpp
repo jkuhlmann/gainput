@@ -49,7 +49,7 @@ void SampleMain()
 
 #if defined(GAINPUT_PLATFORM_WIN)
 		MSG msg;
-		while (PeekMessage(&msg, hWnd,  0, 0, PM_REMOVE))
+		while (PeekMessage(&msg, SfwGetHWnd(),  0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);

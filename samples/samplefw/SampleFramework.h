@@ -16,6 +16,8 @@ int SfwGetHeight();
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 Display* SfwGetXDisplay();
+#elif defined(GAINPUT_PLATFORM_WIN)
+HWND SfwGetHWnd();
 #endif
 
 #endif
