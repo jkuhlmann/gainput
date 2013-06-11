@@ -111,6 +111,7 @@ static char szWindowClass[] = "win32app";
 bool doExit = false;
 HINSTANCE hInstance;
 int nCmdShow;
+HWND hWnd;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -160,7 +161,7 @@ void SfwOpenWindow(const char* title)
 		return;
 	}
 
-	HWND hWnd = CreateWindow(
+	hWnd = CreateWindow(
 			szWindowClass,
 			title,
 			WS_OVERLAPPEDWINDOW,
@@ -184,8 +185,6 @@ void SfwOpenWindow(const char* title)
 
 void SfwCloseWindow()
 {
-	XDestroyWindow(xDisplay, xWindow);
-	XCloseDisplay(xDisplay);
 }
 
 void SfwUpdate()
@@ -201,6 +200,10 @@ void SfwSetInputManager(gainput::InputManager* manager)
 {
 }
 
+HWND SfwGetHWnd()
+{
+	return hWnd;
+}
 
 int WINAPI WinMain(HINSTANCE hInstanceMain, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShowMain)
 {
