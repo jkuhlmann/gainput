@@ -23,7 +23,7 @@ public:
 	DeviceState GetState() const { return DS_OK; }
 
 protected:
-	InputGesture(DeviceId device) : InputDevice(device) { }
+	InputGesture(InputManager& manager, DeviceId device) : InputDevice(manager, device) { }
 
 };
 

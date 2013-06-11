@@ -66,7 +66,6 @@ public:
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return deviceButton == PinchTriggered ? BT_BOOL : BT_FLOAT; }
 
 private:
-	InputManager& manager_;
 	DeviceButtonSpec downButton_;
 	DeviceButtonSpec xAxis_;
 	DeviceButtonSpec yAxis_;

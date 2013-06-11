@@ -6,7 +6,7 @@ namespace gainput
 {
 
 InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device) :
-	InputDevice(device)
+	InputDevice(manager, device)
 {
 	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);

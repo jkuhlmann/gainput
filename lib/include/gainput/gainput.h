@@ -120,6 +120,7 @@ const char* GetLibVersionString();
 
 class InputDeltaState;
 class InputListener;
+class InputManager;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }
 }
@@ -136,12 +137,10 @@ template <class T> T Abs(T a) { return a < T() ? -a : a; }
 #include <gainput/GainputInputDeviceMouse.h>
 #include <gainput/GainputInputDeviceKeyboard.h>
 #include <gainput/GainputInputDevicePad.h>
+#include <gainput/GainputInputDeviceTouch.h>
 
 #include <gainput/gestures/GainputGestures.h>
 
-#if defined(GAINPUT_PLATFORM_ANDROID)
-	#include <gainput/GainputInputDeviceTouch.h>
-#endif
 
 #endif
 

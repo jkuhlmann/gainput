@@ -58,7 +58,7 @@ public:
 	/**
 	 * Do not instantiate any input device directly. Call InputManager::CreateDevice() instead.
 	 */
-	InputDevice(DeviceId device);
+	InputDevice(InputManager& manager, DeviceId device);
 
 	/// Empty virtual destructor.
 	virtual ~InputDevice() { }
@@ -117,6 +117,9 @@ public:
 	virtual DeviceButtonId GetButtonByName(const char* name) const { return InvalidDeviceButtonId; }
 
 protected:
+	/// The manager this device belongs to.
+	InputManager& manager_;
+
 	/// The ID of this device.
 	DeviceId deviceId_;
 

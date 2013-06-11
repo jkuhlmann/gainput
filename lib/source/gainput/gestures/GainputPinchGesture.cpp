@@ -10,8 +10,7 @@ namespace gainput
 {
 
 PinchGesture::PinchGesture(InputManager& manager, DeviceId device) :
-	InputGesture(device),
-	manager_(manager),
+	InputGesture(manager, device),
 	pinching_(false)
 {
 	downButton_.buttonId = InvalidDeviceButtonId;

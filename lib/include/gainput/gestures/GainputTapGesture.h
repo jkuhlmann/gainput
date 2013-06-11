@@ -50,7 +50,6 @@ public:
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
 
 private:
-	InputManager& manager_;
 	DeviceButtonSpec actionButton_;
 
 	uint64_t timeSpan_;

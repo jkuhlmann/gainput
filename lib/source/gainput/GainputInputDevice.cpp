@@ -5,7 +5,8 @@ namespace gainput
 {
 
 
-InputDevice::InputDevice(DeviceId device) :
+InputDevice::InputDevice(InputManager& manager, DeviceId device) :
+	manager_(manager),
 	deviceId_(device)
 {
 }

@@ -8,8 +8,7 @@ namespace gainput
 {
 
 HoldGesture::HoldGesture(InputManager& manager, DeviceId device) :
-	InputGesture(device),
-	manager_(manager),
+	InputGesture(manager, device),
 	oneShotReset_(true),
 	firstDownTime_(0)
 {

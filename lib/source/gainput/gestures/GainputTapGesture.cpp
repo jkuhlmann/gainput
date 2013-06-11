@@ -8,8 +8,7 @@ namespace gainput
 {
 
 TapGesture::TapGesture(InputManager& manager, DeviceId device) :
-	InputGesture(device),
-	manager_(manager),
+	InputGesture(manager, device),
 	firstDownTime_(0)
 {
 	actionButton_.buttonId = InvalidDeviceButtonId;

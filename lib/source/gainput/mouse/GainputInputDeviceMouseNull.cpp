@@ -1,6 +1,8 @@
+#include <gainput/gainput.h>
 
-#ifndef GAINPUTMOUSECOMMON_H_
-#define GAINPUTMOUSECOMMON_H_
+#if !defined(GAINPUT_PLATFORM_LINUX) && !defined(GAINPUT_PLATFORM_WIN)
+
+#include "GainputMouseInfo.h"
 
 namespace gainput
 {
@@ -8,8 +10,6 @@ namespace gainput
 InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
 	InputDevice(manager, device)
 {
-	impl_ = manager.GetAllocator().New<InputDeviceMouseImpl>(manager, device);
-	GAINPUT_ASSERT(impl_);
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
 	GAINPUT_ASSERT(state_);
 	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
@@ -18,24 +18,19 @@ InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
 
 InputDeviceMouse::~InputDeviceMouse()
 {
-	impl_->GetManager().GetAllocator().Delete(state_);
-	impl_->GetManager().GetAllocator().Delete(previousState_);
-	impl_->GetManager().GetAllocator().Delete(impl_);
+	manager_.GetAllocator().Delete(state_);
+	manager_.GetAllocator().Delete(previousState_);
 }
 
 void
 InputDeviceMouse::Update(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
-	impl_->Update(*state_, *previousState_, delta);
 }
 
 size_t
 InputDeviceMouse::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
-	GAINPUT_ASSERT(outButtons);
-	GAINPUT_ASSERT(maxButtonCount > 0);
-	return CheckAllButtonsDown(outButtons, maxButtonCount, MOUSE_BUTTON_0, MOUSE_BUTTON_MAX, impl_->GetDevice());
+	return 0;
 }
 
 size_t
