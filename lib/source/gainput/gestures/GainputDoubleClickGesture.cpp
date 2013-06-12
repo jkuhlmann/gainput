@@ -3,6 +3,8 @@
 #include <gainput/gestures/GainputDoubleClickGesture.h>
 
 #ifdef GAINPUT_ENABLE_DOUBLE_CLICK_GESTURE
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -108,11 +110,11 @@ DoubleClickGesture::Update(InputDeltaState* delta)
 	if (clicksRegistered_ >= clicksTargetCount_)
 	{
 		clicksRegistered_ = 0;
-		state_->Set(DoubleClickTriggered, true);
+		HandleButton(deviceId_, *state_, *previousState_, delta, DoubleClickTriggered, true);
 	}
 	else
 	{
-		state_->Set(DoubleClickTriggered, false);
+		HandleButton(deviceId_, *state_, *previousState_, delta, DoubleClickTriggered, false);
 	}
 }
 

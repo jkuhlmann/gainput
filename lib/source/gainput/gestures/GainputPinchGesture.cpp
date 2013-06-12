@@ -3,7 +3,8 @@
 #include <gainput/gestures/GainputPinchGesture.h>
 
 #ifdef GAINPUT_ENABLE_PINCH_GESTURE
-
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 #include <math.h>
 
 namespace gainput
@@ -79,12 +80,12 @@ PinchGesture::Update(InputDeltaState* delta)
 
 	if (!isDown || !isDown2)
 	{
-		state_->Set(PinchTriggered, false);
+		HandleButton(deviceId_, *state_, *previousState_, delta, PinchTriggered, false);
 		pinching_ = false;
 		return;
 	}
 
-	state_->Set(PinchTriggered, true);
+	HandleButton(deviceId_, *state_, *previousState_, delta, PinchTriggered, true);
 
 	const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);
 	GAINPUT_ASSERT(xAxisDevice);
@@ -108,11 +109,11 @@ PinchGesture::Update(InputDeltaState* delta)
 	{
 		pinching_ = true;
 		initialDistance_ = dist;
-		state_->Set(PinchScale, 1.0f);
+		HandleAxis(deviceId_, *state_, *previousState_, delta, PinchScale, 1.0f);
 		return;
 	}
 
-	state_->Set(PinchScale, dist / initialDistance_);
+	HandleAxis(deviceId_, *state_, *previousState_, delta, PinchScale, dist / initialDistance_);
 }
 
 }

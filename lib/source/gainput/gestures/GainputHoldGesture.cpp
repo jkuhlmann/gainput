@@ -3,6 +3,8 @@
 #include <gainput/gestures/GainputHoldGesture.h>
 
 #ifdef GAINPUT_ENABLE_HOLD_GESTURE
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -98,7 +100,7 @@ HoldGesture::Update(InputDeltaState* delta)
 	{
 		oneShotReset_ = true;
 		firstDownTime_ = 0;
-		state_->Set(HoldTriggered, false);
+		HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, false);
 		return;
 	}
 
@@ -114,17 +116,17 @@ HoldGesture::Update(InputDeltaState* delta)
 	{
 		if (downLongEnough && oneShotReset_)
 		{
-			state_->Set(HoldTriggered, true);
+			HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, true);
 			oneShotReset_ = false;
 		}
 		else
 		{
-			state_->Set(HoldTriggered, false);
+			HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, false);
 		}
 	}
 	else
 	{
-		state_->Set(HoldTriggered, downLongEnough);
+		HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, downLongEnough);
 	}
 }
 

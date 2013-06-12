@@ -3,6 +3,8 @@
 #include <gainput/gestures/GainputRotateGesture.h>
 
 #ifdef GAINPUT_ENABLE_ROTATE_GESTURE
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -80,12 +82,12 @@ RotateGesture::Update(InputDeltaState* delta)
 
 	if (!isDown || !isDown2)
 	{
-		state_->Set(RotateTriggered, false);
+		HandleButton(deviceId_, *state_, *previousState_, delta, RotateTriggered, false);
 		rotating_ = false;
 		return;
 	}
 
-	state_->Set(RotateTriggered, true);
+	HandleButton(deviceId_, *state_, *previousState_, delta, RotateTriggered, true);
 
 	const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);
 	GAINPUT_ASSERT(xAxisDevice);
@@ -107,7 +109,7 @@ RotateGesture::Update(InputDeltaState* delta)
 	{
 		rotating_ = true;
 		initialAngle_ = angle;
-		state_->Set(RotateAngle, 0.0f);
+		HandleAxis(deviceId_, *state_, *previousState_, delta, RotateAngle, 0.0f);
 		return;
 	}
 
@@ -117,7 +119,7 @@ RotateGesture::Update(InputDeltaState* delta)
 		currentAngle += M_PI*2.0f;
 	}
 
-	state_->Set(RotateAngle, currentAngle);
+	HandleAxis(deviceId_, *state_, *previousState_, delta, RotateAngle, currentAngle);
 }
 
 }

@@ -5,6 +5,7 @@
 #if defined(GAINPUT_PLATFORM_ANDROID)
 
 #include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 
 namespace gainput
@@ -110,42 +111,21 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_X, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_Y, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_ACCELERATION_Z, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_X, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_Y, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_Z, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
-				HandleFloat(state, previousState, delta, PAD_BUTTON_GYROSCOPE_X, event.vector.x / ASENSOR_STANDARD_GRAVITY);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_GYROSCOPE_Y, event.vector.y / ASENSOR_STANDARD_GRAVITY);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_GYROSCOPE_Z, event.vector.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_X, event.vector.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_Y, event.vector.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_Z, event.vector.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_MAGNETIC_FIELD)
 			{
-				HandleFloat(state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_X, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Y, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleFloat(state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Z, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-			}
-		}
-	}
-
-	void HandleFloat(InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
-	{
-		state.Set(buttonId, value);
-
-#ifdef GAINPUT_DEBUG
-		if (value != previousState.GetFloat(buttonId))
-		{
-			GAINPUT_LOG("Pad changed: %d, %f\n", buttonId, value);
-		}
-#endif
-
-		if (delta)
-		{
-			const float oldValue = previousState.GetFloat(buttonId);
-			if (value != oldValue)
-			{
-				delta->AddChange(device_, buttonId, oldValue, value);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_X, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Y, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Z, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
 			}
 		}
 	}

@@ -3,6 +3,8 @@
 #include <gainput/gestures/GainputTapGesture.h>
 
 #ifdef GAINPUT_ENABLE_TAP_GESTURE
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -46,7 +48,7 @@ TapGesture::Update(InputDeltaState* delta)
 	const InputDevice* actionDevice = manager_.GetDevice(actionButton_.deviceId);
 	GAINPUT_ASSERT(actionDevice);
 
-	state_->Set(TapTriggered, false);
+	HandleButton(deviceId_, *state_, *previousState_, delta, TapTriggered, false);
 
 	if (actionDevice->GetBool(actionButton_.buttonId))
 	{
@@ -59,7 +61,7 @@ TapGesture::Update(InputDeltaState* delta)
 	{
 		if (firstDownTime_ > 0 && firstDownTime_ + timeSpan_ >= manager_.GetTime())
 		{
-			state_->Set(TapTriggered, true);
+			HandleButton(deviceId_, *state_, *previousState_, delta, TapTriggered, true);
 		}
 		firstDownTime_ = 0;
 	}

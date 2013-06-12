@@ -5,14 +5,14 @@
 namespace gainput
 {
 
-	void HandleButton(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
+	inline void HandleButton(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
 	{
 		state.Set(buttonId, value);
 
 #ifdef GAINPUT_DEBUG
 		if (value != previousState.GetBool(buttonId))
 		{
-			GAINPUT_LOG("Pad changed: %d, %i\n", buttonId, value);
+			GAINPUT_LOG("Button changed: %d, %i\n", buttonId, value);
 		}
 #endif
 
@@ -26,19 +26,14 @@ namespace gainput
 		}
 	}
 
-	void HandleAxis(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
+	inline void HandleAxis(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
 	{
-		if (value < -1.0f) // Because theoretical min value is -32768
-		{
-			value = -1.0f;
-		}
-
 		state.Set(buttonId, value);
 		
 #ifdef GAINPUT_DEBUG
 		if (value != previousState.GetFloat(buttonId))
 		{
-			GAINPUT_LOG("Pad changed: %d, %f\n", buttonId, value);
+			GAINPUT_LOG("Axis changed: %d, %f\n", buttonId, value);
 		}
 #endif
 
