@@ -73,7 +73,7 @@ void SampleMain()
 				// Filter the returned buttons as needed.
 				const gainput::InputDevice* device = manager.GetDevice(anyButton[i].deviceId);
 				if (device->GetButtonType(anyButton[i].buttonId) == gainput::BT_BOOL
-					&& !map.IsDeviceButtonMapped(anyButton[i].deviceId, anyButton[i].buttonId))
+					&& map.GetUserButtonId(anyButton[i].deviceId, anyButton[i].buttonId) == gainput::InvalidDeviceButtonId)
 				{
 					SFW_LOG("Mapping to: %d:%d\n", anyButton[i].deviceId, anyButton[i].buttonId);
 					map.MapBool(ButtonTest, anyButton[i].deviceId, anyButton[i].buttonId);

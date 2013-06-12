@@ -28,7 +28,7 @@ public:
 	 * \param manager The input manager used to get device inputs.
 	 * \param allocator The allocator to be used for all memory allocations.
 	 */
-	InputMap(const InputManager& manager, Allocator& allocator = GetDefaultAllocator());
+	InputMap(InputManager& manager, Allocator& allocator = GetDefaultAllocator());
 	/// Unitializes the map.
 	~InputMap();
 
@@ -125,26 +125,37 @@ public:
 	 */
 	size_t GetUserButtonName(UserButtonId userButton, char* buffer, size_t bufferLength) const;
 
-	/// Checks if the given device button is mapped to any user button.
+	/// Returns the user button ID the given device button is mapped to.
 	/**
 	 * This function iterates over all mapped buttons and therefore shouldn't be used in a performance critical
 	 * situation.
 	 *
 	 * \param device The device's ID of the device button to be checked.
 	 * \param deviceButton The ID of the device button to be checked.
-	 * \return true if the device button is mapped, false otherwise.
+	 * \return The user button ID the device button is mapped to or InvalidDeviceButtonId if the device button is not mapped.
 	 */
-	bool IsDeviceButtonMapped(DeviceId device, DeviceButtonId deviceButton) const;
+	UserButtonId GetUserButtonId(DeviceId device, DeviceButtonId deviceButton) const;
+	
+	/// Registers a listener to be notified when a button state changes.
+	/**
+	 * If there are listeners registered, all input devices will have to record their state changes. This incurs extra runtime costs.
+	 */
+	ListenerId AddListener(MappedInputListener* listener);
+	/// De-registers the given listener.
+	void RemoveListener(ListenerId listenerId);
 
 private:
 	Allocator& allocator_;
-	const InputManager& manager_;
+	InputManager& manager_;
 
 	typedef HashMap<UserButtonId, UserButton*> UserButtonMap;
 	UserButtonMap userButtons_;
 	UserButtonId nextUserButtonId_;
 
-	Array<InputListener*> listeners_;
+	HashMap<ListenerId, MappedInputListener*> listeners_;
+	unsigned nextListenerId_;
+	InputListener* managerListener_;
+	ListenerId managerListenerId_;
 
 	float GetFloatState(UserButtonId userButton, bool previous) const;
 

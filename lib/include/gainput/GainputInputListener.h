@@ -5,7 +5,7 @@
 namespace gainput
 {
 
-/// Listener interface that allows to receive notifications when button states change.
+/// Listener interface that allows to receive notifications when device button states change.
 class GAINPUT_LIBEXPORT InputListener
 {
 public:
@@ -25,9 +25,27 @@ public:
 	 * \param newValue New state of the button.
 	 */
 	virtual void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue) { }
+};
 
-	//virtual void OnMapButtonBool(UserButtonId userButton, ListenEvent event, bool value) { }
-	//virtual void OnMapButtonFloat(UserButtonId userButton, ListenEvent event, float value) { }
+
+/// Listener interface that allows to receive notifications when user button states change.
+class GAINPUT_LIBEXPORT MappedInputListener
+{
+public:
+	/// Called when a bool-type button state changes.
+	/**
+	 * \param userButton The user button's ID.
+	 * \param oldValue Previous state of the button.
+	 * \param newValue New state of the button.
+	 */
+	virtual void OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue) { }
+	/// Called when a float-type button state changes.
+	/**
+	 * \param userButton The user button's ID.
+	 * \param oldValue Previous state of the button.
+	 * \param newValue New state of the button.
+	 */
+	virtual void OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue) { }
 
 };
 

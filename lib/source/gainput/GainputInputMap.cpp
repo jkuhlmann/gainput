@@ -38,12 +38,13 @@ public:
 };
 
 
-InputMap::InputMap(const InputManager& manager, Allocator& allocator) :
+InputMap::InputMap(InputManager& manager, Allocator& allocator) :
 	allocator_(allocator),
 	manager_(manager),
 	userButtons_(allocator_),
 	nextUserButtonId_(0),
-	listeners_(allocator_)
+	listeners_(allocator_),
+	managerListener_(0)
 {
 
 }
@@ -358,8 +359,8 @@ InputMap::GetUserButtonName(UserButtonId userButton, char* buffer, size_t buffer
 	return 0;
 }
 
-bool
-InputMap::IsDeviceButtonMapped(DeviceId device, DeviceButtonId deviceButton) const
+UserButtonId
+InputMap::GetUserButtonId(DeviceId device, DeviceButtonId deviceButton) const
 {
 	for (UserButtonMap::const_iterator it = userButtons_.begin();
 			it != userButtons_.end();
@@ -373,11 +374,77 @@ InputMap::IsDeviceButtonMapped(DeviceId device, DeviceButtonId deviceButton) con
 			const MappedInput& mi = *it2;
 			if (mi.device == device && mi.deviceButton == deviceButton)
 			{
-				return true;
+				return it->first;
 			}
 		}
 	}
-	return false;
+	return InvalidUserButtonId;
+}
+
+class ManagerToMapListener : public InputListener
+{
+public:
+	ManagerToMapListener(InputMap& inputMap, HashMap<ListenerId, MappedInputListener*>& listeners_) :
+		inputMap_(inputMap),
+		listeners_(listeners_)
+	{ }
+
+	void OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	{
+		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
+				it != listeners_.end();
+				++it)
+		{
+			const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
+			if (userButton != InvalidUserButtonId)
+			{
+				it->second->OnUserButtonBool(userButton, oldValue, newValue);
+			}
+		}
+	}
+
+	void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue)
+	{
+		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
+				it != listeners_.end();
+				++it)
+		{
+			const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
+			if (userButton != InvalidUserButtonId)
+			{
+				it->second->OnUserButtonFloat(userButton, oldValue, newValue);
+			}
+		}
+	}
+
+private:
+	InputMap& inputMap_;
+	HashMap<ListenerId, MappedInputListener*>& listeners_;
+};
+
+unsigned
+InputMap::AddListener(MappedInputListener* listener)
+{
+	if (!managerListener_)
+	{
+		managerListener_ = allocator_.New<ManagerToMapListener>(*this, listeners_);
+		managerListenerId_ = manager_.AddListener(managerListener_);
+	}
+	listeners_[nextListenerId_] = listener;
+	return nextListenerId_++;
+}
+
+void
+InputMap::RemoveListener(unsigned listenerId)
+{
+	listeners_.erase(listenerId);
+
+	if (listeners_.empty())
+	{
+		manager_.RemoveListener(managerListenerId_);
+		allocator_.Delete(managerListener_);
+		managerListener_ = 0;
+	}
 }
 
 UserButton*
