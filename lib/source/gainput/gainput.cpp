@@ -11,6 +11,7 @@ If there are any problems, please report them on <a href="https://github.com/jku
 These pages are Gainput's API documentation. In order to download Gainput go to the <a href="http://jkuhlmann.github.io/gainput/" target="_blank">Gainput website</a>.
 
 \section contents Contents
+- \ref page_start
 - \ref page_building
 - \ref page_samples
 - \ref page_platforms
@@ -59,6 +60,46 @@ while (game_running)
 Gainput is licensed under the MIT license:
 
 \include "LICENSE"
+
+
+
+\page page_start Getting Started
+\tableofcontents
+This page gives an overview on how to get Gainput into your game and use it for input.
+
+
+\section sect_obtaining Obtaining Gainput
+Gainput can be obtained in source from the <a href="http://jkuhlmann.github.io/gainput/">Gainput website</a>. GitHub makes it possible to download <a href="https://github.com/jkuhlmann/gainput/archive/master.zip">a snapshot archive of the current revision</a>.
+
+
+\section sect_building Building
+Build Gainput as described on the \ref page_building page.
+
+
+\section sect_integrating Integration Into Your Project
+To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.so (static library). In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
+
+To have the API availale, you have to include Gainput's main header file:
+
+\code
+#include <gainput/gainput.h>
+\endcode
+
+You should have the \c lib/include/ folder as an include folder in your project settings for this to work. The file includes most of Gainput's other header files so that you shouldn't need to include anything else.
+
+
+\section sect_setup Setting up Gainput
+Gainput's most important class is the gainput::InputManager. You should create one that you use globally throughout your game. Create some input devices using gainput::InputManager::CreateDevice(). And then, during your game loop, call gainput::InputManager::Update() every frame.
+
+Some platform-specific function calls may be necessary, like gainput::InputManager::SetXDisplay(), gainput::InputManager::SetDisplaySize() or gainput::InputManager::HandleMessage().
+
+On top of your gainput::InputManager, you should create at least one gainput::InputMap and map some device-specific buttons to your custom user buttons using gainput::InputMap::MapBool() or gainput::InputMap::MapFloat(). This will allow you to more conventienly provide alternative input methods or enable the player to change button mappings.
+
+
+\section sect_using Using Gainput
+After everything has been set up, use gainput::InputMap::GetBool() or gainput::InputMap::GetFloat() (and related functions) anywhere in your game to get player input.
+
+
 
 
 \page page_building Building

@@ -38,9 +38,6 @@ public:
 	/// Returns the input manager this input map uses.
 	const InputManager& GetManager() const { return manager_; }
 
-	void AddListener(InputListener* listener);
-	void RemoveListener(InputListener* listener);
-
 	/// Maps a bool-type button.
 	/**
 	 * \param userButton The user ID for this mapping.
