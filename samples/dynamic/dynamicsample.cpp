@@ -36,8 +36,8 @@ void SampleMain()
 	gainput::DeviceButtonSpec anyButton[32];
 	bool mapped = false;
 
-	GAINPUT_LOG("No button mapped, please press any button.\n");
-	GAINPUT_LOG("Press ESC to reset.\n");
+	SFW_LOG("No button mapped, please press any button.\n");
+	SFW_LOG("Press ESC to reset.\n");
 
 
 	while (!SfwIsDone())
@@ -58,7 +58,7 @@ void SampleMain()
 
 		if (map.GetBoolWasDown(ButtonReset))
 		{
-			GAINPUT_LOG("Mapping reset. Press any button.\n");
+			SFW_LOG("Mapping reset. Press any button.\n");
 			mapped = false;
 			map.Unmap(ButtonTest);
 		}
@@ -68,7 +68,7 @@ void SampleMain()
 			const size_t anyCount = manager.GetAnyButtonDown(anyButton, 32);
 			if (anyCount > 0)
 			{
-				GAINPUT_LOG("Mapping to: %d:%d\n", anyButton[0].deviceId, anyButton[0].buttonId);
+				SFW_LOG("Mapping to: %d:%d\n", anyButton[0].deviceId, anyButton[0].buttonId);
 				map.MapBool(ButtonTest, anyButton[0].deviceId, anyButton[0].buttonId);
 				mapped = true;
 			}
@@ -77,7 +77,7 @@ void SampleMain()
 		{
 			if (map.GetBoolWasDown(ButtonTest))
 			{
-				GAINPUT_LOG("Button was down!\n");
+				SFW_LOG("Button was down!\n");
 			}
 		}
 	}
