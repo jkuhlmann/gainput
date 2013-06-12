@@ -125,6 +125,17 @@ public:
 	 */
 	size_t GetUserButtonName(UserButtonId userButton, char* buffer, size_t bufferLength) const;
 
+	/// Checks if the given device button is mapped to any user button.
+	/**
+	 * This function iterates over all mapped buttons and therefore shouldn't be used in a performance critical
+	 * situation.
+	 *
+	 * \param device The device's ID of the device button to be checked.
+	 * \param deviceButton The ID of the device button to be checked.
+	 * \return true if the device button is mapped, false otherwise.
+	 */
+	bool IsDeviceButtonMapped(DeviceId device, DeviceButtonId deviceButton) const;
+
 private:
 	Allocator& allocator_;
 	const InputManager& manager_;

@@ -7,6 +7,7 @@
 enum Button
 {
 	ButtonReset,
+	ButtonOther,
 	ButtonTest
 };
 
@@ -32,6 +33,7 @@ void SampleMain()
 
 	gainput::InputMap map(manager);
 	map.MapBool(ButtonReset, keyboardId, gainput::KEY_ESCAPE);
+	map.MapBool(ButtonOther, keyboardId, gainput::KEY_A);
 
 	gainput::DeviceButtonSpec anyButton[32];
 	bool mapped = false;
@@ -66,11 +68,18 @@ void SampleMain()
 		if (!mapped)
 		{
 			const size_t anyCount = manager.GetAnyButtonDown(anyButton, 32);
-			if (anyCount > 0)
+			for (size_t i = 0; i < anyCount; ++i)
 			{
-				SFW_LOG("Mapping to: %d:%d\n", anyButton[0].deviceId, anyButton[0].buttonId);
-				map.MapBool(ButtonTest, anyButton[0].deviceId, anyButton[0].buttonId);
-				mapped = true;
+				// Filter the returned buttons as needed.
+				const gainput::InputDevice* device = manager.GetDevice(anyButton[i].deviceId);
+				if (device->GetButtonType(anyButton[i].buttonId) == gainput::BT_BOOL
+					&& !map.IsDeviceButtonMapped(anyButton[i].deviceId, anyButton[i].buttonId))
+				{
+					SFW_LOG("Mapping to: %d:%d\n", anyButton[i].deviceId, anyButton[i].buttonId);
+					map.MapBool(ButtonTest, anyButton[i].deviceId, anyButton[i].buttonId);
+					mapped = true;
+					break;
+				}
 			}
 		}
 		else

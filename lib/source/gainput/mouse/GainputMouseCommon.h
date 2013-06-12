@@ -35,7 +35,7 @@ InputDeviceMouse::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButto
 {
 	GAINPUT_ASSERT(outButtons);
 	GAINPUT_ASSERT(maxButtonCount > 0);
-	return CheckAllButtonsDown(outButtons, maxButtonCount, MOUSE_BUTTON_0, MOUSE_BUTTON_MAX, impl_->GetDevice());
+	return CheckAllButtonsDown(outButtons, maxButtonCount, MOUSE_BUTTON_0, MOUSE_BUTTON_COUNT, impl_->GetDevice());
 }
 
 size_t

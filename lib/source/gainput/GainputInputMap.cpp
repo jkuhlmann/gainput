@@ -350,12 +350,34 @@ InputMap::GetUserButtonName(UserButtonId userButton, char* buffer, size_t buffer
 			it != ub->inputs.end();
 			++it)
 	{
-		const MappedInput& mi= *it;
+		const MappedInput& mi = *it;
 		const InputDevice* device = manager_.GetDevice(mi.device);
 		GAINPUT_ASSERT(device);
 		return device->GetButtonName(mi.deviceButton, buffer, bufferLength);
 	}
 	return 0;
+}
+
+bool
+InputMap::IsDeviceButtonMapped(DeviceId device, DeviceButtonId deviceButton) const
+{
+	for (UserButtonMap::const_iterator it = userButtons_.begin();
+			it != userButtons_.end();
+			++it)
+	{
+		const UserButton* ub = it->second;
+		for (MappedInputList::const_iterator it2 = ub->inputs.begin();
+				it2 != ub->inputs.end();
+				++it2)
+		{
+			const MappedInput& mi = *it2;
+			if (mi.device == device && mi.deviceButton == deviceButton)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 UserButton*
