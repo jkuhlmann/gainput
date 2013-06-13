@@ -58,7 +58,7 @@ public:
 	/**
 	 * Do not instantiate any input device directly. Call InputManager::CreateDevice() instead.
 	 */
-	InputDevice(InputManager& manager, DeviceId device);
+	InputDevice(InputManager& manager, DeviceId device, unsigned index);
 
 	/// Empty virtual destructor.
 	virtual ~InputDevice() { }
@@ -71,9 +71,13 @@ public:
 
 	/// Returns this device's ID.
 	DeviceId GetDeviceId() const { return deviceId_; }
+	/// Returns the device's index among devices of the same type.
+	unsigned GetIndex() const { return index_; }
 
 	/// Returns the device type.
 	virtual DeviceType GetType() const = 0;
+	/// Returns the device type's name.
+	virtual const char* GetTypeName() const = 0;
 	/// Returns the device state.
 	virtual DeviceState GetState() const = 0;
 	/// Returns if this device is available.
@@ -122,6 +126,9 @@ protected:
 
 	/// The ID of this device.
 	DeviceId deviceId_;
+
+	/// Index of this device among devices of the same type.
+	unsigned index_;
 
 	/// The current state of this device.
 	InputState* state_;

@@ -13,7 +13,7 @@ const unsigned TouchDataElems = 4;
 
 
 InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device)
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
 {
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
 	GAINPUT_ASSERT(state_);

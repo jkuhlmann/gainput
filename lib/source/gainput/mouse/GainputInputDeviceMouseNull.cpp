@@ -8,7 +8,7 @@ namespace gainput
 {
 
 InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device)
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE))
 {
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
 	GAINPUT_ASSERT(state_);

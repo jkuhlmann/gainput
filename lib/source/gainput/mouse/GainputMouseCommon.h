@@ -6,7 +6,7 @@ namespace gainput
 {
 
 InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device)
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE))
 {
 	impl_ = manager.GetAllocator().New<InputDeviceMouseImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);

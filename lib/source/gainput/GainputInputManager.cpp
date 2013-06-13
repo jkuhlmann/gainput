@@ -88,6 +88,22 @@ InputManager::GetTime() const
 #endif
 }
 
+DeviceId
+InputManager::FindDeviceId(const char* typeName, unsigned index) const
+{
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		if (strcmp(typeName, it->second->GetTypeName()) == 0
+			&& it->second->GetIndex() == index)
+		{
+			return it->first;
+		}
+	}
+	return InvalidDeviceId;
+}
+
 unsigned
 InputManager::AddListener(InputListener* listener)
 {

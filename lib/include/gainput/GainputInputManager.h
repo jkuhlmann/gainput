@@ -87,6 +87,13 @@ public:
 	 * \return The input device or 0 if it doesn't exist.
 	 */
 	const InputDevice* GetDevice(DeviceId deviceId) const;
+	/// Returns the ID of the device with the given type and index.
+	/**
+	 * \param typeName The name of the device type. Should come from InputDevice::GetTypeName().
+	 * \param index The index of the device. Should come from InputDevice::GetIndex().
+	 * \return The device's ID or InvalidDeviceId if no matching device exists.
+	 */
+	DeviceId FindDeviceId(const char* typeName, unsigned index) const;
 
 	/// Registers a listener to be notified when a button state changes.
 	/**

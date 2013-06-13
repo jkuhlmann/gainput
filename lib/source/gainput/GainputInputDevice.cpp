@@ -5,9 +5,10 @@ namespace gainput
 {
 
 
-InputDevice::InputDevice(InputManager& manager, DeviceId device) :
+InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index) :
 	manager_(manager),
-	deviceId_(device)
+	deviceId_(device),
+	index_(index)
 {
 }
 

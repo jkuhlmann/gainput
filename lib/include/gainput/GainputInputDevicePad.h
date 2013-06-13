@@ -123,6 +123,7 @@ public:
 
 	/// Returns DT_PAD.
 	DeviceType GetType() const { return DT_PAD; }
+	const char* GetTypeName() const { return "pad"; }
 	DeviceState GetState() const;
 	bool IsValidButtonId(DeviceButtonId deviceButton) const;
 

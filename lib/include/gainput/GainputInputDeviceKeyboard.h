@@ -217,6 +217,7 @@ public:
 
 	/// Returns DT_KEYBOARD.
 	DeviceType GetType() const { return DT_KEYBOARD; }
+	const char* GetTypeName() const { return "keyboard"; }
 	DeviceState GetState() const { return DS_OK; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= 0 && deviceButton < KEY_COUNT_; }
 

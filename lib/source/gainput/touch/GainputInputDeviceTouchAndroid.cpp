@@ -149,7 +149,7 @@ InputDeviceTouchImpl::HandleFloat(DeviceButtonId buttonId, float value)
 
 
 InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device)
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
 {
 	impl_ = manager.GetAllocator().New<InputDeviceTouchImpl>(manager, device);
 	GAINPUT_ASSERT(impl_);

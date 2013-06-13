@@ -106,6 +106,8 @@ typedef unsigned int UserButtonId;
 /// ID of an input listener.
 typedef unsigned int ListenerId;
 
+/// An invalid device ID.
+static const DeviceId InvalidDeviceId = -1;
 /// An invalid device button ID.
 static const DeviceButtonId InvalidDeviceButtonId = -1;
 /// An invalid user button ID.
