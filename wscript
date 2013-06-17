@@ -60,16 +60,12 @@ def configure(cnf):
 				cnf.env.CXXFLAGS += ['-march=armv5te', '-mtune=xscale', '-msoft-float']
 
 			arch = 'arm'
-
-			#if cnf.options.debug:
-			#	cnf.env.CFLAGS += ['-marm', '-fno-omit-frame-pointer']
 		else:
 			arch = cnf.options.cross_android_arch
 
 		path = os.path.join(cnf.options.cross_android_ndk, 'toolchains',
 				'arm-linux-androideabi-4.6', 'prebuilt',
 				'linux-x86', 'bin')
-		#cnf.find_program('arm-linux-androideabi-gcc', var='CC', path_list=[path])
 		cnf.find_program('arm-linux-androideabi-g++', var='CXX', path_list=[path])
 
 		cnf.env.android_sysroot = os.path.join( cnf.options.cross_android_ndk, 'platforms',
@@ -104,7 +100,7 @@ def configure(cnf):
 	else:
 		cnf.check_libs_msvc('kernel32 user32 gdi32')
 		cnf.check(compiler='cxx',
-	        	  lib='Xinput',
+			  lib='Xinput',
 		          mandatory=True, 
 		          uselib_store='XINPUT')
 	
@@ -127,29 +123,9 @@ def build(bld):
 		includes='lib/include/', 
 		use=usetheselib,
 		target='gainputstatic')
-	basic_sources = bld.path.ant_glob('samples/basic/*.cpp')
-	if bld.env.cross == 'android':
-		basic_sources += [bld.root.make_node(os.path.join(bld.env.cross_android_ndk, 'sources/android/native_app_glue/android_native_app_glue.c'))]
-		usetheselib='stlport_static gainputstatic'
-		bld.shlib(features='cxx cxxshlib',
-			#source=lib_sources+basic_sources, 
-			source=basic_sources, 
-			includes='lib/include/', 
-			use=usetheselib,
-			target='basicsample',
-			linkflags='-lstdc++ -landroid -llog')
-	else:
-		usethese = 'gainput'
-		if (sys.platform.startswith('win')):
-			usethese = 'gainput KERNEL32 USER32 GDI32 XINPUT'
-		bld.program(features='cxx cxxprogram',
-			source=basic_sources, 
-			includes='lib/include/', 
-			target='basicsample',
-			use = usethese,
-			uselib=['LIBX11', 'LIBGL', 'LIBRT']
-			)
+	bld.recurse('samples/basic/')
 	bld.recurse('samples/dynamic/')
+	bld.recurse('samples/gesture/')
 
 from waflib.Build import BuildContext, CleanContext, \
         InstallContext, UninstallContext
