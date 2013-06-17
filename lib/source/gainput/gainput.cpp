@@ -113,13 +113,23 @@ There are two configurations of which you choose one by substituting CONFIGNAME 
 
 Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in \c build/CONFIGNAME/ folder.
 
+\section sect_android_build Android NDK
+In order to cross-compile for Android, the build has to be configured differently.
+
+Naturally, the Android NDK must be installed. Replace \c ANDROID_NDK_PATH with the complete absolute path to your installation.
+
+-# <tt>waf configure \-\-cross-android \-\-cross-android-ndk=ANDROID_NDK_PATH</tt>
+-# <tt>waf build_CONFIGNAME</tt>
+
+Executing these commands will also yield both a dynamic and static library in the \c build/CONFIGNAME/ folder.
+
 
 \page page_samples Samples Overview
 
 Name | Path | Description
 -----|------|------------
 Basic Sample | samples/basic/ | Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
-Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings. Uses the \ref sample_fw.
+Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
 
 \section sample_fw Sample Framework
 This framework makes it easier to provide succinct samples by taking care of the platform-dependent window creation/destruction.
