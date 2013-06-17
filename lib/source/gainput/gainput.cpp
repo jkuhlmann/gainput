@@ -140,6 +140,7 @@ Name | Path | Description
 -----|------|------------
 Basic Sample | samples/basic/ | Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
 Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
+Gesture Sample | samples/gesture/ | Shows how to use input gestures. Uses the \ref sample_fw.
 
 \section sample_fw Sample Framework
 This framework makes it easier to provide succinct samples by taking care of the platform-dependent window creation/destruction.
