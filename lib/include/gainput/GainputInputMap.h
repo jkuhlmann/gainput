@@ -26,17 +26,23 @@ public:
 	/// Initializes the map.
 	/**
 	 * \param manager The input manager used to get device inputs.
+	 * \param name The name for the input map (optional). If a name is provided, it is copied to an internal buffer.
 	 * \param allocator The allocator to be used for all memory allocations.
 	 */
-	InputMap(InputManager& manager, Allocator& allocator = GetDefaultAllocator());
+	InputMap(InputManager& manager, const char* name = 0, Allocator& allocator = GetDefaultAllocator());
 	/// Unitializes the map.
 	~InputMap();
 
 	/// Clears all mapped inputs.
 	void Clear();
-	
+
 	/// Returns the input manager this input map uses.
 	const InputManager& GetManager() const { return manager_; }
+	/// Returns the map's name, if any.
+	/**
+	 * \return The map's name or 0 if no name was set.
+	 */
+	const char* GetName() const { return name_; }
 
 	/// Maps a bool-type button.
 	/**
@@ -142,8 +148,9 @@ public:
 	void RemoveListener(ListenerId listenerId);
 
 private:
-	Allocator& allocator_;
 	InputManager& manager_;
+	char* name_;
+	Allocator& allocator_;
 
 	typedef HashMap<UserButtonId, UserButton*> UserButtonMap;
 	UserButtonMap userButtons_;

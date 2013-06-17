@@ -38,20 +38,26 @@ public:
 };
 
 
-InputMap::InputMap(InputManager& manager, Allocator& allocator) :
-	allocator_(allocator),
+InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator) :
 	manager_(manager),
+	name_(0),
+	allocator_(allocator),
 	userButtons_(allocator_),
 	nextUserButtonId_(0),
 	listeners_(allocator_),
 	managerListener_(0)
 {
-
+	if (name)
+	{
+		name_ = static_cast<char*>(allocator_.Allocate(strlen(name) + 1));
+		strcpy(name_, name);
+	}
 }
 
 InputMap::~InputMap()
 {
 	Clear();
+	allocator_.Deallocate(name_);
 }
 
 void
