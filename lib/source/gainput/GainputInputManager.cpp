@@ -63,10 +63,11 @@ InputManager::Update()
 uint64_t
 InputManager::GetTime() const
 {
-#if defined(GAINPUT_PLATFORM_LINUX) or defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	struct timespec ts;
 	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
 	{
+		GAINPUT_LOG("Time error\n");
 		return -1;
 	}
 

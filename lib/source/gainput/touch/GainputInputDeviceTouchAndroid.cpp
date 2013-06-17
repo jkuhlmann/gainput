@@ -73,12 +73,6 @@ InputDeviceTouchImpl::Update(InputState& state, InputState& previousState, Input
 	state_ = &state;
 	previousState_ = &previousState;
 	delta_ = delta;
-
-	// Reset downs
-	for (unsigned i = 0; i < TouchPointCount; ++i)
-	{
-		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, false);
-	}
 }
 
 int32_t
@@ -102,10 +96,12 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 		const int32_t h = manager_.GetDisplayHeight();
 		HandleFloat(TOUCH_0_X + i*TouchDataElems, x/float(w));
 		HandleFloat(TOUCH_0_Y + i*TouchDataElems, y/float(h));
-		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, true);
+		const int motionAction = AMotionEvent_getAction(event);
+		const bool down = (motionAction == AMOTION_EVENT_ACTION_DOWN || motionAction == AMOTION_EVENT_ACTION_MOVE);
+		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, down);
 		HandleFloat(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
 #ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i\n", i, x, y, w, h);
+		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i, action: %d\n", i, x, y, w, h, motionAction);
 #endif
 	}
 
