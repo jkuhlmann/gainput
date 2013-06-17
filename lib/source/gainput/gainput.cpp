@@ -123,6 +123,16 @@ Naturally, the Android NDK must be installed. Replace \c ANDROID_NDK_PATH with t
 
 Executing these commands will also yield both a dynamic and static library in the \c build/CONFIGNAME/ folder.
 
+The samples for Android need to be treated a little more to be deployed to a device even though there are some provisions present. For the time being, this is a manual process. If, for example, you want to check out the basic sample, build Gainput as described above and then do:
+
+-# <tt>cp build/debug/samples/basic/libbasicsample.so samples/android/libs/armeabi/libgainputsample.so</tt>
+-# <tt>cd samples/android/</tt>
+-# <tt>ANDROID_SDK_PATH/tools/android update project -p . -s \-\-name GainputSample \-\-target android-17</tt>
+-# <tt>ant debug</tt>
+-# <tt>ANDROID_SDK_PATH/platform-tools/adb install bin/GainputSample-debug.apk</tt>
+
+Where ANDROID_SDK_PATH is the path to your Android SDK installation.
+
 
 \page page_samples Samples Overview
 

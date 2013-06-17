@@ -269,6 +269,7 @@ static void MyHandleCmd(struct android_app* app, int32_t cmd)
 void SfwOpenWindow(const char* title)
 {
 	app_dummy();
+	LOGI("Opening window: %s\n", title);
 }
 
 void SfwCloseWindow()
