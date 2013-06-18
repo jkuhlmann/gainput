@@ -4,6 +4,7 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
+#include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 
 #include "../GainputInputDeltaState.h"
@@ -174,7 +175,7 @@ public:
 			if (event.type == KeyPress || event.type == KeyRelease)
 			{
 				XKeyEvent& keyEvent = event.xkey;
-				KeySym keySym = XKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0);
+				KeySym keySym = XkbKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0, 0);
 				const bool pressed = event.type == KeyPress;
 
 				if (dialect_.count(keySym))

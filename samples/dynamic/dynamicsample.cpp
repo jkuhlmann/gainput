@@ -103,10 +103,10 @@ void SampleMain()
 
 	gainput::InputManager manager;
 
-	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
-	const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch>();
+	manager.CreateDevice<gainput::InputDeviceMouse>();
+	manager.CreateDevice<gainput::InputDeviceTouch>();
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
-	const gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
+	manager.CreateDevice<gainput::InputDevicePad>();
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	manager.SetXDisplay(SfwGetXDisplay(), SfwGetWidth(), SfwGetHeight());

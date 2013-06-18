@@ -67,7 +67,6 @@ InputManager::GetTime() const
 	struct timespec ts;
 	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
 	{
-		GAINPUT_LOG("Time error\n");
 		return -1;
 	}
 

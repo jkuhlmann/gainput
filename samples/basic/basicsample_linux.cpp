@@ -83,8 +83,6 @@ int main(int argc, char** argv)
 	// Linux specific: Let Gainput know which Display is being used
 	manager.SetXDisplay(xDisplay, width, height);
 
-	gainput::DeviceButtonSpec anyButton[32];
-
 	for (;;)
 	{
 		// Update Gainput
@@ -104,14 +102,6 @@ int main(int argc, char** argv)
 		{
 			std::cout << "Mouse: " << map.GetFloat(MouseX) << ", " << map.GetFloat(MouseY) << std::endl;
 		}
-
-#if 0
-		const size_t anyCount = manager.GetAnyButtonDown(anyButton, 32);
-		for (unsigned i = 0; i < anyCount; ++i)
-		{
-			std::cout << "Down: " << i << ") " << anyButton[i].deviceId << " / " << anyButton[i].buttonId << std::endl;
-		}
-#endif
 	}
 
 	XDestroyWindow(xDisplay, xWindow);

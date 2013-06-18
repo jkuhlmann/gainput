@@ -219,7 +219,7 @@ public:
 	DeviceType GetType() const { return DT_KEYBOARD; }
 	const char* GetTypeName() const { return "keyboard"; }
 	DeviceState GetState() const { return DS_OK; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= 0 && deviceButton < KEY_COUNT_; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton < KEY_COUNT_; }
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
