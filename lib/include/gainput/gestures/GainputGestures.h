@@ -14,7 +14,28 @@
 namespace gainput
 {
 
-/// Common functionality for all input gestures.
+/// Base class for all input gestures.
+/**
+ * Input gestures are a way to process basic input data into more complex input data. For example, 
+ * multiple buttons may be interpreted over time to form a new button. A very simple gesture would the
+ * ubiquitous double-click.
+ *
+ * Mainly for consistency and convenience reasons, all gestures should derive from this class though it's not
+ * strictly necessary (deriving from InputDevice would suffice).
+ *
+ * Input gestures are basically just input devices that don't get their data from some hardware device
+ * but from other input devices instead. Therefore gestures must also be created by calling
+ * InputManager::CreateDevice() or InputManager::CreateAndGetDevice(). Most gestures require further 
+ * initialization which is done by calling one of their \c Initialize() member functions. After that, 
+ * they should be good to go and their buttons can be used like any other input device button, i.e.
+ * they can be mapped to some user button.
+ *
+ * Gestures can be excluded from compilation if they are not required. In order to include all gestures 
+ * \c GAINPUT_ENABLE_ALL_GESTURES should be defined in \c gainput.h . This define must be present when
+ * the library is built, otherwise the actual functionality won't be present. Similarly, there is one
+ * define for each gesture. The names of these are documented in the descriptions of the 
+ * individual gesture classes. If no such define is defined, no gesture will be included.
+ */
 class InputGesture : public InputDevice
 {
 public:
