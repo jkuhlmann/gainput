@@ -126,6 +126,7 @@ def build(bld):
 	bld.recurse('samples/basic/')
 	bld.recurse('samples/dynamic/')
 	bld.recurse('samples/gesture/')
+	bld.recurse('samples/listener/')
 
 from waflib.Build import BuildContext, CleanContext, \
         InstallContext, UninstallContext
