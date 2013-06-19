@@ -178,12 +178,30 @@ public:
 				KeySym keySym = XkbKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0, 0);
 				const bool pressed = event.type == KeyPress;
 
+				if (event.type == KeyRelease)
+				{
+					XEvent nextEvent;
+					if (XCheckMaskEvent(manager_.GetXDisplay(), eventMask, &nextEvent))
+					{
+						if (nextEvent.type == KeyPress
+							&& nextEvent.xkey.keycode == event.xkey.keycode
+							&& nextEvent.xkey.time == event.xkey.time)
+						{
+							continue;
+						}
+						else
+						{
+							XPutBackEvent(manager_.GetXDisplay(), &nextEvent);
+						}
+					}
+				}
+
 				if (dialect_.count(keySym))
 				{
 					const DeviceButtonId buttonId = dialect_[keySym];
 					state.Set(buttonId, pressed);
 #ifdef GAINPUT_DEBUG
-					GAINPUT_LOG("buttonId: %d\n", buttonId);
+					GAINPUT_LOG("buttonId: %d, pressed: %d\n", buttonId, pressed);
 #endif
 
 					if (delta)
