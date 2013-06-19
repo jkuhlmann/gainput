@@ -8,6 +8,7 @@ enum Button
 {
 	ButtonConfirm,
 	ButtonConfirmDouble,
+	ButtonConfirmExtra,
 	ButtonHoldGesture,
 	ButtonTapGesture,
 	ButtonPinching,
@@ -23,6 +24,7 @@ void SampleMain()
 
 	gainput::InputManager manager;
 
+	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch>();
 
@@ -45,6 +47,12 @@ void SampleMain()
 			mouseId, gainput::MOUSE_AXIS_Y, 0.01f,
 			500);
 	map.MapBool(ButtonConfirmDouble, dcg->GetDeviceId(), gainput::DoubleClickTriggered);
+
+	gainput::SimultaneouslyDownGesture* sdg = manager.CreateAndGetDevice<gainput::SimultaneouslyDownGesture>();
+	GAINPUT_ASSERT(sdg);
+	sdg->AddButton(mouseId, gainput::MOUSE_BUTTON_LEFT);
+	sdg->AddButton(keyboardId, gainput::KEY_SHIFT_L);
+	map.MapBool(ButtonConfirmExtra, sdg->GetDeviceId(), gainput::SimultaneouslyDownTriggered);
 
 	gainput::HoldGesture* hg = manager.CreateAndGetDevice<gainput::HoldGesture>();
 	GAINPUT_ASSERT(hg);
@@ -107,6 +115,11 @@ void SampleMain()
 		if (map.GetBoolWasDown(ButtonConfirmDouble))
 		{
 			SFW_LOG("Confirmed doubly!\n");
+		}
+
+		if (map.GetBoolWasDown(ButtonConfirmExtra))
+		{
+			SFW_LOG("Confirmed alternatively!\n");
 		}
 
 		if (map.GetBool(ButtonHoldGesture))

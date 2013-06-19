@@ -7,6 +7,7 @@
 #define GAINPUT_ENABLE_HOLD_GESTURE
 #define GAINPUT_ENABLE_PINCH_GESTURE
 #define GAINPUT_ENABLE_ROTATE_GESTURE
+#define GAINPUT_ENABLE_SIMULTANEOUSLY_DOWN_GESTURE
 #define GAINPUT_ENABLE_TAP_GESTURE
 #endif
 
@@ -56,6 +57,7 @@ protected:
 #include <gainput/gestures/GainputHoldGesture.h>
 #include <gainput/gestures/GainputPinchGesture.h>
 #include <gainput/gestures/GainputRotateGesture.h>
+#include <gainput/gestures/GainputSimultaneouslyDownGesture.h>
 #include <gainput/gestures/GainputTapGesture.h>
 
 #endif

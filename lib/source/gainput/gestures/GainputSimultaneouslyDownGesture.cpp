@@ -1,0 +1,65 @@
+
+#include <gainput/gainput.h>
+#include <gainput/gestures/GainputSimultaneouslyDownGesture.h>
+
+#ifdef GAINPUT_ENABLE_SIMULTANEOUSLY_DOWN_GESTURE
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
+
+namespace gainput
+{
+
+SimultaneouslyDownGesture::SimultaneouslyDownGesture(InputManager& manager, DeviceId device) :
+	InputGesture(manager, device),
+	buttons_(manager.GetAllocator())
+{
+	state_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 1);
+	GAINPUT_ASSERT(state_);
+	previousState_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 1);
+	GAINPUT_ASSERT(previousState_);
+}
+
+SimultaneouslyDownGesture::~SimultaneouslyDownGesture()
+{
+	manager_.GetAllocator().Delete(state_);
+	manager_.GetAllocator().Delete(previousState_);
+}
+
+void
+SimultaneouslyDownGesture::AddButton(DeviceId device, DeviceButtonId button)
+{
+	DeviceButtonSpec spec;
+	spec.deviceId = device;
+	spec.buttonId = button;
+	buttons_.push_back(spec);
+}
+
+void
+SimultaneouslyDownGesture::ClearButtons()
+{
+	buttons_.clear();
+}
+
+void
+SimultaneouslyDownGesture::Update(InputDeltaState* delta)
+{
+	*previousState_ = *state_;
+
+	bool allDown = !buttons_.empty();
+
+	for (Array<DeviceButtonSpec>::const_iterator it = buttons_.begin();
+			it != buttons_.end() && allDown;
+			++it)
+	{
+		const InputDevice* device = manager_.GetDevice(it->deviceId);
+		GAINPUT_ASSERT(device);
+		allDown = allDown && device->GetBool(it->buttonId);
+	}
+
+	HandleButton(deviceId_, *state_, *previousState_, delta, SimultaneouslyDownTriggered, allDown);
+}
+
+}
+
+#endif
+
