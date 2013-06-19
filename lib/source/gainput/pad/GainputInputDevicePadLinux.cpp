@@ -81,6 +81,9 @@ public:
 
 		if (strcmp(name, "Sony PLAYSTATION(R)3 Controller") == 0)
 		{
+#ifdef GAINPUT_DEBUG
+			GAINPUT_LOG("  --> known controller\n");
+#endif
 			buttonDialect_[0] = PAD_BUTTON_SELECT;
 			buttonDialect_[1] = PAD_BUTTON_L3;
 			buttonDialect_[2] = PAD_BUTTON_R3;
@@ -101,16 +104,13 @@ public:
 		}
 		else if (strcmp(name, "Microsoft X-Box 360 pad") == 0)
 		{
+#ifdef GAINPUT_DEBUG
+			GAINPUT_LOG("  --> known controller\n");
+#endif
 			buttonDialect_[6] = PAD_BUTTON_SELECT;
 			buttonDialect_[9] = PAD_BUTTON_L3;
 			buttonDialect_[10] = PAD_BUTTON_R3;
 			buttonDialect_[7] = PAD_BUTTON_START;
-			//buttonDialect_[4] = PAD_BUTTON_UP;
-			//buttonDialect_[5] = PAD_BUTTON_RIGHT;
-			//buttonDialect_[6] = PAD_BUTTON_DOWN;
-			//buttonDialect_[7] = PAD_BUTTON_LEFT;
-			//buttonDialect_[8] = PAD_BUTTON_L2;
-			//buttonDialect_[9] = PAD_BUTTON_R2;
 			buttonDialect_[4] = PAD_BUTTON_L1;
 			buttonDialect_[5] = PAD_BUTTON_R1;
 			buttonDialect_[3] = PAD_BUTTON_Y;
@@ -125,6 +125,10 @@ public:
 			axisDialect_[5] = PAD_BUTTON_AXIS_5;
 			axisDialect_[7] = PAD_BUTTON_UP;
 			axisDialect_[6] = PAD_BUTTON_LEFT;
+
+			// Dummy entries for IsValidButton
+			axisDialect_[-1] = PAD_BUTTON_DOWN;
+			axisDialect_[-2] = PAD_BUTTON_RIGHT;
 		}
 
 		state_ = InputDevice::DS_OK;
@@ -211,6 +215,16 @@ public:
 
 		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();
 				it != buttonDialect_.end();
+				++it)
+		{
+			if (it->second == deviceButton)
+			{
+				return true;
+			}
+		}
+
+		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = axisDialect_.begin();
+				it != axisDialect_.end();
 				++it)
 		{
 			if (it->second == deviceButton)
