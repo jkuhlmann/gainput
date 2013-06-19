@@ -43,6 +43,7 @@ public:
 		DT_TOUCH,		///< A touch-sensitive input device supporting multiple simultaneous pointers.
 		DT_REMOTE,		///< A generic networked input device.
 		DT_GESTURE,		///< A gesture input device, building on top of other input devices.
+		DT_CUSTOM,		///< A custom, user-created input device.
 		DT_COUNT		///< The count of input device types.
 	};
 
