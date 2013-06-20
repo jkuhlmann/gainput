@@ -169,6 +169,12 @@ InputDeviceTouch::Update(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
+InputDevice::DeviceState
+InputDeviceTouch::GetState() const
+{
+	return DS_OK;
+}
+
 size_t
 InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {

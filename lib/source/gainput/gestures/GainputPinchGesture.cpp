@@ -105,7 +105,7 @@ PinchGesture::Update(InputDeltaState* delta)
 	const float yd = posY - posY2;
 	const float dist = sqrtf(xd*xd + yd*yd);
 
-	if (!pinching_)
+	if (!pinching_ && dist > 0.0f)
 	{
 		pinching_ = true;
 		initialDistance_ = dist;

@@ -32,6 +32,12 @@ InputDeviceTouch::Update(InputDeltaState* delta)
 {
 }
 
+InputDevice::DeviceState
+InputDeviceTouch::GetState() const
+{
+	return DS_UNAVAILABLE;
+}
+
 size_t
 InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
 {
