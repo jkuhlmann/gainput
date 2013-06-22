@@ -14,7 +14,7 @@ namespace gainput
 class InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device) :
+	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
 		state_(InputDevice::DS_UNAVAILABLE),

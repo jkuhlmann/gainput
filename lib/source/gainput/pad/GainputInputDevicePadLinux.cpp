@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <linux/joystick.h>
+#include <errno.h>
 
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
@@ -39,16 +40,159 @@ static const char* PadDeviceIds[MaxPadCount] =
 class InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device) :
+	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
+		index_(index),
 		state_(InputDevice::DS_UNAVAILABLE),
+		fd_(-1),
 		buttonDialect_(manager_.GetAllocator())
 	{
-		unsigned padIndex = manager_.GetDeviceCountByType(InputDevice::DT_PAD);
-		GAINPUT_ASSERT(padIndex < MaxPadCount);
+		GAINPUT_ASSERT(index_ < MaxPadCount);
+		CheckForDevice();
+	}
 
-		fd_ = open(PadDeviceIds[padIndex], O_RDONLY | O_NONBLOCK);
+	~InputDevicePadImpl()
+	{
+		if (fd_ != -1)
+		{
+			close(fd_);
+		}
+	}
+
+	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	{
+		CheckForDevice();
+
+		if (fd_ < 0)
+		{
+			return;
+		}
+
+		js_event event;
+		int c;
+
+		while ( (c = read(fd_, &event, sizeof(js_event))) == sizeof(js_event) )
+		{
+			event.type &= ~JS_EVENT_INIT;
+			if (event.type == JS_EVENT_AXIS)
+			{
+				GAINPUT_ASSERT(event.number >= PAD_BUTTON_LEFT_STICK_X);
+				GAINPUT_ASSERT(event.number < PAD_BUTTON_AXIS_COUNT);
+				DeviceButtonId buttonId = event.number;
+
+				const float value = float(event.value)/MaxAxisValue;
+
+				if (axisDialect_.count(buttonId))
+				{
+					buttonId = axisDialect_[buttonId];
+				}
+
+				if (buttonId == PAD_BUTTON_UP)
+				{
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_UP, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_DOWN, value > 0.0f);
+				}
+				else if (buttonId == PAD_BUTTON_LEFT)
+				{
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_LEFT, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PAD_BUTTON_RIGHT, value > 0.0f);
+				}
+				else
+				{
+					HandleAxis(device_, state, previousState, delta, buttonId, value);
+				}
+			}
+			else if (event.type == JS_EVENT_BUTTON)
+			{
+				GAINPUT_ASSERT(event.number >= 0);
+				GAINPUT_ASSERT(event.number < PAD_BUTTON_COUNT);
+				if (buttonDialect_.count(event.number))
+				{
+					DeviceButtonId buttonId = buttonDialect_[event.number];
+					const bool value(event.value);
+					state.Set(buttonId, value);
+
+					HandleButton(device_, state, previousState, delta, buttonId, value);
+				}
+#ifdef GAINPUT_DEBUG
+				else
+				{
+					GAINPUT_LOG("Unknown pad button #%d: %d\n", int(event.number), event.value);
+				}
+#endif
+			}
+		}
+		GAINPUT_ASSERT(c == -1);
+
+		if (c == -1 
+			&& (errno == EBADF || errno == ECONNRESET || errno == ENOTCONN || errno == EIO || errno == ENXIO || errno == ENODEV))
+		{
+#ifdef GAINPUT_DEBUG
+			GAINPUT_LOG("Pad lost.\n");
+#endif
+			state_ = InputDevice::DS_UNAVAILABLE;
+			fd_ = -1;
+		}
+	}
+
+	InputManager& GetManager() const { return manager_; }
+	DeviceId GetDevice() const { return device_; }
+
+	InputDevice::DeviceState GetState() const
+	{
+		return state_;
+	}
+
+	bool IsValidButton(DeviceButtonId deviceButton) const
+	{
+		if (buttonDialect_.empty())
+		{
+			return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX;
+		}
+
+		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();
+				it != buttonDialect_.end();
+				++it)
+		{
+			if (it->second == deviceButton)
+			{
+				return true;
+			}
+		}
+
+		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = axisDialect_.begin();
+				it != axisDialect_.end();
+				++it)
+		{
+			if (it->second == deviceButton)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+private:
+	InputManager& manager_;
+	DeviceId device_;
+	unsigned index_;
+	InputDevice::DeviceState state_;
+	int fd_;
+	HashMap<unsigned, DeviceButtonId> buttonDialect_;
+	HashMap<unsigned, DeviceButtonId> axisDialect_;
+
+	void CheckForDevice()
+	{
+		if (fd_ != -1)
+		{
+			return;
+		}
+
+		state_ = InputDevice::DS_UNAVAILABLE;
+
+		fd_ = open(PadDeviceIds[index_], O_RDONLY | O_NONBLOCK);
 		if (fd_ < 0)
 		{
 			return;
@@ -133,116 +277,6 @@ public:
 
 		state_ = InputDevice::DS_OK;
 	}
-
-	~InputDevicePadImpl()
-	{
-		close(fd_);
-	}
-
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
-	{
-		js_event event;
-		int c;
-
-		while ( (c = read(fd_, &event, sizeof(js_event))) == sizeof(js_event) )
-		{
-			event.type &= ~JS_EVENT_INIT;
-			if (event.type == JS_EVENT_AXIS)
-			{
-				GAINPUT_ASSERT(event.number >= PAD_BUTTON_LEFT_STICK_X);
-				GAINPUT_ASSERT(event.number < PAD_BUTTON_AXIS_COUNT);
-				DeviceButtonId buttonId = event.number;
-
-				const float value = float(event.value)/MaxAxisValue;
-
-				if (axisDialect_.count(buttonId))
-				{
-					buttonId = axisDialect_[buttonId];
-				}
-
-				if (buttonId == PAD_BUTTON_UP)
-				{
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_UP, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_DOWN, value > 0.0f);
-				}
-				else if (buttonId == PAD_BUTTON_LEFT)
-				{
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_LEFT, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_RIGHT, value > 0.0f);
-				}
-				else
-				{
-					HandleAxis(device_, state, previousState, delta, buttonId, value);
-				}
-			}
-			else if (event.type == JS_EVENT_BUTTON)
-			{
-				GAINPUT_ASSERT(event.number >= 0);
-				GAINPUT_ASSERT(event.number < PAD_BUTTON_COUNT);
-				if (buttonDialect_.count(event.number))
-				{
-					DeviceButtonId buttonId = buttonDialect_[event.number];
-					const bool value(event.value);
-					state.Set(buttonId, value);
-
-					HandleButton(device_, state, previousState, delta, buttonId, value);
-				}
-#ifdef GAINPUT_DEBUG
-				else
-				{
-					GAINPUT_LOG("Unknown pad button #%d: %d\n", int(event.number), event.value);
-				}
-#endif
-			}
-		}
-		GAINPUT_ASSERT(c == -1);
-	}
-
-	InputManager& GetManager() const { return manager_; }
-	DeviceId GetDevice() const { return device_; }
-
-	InputDevice::DeviceState GetState() const
-	{
-		return state_;
-	}
-
-	bool IsValidButton(DeviceButtonId deviceButton) const
-	{
-		if (buttonDialect_.empty())
-		{
-			return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX;
-		}
-
-		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();
-				it != buttonDialect_.end();
-				++it)
-		{
-			if (it->second == deviceButton)
-			{
-				return true;
-			}
-		}
-
-		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = axisDialect_.begin();
-				it != axisDialect_.end();
-				++it)
-		{
-			if (it->second == deviceButton)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-private:
-	InputManager& manager_;
-	DeviceId device_;
-	InputDevice::DeviceState state_;
-	int fd_;
-	HashMap<unsigned, DeviceButtonId> buttonDialect_;
-	HashMap<unsigned, DeviceButtonId> axisDialect_;
 };
 
 }

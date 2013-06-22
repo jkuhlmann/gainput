@@ -25,14 +25,14 @@ const float MaxMotorSpeed = 65535.0f;
 class InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device) :
+	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
 		lastPacketNumber_(-1),
 		hasBattery_(false)
 	{
-		padIndex_ = manager.GetDeviceCountByType(InputDevice::DT_PAD);
+		padIndex_ = index;
 		GAINPUT_ASSERT(padIndex_ < MaxPadCount);
 
 #if 0
