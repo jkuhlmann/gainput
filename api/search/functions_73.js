@@ -6,5 +6,6 @@ var searchData=
   ['setdisplaysize',['SetDisplaySize',['../classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031',1,'gainput::InputManager']]],
   ['settextinputenabled',['SetTextInputEnabled',['../classgainput_1_1InputDeviceKeyboard.html#a02606aecbbb56b585d8c406035802d94',1,'gainput::InputDeviceKeyboard']]],
   ['setuserbuttonpolicy',['SetUserButtonPolicy',['../classgainput_1_1InputMap.html#a0dbe4f6c75f59b6b863adf68def5d1fc',1,'gainput::InputMap']]],
-  ['setxdisplay',['SetXDisplay',['../classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550',1,'gainput::InputManager']]]
+  ['setxdisplay',['SetXDisplay',['../classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550',1,'gainput::InputManager']]],
+  ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#afe5f7306714d5bd32b2ba32abc8795e2',1,'gainput::SimultaneouslyDownGesture']]]
 ];

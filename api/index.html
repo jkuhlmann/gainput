@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -78,9 +79,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Gainput Documentation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Gainput is an input library for games. This is its API documentation.</p>
+<div class="textblock"><p>Gainput is a C++ Open Source input library for games. It collects input data from different sources (like keyboards, mice or gamepads) and makes the inputs accessible through a unified interface. On top of that, inputs can be mapped to user-defined buttons. Gainput aims to be a one-stop solution to acquire input from players for your game.</p>
+<p>If there are any problems, please report them on <a href="https://github.com/jkuhlmann/gainput/issues" target="_blank">GitHub</a> or contact: <code>gainput -a-t- johanneskuhlmann.de</code></p>
+<p>These pages are Gainput's API documentation. In order to download Gainput go to the <a href="http://jkuhlmann.github.io/gainput/" target="_blank">Gainput website</a>.</p>
+<h1><a class="anchor" id="contents"></a>
+Contents</h1>
+<ul>
+<li><a class="el" href="page_start.html">Getting Started</a></li>
+<li><a class="el" href="page_building.html">Building</a></li>
+<li><a class="el" href="page_samples.html">Samples Overview</a></li>
+<li><a class="el" href="page_platforms.html">Platform Notes</a></li>
+<li><a class="el" href="page_dependencies.html">Dependencies</a></li>
+</ul>
 <h1><a class="anchor" id="using"></a>
 Using Gainput</h1>
+<p>A minimal usage sample:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;gainput/gainput.h&gt;</span></div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Define your user buttons somewhere global</span></div>
@@ -93,24 +106,24 @@ Using Gainput</h1>
 <div class="line"><a class="code" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">gainput::InputManager</a> manager;</div>
 <div class="line"><span class="keyword">const</span> <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">gainput::DeviceId</a> mouseId = manager.<a class="code" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f" title="Creates an input device and registers it with the manager.">CreateDevice</a>&lt;<a class="code" href="classgainput_1_1InputDeviceMouse.html" title="A mouse input device.">gainput::InputDeviceMouse</a>&gt;();</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// On Linux only:</span></div>
-<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550" title="[LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.">SetXDisplay</a>(xDisplay, width, height);</div>
-<div class="line"><span class="comment">// On Windows only:</span></div>
-<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="[WINDOWS/ANDROID ONLY] Sets the window resolution.">SetDisplaySize</a>(width, height);</div>
+<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550" title="[LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.">SetXDisplay</a>(xDisplay, width, height); <span class="comment">// on Linux only</span></div>
+<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="[WINDOWS/ANDROID ONLY] Sets the window resolution.">SetDisplaySize</a>(width, height); <span class="comment">// on Windows only</span></div>
 <div class="line"></div>
 <div class="line"><a class="code" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">gainput::InputMap</a> map(manager);</div>
 <div class="line">map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Call every frame</span></div>
-<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">Update</a>();</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// On Windows only, for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL:</span></div>
-<div class="line">manager.<a class="code" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc" title="[WINDOWS ONLY] Lets the InputManager handle the given Windows message.">HandleMessage</a>(msg);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Check button state</span></div>
-<div class="line"><span class="keywordflow">if</span> (map.GetBoolWasDown(ButtonConfirm))</div>
+<div class="line"><span class="keywordflow">while</span> (game_running)</div>
 <div class="line">{</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Confirmed!!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    <span class="comment">// Call every frame</span></div>
+<div class="line">    manager.<a class="code" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">Update</a>();</div>
+<div class="line"></div>
+<div class="line">    manager.<a class="code" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc" title="[WINDOWS ONLY] Lets the InputManager handle the given Windows message.">HandleMessage</a>(msg); <span class="comment">// on Windows only, for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL</span></div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Check button state</span></div>
+<div class="line">    <span class="keywordflow">if</span> (map.GetBoolWasDown(ButtonConfirm))</div>
+<div class="line">    {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Confirmed!!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="license"></a>
 License</h1>
@@ -125,7 +138,7 @@ License</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 7 2013 16:40:41 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

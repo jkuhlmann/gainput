@@ -12,5 +12,6 @@ var searchData=
   ['_7einputstate',['~InputState',['../classgainput_1_1InputState.html#a864e428a7253868a86f8f4b8a5acc4a9',1,'gainput::InputState']]],
   ['_7epinchgesture',['~PinchGesture',['../classgainput_1_1PinchGesture.html#aac48b63668cacbad128fe6ab4889c00b',1,'gainput::PinchGesture']]],
   ['_7erotategesture',['~RotateGesture',['../classgainput_1_1RotateGesture.html#a3c7d5cd2b6df83d1010844e53e47cb8e',1,'gainput::RotateGesture']]],
+  ['_7esimultaneouslydowngesture',['~SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#a5b07ec07926ec356c81eb45c98eb4737',1,'gainput::SimultaneouslyDownGesture']]],
   ['_7etapgesture',['~TapGesture',['../classgainput_1_1TapGesture.html#ad0be47cf532a1b600f63c0d17277d5f4',1,'gainput::TapGesture']]]
 ];

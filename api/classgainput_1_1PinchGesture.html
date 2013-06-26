@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -104,7 +105,7 @@ Inheritance diagram for gainput::PinchGesture:</div>
  <div class="center">
   <img src="classgainput_1_1PinchGesture.png" usemap="#gainput::PinchGesture_map" alt=""/>
   <map id="gainput::PinchGesture_map" name="gainput::PinchGesture_map">
-<area href="classgainput_1_1InputGesture.html" title="Common functionality for all input gestures." alt="gainput::InputGesture" shape="rect" coords="0,56,135,80"/>
+<area href="classgainput_1_1InputGesture.html" title="Base class for all input gestures." alt="gainput::InputGesture" shape="rect" coords="0,56,135,80"/>
 <area href="classgainput_1_1InputDevice.html" title="Interface for anything that provides device inputs." alt="gainput::InputDevice" shape="rect" coords="0,0,135,24"/>
 </map>
  </div></div>
@@ -138,14 +139,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">DeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputGesture.html#a7db6ddeb4a0183adfa08dff8f5d2cf85">GetType</a> () const </td></tr>
 <tr class="memdesc:a7db6ddeb4a0183adfa08dff8f5d2cf85 inherit pub_methods_classgainput_1_1InputGesture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns DT_GESTURE. <br/></td></tr>
 <tr class="separator:a7db6ddeb4a0183adfa08dff8f5d2cf85 inherit pub_methods_classgainput_1_1InputGesture"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac7852341db5a0d67c388c945456991 inherit pub_methods_classgainput_1_1InputGesture"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ac7852341db5a0d67c388c945456991"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputGesture.html#a7ac7852341db5a0d67c388c945456991">GetTypeName</a> () const </td></tr>
+<tr class="memdesc:a7ac7852341db5a0d67c388c945456991 inherit pub_methods_classgainput_1_1InputGesture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device type's name. <br/></td></tr>
+<tr class="separator:a7ac7852341db5a0d67c388c945456991 inherit pub_methods_classgainput_1_1InputGesture"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5655702a79100c50233bcedd5874bb71 inherit pub_methods_classgainput_1_1InputGesture"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5655702a79100c50233bcedd5874bb71"></a>
 <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputGesture.html#a5655702a79100c50233bcedd5874bb71">GetState</a> () const </td></tr>
 <tr class="memdesc:a5655702a79100c50233bcedd5874bb71 inherit pub_methods_classgainput_1_1InputGesture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device state. <br/></td></tr>
 <tr class="separator:a5655702a79100c50233bcedd5874bb71 inherit pub_methods_classgainput_1_1InputGesture"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classgainput_1_1InputDevice"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classgainput_1_1InputDevice')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classgainput_1_1InputDevice.html">gainput::InputDevice</a></td></tr>
-<tr class="memitem:a2a6e790a70a770aec1937758da33b245 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a2a6e790a70a770aec1937758da33b245">InputDevice</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device)</td></tr>
-<tr class="memdesc:a2a6e790a70a770aec1937758da33b245 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the input device.  <a href="#a2a6e790a70a770aec1937758da33b245"></a><br/></td></tr>
-<tr class="separator:a2a6e790a70a770aec1937758da33b245 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29db4b9ae320fa2e3d5456de5a273c2 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ab29db4b9ae320fa2e3d5456de5a273c2">InputDevice</a> (<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device, unsigned index)</td></tr>
+<tr class="memdesc:ab29db4b9ae320fa2e3d5456de5a273c2 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the input device.  <a href="#ab29db4b9ae320fa2e3d5456de5a273c2"></a><br/></td></tr>
+<tr class="separator:ab29db4b9ae320fa2e3d5456de5a273c2 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68983ffa017c57053fe2900244e255e4 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68983ffa017c57053fe2900244e255e4"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a68983ffa017c57053fe2900244e255e4">~InputDevice</a> ()</td></tr>
 <tr class="memdesc:a68983ffa017c57053fe2900244e255e4 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty virtual destructor. <br/></td></tr>
@@ -154,6 +159,10 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a3cbd4ebfca360334846511d717c778a8">GetDeviceId</a> () const </td></tr>
 <tr class="memdesc:a3cbd4ebfca360334846511d717c778a8 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this device's ID. <br/></td></tr>
 <tr class="separator:a3cbd4ebfca360334846511d717c778a8 inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09506aa3555652e73f72a6db0b3df26b inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09506aa3555652e73f72a6db0b3df26b"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a09506aa3555652e73f72a6db0b3df26b">GetIndex</a> () const </td></tr>
+<tr class="memdesc:a09506aa3555652e73f72a6db0b3df26b inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device's index among devices of the same type. <br/></td></tr>
+<tr class="separator:a09506aa3555652e73f72a6db0b3df26b inherit pub_methods_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fac3b3eefad69a8180ceb8d9e35c643 inherit pub_methods_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fac3b3eefad69a8180ceb8d9e35c643"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a3fac3b3eefad69a8180ceb8d9e35c643">IsAvailable</a> () const </td></tr>
 <tr class="memdesc:a3fac3b3eefad69a8180ceb8d9e35c643 inherit pub_methods_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if this device is available. <br/></td></tr>
@@ -195,6 +204,7 @@ Additional Inherited Members</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaa98ae78f6516eaf8b76d436dcb4599c6">DT_REMOTE</a>, 
 <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa613026c431dbefbf686b7f92f8f2b517">DT_GESTURE</a>, 
+<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aabafdca6cdabe89098c961ce57a954ea3">DT_CUSTOM</a>, 
 <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaab91b37f9bfa6a9dbf1fcc932bc6fb3d">DT_COUNT</a>
 <br/>
  }</td></tr>
@@ -207,14 +217,22 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a39157bf78af48ac2c0cb4482c81716aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of an input device.  <a href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">More...</a><br/></td></tr>
 <tr class="separator:a39157bf78af48ac2c0cb4482c81716aa inherit pub_types_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classgainput_1_1InputGesture"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classgainput_1_1InputGesture')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classgainput_1_1InputGesture.html">gainput::InputGesture</a></td></tr>
-<tr class="memitem:a2b82bfcc82ff925938c0e4fc5a997686 inherit pro_methods_classgainput_1_1InputGesture"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b82bfcc82ff925938c0e4fc5a997686"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>InputGesture</b> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device)</td></tr>
-<tr class="separator:a2b82bfcc82ff925938c0e4fc5a997686 inherit pro_methods_classgainput_1_1InputGesture"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59fb12f7e6cc5cf52380ef1d14a4fef1 inherit pro_methods_classgainput_1_1InputGesture"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59fb12f7e6cc5cf52380ef1d14a4fef1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>InputGesture</b> (<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device)</td></tr>
+<tr class="separator:a59fb12f7e6cc5cf52380ef1d14a4fef1 inherit pro_methods_classgainput_1_1InputGesture"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classgainput_1_1InputDevice"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classgainput_1_1InputDevice')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classgainput_1_1InputDevice.html">gainput::InputDevice</a></td></tr>
+<tr class="memitem:a8c8ca332b9f43ed5da010fcb6bf693b8 inherit pro_attribs_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c8ca332b9f43ed5da010fcb6bf693b8"></a>
+<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a8c8ca332b9f43ed5da010fcb6bf693b8">manager_</a></td></tr>
+<tr class="memdesc:a8c8ca332b9f43ed5da010fcb6bf693b8 inherit pro_attribs_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">The manager this device belongs to. <br/></td></tr>
+<tr class="separator:a8c8ca332b9f43ed5da010fcb6bf693b8 inherit pro_attribs_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a115d135c12ec35227b1bfb972d5f66dc inherit pro_attribs_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a115d135c12ec35227b1bfb972d5f66dc"></a>
 <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a115d135c12ec35227b1bfb972d5f66dc">deviceId_</a></td></tr>
 <tr class="memdesc:a115d135c12ec35227b1bfb972d5f66dc inherit pro_attribs_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of this device. <br/></td></tr>
 <tr class="separator:a115d135c12ec35227b1bfb972d5f66dc inherit pro_attribs_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ccf2b5079e9c9bbec6d7ddc31d58757 inherit pro_attribs_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ccf2b5079e9c9bbec6d7ddc31d58757"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a1ccf2b5079e9c9bbec6d7ddc31d58757">index_</a></td></tr>
+<tr class="memdesc:a1ccf2b5079e9c9bbec6d7ddc31d58757 inherit pro_attribs_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of this device among devices of the same type. <br/></td></tr>
+<tr class="separator:a1ccf2b5079e9c9bbec6d7ddc31d58757 inherit pro_attribs_classgainput_1_1InputDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04fcc65b25f8aad9618a66510e9a3bdf inherit pro_attribs_classgainput_1_1InputDevice"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fcc65b25f8aad9618a66510e9a3bdf"></a>
 <a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a04fcc65b25f8aad9618a66510e9a3bdf">state_</a></td></tr>
 <tr class="memdesc:a04fcc65b25f8aad9618a66510e9a3bdf inherit pro_attribs_classgainput_1_1InputDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current state of this device. <br/></td></tr>
@@ -378,7 +396,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 7 2013 16:40:41 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

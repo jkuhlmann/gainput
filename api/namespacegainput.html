@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -129,7 +130,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A touch input device.  <a href="classgainput_1_1InputDeviceTouch.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputListener.html">InputListener</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listener interface that allows to receive notifications when button states change.  <a href="classgainput_1_1InputListener.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listener interface that allows to receive notifications when device button states change.  <a href="classgainput_1_1InputListener.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1MappedInputListener.html">MappedInputListener</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listener interface that allows to receive notifications when user button states change.  <a href="classgainput_1_1MappedInputListener.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html">InputManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages all input devices and some other helpful stuff.  <a href="classgainput_1_1InputManager.html#details">More...</a><br/></td></tr>
@@ -144,7 +148,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A double-click gesture.  <a href="classgainput_1_1DoubleClickGesture.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputGesture.html">InputGesture</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common functionality for all input gestures.  <a href="classgainput_1_1InputGesture.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all input gestures.  <a href="classgainput_1_1InputGesture.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1HoldGesture.html">HoldGesture</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A hold-to-trigger gesture.  <a href="classgainput_1_1HoldGesture.html#details">More...</a><br/></td></tr>
@@ -154,6 +158,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1RotateGesture.html">RotateGesture</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A multi-touch rotate gesture.  <a href="classgainput_1_1RotateGesture.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1SimultaneouslyDownGesture.html">SimultaneouslyDownGesture</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A gesture that tracks if a number of buttons is down simultaneously.  <a href="classgainput_1_1SimultaneouslyDownGesture.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1TapGesture.html">TapGesture</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tap-to-trigger gesture.  <a href="classgainput_1_1TapGesture.html#details">More...</a><br/></td></tr>
@@ -604,6 +611,10 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a11a95a3465d715788d69720f8f3dc5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buttons provided by the RotateGesture.  <a href="namespacegainput.html#a11a95a3465d715788d69720f8f3dc5a5">More...</a><br/></td></tr>
 <tr class="separator:a11a95a3465d715788d69720f8f3dc5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d56fad0a562c92ce3c9b337b760cb21"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21">SimultaneouslyDownAction</a> { <a class="el" href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21ad074ff1508e9a8242afc0d7f388634da">SimultaneouslyDownTriggered</a>
+ }</td></tr>
+<tr class="memdesc:a5d56fad0a562c92ce3c9b337b760cb21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buttons provided by the SimultaneouslyDownGesture.  <a href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21">More...</a><br/></td></tr>
+<tr class="separator:a5d56fad0a562c92ce3c9b337b760cb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fa7d46c5f665fc163caeb36a4da55ab"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#a9fa7d46c5f665fc163caeb36a4da55ab">TapAction</a> { <a class="el" href="namespacegainput.html#a9fa7d46c5f665fc163caeb36a4da55abad13a2b96c735217f6739019f3de8d9c3">TapTriggered</a>
  }</td></tr>
 <tr class="memdesc:a9fa7d46c5f665fc163caeb36a4da55ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buttons provided by the TapGesture.  <a href="namespacegainput.html#a9fa7d46c5f665fc163caeb36a4da55ab">More...</a><br/></td></tr>
@@ -764,6 +775,27 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>fmix</b> (uint32_
 
 </div>
 </div>
+<a class="anchor" id="a5d56fad0a562c92ce3c9b337b760cb21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21">gainput::SimultaneouslyDownAction</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buttons provided by the <a class="el" href="classgainput_1_1SimultaneouslyDownGesture.html" title="A gesture that tracks if a number of buttons is down simultaneously.">SimultaneouslyDownGesture</a>. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a5d56fad0a562c92ce3c9b337b760cb21ad074ff1508e9a8242afc0d7f388634da"></a>SimultaneouslyDownTriggered</em>&nbsp;</td><td>
+<p>The button triggered by double-clicking. </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a9fa7d46c5f665fc163caeb36a4da55ab"></a>
 <div class="memitem">
 <div class="memproto">
@@ -846,7 +878,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>fmix</b> (uint32_
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 7 2013 16:40:41 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

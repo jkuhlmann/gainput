@@ -2,6 +2,7 @@ var searchData=
 [
   ['padbutton',['PadButton',['../namespacegainput.html#ab64b35c08364619577e3815ebcd20594',1,'gainput']]],
   ['paddeviceids',['PadDeviceIds',['../classgainput_1_1InputDevicePad.html#ad7a305dbdba7901d2761d71c5d51bda5',1,'gainput::InputDevicePad']]],
+  ['platform_20notes',['Platform Notes',['../page_platforms.html',1,'']]],
   ['pinchaction',['PinchAction',['../namespacegainput.html#a2afbae28940bf2248ff9fbbec40dd4c6',1,'gainput']]],
   ['pinchgesture',['PinchGesture',['../classgainput_1_1PinchGesture.html',1,'gainput']]],
   ['pinchgesture',['PinchGesture',['../classgainput_1_1PinchGesture.html#a640eb5d1bb3087c4130470cc049f400c',1,'gainput::PinchGesture']]],

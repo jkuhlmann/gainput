@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -107,16 +108,17 @@ Inheritance diagram for gainput::InputDevice:</div>
  <div class="center">
   <img src="classgainput_1_1InputDevice.png" usemap="#gainput::InputDevice_map" alt=""/>
   <map id="gainput::InputDevice_map" name="gainput::InputDevice_map">
-<area href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device." alt="gainput::InputDeviceKeyboard" shape="rect" coords="0,56,181,80"/>
-<area href="classgainput_1_1InputDeviceMouse.html" title="A mouse input device." alt="gainput::InputDeviceMouse" shape="rect" coords="191,56,372,80"/>
-<area href="classgainput_1_1InputDevicePad.html" title="A pad input device." alt="gainput::InputDevicePad" shape="rect" coords="382,56,563,80"/>
-<area href="classgainput_1_1InputDeviceTouch.html" title="A touch input device." alt="gainput::InputDeviceTouch" shape="rect" coords="573,56,754,80"/>
-<area href="classgainput_1_1InputGesture.html" title="Common functionality for all input gestures." alt="gainput::InputGesture" shape="rect" coords="764,56,945,80"/>
-<area href="classgainput_1_1DoubleClickGesture.html" title="A double-click gesture." alt="gainput::DoubleClickGesture" shape="rect" coords="382,112,563,136"/>
-<area href="classgainput_1_1HoldGesture.html" title="A hold-to-trigger gesture." alt="gainput::HoldGesture" shape="rect" coords="573,112,754,136"/>
-<area href="classgainput_1_1PinchGesture.html" title="A multi-touch pinch-to-scale gesture." alt="gainput::PinchGesture" shape="rect" coords="764,112,945,136"/>
-<area href="classgainput_1_1RotateGesture.html" title="A multi-touch rotate gesture." alt="gainput::RotateGesture" shape="rect" coords="955,112,1136,136"/>
-<area href="classgainput_1_1TapGesture.html" title="A tap-to-trigger gesture." alt="gainput::TapGesture" shape="rect" coords="1146,112,1327,136"/>
+<area href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device." alt="gainput::InputDeviceKeyboard" shape="rect" coords="0,56,219,80"/>
+<area href="classgainput_1_1InputDeviceMouse.html" title="A mouse input device." alt="gainput::InputDeviceMouse" shape="rect" coords="229,56,448,80"/>
+<area href="classgainput_1_1InputDevicePad.html" title="A pad input device." alt="gainput::InputDevicePad" shape="rect" coords="458,56,677,80"/>
+<area href="classgainput_1_1InputDeviceTouch.html" title="A touch input device." alt="gainput::InputDeviceTouch" shape="rect" coords="687,56,906,80"/>
+<area href="classgainput_1_1InputGesture.html" title="Base class for all input gestures." alt="gainput::InputGesture" shape="rect" coords="916,56,1135,80"/>
+<area href="classgainput_1_1DoubleClickGesture.html" title="A double-click gesture." alt="gainput::DoubleClickGesture" shape="rect" coords="343,112,562,136"/>
+<area href="classgainput_1_1HoldGesture.html" title="A hold-to-trigger gesture." alt="gainput::HoldGesture" shape="rect" coords="572,112,791,136"/>
+<area href="classgainput_1_1PinchGesture.html" title="A multi-touch pinch-to-scale gesture." alt="gainput::PinchGesture" shape="rect" coords="801,112,1020,136"/>
+<area href="classgainput_1_1RotateGesture.html" title="A multi-touch rotate gesture." alt="gainput::RotateGesture" shape="rect" coords="1030,112,1249,136"/>
+<area href="classgainput_1_1SimultaneouslyDownGesture.html" title="A gesture that tracks if a number of buttons is down simultaneously." alt="gainput::SimultaneouslyDownGesture" shape="rect" coords="1259,112,1478,136"/>
+<area href="classgainput_1_1TapGesture.html" title="A tap-to-trigger gesture." alt="gainput::TapGesture" shape="rect" coords="1488,112,1707,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -130,6 +132,7 @@ Public Types</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaa98ae78f6516eaf8b76d436dcb4599c6">DT_REMOTE</a>, 
 <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa613026c431dbefbf686b7f92f8f2b517">DT_GESTURE</a>, 
+<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aabafdca6cdabe89098c961ce57a954ea3">DT_CUSTOM</a>, 
 <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaab91b37f9bfa6a9dbf1fcc932bc6fb3d">DT_COUNT</a>
 <br/>
  }</td></tr>
@@ -144,9 +147,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2a6e790a70a770aec1937758da33b245"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a2a6e790a70a770aec1937758da33b245">InputDevice</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device)</td></tr>
-<tr class="memdesc:a2a6e790a70a770aec1937758da33b245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the input device.  <a href="#a2a6e790a70a770aec1937758da33b245"></a><br/></td></tr>
-<tr class="separator:a2a6e790a70a770aec1937758da33b245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29db4b9ae320fa2e3d5456de5a273c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ab29db4b9ae320fa2e3d5456de5a273c2">InputDevice</a> (<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device, unsigned index)</td></tr>
+<tr class="memdesc:ab29db4b9ae320fa2e3d5456de5a273c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the input device.  <a href="#ab29db4b9ae320fa2e3d5456de5a273c2"></a><br/></td></tr>
+<tr class="separator:ab29db4b9ae320fa2e3d5456de5a273c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68983ffa017c57053fe2900244e255e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68983ffa017c57053fe2900244e255e4"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a68983ffa017c57053fe2900244e255e4">~InputDevice</a> ()</td></tr>
 <tr class="memdesc:a68983ffa017c57053fe2900244e255e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty virtual destructor. <br/></td></tr>
@@ -158,10 +161,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a3cbd4ebfca360334846511d717c778a8">GetDeviceId</a> () const </td></tr>
 <tr class="memdesc:a3cbd4ebfca360334846511d717c778a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this device's ID. <br/></td></tr>
 <tr class="separator:a3cbd4ebfca360334846511d717c778a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09506aa3555652e73f72a6db0b3df26b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09506aa3555652e73f72a6db0b3df26b"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a09506aa3555652e73f72a6db0b3df26b">GetIndex</a> () const </td></tr>
+<tr class="memdesc:a09506aa3555652e73f72a6db0b3df26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device's index among devices of the same type. <br/></td></tr>
+<tr class="separator:a09506aa3555652e73f72a6db0b3df26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54f02fe2a25db06c3cd5a486c0df22c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54f02fe2a25db06c3cd5a486c0df22c3"></a>
 virtual <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">DeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a54f02fe2a25db06c3cd5a486c0df22c3">GetType</a> () const =0</td></tr>
 <tr class="memdesc:a54f02fe2a25db06c3cd5a486c0df22c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device type. <br/></td></tr>
 <tr class="separator:a54f02fe2a25db06c3cd5a486c0df22c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5937423f8a7a8807c26c35365b19c54f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5937423f8a7a8807c26c35365b19c54f"></a>
+virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a5937423f8a7a8807c26c35365b19c54f">GetTypeName</a> () const =0</td></tr>
+<tr class="memdesc:a5937423f8a7a8807c26c35365b19c54f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device type's name. <br/></td></tr>
+<tr class="separator:a5937423f8a7a8807c26c35365b19c54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4a415c82932bcb09da1a64de8aedfbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4a415c82932bcb09da1a64de8aedfbd"></a>
 virtual <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#aa4a415c82932bcb09da1a64de8aedfbd">GetState</a> () const =0</td></tr>
 <tr class="memdesc:aa4a415c82932bcb09da1a64de8aedfbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device state. <br/></td></tr>
@@ -212,10 +223,18 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a8c8ca332b9f43ed5da010fcb6bf693b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c8ca332b9f43ed5da010fcb6bf693b8"></a>
+<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a8c8ca332b9f43ed5da010fcb6bf693b8">manager_</a></td></tr>
+<tr class="memdesc:a8c8ca332b9f43ed5da010fcb6bf693b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The manager this device belongs to. <br/></td></tr>
+<tr class="separator:a8c8ca332b9f43ed5da010fcb6bf693b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a115d135c12ec35227b1bfb972d5f66dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a115d135c12ec35227b1bfb972d5f66dc"></a>
 <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a115d135c12ec35227b1bfb972d5f66dc">deviceId_</a></td></tr>
 <tr class="memdesc:a115d135c12ec35227b1bfb972d5f66dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of this device. <br/></td></tr>
 <tr class="separator:a115d135c12ec35227b1bfb972d5f66dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ccf2b5079e9c9bbec6d7ddc31d58757"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ccf2b5079e9c9bbec6d7ddc31d58757"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a1ccf2b5079e9c9bbec6d7ddc31d58757">index_</a></td></tr>
+<tr class="memdesc:a1ccf2b5079e9c9bbec6d7ddc31d58757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of this device among devices of the same type. <br/></td></tr>
+<tr class="separator:a1ccf2b5079e9c9bbec6d7ddc31d58757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04fcc65b25f8aad9618a66510e9a3bdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fcc65b25f8aad9618a66510e9a3bdf"></a>
 <a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a04fcc65b25f8aad9618a66510e9a3bdf">state_</a></td></tr>
 <tr class="memdesc:a04fcc65b25f8aad9618a66510e9a3bdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current state of this device. <br/></td></tr>
@@ -288,6 +307,9 @@ Protected Attributes</h2></td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a4e851f5fda7f6db653f2aa9a15fede6aa613026c431dbefbf686b7f92f8f2b517"></a>DT_GESTURE</em>&nbsp;</td><td>
 <p>A gesture input device, building on top of other input devices. </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a4e851f5fda7f6db653f2aa9a15fede6aabafdca6cdabe89098c961ce57a954ea3"></a>DT_CUSTOM</em>&nbsp;</td><td>
+<p>A custom, user-created input device. </p>
+</td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a4e851f5fda7f6db653f2aa9a15fede6aaab91b37f9bfa6a9dbf1fcc932bc6fb3d"></a>DT_COUNT</em>&nbsp;</td><td>
 <p>The count of input device types. </p>
 </td></tr>
@@ -298,16 +320,32 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2a6e790a70a770aec1937758da33b245"></a>
+<a class="anchor" id="ab29db4b9ae320fa2e3d5456de5a273c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">gainput::InputDevice::InputDevice </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td>
-          <td class="paramname"><em>device</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -482,7 +520,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classgainput_1_1InputDeviceKeyboard.html#a05ba4983d1f8a55d70063ed84eded1b7">gainput::InputDeviceKeyboard</a>, <a class="el" href="classgainput_1_1InputDevicePad.html#a34081771efb3ce9c60ff5cc6838bb9ab">gainput::InputDevicePad</a>, <a class="el" href="classgainput_1_1InputDeviceTouch.html#a528b4e99410ccd2eb6e224c7869f6a6c">gainput::InputDeviceTouch</a>, <a class="el" href="classgainput_1_1DoubleClickGesture.html#a310879602216dd8de37d3daf49325ca1">gainput::DoubleClickGesture</a>, <a class="el" href="classgainput_1_1InputDeviceMouse.html#a5f6751c53c8b07cf56da6bbec28b8c75">gainput::InputDeviceMouse</a>, <a class="el" href="classgainput_1_1HoldGesture.html#acc703618a35a3f2cdfb035f2a3c77a05">gainput::HoldGesture</a>, <a class="el" href="classgainput_1_1PinchGesture.html#aca6c48ec4cdd142109f7941236623c4f">gainput::PinchGesture</a>, <a class="el" href="classgainput_1_1RotateGesture.html#a56dcaa56726e0903be8f956ae197fd88">gainput::RotateGesture</a>, and <a class="el" href="classgainput_1_1TapGesture.html#a097cdc3f963bba693a4533a268b41d50">gainput::TapGesture</a>.</p>
+<p>Implemented in <a class="el" href="classgainput_1_1InputDeviceKeyboard.html#a05ba4983d1f8a55d70063ed84eded1b7">gainput::InputDeviceKeyboard</a>, <a class="el" href="classgainput_1_1InputDevicePad.html#a34081771efb3ce9c60ff5cc6838bb9ab">gainput::InputDevicePad</a>, <a class="el" href="classgainput_1_1InputDeviceTouch.html#a528b4e99410ccd2eb6e224c7869f6a6c">gainput::InputDeviceTouch</a>, <a class="el" href="classgainput_1_1DoubleClickGesture.html#a310879602216dd8de37d3daf49325ca1">gainput::DoubleClickGesture</a>, <a class="el" href="classgainput_1_1InputDeviceMouse.html#a5f6751c53c8b07cf56da6bbec28b8c75">gainput::InputDeviceMouse</a>, <a class="el" href="classgainput_1_1HoldGesture.html#acc703618a35a3f2cdfb035f2a3c77a05">gainput::HoldGesture</a>, <a class="el" href="classgainput_1_1PinchGesture.html#aca6c48ec4cdd142109f7941236623c4f">gainput::PinchGesture</a>, <a class="el" href="classgainput_1_1RotateGesture.html#a56dcaa56726e0903be8f956ae197fd88">gainput::RotateGesture</a>, <a class="el" href="classgainput_1_1SimultaneouslyDownGesture.html#a860e5db6c2a62e5d395b170ccd5b8f5e">gainput::SimultaneouslyDownGesture</a>, and <a class="el" href="classgainput_1_1TapGesture.html#a097cdc3f963bba693a4533a268b41d50">gainput::TapGesture</a>.</p>
 
 </div>
 </div>
@@ -492,7 +530,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 7 2013 16:40:41 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

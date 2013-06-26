@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -112,9 +113,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a2f45070d13aa1ecc8b514b5434dbd38c">InputMap</a> (const <a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, <a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=GetDefaultAllocator())</td></tr>
-<tr class="memdesc:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the map.  <a href="#a2f45070d13aa1ecc8b514b5434dbd38c"></a><br/></td></tr>
-<tr class="separator:a2f45070d13aa1ecc8b514b5434dbd38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66006b5928d264239d4ebe16bb5d14e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a66006b5928d264239d4ebe16bb5d14e1">InputMap</a> (<a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;manager, const char *name=0, <a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=GetDefaultAllocator())</td></tr>
+<tr class="memdesc:a66006b5928d264239d4ebe16bb5d14e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the map.  <a href="#a66006b5928d264239d4ebe16bb5d14e1"></a><br/></td></tr>
+<tr class="separator:a66006b5928d264239d4ebe16bb5d14e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4388beac031131b5aee399d32f81aa16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4388beac031131b5aee399d32f81aa16"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a4388beac031131b5aee399d32f81aa16">~InputMap</a> ()</td></tr>
 <tr class="memdesc:a4388beac031131b5aee399d32f81aa16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unitializes the map. <br/></td></tr>
@@ -127,12 +128,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 const <a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a10a7e7d65b27ea22288172af89c6de09">GetManager</a> () const </td></tr>
 <tr class="memdesc:a10a7e7d65b27ea22288172af89c6de09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the input manager this input map uses. <br/></td></tr>
 <tr class="separator:a10a7e7d65b27ea22288172af89c6de09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a832d8c6c479dd04bd5498fe2879e311b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a832d8c6c479dd04bd5498fe2879e311b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>AddListener</b> (<a class="el" href="classgainput_1_1InputListener.html">InputListener</a> *listener)</td></tr>
-<tr class="separator:a832d8c6c479dd04bd5498fe2879e311b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa41a719baa252b11596fa0ad6cc30c97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa41a719baa252b11596fa0ad6cc30c97"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveListener</b> (<a class="el" href="classgainput_1_1InputListener.html">InputListener</a> *listener)</td></tr>
-<tr class="separator:aa41a719baa252b11596fa0ad6cc30c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b216b5eb5446000d3f1e4aa69b38083"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a8b216b5eb5446000d3f1e4aa69b38083">GetName</a> () const </td></tr>
+<tr class="memdesc:a8b216b5eb5446000d3f1e4aa69b38083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the map's name, if any.  <a href="#a8b216b5eb5446000d3f1e4aa69b38083"></a><br/></td></tr>
+<tr class="separator:a8b216b5eb5446000d3f1e4aa69b38083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd8e038d6d839b056b834fcfccc2cbfd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#acd8e038d6d839b056b834fcfccc2cbfd">MapBool</a> (<a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> userButton, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device, <a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton)</td></tr>
 <tr class="memdesc:acd8e038d6d839b056b834fcfccc2cbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a bool-type button.  <a href="#acd8e038d6d839b056b834fcfccc2cbfd"></a><br/></td></tr>
 <tr class="separator:acd8e038d6d839b056b834fcfccc2cbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,6 +185,16 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="memitem:aa8b981002134eb9d81580dd1ab5a662c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#aa8b981002134eb9d81580dd1ab5a662c">GetUserButtonName</a> (<a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> userButton, char *buffer, size_t bufferLength) const </td></tr>
 <tr class="memdesc:aa8b981002134eb9d81580dd1ab5a662c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the device button mapped to the given user button.  <a href="#aa8b981002134eb9d81580dd1ab5a662c"></a><br/></td></tr>
 <tr class="separator:aa8b981002134eb9d81580dd1ab5a662c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3e94bce44fc05d65402f6b6c7c253a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#aa3e94bce44fc05d65402f6b6c7c253a3">GetUserButtonId</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device, <a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> deviceButton) const </td></tr>
+<tr class="memdesc:aa3e94bce44fc05d65402f6b6c7c253a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the user button ID the given device button is mapped to.  <a href="#aa3e94bce44fc05d65402f6b6c7c253a3"></a><br/></td></tr>
+<tr class="separator:aa3e94bce44fc05d65402f6b6c7c253a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4de947004f638b361cb659a2c2a6717"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#ac4de947004f638b361cb659a2c2a6717">AddListener</a> (<a class="el" href="classgainput_1_1MappedInputListener.html">MappedInputListener</a> *listener)</td></tr>
+<tr class="memdesc:ac4de947004f638b361cb659a2c2a6717"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a listener to be notified when a button state changes.  <a href="#ac4de947004f638b361cb659a2c2a6717"></a><br/></td></tr>
+<tr class="separator:ac4de947004f638b361cb659a2c2a6717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4906bb1fde746fe7dfae73307ee8e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a4906bb1fde746fe7dfae73307ee8e3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html#a1a4906bb1fde746fe7dfae73307ee8e3">RemoveListener</a> (<a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a> listenerId)</td></tr>
+<tr class="memdesc:a1a4906bb1fde746fe7dfae73307ee8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-registers the given listener. <br/></td></tr>
+<tr class="separator:a1a4906bb1fde746fe7dfae73307ee8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Maps user buttons to device buttons. </p>
@@ -225,15 +233,21 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2f45070d13aa1ecc8b514b5434dbd38c"></a>
+<a class="anchor" id="a66006b5928d264239d4ebe16bb5d14e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">gainput::InputMap::InputMap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1InputManager.html">InputManager</a> &amp;&#160;</td>
           <td class="paramname"><em>manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -253,6 +267,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">manager</td><td>The input manager used to get device inputs. </td></tr>
+    <tr><td class="paramname">name</td><td>The name for the input map (optional). If a name is provided, it is copied to an internal buffer. </td></tr>
     <tr><td class="paramname">allocator</td><td>The allocator to be used for all memory allocations. </td></tr>
   </table>
   </dd>
@@ -261,6 +276,25 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac4de947004f638b361cb659a2c2a6717"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a> gainput::InputMap::AddListener </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1MappedInputListener.html">MappedInputListener</a> *&#160;</td>
+          <td class="paramname"><em>listener</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a listener to be notified when a button state changes. </p>
+<p>If there are listeners registered, all input devices will have to record their state changes. This incurs extra runtime costs. </p>
+
+</div>
+</div>
 <a class="anchor" id="a6589a914bee0da7cbc942bf527579ebf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -301,6 +335,69 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of device buttons written to outButtons. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8b216b5eb5446000d3f1e4aa69b38083"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* gainput::InputMap::GetName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the map's name, if any. </p>
+<dl class="section return"><dt>Returns</dt><dd>The map's name or 0 if no name was set. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa3e94bce44fc05d65402f6b6c7c253a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacegainput.html#a855e3ec6f7e3fa3a6145994800e08060">UserButtonId</a> gainput::InputMap::GetUserButtonId </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a>&#160;</td>
+          <td class="paramname"><em>deviceButton</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the user button ID the given device button is mapped to. </p>
+<p>This function iterates over all mapped buttons and therefore shouldn't be used in a performance critical situation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">device</td><td>The device's ID of the device button to be checked. </td></tr>
+    <tr><td class="paramname">deviceButton</td><td>The ID of the device button to be checked. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The user button ID the device button is mapped to or InvalidDeviceButtonId if the device button is not mapped. </dd></dl>
 
 </div>
 </div>
@@ -519,7 +616,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 7 2013 16:40:41 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
