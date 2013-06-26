@@ -275,6 +275,7 @@ void SfwOpenWindow(const char* title)
 void SfwCloseWindow()
 {
 	ANativeActivity_finish(state->activity);
+	LOGI("Closing window\n");
 }
 
 void SfwUpdate()
