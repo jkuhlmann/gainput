@@ -170,6 +170,7 @@ DevUpdate()
 							stream->Write(uint32_t(buttonId));
 							stream->Write(uint32_t(mappings[i].deviceId));
 							stream->Write(uint32_t(mappings[i].buttonId));
+							stream->Write(map->GetFloat(buttonId));
 							stream->SeekBegin(0);
 							devConnection->Send(*stream);
 							++count;
