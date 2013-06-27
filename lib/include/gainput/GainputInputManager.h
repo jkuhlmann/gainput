@@ -60,7 +60,7 @@ public:
 	void Update();
 
 	/// Returns the allocator to be used by for memory allocations.
-	Allocator& GetAllocator() { return allocator_; }
+	Allocator& GetAllocator() const { return allocator_; }
 
 	/// Returns a monotonic time in milliseconds.
 	uint64_t GetTime() const;

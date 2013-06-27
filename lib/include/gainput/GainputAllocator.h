@@ -49,6 +49,12 @@ public:
 	{
 		return new (Allocate(sizeof(T))) T(p0);
 	}
+	
+	template <class T, class P0>
+	T* New(const P0& p0)
+	{
+		return new (Allocate(sizeof(T))) T(p0);
+	}
 
 	/// An operator new-like function that allocates memory and calls T's constructor with two parameters.
 	/**

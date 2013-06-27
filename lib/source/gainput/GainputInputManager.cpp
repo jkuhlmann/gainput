@@ -14,6 +14,8 @@
 #include "touch/GainputInputDeviceTouchAndroid.h"
 #endif
 
+#include "dev/GainputDev.h"
+
 
 namespace gainput
 {
@@ -26,7 +28,7 @@ InputManager::InputManager(Allocator& allocator) :
 		nextListenerId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_))
 {
-
+	GAINPUT_DEV_INIT(this);
 }
 
 InputManager::~InputManager()
@@ -58,6 +60,8 @@ InputManager::Update()
 		ds->NotifyListeners(listeners_);
 		ds->Clear();
 	}
+
+	GAINPUT_DEV_UPDATE();
 }
 
 uint64_t

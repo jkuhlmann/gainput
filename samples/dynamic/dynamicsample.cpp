@@ -16,7 +16,8 @@ enum Button
 	ButtonReset,
 	ButtonLoad,
 	ButtonSave,
-	ButtonTest
+	ButtonTest,
+	ButtonMouseX,
 };
 
 
@@ -103,7 +104,7 @@ void SampleMain()
 
 	gainput::InputManager manager;
 
-	manager.CreateDevice<gainput::InputDeviceMouse>();
+	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	manager.CreateDevice<gainput::InputDeviceTouch>();
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	manager.CreateDevice<gainput::InputDevicePad>();
@@ -120,6 +121,7 @@ void SampleMain()
 	map.MapBool(ButtonReset, keyboardId, gainput::KEY_ESCAPE);
 	map.MapBool(ButtonSave, keyboardId, gainput::KEY_F1);
 	map.MapBool(ButtonLoad, keyboardId, gainput::KEY_F2);
+	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
 
 	gainput::DeviceButtonSpec anyButton[32];
 	bool mapped = false;

@@ -25,15 +25,20 @@
 	#error Gainput: Unknown/unsupported platform!
 #endif
 
-#define GAINPUT_ASSERT assert
-#define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
 
 //#define GAINPUT_DEBUG
+//#define GAINPUT_DEV
 #define GAINPUT_ENABLE_ALL_GESTURES
+
 
 #include <cassert>
 #include <cstring>
 #include <new>
+
+
+#define GAINPUT_ASSERT assert
+#define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
+
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
@@ -41,7 +46,7 @@
 #include <X11/Xlib.h>
 #include <stdint.h>
 
-#ifdef GAINPUT_DEBUG
+#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#include <stdio.h>
 	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
 #endif
@@ -64,7 +69,7 @@ namespace gainput
 	typedef unsigned __int64 uint64_t;
 }
 
-#ifdef GAINPUT_DEBUG
+#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#include <stdio.h>
 	#define GAINPUT_LOG(...) { char buf[1024]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
 #endif
@@ -76,7 +81,7 @@ namespace gainput
 #include <android/native_activity.h>
 #include <android/log.h>
 
-#ifdef GAINPUT_DEBUG
+#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 

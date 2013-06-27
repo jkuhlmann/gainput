@@ -1,5 +1,6 @@
 
 #include <gainput/gainput.h>
+#include "dev/GainputDev.h"
 
 namespace
 {
@@ -52,6 +53,7 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 		name_ = static_cast<char*>(allocator_.Allocate(strlen(name) + 1));
 		strcpy(name_, name);
 	}
+	GAINPUT_DEV_NEW_MAP(this);
 }
 
 InputMap::~InputMap()
