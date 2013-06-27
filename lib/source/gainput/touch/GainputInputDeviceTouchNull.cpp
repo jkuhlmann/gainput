@@ -3,67 +3,46 @@
 
 #if !defined(GAINPUT_PLATFORM_ANDROID)
 
+#include "GainputTouchInfo.h"
 
 namespace gainput
 {
 
-const unsigned TouchPointCount = 8;
-const unsigned TouchDataElems = 4;
-
-
-
-InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
+class InputDeviceTouchImpl
 {
-	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
-	GAINPUT_ASSERT(state_);
-	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
-	GAINPUT_ASSERT(previousState_);
-}
+public:
+	InputDeviceTouchImpl(InputManager& manager, DeviceId device);
 
-InputDeviceTouch::~InputDeviceTouch()
+	void Update(InputState& state, InputState& previousState, InputDeltaState* delta);
+
+	InputManager& GetManager() const { return manager_; }
+	DeviceId GetDevice() const { return device_; }
+
+	InputDevice::DeviceState GetState() const { return InputDevice::DS_UNAVAILABLE; }
+
+private:
+	InputManager& manager_;
+	DeviceId device_;
+
+	void HandleBool(DeviceButtonId buttonId, bool value);
+	void HandleFloat(DeviceButtonId buttonId, float value);
+};
+
+
+InputDeviceTouchImpl::InputDeviceTouchImpl(InputManager& manager, DeviceId device) :
+	manager_(manager),
+	device_(device)
 {
-	manager_.GetAllocator().Delete(state_);
-	manager_.GetAllocator().Delete(previousState_);
 }
 
 void
-InputDeviceTouch::Update(InputDeltaState* delta)
+InputDeviceTouchImpl::Update(InputState& state, InputState& previousState, InputDeltaState* delta)
 {
 }
 
-InputDevice::DeviceState
-InputDeviceTouch::GetState() const
-{
-	return DS_UNAVAILABLE;
 }
 
-size_t
-InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const
-{
-	return 0;
-}
-
-size_t
-InputDeviceTouch::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const
-{
-	return 0;
-}
-
-ButtonType
-InputDeviceTouch::GetButtonType(DeviceButtonId deviceButton) const
-{
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-	return BT_BOOL;
-}
-
-DeviceButtonId
-InputDeviceTouch::GetButtonByName(const char* name) const
-{
-	return InvalidDeviceButtonId;
-}
-
-}
+#include "GainputTouchCommon.h"
 
 #endif
 

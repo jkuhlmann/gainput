@@ -129,9 +129,10 @@ DevUpdate()
 						t = buttonId;
 						stream->Write(t);
 						char buttonName[128];
-						device->GetButtonName(buttonId, buttonName, 128);
-						stream->Write(uint8_t(strlen(buttonName)));
-						stream->Write(buttonName, strlen(buttonName));
+						const size_t len= device->GetButtonName(buttonId, buttonName, 128);
+						stream->Write(uint8_t(len));
+						if (len)
+							stream->Write(buttonName, len);
 						stream->Write(uint8_t(device->GetButtonType(buttonId)));
 						stream->SeekBegin(0);
 						devConnection->Send(*stream);

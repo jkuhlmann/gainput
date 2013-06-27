@@ -4,7 +4,7 @@
 
 namespace gainput
 {
-	
+
 class InputDeviceTouchImpl
 {
 public:
@@ -14,6 +14,8 @@ public:
 
 	InputManager& GetManager() const { return manager_; }
 	DeviceId GetDevice() const { return device_; }
+
+	InputDevice::DeviceState GetState() const { return InputDevice::DS_OK; }
 
 	int32_t HandleInput(AInputEvent* event);
 

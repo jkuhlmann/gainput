@@ -15,7 +15,6 @@ enum DevCmd
 	DevCmdUserButtonChanged,
 };
 
-
 }
 
 #endif
