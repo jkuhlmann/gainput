@@ -58,6 +58,7 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 
 InputMap::~InputMap()
 {
+	GAINPUT_DEV_REMOVE_MAP(this);
 	Clear();
 	allocator_.Deallocate(name_);
 }

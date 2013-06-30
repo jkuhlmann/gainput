@@ -176,8 +176,6 @@ public:
 		x.data_ = data;
 	}
 
-#if 0
-	// Untested
 	iterator erase(iterator pos)
 	{
 		if (size_ == 0)
@@ -187,12 +185,35 @@ public:
 		--size_;
 		return pos;
 	}
-#endif
 
 	void clear() { size_ = 0; }
 
 	bool empty() const { return size_ == 0; }
 	size_t size() const { return size_; }
+
+	iterator find(const value_type& val)
+	{
+		for (size_t i = 0; i < size_; ++i)
+		{
+			if (data_[i] == val)
+			{
+				return data_ + i;
+			}
+		}
+		return end();
+	}
+
+	const_iterator find(const value_type& val) const
+	{
+		for (size_t i = 0; i < size_; ++i)
+		{
+			if (data_[i] == val)
+			{
+				return data_ + i;
+			}
+		}
+		return end();
+	}
 
 private:
 	Allocator& allocator_;

@@ -10,10 +10,13 @@ enum DevCmd
 	DevCmdDevice,
 	DevCmdDeviceButton,
 	DevCmdMap,
+	DevCmdRemoveMap,
 	DevCmdUserButton,
 	DevCmdPing,
 	DevCmdUserButtonChanged,
 };
+
+const static unsigned DevProtocolVersion = 0x1;
 
 }
 

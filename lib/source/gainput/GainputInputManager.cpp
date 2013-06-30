@@ -150,6 +150,12 @@ InputManager::GetDeviceCountByType(InputDevice::DeviceType type) const
 	return count;
 }
 
+void
+InputManager::DeviceCreated(InputDevice* device)
+{
+	GAINPUT_DEV_NEW_DEVICE(device);
+}
+
 
 #if defined(GAINPUT_PLATFORM_WIN)
 void

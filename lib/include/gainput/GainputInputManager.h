@@ -138,6 +138,8 @@ private:
 	int displayWidth_;
 	int displayHeight_;
 
+	void DeviceCreated(InputDevice* device);
+
 	// Do not copy.
 	InputManager(const InputManager &);
 	InputManager& operator=(const InputManager &);
@@ -152,6 +154,7 @@ InputManager::CreateDevice()
 {
 	T* device = allocator_.New<T>(*this, nextDeviceId_);
 	devices_[nextDeviceId_] = device;
+	DeviceCreated(device);
 	return nextDeviceId_++;
 }
 
@@ -163,6 +166,7 @@ InputManager::CreateAndGetDevice()
 	T* device = allocator_.New<T>(*this, nextDeviceId_);
 	devices_[nextDeviceId_] = device;
 	++nextDeviceId_;
+	DeviceCreated(device);
 	return device;
 }
 
