@@ -3,7 +3,7 @@
 #ifdef GAINPUT_DEV
 #include "GainputNetAddress.h"
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>

@@ -5,7 +5,7 @@
 #include "GainputNetConnection.h"
 #include "GainputNetListener.h"
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 #include <fcntl.h>
 
 namespace gainput {

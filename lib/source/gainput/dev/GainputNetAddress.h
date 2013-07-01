@@ -1,7 +1,7 @@
 #ifndef GAINPUTADDRESS_H_
 #define GAINPUTADDRESS_H_
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 #include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -14,7 +14,7 @@ class NetAddress
 public:
 	NetAddress(const char* ip, unsigned port);
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	NetAddress(const struct sockaddr_in& rhs);
 
 	const struct sockaddr_in& GetAddr() const { return addr; }
@@ -24,7 +24,7 @@ public:
 	NetAddress& operator = (const NetAddress& rhs);
 
 private:
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	struct sockaddr_in addr;
 #endif
 
@@ -35,7 +35,7 @@ inline
 NetAddress&
 NetAddress::operator = (const NetAddress& rhs)
 {
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	addr.sin_family = rhs.addr.sin_family;
 	addr.sin_addr.s_addr = rhs.addr.sin_addr.s_addr;
 	addr.sin_port = rhs.addr.sin_port;

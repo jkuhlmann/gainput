@@ -21,7 +21,7 @@ public:
 private:
 	NetAddress address;
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	int fd;
 #endif
 
