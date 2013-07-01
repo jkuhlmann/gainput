@@ -103,6 +103,10 @@ def configure(cnf):
 			  lib='Xinput9_1_0',
 		          mandatory=True, 
 		          uselib_store='XINPUT')
+		cnf.check(compiler='cxx',
+			  lib='Ws2_32',
+		          mandatory=True, 
+		          uselib_store='WINSOCK')
 	
 	cnf.setenv('release', env=cnf.env.derive())
 	cnf.load('compiler_cxx')
@@ -112,7 +116,7 @@ def build(bld):
 	lib_sources = bld.path.ant_glob('lib/source/gainput/**/*.cpp')
 	usetheselib = ''
 	if (sys.platform.startswith('win')):
-		usetheselib = 'KERNEL32 USER32 GDI32 XINPUT'
+		usetheselib = 'KERNEL32 USER32 GDI32 XINPUT WINSOCK'
 	bld.shlib(features='cxx cxxshlib',
 		source=lib_sources, 
 		includes='lib/include/', 

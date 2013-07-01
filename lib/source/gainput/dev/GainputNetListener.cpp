@@ -80,6 +80,87 @@ NetListener::Accept()
 
 }
 
+#elif defined(GAINPUT_PLATFORM_WIN)
+
+namespace gainput {
+
+NetListener::NetListener(const NetAddress& address) :
+	address(address),
+	listenSocket(INVALID_SOCKET)
+{
+
+}
+
+NetListener::~NetListener()
+{
+	Stop();
+}
+
+bool
+NetListener::Start(bool shouldBlock)
+{
+	assert(listenSocket == INVALID_SOCKET);
+	listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (listenSocket == INVALID_SOCKET)
+	{
+		return false;
+	}
+
+	if (!shouldBlock)
+	{
+		u_long NonBlock = 1;
+		if (ioctlsocket(listenSocket, FIONBIO, &NonBlock) == SOCKET_ERROR)
+		{
+			return false;
+		}
+	}
+
+	if (bind(listenSocket, (struct sockaddr*)&address.GetAddr(), sizeof(struct sockaddr_in)) == SOCKET_ERROR)
+	{
+		closesocket(listenSocket);
+		return false;
+	}
+
+	if (listen(listenSocket, SOMAXCONN ) == SOCKET_ERROR)
+	{
+		closesocket(listenSocket);
+		return false;
+	}
+
+	return true;
+}
+
+void
+NetListener::Stop()
+{
+	if (listenSocket == INVALID_SOCKET)
+	{
+		return;
+	}
+
+	closesocket(listenSocket);
+	listenSocket = INVALID_SOCKET;
+}
+
+NetConnection*
+NetListener::Accept()
+{
+	assert(listenSocket != INVALID_SOCKET);
+	struct sockaddr_in addr;
+	int addr_len = sizeof(struct sockaddr_in);
+	SOCKET remoteSocket = accept(listenSocket, (struct sockaddr*)&addr, &addr_len);
+	if (remoteSocket == INVALID_SOCKET)
+	{
+		return 0;
+	}
+	NetAddress remoteAddress(addr);
+	NetConnection* connection = new NetConnection(remoteAddress, remoteSocket);
+	return connection;
+}
+
+}
+
+
 #endif
 #endif
 
