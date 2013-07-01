@@ -42,7 +42,7 @@ if (map.GetBoolWasDown(ButtonConfirm))
 ```
 
 
-Building
+Building [![Build Status](https://travis-ci.org/jkuhlmann/gainput.png?branch=master)](https://travis-ci.org/jkuhlmann/gainput)
 --------
 
 By default, Gainput is built using [Waf](http://code.google.com/p/waf/). So make sure you have a recent version of [Python](http://www.python.org/) installed.
