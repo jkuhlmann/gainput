@@ -18,6 +18,7 @@ enum Button
 	ButtonSave,
 	ButtonTest,
 	ButtonMouseX,
+	ButtonCount
 };
 
 
@@ -31,7 +32,7 @@ void SaveInputMap(const gainput::InputMap& map)
 #endif
 	const size_t maxCount = 32;
 	gainput::DeviceButtonSpec buttons[maxCount];
-	for (int i = ButtonReset; i <= ButtonTest; ++i)
+	for (int i = ButtonReset; i < ButtonCount; ++i)
 	{
 		if (!map.IsMapped(i))
 			continue;

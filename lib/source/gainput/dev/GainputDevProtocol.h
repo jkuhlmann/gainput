@@ -12,6 +12,7 @@ enum DevCmd
 	DevCmdMap,
 	DevCmdRemoveMap,
 	DevCmdUserButton,
+	DevCmdRemoveUserButton,
 	DevCmdPing,
 	DevCmdUserButtonChanged,
 };

@@ -71,6 +71,7 @@ InputMap::Clear()
 			++it)
 	{
 		allocator_.Delete(it->second);
+		GAINPUT_DEV_REMOVE_USER_BUTTON(this, it->first);
 	}
 	userButtons_.clear();
 	nextUserButtonId_ = 0;
@@ -94,6 +95,8 @@ InputMap::MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId devic
 	mi.device = device;
 	mi.deviceButton = deviceButton;
 	ub->inputs.push_back(mi);
+
+	GAINPUT_DEV_NEW_USER_BUTTON(this, userButton, device, deviceButton);
 
 	return true;
 }
@@ -119,6 +122,8 @@ InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId devi
 	mi.rangeMax = max;
 	ub->inputs.push_back(mi);
 
+	GAINPUT_DEV_NEW_USER_BUTTON(this, userButton, device, deviceButton);
+
 	return true;
 }
 
@@ -126,6 +131,7 @@ void
 InputMap::Unmap(UserButtonId userButton)
 {
 	userButtons_.erase(userButton);
+	GAINPUT_DEV_REMOVE_USER_BUTTON(this, userButton);
 }
 
 bool

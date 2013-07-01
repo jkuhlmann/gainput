@@ -238,9 +238,46 @@ DevNewMap(InputMap* inputMap)
 }
 
 void
+DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton)
+{
+	if (!devConnection || devMaps.find(inputMap) == devMaps.end())
+	{
+		return;
+	}
+
+	Stream* stream = allocator->New<MemoryStream>(1024);
+	stream->Write(uint8_t(DevCmdUserButton));
+	stream->Write(uint64_t(inputMap));
+	stream->Write(uint32_t(userButton));
+	stream->Write(uint32_t(device));
+	stream->Write(uint32_t(deviceButton));
+	stream->Write(inputMap->GetFloat(userButton));
+	stream->SeekBegin(0);
+	devConnection->Send(*stream);
+	allocator->Delete(stream);
+}
+
+void
+DevRemoveUserButton(InputMap* inputMap, UserButtonId userButton)
+{
+	if (!devConnection)
+	{
+		return;
+	}
+
+	Stream* stream = allocator->New<MemoryStream>(1024);
+	stream->Write(uint8_t(DevCmdRemoveUserButton));
+	stream->Write(uint64_t(inputMap));
+	stream->Write(uint32_t(userButton));
+	stream->SeekBegin(0);
+	devConnection->Send(*stream);
+	allocator->Delete(stream);
+}
+
+void
 DevRemoveMap(InputMap* inputMap)
 {
-	if (devMaps.find(inputMap) == devMaps.end())
+	if (!devConnection || devMaps.find(inputMap) == devMaps.end())
 	{
 		return;
 	}
