@@ -48,6 +48,9 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 	listeners_(allocator_),
 	managerListener_(0)
 {
+	static unsigned nextId = 0;
+	id_ = nextId++;
+
 	if (name)
 	{
 		name_ = static_cast<char*>(allocator_.Allocate(strlen(name) + 1));

@@ -43,6 +43,8 @@ public:
 	 * \return The map's name or 0 if no name was set.
 	 */
 	const char* GetName() const { return name_; }
+	/// Returns the map's auto-generated ID (that should not be used outside of the library).
+	unsigned GetId() const { return id_; }
 
 	/// Maps a bool-type button.
 	/**
@@ -150,6 +152,7 @@ public:
 private:
 	InputManager& manager_;
 	char* name_;
+	unsigned id_;
 	Allocator& allocator_;
 
 	typedef HashMap<UserButtonId, UserButton*> UserButtonMap;
