@@ -216,8 +216,13 @@ size_t
 NetConnection::Receive(void* buffer, size_t length)
 {
 	assert(IsConnected());
-	size_t receivedLength = recv(fd, (char*)buffer, length, 0);
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+	ssize_t receivedLength = recv(fd, (char*)buffer, length, 0);
 	if (receivedLength == -1)
+#elif defined(GAINPUT_PLATFORM_WIN)
+	int receivedLength = recv(fd, (char*)buffer, length, 0);
+	if (receivedLength == SOCKET_ERROR)
+#endif
 	{
 		return 0;
 	}
