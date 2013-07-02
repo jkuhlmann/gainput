@@ -41,6 +41,8 @@ InputManager::~InputManager()
 	{
 		allocator_.Delete(it->second);
 	}
+
+	GAINPUT_DEV_SHUTDOWN(this);
 }
 
 void

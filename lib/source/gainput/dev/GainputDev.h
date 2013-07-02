@@ -10,6 +10,7 @@ namespace gainput
 {
 
 void DevInit(const InputManager* inputManager);
+void DevShutdown(const InputManager* inputManager);
 void DevUpdate();
 void DevNewMap(InputMap* inputMap);
 void DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton);
@@ -20,6 +21,7 @@ void DevNewDevice(InputDevice* device);
 }
 
 #define GAINPUT_DEV_INIT(inputManager)	DevInit(inputManager)
+#define GAINPUT_DEV_SHUTDOWN(inputManager)	DevShutdown(inputManager)
 #define GAINPUT_DEV_UPDATE()		DevUpdate()
 #define GAINPUT_DEV_NEW_MAP(inputMap)	DevNewMap(inputMap)
 #define GAINPUT_DEV_NEW_USER_BUTTON(inputMap, userButton, device, deviceButton)	DevNewUserButton(inputMap, userButton, device, deviceButton)
@@ -30,6 +32,7 @@ void DevNewDevice(InputDevice* device);
 #else
 
 #define GAINPUT_DEV_INIT(inputManager)
+#define GAINPUT_DEV_SHUTDOWN(inputManager)
 #define GAINPUT_DEV_UPDATE()
 #define GAINPUT_DEV_NEW_MAP(inputMap)
 #define GAINPUT_DEV_NEW_USER_BUTTON(inputMap, userButton, device, deviceButton)

@@ -99,10 +99,16 @@ def configure(cnf):
 		          uselib_store='LIBRT')
 	else:
 		cnf.check_libs_msvc('kernel32 user32 gdi32')
-		cnf.check(compiler='cxx',
-			  lib='Xinput9_1_0',
-		          mandatory=True, 
-		          uselib_store='XINPUT')
+		try:
+			cnf.check(compiler='cxx',
+				  lib='Xinput9_1_0',
+			          mandatory=True, 
+			          uselib_store='XINPUT')
+		except:
+			cnf.check(compiler='cxx',
+				  lib='Xinput',
+			          mandatory=True, 
+			          uselib_store='XINPUT')
 		cnf.check(compiler='cxx',
 			  lib='Ws2_32',
 		          mandatory=True, 

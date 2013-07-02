@@ -167,6 +167,20 @@ DevInit(const InputManager* manager)
 }
 
 void
+DevShutdown(const InputManager* manager)
+{
+	if (inputManager != manager)
+	{
+		return;
+	}
+	GAINPUT_LOG("TOOL: Shutdown\n");
+#if defined(GAINPUT_PLATFORM_WIN)
+	WSACleanup();
+#endif
+}
+
+
+void
 DevUpdate()
 {
 	if (!devConnection)
