@@ -7,6 +7,7 @@
 .project
 .waf*/
 waf-*/
+waf3-*/
 build/
 __pycache__/
 .depproj/

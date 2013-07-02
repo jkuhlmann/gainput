@@ -3,9 +3,14 @@
 
 #ifdef GAINPUT_DEV
 #include "GainputDev.h"
+#include "GainputNetAddress.h"
 #include "GainputNetListener.h"
 #include "GainputNetConnection.h"
 #include "GainputMemoryStream.h"
+
+#if _MSC_VER
+#define snprintf _snprintf
+#endif
 
 namespace gainput
 {
@@ -138,6 +143,14 @@ DevInit(const InputManager* manager)
 	{
 		return;
 	}
+
+#if defined(GAINPUT_PLATFORM_WIN)
+	WSADATA wsaData;
+	if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0)
+	{
+		GAINPUT_ASSERT(false);
+	}
+#endif
 
 	inputManager = manager;
 	allocator = &manager->GetAllocator();

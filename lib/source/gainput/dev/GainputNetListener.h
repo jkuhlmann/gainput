@@ -23,6 +23,8 @@ private:
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	int fd;
+#elif defined(GAINPUT_PLATFORM_WIN)
+	SOCKET listenSocket;
 #endif
 
 };

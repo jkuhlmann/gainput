@@ -3,24 +3,31 @@
 #ifdef GAINPUT_DEV
 #include "GainputNetAddress.h"
 
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_WIN)
+
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
 
 namespace gainput {
 
 NetAddress::NetAddress(const char* ip, unsigned port)
 {
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	struct in_addr inp;
 	if (!inet_aton(ip, &inp))
 	{
 		assert(false);
 		return;
 	}
+	addr.sin_addr.s_addr = inp.s_addr;
+#elif defined(GAINPUT_PLATFORM_WIN)
+	addr.sin_addr.s_addr = inet_addr(ip);
+#endif
 
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = inp.s_addr;
 	addr.sin_port = port;
 }
 

@@ -13,6 +13,8 @@ public:
 	NetConnection(const NetAddress& address);
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	NetConnection(const NetAddress& remoteAddress, int fd);
+#elif defined(GAINPUT_PLATFORM_WIN)
+	NetConnection(const NetAddress& remoteAddress, SOCKET fd);
 #endif
 	~NetConnection();
 
@@ -32,6 +34,8 @@ private:
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	int fd;
+#elif defined(GAINPUT_PLATFORM_WIN)
+	SOCKET fd;
 #endif
 
 };
