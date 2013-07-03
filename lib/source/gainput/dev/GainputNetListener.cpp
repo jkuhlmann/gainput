@@ -10,8 +10,9 @@
 
 namespace gainput {
 
-NetListener::NetListener(const NetAddress& address) :
+NetListener::NetListener(const NetAddress& address, Allocator& allocator) :
 	address(address),
+	allocator(allocator),
 	fd(-1)
 {
 
@@ -74,7 +75,7 @@ NetListener::Accept()
 		return 0;
 	}
 	NetAddress remoteAddress(addr);
-	NetConnection* connection = new NetConnection(remoteAddress, remoteFd);
+	NetConnection* connection = allocator.New<NetConnection>(remoteAddress, remoteFd, allocator);
 	return connection;
 }
 
@@ -154,7 +155,7 @@ NetListener::Accept()
 		return 0;
 	}
 	NetAddress remoteAddress(addr);
-	NetConnection* connection = new NetConnection(remoteAddress, remoteSocket);
+	NetConnection* connection = allocator.New<NetConnection>(remoteAddress, remoteSocket, allocator);
 	return connection;
 }
 

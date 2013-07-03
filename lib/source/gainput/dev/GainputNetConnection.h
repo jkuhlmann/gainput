@@ -10,11 +10,11 @@ class Stream;
 class NetConnection
 {
 public:
-	NetConnection(const NetAddress& address);
+	NetConnection(const NetAddress& address, Allocator& allocator = GetDefaultAllocator());
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
-	NetConnection(const NetAddress& remoteAddress, int fd);
+	NetConnection(const NetAddress& remoteAddress, int fd, Allocator& allocator = GetDefaultAllocator());
 #elif defined(GAINPUT_PLATFORM_WIN)
-	NetConnection(const NetAddress& remoteAddress, SOCKET fd);
+	NetConnection(const NetAddress& remoteAddress, SOCKET fd, Allocator& allocator = GetDefaultAllocator());
 #endif
 	~NetConnection();
 
@@ -30,6 +30,7 @@ public:
 	size_t Receive(Stream& stream, size_t maxLength);
 
 private:
+	Allocator& allocator;
 	NetAddress address;
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)

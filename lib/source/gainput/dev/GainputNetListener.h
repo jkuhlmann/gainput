@@ -1,6 +1,7 @@
 #ifndef GAINPUTLISTENER_H_
 #define GAINPUTLISTENER_H_
 
+#include <gainput/GainputAllocator.h>
 #include "GainputNetAddress.h"
 
 namespace gainput {
@@ -10,7 +11,7 @@ class NetConnection;
 class NetListener
 {
 public:
-	NetListener(const NetAddress& address);
+	NetListener(const NetAddress& address, Allocator& allocator = GetDefaultAllocator());
 	~NetListener();
 
 	bool Start(bool shouldBlock);
@@ -20,6 +21,7 @@ public:
 
 private:
 	NetAddress address;
+	Allocator& allocator;
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	int fd;

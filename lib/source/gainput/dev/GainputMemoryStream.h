@@ -9,7 +9,7 @@ class MemoryStream : public Stream
 {
 public:
 	MemoryStream(void* data, size_t length, bool ownership = false);
-	MemoryStream(size_t capacity);
+	MemoryStream(size_t capacity, Allocator& allocator = GetDefaultAllocator());
 	~MemoryStream();
 
 	size_t Read(void* dest, size_t readLength);
@@ -32,6 +32,7 @@ public:
 	size_t GetPosition() const { return position; }
 
 private:
+	Allocator* allocator;
 	void* data;
 	size_t length;
 	size_t capacity;

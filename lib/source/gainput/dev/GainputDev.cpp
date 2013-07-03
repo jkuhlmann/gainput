@@ -35,7 +35,7 @@ public:
 			return;
 		}
 
-		Stream* stream = allocator->New<MemoryStream>(32);
+		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
 		stream->Write(uint8_t(DevCmdUserButtonChanged));
 		stream->Write(uint32_t(map_->GetId()));
 		stream->Write(uint32_t(userButton));
@@ -53,7 +53,7 @@ public:
 			return;
 		}
 
-		Stream* stream = allocator->New<MemoryStream>(32);
+		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
 		stream->Write(uint8_t(DevCmdUserButtonChanged));
 		stream->Write(uint32_t(map_->GetId()));
 		stream->Write(uint32_t(userButton));
@@ -156,7 +156,7 @@ DevInit(const InputManager* manager)
 	allocator = &manager->GetAllocator();
 
 	NetAddress address("0.0.0.0", 1211);
-	devListener = allocator->New<NetListener>(address);
+	devListener = allocator->New<NetListener>(address, *allocator);
 
 	if (!devListener->Start(false))
 	{
@@ -193,7 +193,7 @@ DevUpdate()
 			devConnection->Receive(buf, 1024);
 			GAINPUT_LOG("TOOL: Got: %s\n", buf);
 			int count = 0;
-			Stream* stream = allocator->New<MemoryStream>(1024);
+			Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 
 			stream->Write(uint8_t(DevCmdHello));
 			stream->Write(uint32_t(DevProtocolVersion));
@@ -258,7 +258,7 @@ DevNewMap(InputMap* inputMap)
 
 	if (devConnection)
 	{
-		Stream* stream = allocator->New<MemoryStream>(1024);
+		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 		SendMap(inputMap, stream, devConnection);
 		allocator->Delete(stream);
 	}
@@ -272,7 +272,7 @@ DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, D
 		return;
 	}
 
-	Stream* stream = allocator->New<MemoryStream>(1024);
+	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 	stream->Write(uint8_t(DevCmdUserButton));
 	stream->Write(uint32_t(inputMap->GetId()));
 	stream->Write(uint32_t(userButton));
@@ -292,7 +292,7 @@ DevRemoveUserButton(InputMap* inputMap, UserButtonId userButton)
 		return;
 	}
 
-	Stream* stream = allocator->New<MemoryStream>(1024);
+	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 	stream->Write(uint8_t(DevCmdRemoveUserButton));
 	stream->Write(uint32_t(inputMap->GetId()));
 	stream->Write(uint32_t(userButton));
@@ -309,7 +309,7 @@ DevRemoveMap(InputMap* inputMap)
 		return;
 	}
 
-	Stream* stream = allocator->New<MemoryStream>(1024);
+	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 	stream->Write(uint8_t(DevCmdRemoveMap));
 	stream->Write(uint32_t(inputMap->GetId()));
 	stream->SeekBegin(0);
@@ -330,7 +330,7 @@ DevNewDevice(InputDevice* device)
 
 	if (devConnection)
 	{
-		Stream* stream = allocator->New<MemoryStream>(1024);
+		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 		SendDevice(device, stream, devConnection);
 		allocator->Delete(stream);
 	}

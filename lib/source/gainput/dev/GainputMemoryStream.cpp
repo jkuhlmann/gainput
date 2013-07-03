@@ -15,20 +15,22 @@ MemoryStream::MemoryStream(void* data, size_t length, bool ownership) :
 	// empty
 }
 
-MemoryStream::MemoryStream(size_t capacity) :
+MemoryStream::MemoryStream(size_t capacity, Allocator& allocator) :
+	allocator(&allocator),
 	length(0),
 	capacity(capacity),
 	ownership(true),
 	position(0)
 {
-	data = new char[capacity];
+	data = this->allocator->Allocate(capacity);
 }
 
 MemoryStream::~MemoryStream()
 {
 	if (ownership)
 	{
-		delete[] (uint8_t*)data;
+		assert(allocator);
+		allocator->Deallocate(data);
 	}
 }
 

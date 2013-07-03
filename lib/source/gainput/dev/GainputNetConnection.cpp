@@ -17,13 +17,15 @@
 namespace gainput {
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
-NetConnection::NetConnection(const NetAddress& address) :
+NetConnection::NetConnection(const NetAddress& address, Allocator& allocator) :
+	allocator(allocator),
 	address(address),
 	fd(-1)
 {
 }
 
-NetConnection::NetConnection(const NetAddress& remoteAddress, int fd) :
+NetConnection::NetConnection(const NetAddress& remoteAddress, int fd, Allocator& allocator) :
+	allocator(allocator),
 	address(remoteAddress),
 	fd(fd)
 {
@@ -76,13 +78,15 @@ NetConnection::Close()
 	fd = -1;
 }
 #elif defined(GAINPUT_PLATFORM_WIN)
-NetConnection::NetConnection(const NetAddress& address) :
+NetConnection::NetConnection(const NetAddress& address, Allocator& allocator) :
+	allocator(allocator),
 	address(address),
 	fd(INVALID_SOCKET)
 {
 }
 
-NetConnection::NetConnection(const NetAddress& remoteAddress, SOCKET fd) :
+NetConnection::NetConnection(const NetAddress& remoteAddress, SOCKET fd, Allocator& allocator) :
+	allocator(allocator),
 	address(remoteAddress),
 	fd(fd)
 {
@@ -205,10 +209,10 @@ size_t
 NetConnection::Send(Stream& stream)
 {
 	const size_t length = stream.GetLeft();
-	char* buf = new char[length];
+	char* buf = (char*)allocator.Allocate(length);
 	stream.Read(buf, length);
 	size_t sentLength = Send(buf, length);
-	delete[] buf;
+	allocator.Deallocate(buf);
 	return sentLength;
 }
 
@@ -232,11 +236,11 @@ NetConnection::Receive(void* buffer, size_t length)
 size_t
 NetConnection::Receive(Stream& stream, size_t maxLength)
 {
-	char* buf = new char[maxLength];
+	char* buf = (char*)allocator.Allocate(maxLength);
 	size_t receivedLength = Receive(buf, maxLength);
 	stream.Write(buf, receivedLength);
 	stream.SeekBegin(0);
-	delete[] buf;
+	allocator.Deallocate(buf);
 	return receivedLength;
 }
 
