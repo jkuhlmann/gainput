@@ -109,9 +109,9 @@ Simply run these commands:
 -# <tt>waf configure</tt>
 -# <tt>waf build_CONFIGNAME</tt>
 
-There are two configurations of which you choose one by substituting CONFIGNAME for \c debug or \c release . The debug configuration supports debugging while the release configuration is more optimized.
+There are three configurations of which you choose one by substituting CONFIGNAME for \c debug or \c dev or \c release . The \c debug configuration supports debugging while the \c release configuration is optimized. The \c dev configuration features a server that external tools can connect to (see \ref page_devprotocol).
 
-Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in \c build/CONFIGNAME/ folder.
+Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/CONFIGNAME/ folder.
 
 \section sect_android_build Android NDK
 In order to cross-compile for Android, the build has to be configured differently.
@@ -178,16 +178,104 @@ Most importantly, Gainput does not depend on the STL or any other unnecessary he
 Android NDK: All input is acquired through the NDK.
 
 Linux:
-- the X11 message loop for keyboard and mouse
-- the kernel's joystick API for pads
+- the X11 message loop is used for keyboard and mouse
+- the kernel's joystick API is used for pads
 
 Windows:
-- the Win32 message loop for keyboard and mouse
-- XINPUT for gamepads
+- the Win32 message loop is used for keyboard and mouse
+- XINPUT is used for gamepads
 
 \section sect_building Building
 Gainput is built using <a href="http://code.google.com/p/waf/" target="_blank">Waf</a> which is written in <a href="http://www.python.org/" target="_blank">Python</a>. Therefore you have to have a recent version of Python installed.
 
+
+
+\page page_devprotocol Development Tool Protocol
+If Gainput is built with \c GAINPUT_DEV defined, it features a server that external tools can connect to obtain information on devices, mappings and button states. The underlying protocol is TCP/IP and the default port 1211.
+
+The following messages are defined:
+
+\code
+hello
+{
+	uint8_t cmd
+	uint32_t protocolVersion
+	uint32_t libVersion
+}
+
+device
+{
+	uint8_t cmd
+	uint32_t deviceId
+	string name
+}
+
+device button
+{
+	uint8_t cmd
+	uint32_t deviceId
+	uint32_t buttonId
+	string name
+	uint8_t type
+}
+
+map
+{
+	uint8_t cmd
+	uint32_t mapId
+	string name
+}
+
+remove map
+{
+	uint8_t cmd
+	uint32_t mapId
+}
+
+user button
+{
+	uint8_t cmd
+	uint32_t mapId
+	uint32_t buttonId
+	uint32_t deviceId
+	uint32_t deviceButtonId
+	float value
+}
+
+remove user button
+{
+	uint8_t cmd
+	uint32_t mapId
+	uint32_t buttonId
+}
+
+user button changed
+{
+	uint8_t cmd
+	uint32_t mapId
+	uint32_t buttonId
+	uint8_t type
+	uint8_t/float value
+}
+
+ping
+{
+	uint8_t cmd
+}
+\endcode
+
+The message IDs are defined in GainputDevProtocol.h.
+
+All integers are in network byte order.
+
+Strings are represented like this:
+
+\code
+{
+	uint8_t length
+	char text[length] // without the trailing \0
+}
+\endcode
 
 */
 

@@ -33,6 +33,7 @@ def options(opt):
 def configure(cnf):
 	cnf.setenv('debug')
 	cnf.define('GAINPUT_LIB_BUILD', 1)
+	cnf.define('DEBUG', 1)
 	cnf.env.CXXFLAGS += []
 	
 	cnf.env.cross = 'none'
@@ -113,10 +114,21 @@ def configure(cnf):
 			  lib='Ws2_32',
 		          mandatory=True, 
 		          uselib_store='WINSOCK')
-	
+
 	cnf.setenv('release', env=cnf.env.derive())
 	cnf.load('compiler_cxx')
+	cnf.undefine('DEBUG')
+	cnf.define('NDEBUG', 1)
 	cnf.env.CXXFLAGS = ['-O2']
+	if sys.platform.startswith('linux'):
+		cnf.env.CXXFLAGS += ['-fno-rtti', '-fno-exceptions', '-s']
+
+	cnf.setenv('dev', env=cnf.env.derive())
+	cnf.load('compiler_cxx')
+	cnf.define('GAINPUT_DEV', 1)
+	cnf.env.CXXFLAGS = ['-O2']
+	if sys.platform.startswith('linux'):
+		cnf.env.CXXFLAGS += ['-Wall', '-g', '-fno-rtti', '-fno-exceptions']
 
 def build(bld):
 	lib_sources = bld.path.ant_glob('lib/source/gainput/**/*.cpp')
@@ -142,7 +154,7 @@ from waflib.Build import BuildContext, CleanContext, \
         InstallContext, UninstallContext
 
 contexts = (BuildContext, CleanContext, InstallContext, UninstallContext)
-for x in 'debug release'.split():
+for x in 'debug dev release'.split():
 	for y in contexts:
 		name = y.__name__.replace('Context','').lower()
 		class tmp(y):
