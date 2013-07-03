@@ -189,9 +189,6 @@ DevUpdate()
 		if (devConnection)
 		{
 			GAINPUT_LOG("TOOL: New connection\n");
-			char buf[1024];
-			devConnection->Receive(buf, 1024);
-			GAINPUT_LOG("TOOL: Got: %s\n", buf);
 			int count = 0;
 			Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 

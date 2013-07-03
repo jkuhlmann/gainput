@@ -126,6 +126,7 @@ def configure(cnf):
 	cnf.setenv('dev', env=cnf.env.derive())
 	cnf.load('compiler_cxx')
 	cnf.define('GAINPUT_DEV', 1)
+	cnf.undefine('NDEBUG')
 	cnf.env.CXXFLAGS = ['-O2']
 	if sys.platform.startswith('linux'):
 		cnf.env.CXXFLAGS += ['-Wall', '-g', '-fno-rtti', '-fno-exceptions']

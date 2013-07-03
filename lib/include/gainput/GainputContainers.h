@@ -274,7 +274,7 @@ public:
 		uint32_t h;
 		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
 		const uint32_t ha = h % keys_.size();
-		uint32_t vi = keys_[ha];
+		volatile uint32_t vi = keys_[ha];
 		while (vi != InvalidKey)
 		{
 			if (values_[vi].first == k)
@@ -293,7 +293,7 @@ public:
 		uint32_t h;
 		MurmurHash3_x86_32(&k, sizeof(K), Seed, &h);
 		const uint32_t ha = h % keys_.size();
-		uint32_t vi = keys_[ha];
+		volatile uint32_t vi = keys_[ha];
 		while (vi != InvalidKey)
 		{
 			if (values_[vi].first == k)
