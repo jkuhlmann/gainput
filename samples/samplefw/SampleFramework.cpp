@@ -28,7 +28,6 @@ int SfwGetHeight()
 Display* xDisplay = 0;
 Window xWindow;
 GLXContext glxContext;
-bool doExit = false;
 
 
 void SfwOpenWindow(const char* title)
@@ -88,35 +87,13 @@ void SfwCloseWindow()
 	XCloseDisplay(xDisplay);
 }
 
-Bool EventCheck(Display* display, XEvent* event, XPointer arg)
-{
-	if (event->type == KeyPress 
-		|| event->type == KeyRelease
-		|| event->type == MotionNotify
-		|| event->type == ButtonPress
-		|| event->type == ButtonRelease
-	   )
-	{
-		return False;
-	}
-	return True;
-}
-
 void SfwUpdate()
 {
-	XEvent event;
-	while (XCheckIfEvent(xDisplay, &event, EventCheck, 0))
-	{
-		if (event.type == DestroyNotify || event.type == ClientMessage)
-		{
-			doExit = true;
-		}
-	}
 }
 
 bool SfwIsDone()
 {
-	return doExit;
+	return false;
 }
 
 void SfwSetInputManager(gainput::InputManager* manager)

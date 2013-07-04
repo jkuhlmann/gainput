@@ -35,7 +35,7 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 	// Reset mouse wheel buttons
 	nextState_.Set(MOUSE_BUTTON_3, false);
 	nextState_.Set(MOUSE_BUTTON_4, false);
-	
+
 	if (delta)
 	{
 		bool oldValue = previousState.GetBool(MOUSE_BUTTON_3);

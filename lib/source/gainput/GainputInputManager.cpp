@@ -5,6 +5,8 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 #include <time.h>
+#include "keyboard/GainputInputDeviceKeyboardLinux.h"
+#include "mouse/GainputInputDeviceMouseLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 #include "keyboard/GainputInputDeviceKeyboardWin.h"
 #include "mouse/GainputInputDeviceMouseWin.h"
@@ -158,6 +160,32 @@ InputManager::DeviceCreated(InputDevice* device)
 	GAINPUT_DEV_NEW_DEVICE(device);
 }
 
+#if defined(GAINPUT_PLATFORM_LINUX)
+void
+InputManager::HandleEvent(XEvent& event)
+{
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		if (it->second->GetType() == InputDevice::DT_KEYBOARD)
+		{
+			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
+			InputDeviceKeyboardImpl* keyboardImpl = keyboard->GetPimpl();
+			GAINPUT_ASSERT(keyboardImpl);
+			keyboardImpl->HandleEvent(event);
+		}
+		else if (it->second->GetType() == InputDevice::DT_MOUSE)
+		{
+			InputDeviceMouse* mouse = static_cast<InputDeviceMouse*>(it->second);
+			InputDeviceMouseImpl* mouseImpl = mouse->GetPimpl();
+			GAINPUT_ASSERT(mouseImpl);
+			mouseImpl->HandleEvent(event);
+		}
+	}
+
+}
+#endif
 
 #if defined(GAINPUT_PLATFORM_WIN)
 void

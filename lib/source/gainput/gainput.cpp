@@ -45,11 +45,12 @@ while (game_running)
 	manager.Update();
 
 	manager.HandleMessage(msg); // on Windows only, for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL
+	manager.HandleEvent(event); // on Linux only, for event types MotionNotify, ButtonPress, ButtonRelease, KeyPress, KeyRelease
 
 	// Check button state
 	if (map.GetBoolWasDown(ButtonConfirm))
 	{
-		std::cout << "Confirmed!!" << std::endl;
+		// Confirmed!
 	}
 }
 \endcode

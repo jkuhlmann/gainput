@@ -215,11 +215,24 @@ void SampleMain()
 	map.MapBool(ButtonRotating, rg->GetDeviceId(), gainput::RotateTriggered);
 	map.MapFloat(ButtonRotateAngle, rg->GetDeviceId(), gainput::RotateAngle);
 
-	while (!SfwIsDone())
+	bool doExit = false;
+
+	while (!SfwIsDone() && !doExit)
 	{
 		manager.Update();
 
-#if defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX)
+		XEvent event;
+		while (XPending(SfwGetXDisplay()))
+		{
+			XNextEvent(SfwGetXDisplay(), &event);
+			manager.HandleEvent(event);
+			if (event.type == DestroyNotify || event.type == ClientMessage)
+			{
+				doExit = true;
+			}
+		}
+#elif defined(GAINPUT_PLATFORM_WIN)
 		MSG msg;
 		while (PeekMessage(&msg, SfwGetHWnd(),  0, 0, PM_REMOVE))
 		{

@@ -130,12 +130,24 @@ void SampleMain()
 	SFW_LOG("No button mapped, please press any button.\n");
 	SFW_LOG("Press ESC to reset.\n");
 
+	bool doExit = false;
 
-	while (!SfwIsDone())
+	while (!SfwIsDone() & !doExit)
 	{
 		manager.Update();
 
-#if defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX)
+		XEvent event;
+		while (XPending(SfwGetXDisplay()))
+		{
+			XNextEvent(SfwGetXDisplay(), &event);
+			manager.HandleEvent(event);
+			if (event.type == DestroyNotify || event.type == ClientMessage)
+			{
+				doExit = true;
+			}
+		}
+#elif defined(GAINPUT_PLATFORM_WIN)
 		MSG msg;
 		while (PeekMessage(&msg, SfwGetHWnd(),  0, 0, PM_REMOVE))
 		{

@@ -88,6 +88,13 @@ int main(int argc, char** argv)
 		// Update Gainput
 		manager.Update();
 
+		XEvent event;
+		while (XPending(xDisplay))
+		{
+			XNextEvent(xDisplay, &event);
+			manager.HandleEvent(event);
+		}
+
 		// Check button states
 		if (map.GetBoolWasDown(ButtonMenu))
 		{

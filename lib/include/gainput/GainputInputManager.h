@@ -39,6 +39,8 @@ public:
 	Display* GetXDisplay() { return xDisplay_; }
 	/// [LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.
 	void SetXDisplay(Display* xDisplay, int width, int height) { xDisplay_ = xDisplay; displayWidth_ = width; displayHeight_ = height; }
+	/// [LINUX ONLY] Lets the InputManager handle the given X event.
+	void HandleEvent(XEvent& event);
 #endif
 #if defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_ANDROID)
 	/// [WINDOWS/ANDROID ONLY] Sets the window resolution.
