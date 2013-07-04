@@ -64,6 +64,12 @@ InputMap::~InputMap()
 	GAINPUT_DEV_REMOVE_MAP(this);
 	Clear();
 	allocator_.Deallocate(name_);
+
+	if (managerListener_)
+	{
+		manager_.RemoveListener(managerListenerId_);
+		allocator_.Delete(managerListener_);
+	}
 }
 
 void

@@ -285,7 +285,7 @@ public:
 		}
 		return end();
 	}
-	
+
 	const_iterator find(const K& k) const
 	{
 		if (keys_.empty() || values_.empty())

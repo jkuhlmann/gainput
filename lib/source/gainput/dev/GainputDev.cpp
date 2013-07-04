@@ -22,7 +22,6 @@ static Allocator* allocator = 0;
 static Array<const InputMap*> devMaps(GetDefaultAllocator());
 static Array<const InputDevice*> devDevices(GetDefaultAllocator());
 
-
 class DevUserButtonListener : public MappedInputListener
 {
 public:
@@ -67,6 +66,9 @@ public:
 private:
 	const InputMap* map_;
 };
+
+static HashMap<const InputMap*, DevUserButtonListener*> devUserButtonListeners(GetDefaultAllocator());
+
 
 
 void
@@ -173,7 +175,27 @@ DevShutdown(const InputManager* manager)
 	{
 		return;
 	}
+
 	GAINPUT_LOG("TOOL: Shutdown\n");
+
+	if (devConnection)
+	{
+		devConnection->Close();
+		allocator->Delete(devConnection);
+		devConnection = 0;
+	}
+
+	devListener->Stop();
+	allocator->Delete(devListener);
+	devListener = 0;
+
+	for (HashMap<const InputMap*, DevUserButtonListener*>::iterator it = devUserButtonListeners.begin();
+			it != devUserButtonListeners.end();
+			++it)
+	{
+		allocator->Delete(it->second);
+	}
+
 #if defined(GAINPUT_PLATFORM_WIN)
 	WSACleanup();
 #endif
@@ -237,7 +259,7 @@ DevUpdate()
 	{
 		GAINPUT_LOG("TOOL: Disconnected\n");
 		devConnection->Close();
-		delete devConnection;
+		allocator->Delete(devConnection);
 		devConnection = 0;
 		return;
 	}
@@ -251,7 +273,9 @@ DevNewMap(InputMap* inputMap)
 		return;
 	}
 	devMaps.push_back(inputMap);
-	inputMap->AddListener(allocator->New<DevUserButtonListener>(inputMap));
+
+	DevUserButtonListener* listener = allocator->New<DevUserButtonListener>(inputMap);
+	devUserButtonListeners[inputMap] = listener;
 
 	if (devConnection)
 	{
@@ -314,6 +338,13 @@ DevRemoveMap(InputMap* inputMap)
 	allocator->Delete(stream);
 
 	devMaps.erase(devMaps.find(inputMap));
+
+	HashMap<const InputMap*, DevUserButtonListener*>::iterator it = devUserButtonListeners.find(inputMap);
+	if (it != devUserButtonListeners.end())
+	{
+		allocator->Delete(it->second);
+		devUserButtonListeners.erase(it->first);
+	}
 }
 
 void
