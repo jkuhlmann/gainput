@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Gainput: Namespace List</title>
+<title>Gainput: Development Tool Protocol</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,8 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -59,13 +58,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li class="current"><a href="namespaces.html"><span>Namespace&#160;List</span></a></li>
-      <li><a href="namespacemembers.html"><span>Namespace&#160;Members</span></a></li>
-    </ul>
-  </div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -80,20 +72,91 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">Namespace List</div>  </div>
+<div class="title">Development Tool Protocol </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented namespaces with brief descriptions:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2ns.png" alt="N" width="24" height="22" /><a class="el" href="namespacegainput.html" target="_self">gainput</a></td><td class="desc">Contains all Gainput related classes, types, and functions</td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p>If Gainput is built with <code>GAINPUT_DEV</code> defined, it features a server that external tools can connect to obtain information on devices, mappings and button states. The underlying protocol is TCP/IP and the default port 1211.</p>
+<p>The following messages are defined:</p>
+<div class="fragment"><div class="line">hello</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t protocolVersion</div>
+<div class="line">    uint32_t libVersion</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">device</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t deviceId</div>
+<div class="line">    <span class="keywordtype">string</span> name</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">device button</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t deviceId</div>
+<div class="line">    uint32_t buttonId</div>
+<div class="line">    <span class="keywordtype">string</span> name</div>
+<div class="line">    uint8_t type</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">map</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t mapId</div>
+<div class="line">    <span class="keywordtype">string</span> name</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">remove</span> map</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t mapId</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">user button</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t mapId</div>
+<div class="line">    uint32_t buttonId</div>
+<div class="line">    uint32_t deviceId</div>
+<div class="line">    uint32_t deviceButtonId</div>
+<div class="line">    <span class="keywordtype">float</span> value</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">remove</span> user button</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t mapId</div>
+<div class="line">    uint32_t buttonId</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">user button changed</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">    uint32_t mapId</div>
+<div class="line">    uint32_t buttonId</div>
+<div class="line">    uint8_t type</div>
+<div class="line">    uint8_t/<span class="keywordtype">float</span> value</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">ping</div>
+<div class="line">{</div>
+<div class="line">    uint8_t cmd</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The message IDs are defined in GainputDevProtocol.h.</p>
+<p>All integers are in network byte order.</p>
+<p>Strings are represented like this:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">    uint8_t length</div>
+<div class="line">    <span class="keywordtype">char</span> text[length] <span class="comment">// without the trailing \0</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 26 2013 23:43:29 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

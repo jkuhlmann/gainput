@@ -1,7 +1,7 @@
 var searchData=
 [
   ['gainput',['gainput',['../namespacegainput.html',1,'']]],
-  ['getallocator',['GetAllocator',['../classgainput_1_1InputManager.html#a63192e7b0a87598eb38d3c7054404ca8',1,'gainput::InputManager']]],
+  ['getallocator',['GetAllocator',['../classgainput_1_1InputManager.html#a649b9b155dc0729af405871cdd0b9fd9',1,'gainput::InputManager']]],
   ['getanybuttondown',['GetAnyButtonDown',['../classgainput_1_1InputDevice.html#acac931f5f1d77cc903c1a46805611915',1,'gainput::InputDevice::GetAnyButtonDown()'],['../classgainput_1_1InputDeviceKeyboard.html#a99d1459ae917e9e86eee3aead09ac634',1,'gainput::InputDeviceKeyboard::GetAnyButtonDown()'],['../classgainput_1_1InputDeviceMouse.html#aa7826261dd4614a8b77ddd9d24a09e16',1,'gainput::InputDeviceMouse::GetAnyButtonDown()'],['../classgainput_1_1InputDevicePad.html#a19ac4f840512a6b47a17bd6773d71dc0',1,'gainput::InputDevicePad::GetAnyButtonDown()'],['../classgainput_1_1InputDeviceTouch.html#a8e3d433f91ee7caaf6f954b1fb731dd5',1,'gainput::InputDeviceTouch::GetAnyButtonDown()'],['../classgainput_1_1InputManager.html#ab3a2692dc1096ab410a0f1f9b63057ee',1,'gainput::InputManager::GetAnyButtonDown()']]],
   ['getbool',['GetBool',['../classgainput_1_1InputDevice.html#ada3e333ec0057cb41deed08567f2965b',1,'gainput::InputDevice::GetBool()'],['../classgainput_1_1InputMap.html#a0500b228fa4609b85d9b5c3cc1a4c183',1,'gainput::InputMap::GetBool()'],['../classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02',1,'gainput::InputState::GetBool()']]],
   ['getboolisnew',['GetBoolIsNew',['../classgainput_1_1InputMap.html#a664b698e411e370e6a9a37f2b58933dd',1,'gainput::InputMap']]],
@@ -18,6 +18,7 @@ var searchData=
   ['getfloat',['GetFloat',['../classgainput_1_1InputDevice.html#a239d56d3da607f6dff3f82ecf7c2367b',1,'gainput::InputDevice::GetFloat()'],['../classgainput_1_1InputMap.html#acd5b6141706642f6ef6faf1560c01b9c',1,'gainput::InputMap::GetFloat()'],['../classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51',1,'gainput::InputState::GetFloat()']]],
   ['getfloatdelta',['GetFloatDelta',['../classgainput_1_1InputMap.html#a74f815438bc5af3ea1f29a6a4f77778c',1,'gainput::InputMap']]],
   ['getfloatprevious',['GetFloatPrevious',['../classgainput_1_1InputDevice.html#a20c348efe171c56accf4cd578624f83b',1,'gainput::InputDevice::GetFloatPrevious()'],['../classgainput_1_1InputMap.html#aef6ea5819b1a8cafea135272561226fa',1,'gainput::InputMap::GetFloatPrevious()']]],
+  ['getid',['GetId',['../classgainput_1_1InputMap.html#a2b129a0415525b3e7d3887c52746ea2d',1,'gainput::InputMap']]],
   ['getindex',['GetIndex',['../classgainput_1_1InputDevice.html#a09506aa3555652e73f72a6db0b3df26b',1,'gainput::InputDevice']]],
   ['getlibname',['GetLibName',['../namespacegainput.html#a43f6880e8d185275c2168d31f12c82a1',1,'gainput']]],
   ['getlibversion',['GetLibVersion',['../namespacegainput.html#adac6e560d0fb6196f73459deff7d27d0',1,'gainput']]],

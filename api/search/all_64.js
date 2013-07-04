@@ -24,5 +24,6 @@ var searchData=
   ['dt_5fpad',['DT_PAD',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaccfae3f37523f283a5c46f8e623ddb03',1,'gainput::InputDevice']]],
   ['dt_5fremote',['DT_REMOTE',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaa98ae78f6516eaf8b76d436dcb4599c6',1,'gainput::InputDevice']]],
   ['dt_5ftouch',['DT_TOUCH',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa3c6089fd6504b1fa647b1683482edcdb',1,'gainput::InputDevice']]],
-  ['dependencies',['Dependencies',['../page_dependencies.html',1,'']]]
+  ['dependencies',['Dependencies',['../page_dependencies.html',1,'']]],
+  ['development_20tool_20protocol',['Development Tool Protocol',['../page_devprotocol.html',1,'']]]
 ];
