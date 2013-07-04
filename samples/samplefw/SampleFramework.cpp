@@ -1,5 +1,6 @@
 
 #include <gainput/gainput.h>
+#include "SampleFramework.h"
 
 extern void SampleMain();
 
@@ -23,10 +24,11 @@ int SfwGetHeight()
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <GL/glx.h>
-#include <iostream>
 
 Display* xDisplay = 0;
 Window xWindow;
+GLXContext glxContext;
+bool doExit = false;
 
 
 void SfwOpenWindow(const char* title)
@@ -37,7 +39,7 @@ void SfwOpenWindow(const char* title)
 	xDisplay = XOpenDisplay(0);
 	if (xDisplay == 0)
 	{
-		std::cerr << "Cannot connect to X server." << std::endl;
+		SFW_LOG("Cannot connect to X server.\n");
 		return;
 	}
 
@@ -46,7 +48,7 @@ void SfwOpenWindow(const char* title)
 	XVisualInfo* vi = glXChooseVisual(xDisplay, DefaultScreen(xDisplay), attributeListDbl);
 	assert(vi);
 
-	GLXContext context = glXCreateContext(xDisplay, vi, 0, GL_TRUE);
+	glxContext = glXCreateContext(xDisplay, vi, 0, GL_TRUE);
 
 	Colormap cmap = XCreateColormap(xDisplay, root,                   vi->visual, AllocNone);
 
@@ -64,7 +66,7 @@ void SfwOpenWindow(const char* title)
 			&swa
 			);
 
-	glXMakeCurrent(xDisplay, xWindow, context);
+	glXMakeCurrent(xDisplay, xWindow, glxContext);
 
 	XSetWindowAttributes xattr;
 	xattr.override_redirect = False;
@@ -72,21 +74,49 @@ void SfwOpenWindow(const char* title)
 
 	XMapWindow(xDisplay, xWindow);
 	XStoreName(xDisplay, xWindow, title);
+
+	Atom wmDelete=XInternAtom(xDisplay, "WM_DELETE_WINDOW", True);
+	XSetWMProtocols(xDisplay, xWindow, &wmDelete, 1);
+
+	XFree(vi);
 }
 
 void SfwCloseWindow()
 {
+	glXDestroyContext(xDisplay, glxContext);
 	XDestroyWindow(xDisplay, xWindow);
 	XCloseDisplay(xDisplay);
 }
 
+Bool EventCheck(Display* display, XEvent* event, XPointer arg)
+{
+	if (event->type == KeyPress 
+		|| event->type == KeyRelease
+		|| event->type == MotionNotify
+		|| event->type == ButtonPress
+		|| event->type == ButtonRelease
+	   )
+	{
+		return False;
+	}
+	return True;
+}
+
 void SfwUpdate()
 {
+	XEvent event;
+	while (XCheckIfEvent(xDisplay, &event, EventCheck, 0))
+	{
+		if (event.type == DestroyNotify || event.type == ClientMessage)
+		{
+			doExit = true;
+		}
+	}
 }
 
 bool SfwIsDone()
 {
-	return false;
+	return doExit;
 }
 
 void SfwSetInputManager(gainput::InputManager* manager)
