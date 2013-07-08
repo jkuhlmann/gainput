@@ -276,6 +276,7 @@ DevNewMap(InputMap* inputMap)
 
 	DevUserButtonListener* listener = allocator->New<DevUserButtonListener>(inputMap);
 	devUserButtonListeners[inputMap] = listener;
+	inputMap->AddListener(listener);
 
 	if (devConnection)
 	{
