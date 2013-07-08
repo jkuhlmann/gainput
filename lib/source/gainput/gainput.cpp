@@ -289,16 +289,16 @@ GetLibName()
 	return "Gainput";
 }
 
-unsigned
+uint32_t
 GetLibVersion()
 {
-	return 0;
+	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (0) );
 }
 
 const char*
 GetLibVersionString()
 {
-	return "0";
+	return "0.0";
 }
 
 }

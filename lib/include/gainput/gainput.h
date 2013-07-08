@@ -26,7 +26,7 @@
 #endif
 
 
-//#define GAINPUT_DEBUG
+#define GAINPUT_DEBUG
 //#define GAINPUT_DEV
 #define GAINPUT_ENABLE_ALL_GESTURES
 
@@ -121,7 +121,7 @@ static const UserButtonId InvalidUserButtonId = -1;
 /// Returns the name of the library, should be "Gainput".
 const char* GetLibName();
 /// Returns the version number of the library.
-unsigned GetLibVersion();
+uint32_t GetLibVersion();
 /// Returns the version number of the library as a printable string.
 const char* GetLibVersionString();
 
@@ -131,6 +131,10 @@ class InputManager;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }
 }
+
+#define GAINPUT_VER_MAJOR_SHIFT		16
+#define GAINPUT_VER_GET_MAJOR(ver)	(ver >> GAINPUT_VER_MAJOR_SHIFT)
+#define GAINPUT_VER_GET_MINOR(ver)	(ver & (uint32_t(-1) >> GAINPUT_VER_MAJOR_SHIFT))
 
 
 #include <gainput/GainputAllocator.h>
