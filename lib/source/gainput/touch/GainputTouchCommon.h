@@ -24,14 +24,13 @@ InputDeviceTouch::~InputDeviceTouch()
 }
 
 void
-InputDeviceTouch::Update(InputDeltaState* delta)
+InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
 	impl_->Update(*state_, *previousState_, delta);
 }
 
 InputDevice::DeviceState
-InputDeviceTouch::GetState() const
+InputDeviceTouch::InternalGetState() const
 {
 	return impl_->GetState();
 }

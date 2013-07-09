@@ -263,9 +263,28 @@ ping
 {
 	uint8_t cmd
 }
+
+get all infos
+{
+	uint8_t cmd
+}
+
+start device sync
+{
+	uint8_t cmd
+	uint32_t deviceId
+}
+
+set device button
+{
+	uint8_t cmd
+	uint32_t deviceId
+	uint32_t deviceButtonId
+	uint8_t/float value
+}
 \endcode
 
-The message IDs are defined in GainputDevProtocol.h.
+The message IDs (\c cmd) are defined in GainputDevProtocol.h.
 
 All integers are in network byte order.
 

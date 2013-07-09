@@ -63,11 +63,12 @@ public:
 			bool oneShot = true, 
 			uint64_t timeSpan = 800);
 
-	void Update(InputDeltaState* delta);
-
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == HoldTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
 
 private:
 	DeviceButtonSpec actionButton_;
@@ -83,7 +84,6 @@ private:
 
 	float firstDownX_;
 	float firstDownY_;
-
 };
 
 }

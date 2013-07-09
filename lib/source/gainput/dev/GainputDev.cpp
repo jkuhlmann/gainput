@@ -7,6 +7,8 @@
 #include "GainputNetListener.h"
 #include "GainputNetConnection.h"
 #include "GainputMemoryStream.h"
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
 
 #if _MSC_VER
 #define snprintf _snprintf
@@ -17,10 +19,12 @@ namespace gainput
 
 static NetListener* devListener = 0;
 static NetConnection* devConnection = 0;
-static const InputManager* inputManager = 0;
+static InputManager* inputManager = 0;
 static Allocator* allocator = 0;
 static Array<const InputMap*> devMaps(GetDefaultAllocator());
 static Array<const InputDevice*> devDevices(GetDefaultAllocator());
+static bool devSendInfos = false;
+static Array<DeviceId> devSyncedDevices(GetDefaultAllocator());
 
 class DevUserButtonListener : public MappedInputListener
 {
@@ -29,7 +33,7 @@ public:
 
 	void OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue)
 	{
-		if (!devConnection)
+		if (!devConnection || !devSendInfos)
 		{
 			return;
 		}
@@ -47,7 +51,7 @@ public:
 
 	void OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue)
 	{
-		if (!devConnection)
+		if (!devConnection || !devSendInfos)
 		{
 			return;
 		}
@@ -67,7 +71,40 @@ private:
 	const InputMap* map_;
 };
 
+class DevDeviceButtonListener : public InputListener
+{
+public:
+	void OnDeviceButtonBool(DeviceId deviceId, DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	{
+		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
+			return;
+		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
+		stream->Write(uint8_t(DevCmdSetDeviceButton));
+		stream->Write(uint32_t(deviceId));
+		stream->Write(uint32_t(deviceButton));
+		stream->Write(uint8_t(newValue));
+		stream->SeekBegin(0);
+		devConnection->Send(*stream);
+		allocator->Delete(stream);
+	}
+
+	void OnDeviceButtonFloat(DeviceId deviceId, DeviceButtonId deviceButton, float oldValue, float newValue)
+	{
+		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
+			return;
+		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
+		stream->Write(uint8_t(DevCmdSetDeviceButton));
+		stream->Write(uint32_t(deviceId));
+		stream->Write(uint32_t(deviceButton));
+		stream->Write(newValue);
+		stream->SeekBegin(0);
+		devConnection->Send(*stream);
+		allocator->Delete(stream);
+	}
+};
+
 static HashMap<const InputMap*, DevUserButtonListener*> devUserButtonListeners(GetDefaultAllocator());
+DevDeviceButtonListener* devDeviceButtonListener = 0;
 
 
 
@@ -139,7 +176,7 @@ SendMap(const InputMap* map, Stream* stream, NetConnection* devConnection)
 }
 
 void
-DevInit(const InputManager* manager)
+DevInit(InputManager* manager)
 {
 	if (devListener)
 	{
@@ -185,9 +222,12 @@ DevShutdown(const InputManager* manager)
 		devConnection = 0;
 	}
 
-	devListener->Stop();
-	allocator->Delete(devListener);
-	devListener = 0;
+	if (devListener)
+	{
+		devListener->Stop();
+		allocator->Delete(devListener);
+		devListener = 0;
+	}
 
 	for (HashMap<const InputMap*, DevUserButtonListener*>::iterator it = devUserButtonListeners.begin();
 			it != devUserButtonListeners.end();
@@ -203,7 +243,7 @@ DevShutdown(const InputManager* manager)
 
 
 void
-DevUpdate()
+DevUpdate(InputDeltaState* delta)
 {
 	if (!devConnection)
 	{
@@ -211,7 +251,6 @@ DevUpdate()
 		if (devConnection)
 		{
 			GAINPUT_LOG("TOOL: New connection\n");
-			int count = 0;
 			Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 
 			stream->Write(uint8_t(DevCmdHello));
@@ -220,6 +259,32 @@ DevUpdate()
 			stream->SeekBegin(0);
 			devConnection->Send(*stream);
 
+			allocator->Delete(stream);
+		}
+	}
+
+	if (!devConnection)
+	{
+		return;
+	}
+
+	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
+	size_t received = 1;
+	size_t r;
+	while (received > 0)
+	{
+		stream->Reset();
+		received = devConnection->Receive(*stream, 1024);
+		if (!received)
+			break;
+		uint8_t cmd;
+		r = stream->Read(cmd);
+		GAINPUT_ASSERT(r);
+		if (cmd == DevCmdGetAllInfos)
+		{
+			devSendInfos = true;
+
+			int count = 0;
 			// Send existing devices
 			for (DeviceId deviceId = 0; deviceId < 1000; ++deviceId)
 			{
@@ -244,15 +309,49 @@ DevUpdate()
 				++count;
 			}
 			GAINPUT_LOG("TOOL: Sent %d maps.\n", count);
-
-			allocator->Delete(stream);
+		}
+		else if (cmd == DevCmdStartDeviceSync)
+		{
+			uint32_t deviceId;
+			r = stream->Read(deviceId);
+			GAINPUT_ASSERT(r == sizeof(deviceId));
+			InputDevice* device = inputManager->GetDevice(deviceId);
+			GAINPUT_ASSERT(device);
+			device->SetSynced(true);
+			devSyncedDevices.push_back(deviceId);
+			GAINPUT_LOG("TOOL: Starting to sync device #%d.\n", deviceId);
+		}
+		else if (cmd == DevCmdSetDeviceButton)
+		{
+			uint32_t deviceId;
+			uint32_t deviceButtonId;
+			r = stream->Read(deviceId);
+			r += stream->Read(deviceButtonId);
+			GAINPUT_ASSERT(r == sizeof(uint32_t)*2);
+			InputDevice* device = inputManager->GetDevice(deviceId);
+			GAINPUT_ASSERT(device);
+			GAINPUT_ASSERT(device->IsValidButtonId(deviceButtonId));
+			GAINPUT_ASSERT(device->GetInputState());
+			GAINPUT_ASSERT(device->GetPreviousInputState());
+			if (device->GetButtonType(deviceButtonId) == BT_BOOL)
+			{
+				uint8_t value;
+				r = stream->Read(value);
+				GAINPUT_ASSERT(r == 1);
+				bool boolValue = bool(value);
+				HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, boolValue);
+			}
+			else
+			{
+				float value;
+				r = stream->Read(value);
+				GAINPUT_ASSERT(r == sizeof(float));
+				device->GetInputState()->Set(deviceButtonId, value);
+				HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
+			}
 		}
 	}
-
-	if (!devConnection)
-	{
-		return;
-	}
+	allocator->Delete(stream);
 
 	const uint8_t cmd = DevCmdPing;
 	if (!devConnection->IsConnected() || devConnection->Send(&cmd, sizeof(cmd)) == 0)
@@ -261,6 +360,18 @@ DevUpdate()
 		devConnection->Close();
 		allocator->Delete(devConnection);
 		devConnection = 0;
+
+		for (Array<DeviceId>::iterator it = devSyncedDevices.begin();
+				it != devSyncedDevices.end();
+				++it)
+		{
+			InputDevice* device = inputManager->GetDevice(*it);
+			GAINPUT_ASSERT(device);
+			device->SetSynced(false);
+			GAINPUT_LOG("TOOL: Stopped syncing device #%d.\n", *it);
+		}
+		devSyncedDevices.clear();
+
 		return;
 	}
 }
@@ -278,7 +389,7 @@ DevNewMap(InputMap* inputMap)
 	devUserButtonListeners[inputMap] = listener;
 	inputMap->AddListener(listener);
 
-	if (devConnection)
+	if (devConnection && devSendInfos)
 	{
 		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 		SendMap(inputMap, stream, devConnection);
@@ -289,7 +400,7 @@ DevNewMap(InputMap* inputMap)
 void
 DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton)
 {
-	if (!devConnection || devMaps.find(inputMap) == devMaps.end())
+	if (!devConnection || devMaps.find(inputMap) == devMaps.end() || !devSendInfos)
 	{
 		return;
 	}
@@ -309,7 +420,7 @@ DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, D
 void
 DevRemoveUserButton(InputMap* inputMap, UserButtonId userButton)
 {
-	if (!devConnection)
+	if (!devConnection || !devSendInfos)
 	{
 		return;
 	}
@@ -331,12 +442,15 @@ DevRemoveMap(InputMap* inputMap)
 		return;
 	}
 
-	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
-	stream->Write(uint8_t(DevCmdRemoveMap));
-	stream->Write(uint32_t(inputMap->GetId()));
-	stream->SeekBegin(0);
-	devConnection->Send(*stream);
-	allocator->Delete(stream);
+	if (devSendInfos)
+	{
+		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
+		stream->Write(uint8_t(DevCmdRemoveMap));
+		stream->Write(uint32_t(inputMap->GetId()));
+		stream->SeekBegin(0);
+		devConnection->Send(*stream);
+		allocator->Delete(stream);
+	}
 
 	devMaps.erase(devMaps.find(inputMap));
 
@@ -357,12 +471,91 @@ DevNewDevice(InputDevice* device)
 	}
 	devDevices.push_back(device);
 
-	if (devConnection)
+	if (devConnection && devSendInfos)
 	{
 		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 		SendDevice(device, stream, devConnection);
 		allocator->Delete(stream);
 	}
+}
+
+void
+DevConnect(InputManager* manager, const char* ip, unsigned port)
+{
+	if (devConnection)
+	{
+		devConnection->Close();
+		allocator->Delete(devConnection);
+	}
+
+	if (devListener)
+	{
+		devListener->Stop();
+		allocator->Delete(devListener);
+		devListener = 0;
+	}
+
+	inputManager = manager;
+	allocator = &manager->GetAllocator();
+
+	devConnection = allocator->New<NetConnection>(NetAddress(ip, port));
+
+	if (!devConnection->Connect(false) || !devConnection->IsConnected())
+	{
+		devConnection->Close();
+		allocator->Delete(devConnection);
+		devConnection = 0;
+		GAINPUT_LOG("TOOL: Unable to connect to %s:%d.\n", ip, port);
+	}
+
+	GAINPUT_LOG("TOOL: Connected to %s:%d.\n", ip, port);
+
+	if (!devDeviceButtonListener)
+	{
+		devDeviceButtonListener = allocator->New<DevDeviceButtonListener>();
+		inputManager->AddListener(devDeviceButtonListener);
+	}
+}
+
+void
+DevStartDeviceSync(DeviceId deviceId)
+{
+	if (devSyncedDevices.find(deviceId) != devSyncedDevices.end())
+		return;
+	devSyncedDevices.push_back(deviceId);
+
+	Stream* stream = allocator->New<MemoryStream>(32, *allocator);
+	stream->Write(uint8_t(DevCmdStartDeviceSync));
+	stream->Write(uint32_t(deviceId));
+	stream->SeekBegin(0);
+	devConnection->Send(*stream);
+
+	const InputDevice* device = inputManager->GetDevice(deviceId);
+	GAINPUT_ASSERT(device);
+
+	// Send device state
+	for (DeviceButtonId buttonId = 0; buttonId < 1000; ++buttonId)
+	{
+		if (device->IsValidButtonId(buttonId))
+		{
+			stream->Reset();
+			stream->Write(uint8_t(DevCmdSetDeviceButton));
+			stream->Write(uint32_t(deviceId));
+			stream->Write(uint32_t(buttonId));
+			if (device->GetButtonType(buttonId) == BT_BOOL)
+			{
+				stream->Write(uint8_t(device->GetBool(buttonId)));
+			}
+			else
+			{
+				stream->Write(device->GetFloat(buttonId));
+			}
+			stream->SeekBegin(0);
+			devConnection->Send(*stream);
+		}
+	}
+
+	allocator->Delete(stream);
 }
 
 }

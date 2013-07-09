@@ -43,10 +43,11 @@ public:
 	/// Returns DT_GESTURE.
 	DeviceType GetType() const { return DT_GESTURE; }
 	const char* GetTypeName() const { return "gesture"; }
-	DeviceState GetState() const { return DS_OK; }
 
 protected:
 	InputGesture(InputManager& manager, DeviceId device) : InputDevice(manager, device, manager.GetDeviceCountByType(DT_GESTURE)) { }
+
+	DeviceState InternalGetState() const { return DS_OK; }
 
 };
 

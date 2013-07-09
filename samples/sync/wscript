@@ -1,0 +1,39 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+VERSION='0.1'
+APPNAME='syncsample'
+
+top = '.'
+out = 'build'
+
+import sys, os
+from waflib import Context
+
+def options(opt):
+	opt.load('compiler_cxx')
+
+def build(bld):
+	sources = bld.path.ant_glob('*.cpp')
+	sources += [bld.root.make_node(os.path.join(Context.top_dir, 'samples/samplefw/SampleFramework.cpp'))]
+	if bld.env.cross == 'android':
+		sources += [bld.root.make_node(os.path.join(bld.env.cross_android_ndk, 'sources/android/native_app_glue/android_native_app_glue.c'))]
+		usetheselib='stlport_static gainputstatic'
+		bld.shlib(features='cxx cxxshlib',
+			source=sources, 
+			includes='../../lib/include/', 
+			use=usetheselib,
+			target=APPNAME,
+			linkflags='-lstdc++ -landroid -llog')
+	else:
+		usethese = 'gainput'
+		if (sys.platform.startswith('win')):
+			usethese = 'gainput KERNEL32 USER32 GDI32 XINPUT'
+		bld.program(features='cxx cxxprogram',
+			source=sources, 
+			includes='../../lib/include/', 
+			target=APPNAME,
+			use = usethese,
+			uselib=['LIBX11', 'LIBGL', 'LIBRT']
+			)
+

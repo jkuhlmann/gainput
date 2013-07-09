@@ -68,7 +68,7 @@ public:
 	/**
 	 * \param delta The delta state to add changes to.
 	 */
-	virtual void Update(InputDeltaState* delta) = 0;
+	void Update(InputDeltaState* delta);
 
 	/// Returns this device's ID.
 	DeviceId GetDeviceId() const { return deviceId_; }
@@ -80,7 +80,7 @@ public:
 	/// Returns the device type's name.
 	virtual const char* GetTypeName() const = 0;
 	/// Returns the device state.
-	virtual DeviceState GetState() const = 0;
+	DeviceState GetState() const;
 	/// Returns if this device is available.
 	virtual bool IsAvailable() const { return GetState() == DS_OK || GetState() == DS_LOW_BATTERY; }
 	/// Returns if the given button is valid for this device.
@@ -121,6 +121,16 @@ public:
 	 */
 	virtual DeviceButtonId GetButtonByName(const char* name) const { return InvalidDeviceButtonId; }
 
+	/// Returns the device's state, probably best if only used internally.
+	InputState* GetInputState() { return state_; }
+	/// Returns the device's previous state, probably best if only used internally.
+	InputState* GetPreviousInputState() { return previousState_; }
+
+#if defined(GAINPUT_DEV)
+	bool IsSynced() const { return synced_; }
+	void SetSynced(bool synced) { synced_ = synced; }
+#endif
+
 protected:
 	/// The manager this device belongs to.
 	InputManager& manager_;
@@ -135,6 +145,14 @@ protected:
 	InputState* state_;
 	/// The previous state of this device.
 	InputState* previousState_;
+
+#if defined(GAINPUT_DEV)
+	bool synced_;
+#endif
+
+	virtual void InternalUpdate(InputDeltaState* delta) = 0;
+
+	virtual DeviceState InternalGetState() const = 0;
 
 	size_t CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end, DeviceId device) const;
 };

@@ -24,9 +24,8 @@ InputDeviceMouse::~InputDeviceMouse()
 }
 
 void
-InputDeviceMouse::Update(InputDeltaState* delta)
+InputDeviceMouse::InternalUpdate(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
 	impl_->Update(*state_, *previousState_, delta);
 }
 

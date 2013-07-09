@@ -59,13 +59,13 @@ InputManager::Update()
 		it->second->Update(ds);
 	}
 
+	GAINPUT_DEV_UPDATE(ds);
+
 	if (ds)
 	{
 		ds->NotifyListeners(listeners_);
 		ds->Clear();
 	}
-
-	GAINPUT_DEV_UPDATE();
 }
 
 uint64_t
@@ -168,6 +168,12 @@ InputManager::HandleEvent(XEvent& event)
 			it != devices_.end();
 			++it)
 	{
+#if defined(GAINPUT_DEV)
+		if (it->second->IsSynced())
+		{
+			continue;
+		}
+#endif
 		if (it->second->GetType() == InputDevice::DT_KEYBOARD)
 		{
 			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
@@ -240,6 +246,18 @@ InputManager::HandleInput(AInputEvent* event)
 	return handled;
 }
 #endif
+
+void
+InputManager::ConnectForStateSync(const char* ip, unsigned port)
+{
+	GAINPUT_DEV_CONNECT(this, ip, port);
+}
+
+void
+InputManager::StartDeviceStateSync(DeviceId deviceId)
+{
+	GAINPUT_DEV_START_SYNC(deviceId);
+}
 
 }
 

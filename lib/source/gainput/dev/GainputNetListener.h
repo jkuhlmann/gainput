@@ -22,6 +22,7 @@ public:
 private:
 	NetAddress address;
 	Allocator& allocator;
+	bool blocking;
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	int fd;

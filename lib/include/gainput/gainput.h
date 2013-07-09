@@ -26,7 +26,7 @@
 #endif
 
 
-#define GAINPUT_DEBUG
+//#define GAINPUT_DEBUG
 //#define GAINPUT_DEV
 #define GAINPUT_ENABLE_ALL_GESTURES
 

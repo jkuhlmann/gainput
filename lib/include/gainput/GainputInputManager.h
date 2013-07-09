@@ -120,6 +120,11 @@ public:
 	/// Returns the graphical display's height in pixels.
 	int GetDisplayHeight() const { return displayHeight_; }
 
+	/// [IN dev BUILDS ONLY] Connect to a remote host to send device state changes to.
+	void ConnectForStateSync(const char* ip, unsigned port);
+	/// [IN dev BUILDS ONLY] Initiate sending of device state changes to the given device.
+	void StartDeviceStateSync(DeviceId deviceId);
+
 private:
 	Allocator& allocator_;
 

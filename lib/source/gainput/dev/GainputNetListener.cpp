@@ -13,6 +13,7 @@ namespace gainput {
 NetListener::NetListener(const NetAddress& address, Allocator& allocator) :
 	address(address),
 	allocator(allocator),
+	blocking(true),
 	fd(-1)
 {
 
@@ -27,6 +28,9 @@ bool
 NetListener::Start(bool shouldBlock)
 {
 	assert(fd == -1);
+
+	blocking = shouldBlock;
+
 	fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (fd == -1)
 	{
@@ -69,13 +73,21 @@ NetListener::Accept()
 	assert(fd != -1);
 	struct sockaddr_in addr;
 	socklen_t addr_len = sizeof(struct sockaddr_in);
+
 	int remoteFd = accept(fd, (struct sockaddr*)&addr, &addr_len);
 	if (remoteFd == -1)
 	{
 		return 0;
 	}
+
+	if (!blocking)
+	{
+		fcntl(remoteFd, F_SETFL, O_NONBLOCK);
+	}
+
 	NetAddress remoteAddress(addr);
 	NetConnection* connection = allocator.New<NetConnection>(remoteAddress, remoteFd, allocator);
+
 	return connection;
 }
 

@@ -41,10 +41,8 @@ SimultaneouslyDownGesture::ClearButtons()
 }
 
 void
-SimultaneouslyDownGesture::Update(InputDeltaState* delta)
+SimultaneouslyDownGesture::InternalUpdate(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
-
 	bool allDown = !buttons_.empty();
 
 	for (Array<DeviceButtonSpec>::const_iterator it = buttons_.begin();

@@ -23,7 +23,7 @@ InputDeviceMouse::~InputDeviceMouse()
 }
 
 void
-InputDeviceMouse::Update(InputDeltaState* delta)
+InputDeviceMouse::InternalUpdate(InputDeltaState* delta)
 {
 }
 

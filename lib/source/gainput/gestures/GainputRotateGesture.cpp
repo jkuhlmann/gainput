@@ -58,7 +58,7 @@ RotateGesture::Initialize(DeviceId downDevice, DeviceButtonId downButton,
 }
 
 void
-RotateGesture::Update(InputDeltaState* delta)
+RotateGesture::InternalUpdate(InputDeltaState* delta)
 {
 	if (downButton_.buttonId == InvalidDeviceButtonId
 	 || xAxis_.buttonId == InvalidDeviceButtonId
@@ -69,8 +69,6 @@ RotateGesture::Update(InputDeltaState* delta)
 	{
 		return;
 	}
-
-	*previousState_ = *state_;
 
 	const InputDevice* downDevice = manager_.GetDevice(downButton_.deviceId);
 	GAINPUT_ASSERT(downDevice);

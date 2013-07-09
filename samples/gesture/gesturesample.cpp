@@ -58,9 +58,25 @@ public:
 
 	DeviceType GetType() const { return DT_CUSTOM; }
 	const char* GetTypeName() const { return "custom"; }
-	DeviceState GetState() const { return DS_OK; }
 
-	void Update(gainput::InputDeltaState* delta)
+	bool IsValidButtonId(gainput::DeviceButtonId deviceButton) const
+	{
+		return deviceButton == gainput::TOUCH_0_DOWN
+			|| deviceButton == gainput::TOUCH_0_X
+			|| deviceButton == gainput::TOUCH_0_Y
+			|| deviceButton == gainput::TOUCH_1_DOWN
+			|| deviceButton == gainput::TOUCH_1_X
+			|| deviceButton == gainput::TOUCH_1_Y;
+	}
+
+	gainput::ButtonType GetButtonType(gainput::DeviceButtonId deviceButton) const
+	{
+		GAINPUT_ASSERT(IsValidButtonId(deviceButton));
+		return deviceButton == (gainput::TOUCH_0_DOWN || gainput::TOUCH_1_DOWN) ? gainput::BT_BOOL : gainput::BT_FLOAT;
+	}
+
+protected:
+	void InternalUpdate(gainput::InputDeltaState* delta)
 	{
 		const gainput::InputDevice* downDevice = manager_.GetDevice(downDevice_);
 		GAINPUT_ASSERT(downDevice);
@@ -90,21 +106,7 @@ public:
 		state_->Set(gainput::TOUCH_0_Y, yDevice2->GetFloat(yAxisButton2_));
 	}
 
-	bool IsValidButtonId(gainput::DeviceButtonId deviceButton) const
-	{
-		return deviceButton == gainput::TOUCH_0_DOWN
-			|| deviceButton == gainput::TOUCH_0_X
-			|| deviceButton == gainput::TOUCH_0_Y
-			|| deviceButton == gainput::TOUCH_1_DOWN
-			|| deviceButton == gainput::TOUCH_1_X
-			|| deviceButton == gainput::TOUCH_1_Y;
-	}
-
-	gainput::ButtonType GetButtonType(gainput::DeviceButtonId deviceButton) const
-	{
-		GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-		return deviceButton == (gainput::TOUCH_0_DOWN || gainput::TOUCH_1_DOWN) ? gainput::BT_BOOL : gainput::BT_FLOAT;
-	}
+	DeviceState InternalGetState() const { return DS_OK; }
 
 private:
 	bool isDown_;

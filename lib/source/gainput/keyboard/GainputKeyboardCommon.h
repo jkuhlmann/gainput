@@ -24,9 +24,8 @@ InputDeviceKeyboard::~InputDeviceKeyboard()
 }
 
 void
-InputDeviceKeyboard::Update(InputDeltaState* delta)
+InputDeviceKeyboard::InternalUpdate(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
 	impl_->Update(*state_, *previousState_, delta);
 }
 

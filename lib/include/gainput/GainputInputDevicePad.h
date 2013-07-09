@@ -119,12 +119,9 @@ public:
 	/// Shuts down the device.
 	~InputDevicePad();
 
-	void Update(InputDeltaState* delta);
-
 	/// Returns DT_PAD.
 	DeviceType GetType() const { return DT_PAD; }
 	const char* GetTypeName() const { return "pad"; }
-	DeviceState GetState() const;
 	bool IsValidButtonId(DeviceButtonId deviceButton) const;
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
@@ -140,6 +137,11 @@ public:
 	 * \return true if rumble was enabled successfully, false otherwise.
 	 */
 	bool Vibrate(float leftMotor, float rightMotor);
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
+
+	DeviceState InternalGetState() const;
 
 private:
 	InputDevicePadImpl* impl_;

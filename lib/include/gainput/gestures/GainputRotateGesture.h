@@ -59,11 +59,12 @@ public:
 			DeviceId xAxis2Device, DeviceButtonId xAxis2, 
 			DeviceId yAxis2Device, DeviceButtonId yAxis2);
 
-	void Update(InputDeltaState* delta);
-
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == RotateTriggered || deviceButton == RotateAngle; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return deviceButton == RotateTriggered ? BT_BOOL : BT_FLOAT; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
 
 private:
 	DeviceButtonSpec downButton_;

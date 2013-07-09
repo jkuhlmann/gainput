@@ -61,14 +61,12 @@ HoldGesture::Initialize(DeviceId actionButtonDevice, DeviceButtonId actionButton
 }
 
 void
-HoldGesture::Update(InputDeltaState* delta)
+HoldGesture::InternalUpdate(InputDeltaState* delta)
 {
 	if (actionButton_.buttonId == InvalidDeviceButtonId)
 	{
 		return;
 	}
-
-	*previousState_ = *state_;
 
 	const InputDevice* actionDevice = manager_.GetDevice(actionButton_.deviceId);
 	GAINPUT_ASSERT(actionDevice);

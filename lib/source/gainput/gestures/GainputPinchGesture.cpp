@@ -56,7 +56,7 @@ PinchGesture::Initialize(DeviceId downDevice, DeviceButtonId downButton,
 }
 
 void
-PinchGesture::Update(InputDeltaState* delta)
+PinchGesture::InternalUpdate(InputDeltaState* delta)
 {
 	if (downButton_.buttonId == InvalidDeviceButtonId
 	 || xAxis_.buttonId == InvalidDeviceButtonId
@@ -67,8 +67,6 @@ PinchGesture::Update(InputDeltaState* delta)
 	{
 		return;
 	}
-
-	*previousState_ = *state_;
 
 	const InputDevice* downDevice = manager_.GetDevice(downButton_.deviceId);
 	GAINPUT_ASSERT(downDevice);

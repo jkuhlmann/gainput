@@ -67,11 +67,12 @@ public:
 	 */
 	void SetClicksTargetCount(unsigned count) { clicksTargetCount_ = count; }
 
-	void Update(InputDeltaState* delta);
-
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == DoubleClickTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
 
 private:
 	DeviceButtonSpec actionButton_;
@@ -88,7 +89,6 @@ private:
 
 	unsigned clicksRegistered_;
 	unsigned clicksTargetCount_;
-
 };
 
 }

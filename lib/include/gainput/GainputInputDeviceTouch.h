@@ -74,12 +74,9 @@ public:
 	/// Shuts down the device.
 	~InputDeviceTouch();
 
-	void Update(InputDeltaState* delta);
-
 	/// Returns DT_TOUCH.
 	DeviceType GetType() const { return DT_TOUCH; }
 	const char* GetTypeName() const { return "touch"; }
-	DeviceState GetState() const;
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= TOUCH_0_DOWN && deviceButton < TOUCH_COUNT; }
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
@@ -90,6 +87,11 @@ public:
 
 	/// Returns the platform-specific implementation of this device.
 	InputDeviceTouchImpl* GetPimpl() { return impl_; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
+
+	DeviceState InternalGetState() const;
 
 private:
 	InputDeviceTouchImpl* impl_;

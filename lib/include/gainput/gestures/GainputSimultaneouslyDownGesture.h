@@ -46,11 +46,12 @@ public:
 	/// Removes all buttons previously registered through AddButton().
 	void ClearButtons();
 
-	void Update(InputDeltaState* delta);
-
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == SimultaneouslyDownTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
 
 private:
 	Array<DeviceButtonSpec> buttons_;

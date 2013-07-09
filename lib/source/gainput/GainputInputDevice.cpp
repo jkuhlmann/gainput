@@ -9,7 +9,35 @@ InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index)
 	manager_(manager),
 	deviceId_(device),
 	index_(index)
+#if defined(GAINPUT_DEV)
+	, synced_(false)
+#endif
 {
+}
+
+void
+InputDevice::Update(InputDeltaState* delta)
+{
+	*previousState_ = *state_;
+#if defined(GAINPUT_DEV)
+	if (synced_)
+	{
+		return;
+	}
+#endif
+	InternalUpdate(delta);
+}
+
+InputDevice::DeviceState
+InputDevice::GetState() const
+{
+#if defined(GAINPUT_DEV)
+	if (synced_)
+	{
+		return DS_OK;
+	}
+#endif
+	return InternalGetState();
 }
 
 size_t

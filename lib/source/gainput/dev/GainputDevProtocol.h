@@ -15,9 +15,12 @@ enum DevCmd
 	DevCmdRemoveUserButton,
 	DevCmdPing,
 	DevCmdUserButtonChanged,
+	DevCmdGetAllInfos,
+	DevCmdStartDeviceSync,
+	DevCmdSetDeviceButton,
 };
 
-const static unsigned DevProtocolVersion = 0x1;
+const static unsigned DevProtocolVersion = 0x2;
 
 }
 

@@ -43,11 +43,12 @@ public:
 	 */
 	void Initialize(DeviceId actionButtonDevice, DeviceButtonId actionButton, uint64_t timeSpan = 500);
 
-	void Update(InputDeltaState* delta);
-
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == TapTriggered; }
 
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
+
+protected:
+	void InternalUpdate(InputDeltaState* delta);
 
 private:
 	DeviceButtonSpec actionButton_;

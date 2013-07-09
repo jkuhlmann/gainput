@@ -36,14 +36,12 @@ TapGesture::Initialize(DeviceId actionButtonDevice, DeviceButtonId actionButton,
 }
 
 void
-TapGesture::Update(InputDeltaState* delta)
+TapGesture::InternalUpdate(InputDeltaState* delta)
 {
 	if (actionButton_.buttonId == InvalidDeviceButtonId)
 	{
 		return;
 	}
-
-	*previousState_ = *state_;
 
 	const InputDevice* actionDevice = manager_.GetDevice(actionButton_.deviceId);
 	GAINPUT_ASSERT(actionDevice);

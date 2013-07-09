@@ -115,14 +115,13 @@ InputDevicePad::~InputDevicePad()
 }
 
 void
-InputDevicePad::Update(InputDeltaState* delta)
+InputDevicePad::InternalUpdate(InputDeltaState* delta)
 {
-	*previousState_ = *state_;
 	impl_->Update(*state_, *previousState_, delta);
 }
 
 InputDevice::DeviceState
-InputDevicePad::GetState() const
+InputDevicePad::InternalGetState() const
 {
 	return impl_->GetState();
 }
