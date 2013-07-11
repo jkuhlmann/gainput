@@ -112,6 +112,22 @@ InputManager::FindDeviceId(const char* typeName, unsigned index) const
 	return InvalidDeviceId;
 }
 
+DeviceId
+InputManager::FindDeviceId(InputDevice::DeviceType type, unsigned index) const
+{
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		if (it->second->GetType() == type
+			&& it->second->GetIndex() == index)
+		{
+			return it->first;
+		}
+	}
+	return InvalidDeviceId;
+}
+
 unsigned
 InputManager::AddListener(InputListener* listener)
 {
