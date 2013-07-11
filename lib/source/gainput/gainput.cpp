@@ -114,6 +114,16 @@ There are three configurations of which you choose one by substituting CONFIGNAM
 
 Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/CONFIGNAME/ folder.
 
+\section sect_defines Build Configuration Defines
+There is a number of defines that govern what is included in the library and how it behaves. Normally, most of these are set by the build scripts, but it may be necessary to set these when doing custom builds or modifying the build process. All defines must be set during compilation of the library itself.
+
+Name | Description
+-----|------------
+\c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables lot of internal console output and checks.
+\c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to. Automatically enabled in the \c dev build configuration.
+\c GAINPUT_ENABLE_ALL_GESTURES | Enables all gestures. Note that there is also an individual define for each gesture (see gainput::InputGesture).
+\c GAINPUT_LIB_BUILD | Should be set if Gainput is being built as library.
+
 \section sect_android_build Android NDK
 In order to cross-compile for Android, the build has to be configured differently.
 
@@ -143,6 +153,7 @@ Basic Sample | samples/basic/ | Shows the most basic initialization and usage of
 Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
 Gesture Sample | samples/gesture/ | Shows how to use input gestures. Also shows how to implement your own custom input device. Uses the \ref sample_fw.
 Listener Sample | samples/listener/ | Shows how to use device button listeners as well as user button listeners. Uses the \ref sample_fw.
+Sync Sample | samples/sync/ | Shows how to connect two Gainput instances to each other and send the device state over the network. Uses the \ref sample_fw. Works only in the \c dev build configuration.
 
 \section sample_fw Sample Framework
 This framework makes it easier to provide succinct samples by taking care of the platform-dependent window creation/destruction.
@@ -272,13 +283,15 @@ get all infos
 start device sync
 {
 	uint8_t cmd
-	uint32_t deviceId
+	uint8_t deviceType
+	uint8_t deviceIndex
 }
 
 set device button
 {
 	uint8_t cmd
-	uint32_t deviceId
+	uint8_t deviceType
+	uint8_t deviceIndex
 	uint32_t deviceButtonId
 	uint8_t/float value
 }

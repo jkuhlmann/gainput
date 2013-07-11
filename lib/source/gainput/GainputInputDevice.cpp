@@ -41,7 +41,7 @@ InputDevice::GetState() const
 }
 
 size_t
-InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end, DeviceId device) const
+InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end) const
 {
 	size_t buttonsFound = 0;
 	for (unsigned i = start; i < end; ++i)
@@ -49,7 +49,7 @@ InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonC
 		DeviceButtonId id(i);
 		if (IsValidButtonId(id) && GetBool(id))
 		{
-			outButtons[buttonsFound].deviceId = device;
+			outButtons[buttonsFound].deviceId = deviceId_;
 			outButtons[buttonsFound].buttonId = id;
 			++buttonsFound;
 		}

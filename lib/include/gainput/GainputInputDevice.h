@@ -66,7 +66,7 @@ public:
 
 	/// Update this device, internally called by InputManager.
 	/**
-	 * \param delta The delta state to add changes to.
+	 * \param delta The delta state to add changes to. May be 0.
 	 */
 	void Update(InputDeltaState* delta);
 
@@ -150,11 +150,28 @@ protected:
 	bool synced_;
 #endif
 
+	/// Implementation of the device's Update function.
+	/**
+	 * \param delta The delta state to add changes to. May be 0.
+	 */
 	virtual void InternalUpdate(InputDeltaState* delta) = 0;
 
+	/// Implementation of the device's GetState function.
+	/**
+	 * \return The device's state.
+	 */
 	virtual DeviceState InternalGetState() const = 0;
 
-	size_t CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end, DeviceId device) const;
+	/// Checks which buttons are down.
+	/**
+	 * This function is normally used by GetAnyButtonDown implementations internally.
+	 * \param outButtons An array to write buttons that are down to.
+	 * \param maxButtonCount The size of outButtons.
+	 * \param start The lowest device button ID to check.
+	 * \param end The biggest device button ID to check.
+	 * \return The number of buttons written to outButtons.
+	 */
+	size_t CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end) const;
 };
 
 

@@ -34,7 +34,7 @@ InputDeviceKeyboard::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxBu
 {
 	GAINPUT_ASSERT(outButtons);
 	GAINPUT_ASSERT(maxButtonCount > 0);
-	return CheckAllButtonsDown(outButtons, maxButtonCount, 0, KeyboardButtonCount, impl_->GetDevice());
+	return CheckAllButtonsDown(outButtons, maxButtonCount, 0, KeyboardButtonCount);
 }
 
 size_t
