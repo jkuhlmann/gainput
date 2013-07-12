@@ -1,0 +1,51 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+VERSION='1'
+APPNAME='gainputtest'
+
+top = '.'
+out = 'build'
+
+import sys
+import os.path
+import os
+import platform
+import shutil
+
+from waflib import Context
+
+def options(opt):
+	opt.load('compiler_cxx')
+
+def configure(cnf):
+	if not os.path.exists('Catch/'):
+		os.system('git clone https://github.com/philsquared/Catch.git')
+	cnf.load('compiler_cxx')
+	cnf.check(compiler='cxx',
+			 lib='X11',
+			 mandatory=True, 
+			 uselib_store='LIBX11')
+	cnf.check(compiler='cxx',
+			lib='GL',
+			mandatory=True, 
+			uselib_store='LIBGL')
+	cnf.check(compiler='cxx',
+			lib='rt',
+			mandatory=True, 
+			uselib_store='LIBRT')
+	cnf.env.STLIBPATH += [os.path.join(Context.top_dir, '../build/release/')]
+	cnf.check(compiler='cxx',
+			stlib='gainputstatic',
+			mandatory=True, 
+			uselib_store='LIBGAINPUT')
+
+def build(bld):
+	sources = bld.path.ant_glob('*.cpp')
+	bld.program(features='cxx cxxprogram',
+		source=sources, 
+		includes='../lib/include/', 
+		target=APPNAME,
+		uselib=['LIBX11', 'LIBGL', 'LIBRT', 'LIBGAINPUT']
+		)
+
