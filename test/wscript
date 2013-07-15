@@ -34,7 +34,7 @@ def configure(cnf):
 			lib='rt',
 			mandatory=True, 
 			uselib_store='LIBRT')
-	cnf.env.STLIBPATH += [os.path.join(Context.top_dir, '../build/release/')]
+	cnf.env.STLIBPATH += [os.path.join(Context.run_dir, '../build/release/')]
 	cnf.check(compiler='cxx',
 			stlib='gainputstatic',
 			mandatory=True, 
