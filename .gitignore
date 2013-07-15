@@ -13,4 +13,5 @@ __pycache__/
 .depproj/
 gainput_2008.*
 docs/
+test/Catch/
 
