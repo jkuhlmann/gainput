@@ -154,7 +154,10 @@ InputMap::GetMappings(UserButtonId userButton, DeviceButtonSpec* outButtons, siz
 {
 	size_t buttonCount = 0;
 	const UserButton* ub = GetUserButton(userButton);
-	GAINPUT_ASSERT(ub);
+	if (!ub)
+	{
+		return 0;
+	}
 	for (MappedInputList::const_iterator it = ub->inputs.begin();
 			it != ub->inputs.end() && buttonCount < maxButtonCount;
 			++it, ++buttonCount)
