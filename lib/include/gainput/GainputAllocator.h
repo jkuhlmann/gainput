@@ -49,7 +49,7 @@ public:
 	{
 		return new (Allocate(sizeof(T))) T(p0);
 	}
-	
+
 	template <class T, class P0>
 	T* New(const P0& p0)
 	{

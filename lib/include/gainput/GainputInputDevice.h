@@ -1,5 +1,4 @@
 
-
 #ifndef GAINPUTINPUTDEVICE_H_
 #define GAINPUTINPUTDEVICE_H_
 

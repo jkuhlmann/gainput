@@ -29,6 +29,7 @@
 //#define GAINPUT_DEBUG
 //#define GAINPUT_DEV
 #define GAINPUT_ENABLE_ALL_GESTURES
+#define GAINPUT_ENABLE_RECORDER
 
 
 #include <cassert>
@@ -151,6 +152,10 @@ template <class T> T Abs(T a) { return a < T() ? -a : a; }
 #include <gainput/GainputInputDeviceTouch.h>
 
 #include <gainput/gestures/GainputGestures.h>
+
+#include <gainput/recorder/GainputInputRecording.h>
+#include <gainput/recorder/GainputInputPlayer.h>
+#include <gainput/recorder/GainputInputRecorder.h>
 
 
 #endif

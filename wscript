@@ -150,6 +150,7 @@ def build(bld):
 	bld.recurse('samples/dynamic/')
 	bld.recurse('samples/gesture/')
 	bld.recurse('samples/listener/')
+	bld.recurse('samples/recording/')
 	bld.recurse('samples/sync/')
 
 from waflib.Build import BuildContext, CleanContext, \
