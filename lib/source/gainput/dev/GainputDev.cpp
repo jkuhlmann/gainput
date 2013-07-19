@@ -371,7 +371,6 @@ DevUpdate(InputDeltaState* delta)
 				float value;
 				r = stream->Read(value);
 				GAINPUT_ASSERT(r == sizeof(float));
-				device->GetInputState()->Set(deviceButtonId, value);
 				HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
 			}
 		}
