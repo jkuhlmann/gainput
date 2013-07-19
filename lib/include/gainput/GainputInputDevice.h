@@ -125,7 +125,7 @@ public:
 	/// Returns the device's previous state, probably best if only used internally.
 	InputState* GetPreviousInputState() { return previousState_; }
 
-#if defined(GAINPUT_DEV)
+#if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	bool IsSynced() const { return synced_; }
 	void SetSynced(bool synced) { synced_ = synced; }
 #endif
@@ -145,7 +145,7 @@ protected:
 	/// The previous state of this device.
 	InputState* previousState_;
 
-#if defined(GAINPUT_DEV)
+#if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	bool synced_;
 #endif
 
