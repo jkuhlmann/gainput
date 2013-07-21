@@ -77,7 +77,6 @@ void SampleMain()
 	while (!SfwIsDone() && !doExit)
 	{
 		manager.Update();
-		inputPlayer.Update();
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 		XEvent event;

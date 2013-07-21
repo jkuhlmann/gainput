@@ -111,6 +111,7 @@ struct DeviceButtonSpec
 typedef unsigned int UserButtonId;
 /// ID of an input listener.
 typedef unsigned int ListenerId;
+typedef unsigned int ModifierId;
 
 /// An invalid device ID.
 static const DeviceId InvalidDeviceId = -1;
@@ -129,6 +130,7 @@ const char* GetLibVersionString();
 class InputDeltaState;
 class InputListener;
 class InputManager;
+class DeviceStateModifier;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }
 }

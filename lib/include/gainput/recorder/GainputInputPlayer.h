@@ -7,20 +7,21 @@
 namespace gainput
 {
 
-class InputPlayer
+class InputPlayer : public DeviceStateModifier
 {
 public:
 	InputPlayer(InputManager& manager, InputRecording* recording = 0);
+	~InputPlayer();
 
-	void Update();
-
-	void SetRecording(InputRecording* recording);
-	InputRecording* GetRecording() { return recording_; }
-	const InputRecording* GetRecording() const { return recording_; }
+	void Update(InputDeltaState* delta);
 
 	void Start();
 	void Stop();
 	bool IsPlaying() const { return isPlaying_; }
+
+	void SetRecording(InputRecording* recording);
+	InputRecording* GetRecording() { return recording_; }
+	const InputRecording* GetRecording() const { return recording_; }
 
 private:
 	InputManager& manager_;
@@ -30,6 +31,8 @@ private:
 	uint64_t startTime_;
 
 	Array<DeviceId> devicesToReset_;
+
+	ModifierId playingModifierId_;
 };
 
 }

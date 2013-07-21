@@ -127,6 +127,9 @@ public:
 	/// Returns the graphical display's height in pixels.
 	int GetDisplayHeight() const { return displayHeight_; }
 
+	ModifierId AddDeviceStateModifier(DeviceStateModifier* modifier);
+	void RemoveDeviceStateModifier(ModifierId modifierId);
+
 	/// [IN dev BUILDS ONLY] Connect to a remote host to send device state changes to.
 	void ConnectForStateSync(const char* ip, unsigned port);
 	/// [IN dev BUILDS ONLY] Initiate sending of device state changes to the given device.
@@ -141,6 +144,9 @@ private:
 
 	HashMap<ListenerId, InputListener*> listeners_;
 	unsigned nextListenerId_;
+
+	HashMap<ModifierId, DeviceStateModifier*> modifiers_;
+	unsigned nextModifierId_;
 
 	InputDeltaState* deltaState_;
 
@@ -207,6 +213,13 @@ InputManager::GetDevice(DeviceId deviceId) const
 	}
 	return it->second;
 }
+
+
+class DeviceStateModifier
+{
+public:
+	virtual void Update(InputDeltaState* delta) = 0;
+};
 
 }
 

@@ -17,17 +17,21 @@ InputPlayer::InputPlayer(InputManager& manager, InputRecording* recording) :
 	startTime_(0),
 	devicesToReset_(manager.GetAllocator())
 {
+	playingModifierId_ = manager_.AddDeviceStateModifier(this);
+}
+
+InputPlayer::~InputPlayer()
+{
+	manager_.RemoveDeviceStateModifier(playingModifierId_);
 }
 
 void
-InputPlayer::Update()
+InputPlayer::Update(InputDeltaState* delta)
 {
 	if (!isPlaying_)
 	{
 		return;
 	}
-
-	InputDeltaState* delta = 0; // TODO
 
 	uint64_t now = manager_.GetTime();
 	GAINPUT_ASSERT(now >= startTime_);

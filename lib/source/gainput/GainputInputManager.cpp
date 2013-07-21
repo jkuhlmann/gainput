@@ -28,6 +28,8 @@ InputManager::InputManager(Allocator& allocator) :
 		nextDeviceId_(0),
 		listeners_(allocator_),
 		nextListenerId_(0),
+		modifiers_(allocator_),
+		nextModifierId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_))
 {
 	GAINPUT_DEV_INIT(this);
@@ -56,10 +58,30 @@ InputManager::Update()
 			it != devices_.end();
 			++it)
 	{
-		it->second->Update(ds);
+		if (it->second->GetType() != InputDevice::DT_GESTURE)
+		{
+			it->second->Update(ds);
+		}
 	}
 
 	GAINPUT_DEV_UPDATE(ds);
+
+	for (HashMap<ModifierId, DeviceStateModifier*>::iterator it = modifiers_.begin();
+			it != modifiers_.end();
+			++it)
+	{
+		it->second->Update(ds);
+	}
+
+	for (DeviceMap::iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+		if (it->second->GetType() == InputDevice::DT_GESTURE)
+		{
+			it->second->Update(ds);
+		}
+	}
 
 	if (ds)
 	{
@@ -128,7 +150,7 @@ InputManager::FindDeviceId(InputDevice::DeviceType type, unsigned index) const
 	return InvalidDeviceId;
 }
 
-unsigned
+ListenerId
 InputManager::AddListener(InputListener* listener)
 {
 	listeners_[nextListenerId_] = listener;
@@ -136,9 +158,22 @@ InputManager::AddListener(InputListener* listener)
 }
 
 void
-InputManager::RemoveListener(unsigned listenerId)
+InputManager::RemoveListener(ListenerId listenerId)
 {
 	listeners_.erase(listenerId);
+}
+
+ModifierId
+InputManager::AddDeviceStateModifier(DeviceStateModifier* modifier)
+{
+	modifiers_[nextModifierId_] = modifier;
+	return nextModifierId_++;
+}
+
+void
+InputManager::RemoveDeviceStateModifier(ModifierId modifierId)
+{
+	modifiers_.erase(modifierId);
 }
 
 size_t
@@ -272,6 +307,8 @@ InputManager::ConnectForStateSync(const char* ip, unsigned port)
 void
 InputManager::StartDeviceStateSync(DeviceId deviceId)
 {
+	GAINPUT_ASSERT(GetDevice(deviceId));
+	GAINPUT_ASSERT(GetDevice(deviceId)->GetType() != InputDevice::DT_GESTURE);
 	GAINPUT_DEV_START_SYNC(deviceId);
 }
 
