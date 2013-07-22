@@ -122,6 +122,7 @@ Name | Description
 \c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables lot of internal console output and checks.
 \c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to. Automatically enabled in the \c dev build configuration.
 \c GAINPUT_ENABLE_ALL_GESTURES | Enables all gestures. Note that there is also an individual define for each gesture (see gainput::InputGesture).
+\c GAINPUT_ENABLE_RECORDER | Enables recording of inputs.
 \c GAINPUT_LIB_BUILD | Should be set if Gainput is being built as library.
 
 \section sect_android_build Android NDK

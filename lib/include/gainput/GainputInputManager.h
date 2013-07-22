@@ -215,9 +215,17 @@ InputManager::GetDevice(DeviceId deviceId) const
 }
 
 
+/// Interface for modifiers that change device input states after they have been updated.
 class DeviceStateModifier
 {
 public:
+	/// Called after non-dependent devices have been updated.
+	/**
+	 * This function is called by InputManager::Update() after InputDevice::Update() has been
+	 * called on all registered devices that have InputDevice::IsLateUpdate() return \c false.
+	 *
+	 * \param delta All device state changes should be registered with this delta state, may be 0.
+	 */
 	virtual void Update(InputDeltaState* delta) = 0;
 };
 
