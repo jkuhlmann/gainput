@@ -1,6 +1,6 @@
 #include <gainput/gainput.h>
 
-#ifdef GAINPUT_DEV
+#if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 #include "GainputMemoryStream.h"
 
 namespace gainput {
