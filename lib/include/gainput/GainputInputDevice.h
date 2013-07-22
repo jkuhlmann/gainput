@@ -78,10 +78,13 @@ public:
 	virtual DeviceType GetType() const = 0;
 	/// Returns the device type's name.
 	virtual const char* GetTypeName() const = 0;
+	/// Returns if this device should be updated after other devices.
+	virtual bool IsLateUpdate() const { return false; }
 	/// Returns the device state.
 	DeviceState GetState() const;
 	/// Returns if this device is available.
 	virtual bool IsAvailable() const { return GetState() == DS_OK || GetState() == DS_LOW_BATTERY; }
+
 	/// Returns if the given button is valid for this device.
 	virtual bool IsValidButtonId(DeviceButtonId deviceButton) const = 0;
 

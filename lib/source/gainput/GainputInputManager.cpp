@@ -58,7 +58,7 @@ InputManager::Update()
 			it != devices_.end();
 			++it)
 	{
-		if (it->second->GetType() != InputDevice::DT_GESTURE)
+		if (!it->second->IsLateUpdate())
 		{
 			it->second->Update(ds);
 		}
@@ -77,7 +77,7 @@ InputManager::Update()
 			it != devices_.end();
 			++it)
 	{
-		if (it->second->GetType() == InputDevice::DT_GESTURE)
+		if (it->second->IsLateUpdate())
 		{
 			it->second->Update(ds);
 		}
