@@ -34,6 +34,7 @@ def configure(cnf):
 	cnf.setenv('debug')
 	cnf.define('GAINPUT_LIB_BUILD', 1)
 	cnf.define('DEBUG', 1)
+	cnf.define('GAINPUT_DEV', 1)
 	cnf.env.CXXFLAGS += []
 	
 	cnf.env.cross = 'none'
@@ -118,6 +119,7 @@ def configure(cnf):
 	cnf.setenv('release', env=cnf.env.derive())
 	cnf.load('compiler_cxx')
 	cnf.undefine('DEBUG')
+	cnf.undefine('GAINPUT_DEV')
 	cnf.define('NDEBUG', 1)
 	cnf.env.CXXFLAGS = ['-O2']
 	if sys.platform.startswith('linux'):

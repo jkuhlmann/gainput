@@ -5,10 +5,10 @@
 
 namespace gainput {
 
-MemoryStream::MemoryStream(void* data, size_t length, bool ownership) :
+MemoryStream::MemoryStream(void* data, size_t length, size_t capacity, bool ownership) :
 	data(data),
 	length(length),
-	capacity(length),
+	capacity(capacity),
 	ownership(ownership),
 	position(0)
 {

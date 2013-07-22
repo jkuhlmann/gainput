@@ -24,6 +24,7 @@ class InputRecording
 {
 public:
 	InputRecording(Allocator& allocator = GetDefaultAllocator());
+	InputRecording(InputManager& manager, void* data, size_t size, Allocator& allocator = GetDefaultAllocator());
 
 	void AddChange(uint64_t time, DeviceId deviceId, DeviceButtonId buttonId, bool value);
 	void AddChange(uint64_t time, DeviceId deviceId, DeviceButtonId buttonId, float value);
@@ -34,6 +35,9 @@ public:
 	void Reset() { position_ = 0; }
 
 	uint64_t GetDuration() const;
+
+	size_t GetSerializedSize() const;
+	void GetSerialized(InputManager& manager, void* data) const;
 
 private:
 	Array<RecordedDeviceButtonChange> changes_;

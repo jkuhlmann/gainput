@@ -9,7 +9,7 @@ InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index)
 	manager_(manager),
 	deviceId_(device),
 	index_(index)
-#if defined(GAINPUT_DEV)
+#if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	, synced_(false)
 #endif
 {

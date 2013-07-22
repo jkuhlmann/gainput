@@ -8,7 +8,7 @@ namespace gainput {
 class MemoryStream : public Stream
 {
 public:
-	MemoryStream(void* data, size_t length, bool ownership = false);
+	MemoryStream(void* data, size_t length, size_t capacity, bool ownership = false);
 	MemoryStream(size_t capacity, Allocator& allocator = GetDefaultAllocator());
 	~MemoryStream();
 

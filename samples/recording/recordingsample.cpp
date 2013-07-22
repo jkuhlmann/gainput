@@ -10,6 +10,7 @@ enum Button
 	ButtonStopRecording,
 	ButtonStartPlaying,
 	ButtonStopPlaying,
+	ButtonSerialize,
 };
 
 
@@ -64,6 +65,7 @@ void SampleMain()
 	map.MapBool(ButtonStopRecording, keyboardId, gainput::KEY_F2);
 	map.MapBool(ButtonStartPlaying, keyboardId, gainput::KEY_F3);
 	map.MapBool(ButtonStopPlaying, keyboardId, gainput::KEY_F4);
+	map.MapBool(ButtonSerialize, keyboardId, gainput::KEY_F5);
 
 	MyDeviceButtonListener myDeviceButtonListener(manager);
 	manager.AddListener(&myDeviceButtonListener);
@@ -71,6 +73,8 @@ void SampleMain()
 	gainput::InputRecorder inputRecorder(manager);
 	inputRecorder.AddDeviceToRecord(mouseId);
 	gainput::InputPlayer inputPlayer(manager);
+
+	gainput::InputRecording* serializedRecording = 0;
 
 	bool doExit = false;
 
@@ -122,6 +126,32 @@ void SampleMain()
 			SFW_LOG("Stopped playing\n");
 			inputPlayer.Stop();
 		}
+		else if (map.GetBoolWasDown(ButtonSerialize))
+		{
+			inputPlayer.Stop();
+
+			SFW_LOG("Serializing recording\n");
+			const size_t dataSize = inputRecorder.GetRecording()->GetSerializedSize();
+			SFW_LOG("Size: %lu\n", dataSize);
+			void* serializedRecordingData = malloc(dataSize);
+			inputRecorder.GetRecording()->GetSerialized(manager, serializedRecordingData);
+
+			SFW_LOG("Deserialzing recording\n");
+			if (serializedRecording)
+			{
+				delete serializedRecording;
+			}
+			serializedRecording = new gainput::InputRecording(manager, serializedRecordingData, dataSize);
+
+			SFW_LOG("Playing deserialized recording\n");
+			inputPlayer.SetRecording(serializedRecording);
+			inputPlayer.Start();
+		}
+	}
+
+	if (serializedRecording)
+	{
+		delete serializedRecording;
 	}
 
 	SfwCloseWindow();
