@@ -4,11 +4,11 @@
 /**
 \mainpage Gainput Documentation
 
-Gainput is a C++ Open Source input library for games. It collects input data from different sources (like keyboards, mice or gamepads) and makes the inputs accessible through a unified interface. On top of that, inputs can be mapped to user-defined buttons. Gainput aims to be a one-stop solution to acquire input from players for your game.
+Gainput is a C++ Open Source input library for games. It collects input data from different devices (like keyboards, mice or gamepads) and makes the inputs accessible through a unified interface. On top of that, inputs can be mapped to user-defined buttons and other advanced features are offered. Gainput aims to be a one-stop solution to acquire input from players for your game.
 
-If there are any problems, please report them on <a href="https://github.com/jkuhlmann/gainput/issues" target="_blank">GitHub</a> or contact: <tt>gainput -a-t- johanneskuhlmann.de</tt>
+If there are any problems, please report them on <a href="https://github.com/jkuhlmann/gainput/issues" target="_blank">GitHub</a> or contact: <tt>gainput -a-t- johanneskuhlmann.de</tt>.
 
-These pages are Gainput's API documentation. In order to download Gainput go to the <a href="http://jkuhlmann.github.io/gainput/" target="_blank">Gainput website</a>.
+These pages are Gainput's API documentation. In order to download Gainput go to the <a href="http://gainput.johanneskuhlmann.de/" target="_blank">Gainput website</a>.
 
 \section contents Contents
 - \ref page_start
@@ -33,8 +33,7 @@ enum Button
 gainput::InputManager manager;
 const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 
-manager.SetXDisplay(xDisplay, width, height); // on Linux only
-manager.SetDisplaySize(width, height); // on Windows only
+manager.SetDisplaySize(width, height);
 
 gainput::InputMap map(manager);
 map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
@@ -66,19 +65,18 @@ Gainput is licensed under the MIT license:
 
 \page page_start Getting Started
 \tableofcontents
-This page gives an overview on how to get Gainput into your game and use it for input.
+This page gives an overview on how to get Gainput into your game and use it for getting your players' input.
 
 
 \section sect_obtaining Obtaining Gainput
-Gainput can be obtained in source from the <a href="http://jkuhlmann.github.io/gainput/">Gainput website</a>. GitHub makes it possible to download <a href="https://github.com/jkuhlmann/gainput/archive/master.zip">a snapshot archive of the current revision</a>.
-
+Gainput can be obtained in source from <a href="https://github.com/jkuhlmann/gainput">GitHub</a>.
 
 \section sect_building Building
 Build Gainput as described on the \ref page_building page.
 
 
 \section sect_integrating Integration Into Your Project
-To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.so (static library). In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
+To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.so (static library). On Windows, the filenames are \c gainput.lib (used with \c gainput.dll) and \c gainputstatic.lib. In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
 
 To have the API availale, you have to include Gainput's main header file:
 
@@ -90,9 +88,9 @@ You should have the \c lib/include/ folder as an include folder in your project 
 
 
 \section sect_setup Setting up Gainput
-Gainput's most important class is the gainput::InputManager. You should create one that you use globally throughout your game. Create some input devices using gainput::InputManager::CreateDevice(). And then, during your game loop, call gainput::InputManager::Update() every frame.
+Gainput's most important class is gainput::InputManager. You should create one that you use throughout your game. Create some input devices using gainput::InputManager::CreateDevice(). And then, during your game loop, call gainput::InputManager::Update() every frame.
 
-Some platform-specific function calls may be necessary, like gainput::InputManager::SetXDisplay(), gainput::InputManager::SetDisplaySize() or gainput::InputManager::HandleMessage().
+Some platform-specific function calls may be necessary, like gainput::InputManager::HandleMessage().
 
 On top of your gainput::InputManager, you should create at least one gainput::InputMap and map some device-specific buttons to your custom user buttons using gainput::InputMap::MapBool() or gainput::InputMap::MapFloat(). This will allow you to more conventienly provide alternative input methods or enable the player to change button mappings.
 
@@ -110,12 +108,17 @@ Simply run these commands:
 -# <tt>waf configure</tt>
 -# <tt>waf build_CONFIGNAME</tt>
 
-There are three configurations of which you choose one by substituting CONFIGNAME for \c debug or \c dev or \c release . The \c debug configuration supports debugging while the \c release configuration is optimized. The \c dev configuration features a server that external tools can connect to (see \ref page_devprotocol).
+There are three configurations of which you choose one by substituting CONFIGNAME for one of these:
+- \c debug
+- \c dev
+- \c release
+
+The \c debug configuration supports debugging while the \c release configuration is optimized. The \c dev configuration features a server that external tools can connect to (see \ref page_devprotocol).
 
 Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/CONFIGNAME/ folder.
 
 \section sect_defines Build Configuration Defines
-There is a number of defines that govern what is included in the library and how it behaves. Normally, most of these are set by the build scripts, but it may be necessary to set these when doing custom builds or modifying the build process. All defines must be set during compilation of the library itself.
+There is a number of defines that determine what is included in the library and how it behaves. Normally, most of these are set by the build scripts or in gainput.h, but it may be necessary to set these when doing custom builds or modifying the build process. All defines must be set during compilation of the library itself.
 
 Name | Description
 -----|------------
@@ -154,6 +157,7 @@ Basic Sample | samples/basic/ | Shows the most basic initialization and usage of
 Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
 Gesture Sample | samples/gesture/ | Shows how to use input gestures. Also shows how to implement your own custom input device. Uses the \ref sample_fw.
 Listener Sample | samples/listener/ | Shows how to use device button listeners as well as user button listeners. Uses the \ref sample_fw.
+Recording Sample | samples/recording/ | Shows how to record, play and serialize/deserialize input sequences. Uses the \ref sample_fw.
 Sync Sample | samples/sync/ | Shows how to connect two Gainput instances to each other and send the device state over the network. Uses the \ref sample_fw. Works only in the \c dev build configuration.
 
 \section sample_fw Sample Framework
