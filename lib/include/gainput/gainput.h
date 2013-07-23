@@ -111,6 +111,7 @@ struct DeviceButtonSpec
 typedef unsigned int UserButtonId;
 /// ID of an input listener.
 typedef unsigned int ListenerId;
+/// ID of a device state modifier.
 typedef unsigned int ModifierId;
 
 /// An invalid device ID.

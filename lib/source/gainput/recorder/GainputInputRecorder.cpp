@@ -90,6 +90,37 @@ InputRecorder::Start()
 
 	recordingListener_ = manager_.GetAllocator().New<RecordingListener>(manager_, *this);
 	recordingListenerId_ = manager_.AddListener(recordingListener_);
+
+	// Record the initial state
+	for (DeviceId deviceId = 0; deviceId < 1000; ++deviceId)
+	{
+		if (!IsDeviceToRecord(deviceId))
+		{
+			continue;
+		}
+
+		InputDevice* device = manager_.GetDevice(deviceId);
+		if (!device)
+		{
+			continue;
+		}
+
+		GAINPUT_ASSERT(device->GetInputState());
+		for (DeviceButtonId buttonId = 0; buttonId < device->GetInputState()->GetButtonCount(); ++buttonId)
+		{
+			if (device->IsValidButtonId(buttonId))
+			{
+				if (device->GetButtonType(buttonId) == BT_BOOL)
+				{
+					recording_->AddChange(0, deviceId, buttonId, device->GetBool(buttonId));
+				}
+				else
+				{
+					recording_->AddChange(0, deviceId, buttonId, device->GetFloat(buttonId));
+				}
+			}
+		}
+	}
 }
 
 void

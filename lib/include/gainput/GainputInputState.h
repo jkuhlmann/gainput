@@ -18,11 +18,19 @@ public:
 	/// Unitializes the state.
 	~InputState();
 
-	/// Return the bool state of the given device button.
+	/// Returns the number of buttons in this state.
+	/**
+	 * Note that not all buttons may be valid.
+	 *
+	 * \sa InputDevice::IsValidButtonId()
+	 */
+	unsigned GetButtonCount() const { return buttonCount_; }
+
+	/// Returns the bool state of the given device button.
 	bool GetBool(DeviceButtonId buttonId) const { return buttons_[buttonId].b; }
 	/// Sets the bool state of the given device button.
 	void Set(DeviceButtonId buttonId, bool value) { buttons_[buttonId].b = value; }
-	/// Return the float state of the given device button.
+	/// Returns the float state of the given device button.
 	float GetFloat(DeviceButtonId buttonId) const { return buttons_[buttonId].f; }
 	/// Sets the float state of the given device button.
 	void Set(DeviceButtonId buttonId, float value) { buttons_[buttonId].f = value; }
