@@ -64,9 +64,7 @@ void SampleMain()
 	manager.CreateDevice<gainput::InputDevicePad>();
 	manager.CreateDevice<gainput::InputDeviceTouch>();
 
-#if defined(GAINPUT_PLATFORM_LINUX)
-	manager.SetXDisplay(SfwGetXDisplay(), SfwGetWidth(), SfwGetHeight());
-#elif defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_WIN)
 	manager.SetDisplaySize(SfwGetWidth(), SfwGetHeight());
 #endif
 

@@ -49,9 +49,7 @@ void SampleMain()
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	manager.CreateDevice<gainput::InputDevicePad>();
 
-#if defined(GAINPUT_PLATFORM_LINUX)
-	manager.SetXDisplay(SfwGetXDisplay(), SfwGetWidth(), SfwGetHeight());
-#elif defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_WIN)
 	manager.SetDisplaySize(SfwGetWidth(), SfwGetHeight());
 #endif
 

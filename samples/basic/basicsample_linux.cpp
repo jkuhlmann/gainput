@@ -80,8 +80,7 @@ int main(int argc, char** argv)
 	map.MapFloat(MouseY, mouseId, gainput::MOUSE_AXIS_Y);
 	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 
-	// Linux specific: Let Gainput know which Display is being used
-	manager.SetXDisplay(xDisplay, width, height);
+	manager.SetDisplaySize(width, height);
 
 	for (;;)
 	{

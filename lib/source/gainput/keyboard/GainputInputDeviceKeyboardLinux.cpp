@@ -184,19 +184,19 @@ InputDeviceKeyboardImpl::HandleEvent(XEvent& event)
 	if (event.type == KeyPress || event.type == KeyRelease)
 	{
 		XKeyEvent& keyEvent = event.xkey;
-		KeySym keySym = XkbKeycodeToKeysym(manager_.GetXDisplay(), keyEvent.keycode, 0, 0);
+		KeySym keySym = XkbKeycodeToKeysym(keyEvent.display, keyEvent.keycode, 0, 0);
 		const bool pressed = event.type == KeyPress;
 
 		// Handle key repeat
-		if (event.type == KeyRelease && XPending(manager_.GetXDisplay()))
+		if (event.type == KeyRelease && XPending(keyEvent.display))
 		{
 			XEvent nextEvent;
-			XPeekEvent(manager_.GetXDisplay(), &nextEvent);
+			XPeekEvent(keyEvent.display, &nextEvent);
 			if (nextEvent.type == KeyPress
 				&& nextEvent.xkey.keycode == event.xkey.keycode
 				&& nextEvent.xkey.time == event.xkey.time)
 			{
-				XNextEvent(manager_.GetXDisplay(), &nextEvent);
+				XNextEvent(keyEvent.display, &nextEvent);
 				return;
 			}
 		}

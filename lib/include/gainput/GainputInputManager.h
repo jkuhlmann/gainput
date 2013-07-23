@@ -11,10 +11,9 @@ namespace gainput
  * This manager takes care of all device-related things. Normally, you should only need one that contains
  * all your input devices.
  *
- * After instantiating an InputManager, you probably have to call some platform-specific function 
- * (see SetXDisplay(), SetDisplaySize()). You should also create some input devices using the template
- * function CreateDevice() which returns the device ID that is needed to do anything further with the
- * device (for example, see InputMap).
+ * After instantiating an InputManager, you have to call SetDisplaySize(). You should also create some 
+ * input devices using the template function CreateDevice() which returns the device ID that is needed 
+ * to do anything further with the device (for example, see InputMap).
  *
  * The manager has to be updated every frame by calling Update(). Depending on the platform,
  * you may have to call another function as part of your message handling code (see HandleMessage(), HandleInput()).
@@ -29,22 +28,16 @@ public:
 	/**
 	 * Further initialization is typically necessary.
 	 * \param allocator The memory allocator to be used for all allocations.
-	 * \see SetXDisplay
 	 * \see SetDisplaySize
 	 */
 	InputManager(Allocator& allocator = GetDefaultAllocator());
 
+	/// Sets the window resolution.
+	void SetDisplaySize(int width, int height) { displayWidth_ = width; displayHeight_ = height; }
+
 #if defined(GAINPUT_PLATFORM_LINUX)
-	/// [LINUX ONLY] Returns the XDisplay used to acquire keyboard and mouse inputs.
-	Display* GetXDisplay() { return xDisplay_; }
-	/// [LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.
-	void SetXDisplay(Display* xDisplay, int width, int height) { xDisplay_ = xDisplay; displayWidth_ = width; displayHeight_ = height; }
 	/// [LINUX ONLY] Lets the InputManager handle the given X event.
 	void HandleEvent(XEvent& event);
-#endif
-#if defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_ANDROID)
-	/// [WINDOWS/ANDROID ONLY] Sets the window resolution.
-	void SetDisplaySize(int width, int height) { displayWidth_ = width; displayHeight_ = height; }
 #endif
 #if defined(GAINPUT_PLATFORM_WIN)
 	/// [WINDOWS ONLY] Lets the InputManager handle the given Windows message.
@@ -127,7 +120,9 @@ public:
 	/// Returns the graphical display's height in pixels.
 	int GetDisplayHeight() const { return displayHeight_; }
 
+	/// Registers a modifier that will be called after devices have been updated.
 	ModifierId AddDeviceStateModifier(DeviceStateModifier* modifier);
+	/// De-registers the given modifier.
 	void RemoveDeviceStateModifier(ModifierId modifierId);
 
 	/// [IN dev BUILDS ONLY] Connect to a remote host to send device state changes to.
@@ -149,11 +144,6 @@ private:
 	unsigned nextModifierId_;
 
 	InputDeltaState* deltaState_;
-
-#if defined(GAINPUT_PLATFORM_LINUX)
-	/// [LINUX ONLY] The XDisplay used to acquire keyboard and mouse inputs.
-	Display* xDisplay_;
-#endif
 
 	int displayWidth_;
 	int displayHeight_;
