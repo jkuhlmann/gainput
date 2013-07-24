@@ -252,6 +252,12 @@ InputManager::HandleMessage(const MSG& msg)
 			it != devices_.end();
 			++it)
 	{
+#if defined(GAINPUT_DEV)
+		if (it->second->IsSynced())
+		{
+			continue;
+		}
+#endif
 		if (it->second->GetType() == InputDevice::DT_KEYBOARD)
 		{
 			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
@@ -279,6 +285,12 @@ InputManager::HandleInput(AInputEvent* event)
 			it != devices_.end();
 			++it)
 	{
+#if defined(GAINPUT_DEV)
+		if (it->second->IsSynced())
+		{
+			continue;
+		}
+#endif
 		if (it->second->GetType() == InputDevice::DT_TOUCH)
 		{
 			InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);

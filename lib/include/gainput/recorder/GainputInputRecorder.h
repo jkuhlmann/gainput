@@ -12,7 +12,7 @@ namespace gainput
  * In order for input recording to be available, Gainput must have been built with
  * \c GAINPUT_ENABLE_RECORDER defined.
  */
-class InputRecorder
+class GAINPUT_LIBEXPORT InputRecorder
 {
 public:
 	/// Initializes the recorder.

@@ -97,8 +97,10 @@ NetListener::Accept()
 
 namespace gainput {
 
-NetListener::NetListener(const NetAddress& address) :
+NetListener::NetListener(const NetAddress& address, Allocator& allocator) :
 	address(address),
+	allocator(allocator),
+	blocking(true),
 	listenSocket(INVALID_SOCKET)
 {
 

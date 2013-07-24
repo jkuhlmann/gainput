@@ -8,7 +8,7 @@ namespace gainput
 {
 
 /// A single recorded change for a device button.
-struct RecordedDeviceButtonChange
+struct GAINPUT_LIBEXPORT RecordedDeviceButtonChange
 {
 	/// The time at which the change occurred.
 	uint64_t time;
@@ -36,7 +36,7 @@ struct RecordedDeviceButtonChange
  * \sa InputPlayer
  * \sa InputRecorder
  */
-class InputRecording
+class GAINPUT_LIBEXPORT InputRecording
 {
 public:
 	/// Initializes the recording in an empty state.
