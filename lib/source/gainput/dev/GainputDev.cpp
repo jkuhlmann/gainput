@@ -212,6 +212,8 @@ DevInit(InputManager* manager)
 	if (!devListener->Start(false))
 	{
 		GAINPUT_LOG("TOOL: Unable to listen\n");
+		allocator->Delete(devListener);
+		devListener = 0;
 	}
 
 	GAINPUT_LOG("TOOL: Listening...\n");
@@ -264,7 +266,7 @@ DevShutdown(const InputManager* manager)
 void
 DevUpdate(InputDeltaState* delta)
 {
-	if (!devConnection)
+	if (!devConnection && devListener)
 	{
 		devConnection = devListener->Accept();
 		if (devConnection)
