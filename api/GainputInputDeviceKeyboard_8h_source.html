@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -287,37 +287,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>(<a class="code" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>&amp; manager, <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a> device);</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    ~<a class="code" href="classgainput_1_1InputDeviceKeyboard.html" title="A keyboard input device.">InputDeviceKeyboard</a>();</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordtype">void</span> Update(InputDeltaState* delta);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc">  219</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a" title="Type of an input device.">DeviceType</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc" title="Returns DT_KEYBOARD.">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DT_KEYBOARD; }</div>
-<div class="line"><a name="l00220"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a43ec65b66ce72507e718d5867682df18">  220</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a43ec65b66ce72507e718d5867682df18" title="Returns the device type&#39;s name.">GetTypeName</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;keyboard&quot;</span>; }</div>
-<div class="line"><a name="l00221"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c">  221</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a5e12cd0695ba3442eaf99240c453822c" title="Returns the device state.">GetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DS_OK; }</div>
-<div class="line"><a name="l00222"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c">  222</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton &lt; KEY_COUNT_; }</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordtype">size_t</span> GetAnyButtonDown(<a class="code" href="structgainput_1_1DeviceButtonSpec.html" title="Describes a device button on a specific device.">DeviceButtonSpec</a>* outButtons, <span class="keywordtype">size_t</span> maxButtonCount) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">size_t</span> GetButtonName(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">size_t</span> bufferLength) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> GetButtonType(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> GetButtonByName(<span class="keyword">const</span> <span class="keywordtype">char</span>* name) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">bool</span> IsTextInputEnabled() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">void</span> SetTextInputEnabled(<span class="keywordtype">bool</span> enabled);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordtype">char</span> GetNextCharacter();</div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc">  217</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a" title="Type of an input device.">DeviceType</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a09db9e6163c65cf27a23859536a81cfc" title="Returns DT_KEYBOARD.">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DT_KEYBOARD; }</div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a43ec65b66ce72507e718d5867682df18">  218</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a43ec65b66ce72507e718d5867682df18" title="Returns the device type&#39;s name.">GetTypeName</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;keyboard&quot;</span>; }</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c">  219</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#a81d2820ef722e9189dec3570f27b2b4c" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton &lt; KEY_COUNT_; }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">size_t</span> GetAnyButtonDown(<a class="code" href="structgainput_1_1DeviceButtonSpec.html" title="Describes a device button on a specific device.">DeviceButtonSpec</a>* outButtons, <span class="keywordtype">size_t</span> maxButtonCount) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordtype">size_t</span> GetButtonName(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">size_t</span> bufferLength) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> GetButtonType(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> GetButtonByName(<span class="keyword">const</span> <span class="keywordtype">char</span>* name) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">bool</span> IsTextInputEnabled() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">void</span> SetTextInputEnabled(<span class="keywordtype">bool</span> enabled);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordtype">char</span> GetNextCharacter();</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71">  235</a></span>&#160;    InputDeviceKeyboardImpl* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71" title="Returns the platform-specific implementation of this device (internal use only).">GetPimpl</a>() { <span class="keywordflow">return</span> impl_; }</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00238"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71">  238</a></span>&#160;    InputDeviceKeyboardImpl* <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af318b02cf9cda06c33b7d87ea556fd71" title="Returns the platform-specific implementation of this device (internal use only).">GetPimpl</a>() { <span class="keywordflow">return</span> impl_; }</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">void</span> InternalUpdate(InputDeltaState* delta);</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    InputDeviceKeyboardImpl* impl_;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;};</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af5192ae781eb8ab7acd9b044e461c40f">  240</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputDeviceKeyboard.html#af5192ae781eb8ab7acd9b044e461c40f" title="Implementation of the device&#39;s GetState function.">InternalGetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> DS_OK; }</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    InputDeviceKeyboardImpl* impl_;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;};</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;}</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

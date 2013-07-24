@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -109,9 +109,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#a864e428a7253868a86f8f4b8a5acc4a9">~InputState</a> ()</td></tr>
 <tr class="memdesc:a864e428a7253868a86f8f4b8a5acc4a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unitializes the state. <br/></td></tr>
 <tr class="separator:a864e428a7253868a86f8f4b8a5acc4a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae698a122076142f88ecd2c83432f4996"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#ae698a122076142f88ecd2c83432f4996">GetButtonCount</a> () const </td></tr>
+<tr class="memdesc:ae698a122076142f88ecd2c83432f4996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of buttons in this state.  <a href="#ae698a122076142f88ecd2c83432f4996"></a><br/></td></tr>
+<tr class="separator:ae698a122076142f88ecd2c83432f4996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab73a28bf469b282ada06ddf8a453da02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab73a28bf469b282ada06ddf8a453da02"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02">GetBool</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> buttonId) const </td></tr>
-<tr class="memdesc:ab73a28bf469b282ada06ddf8a453da02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the bool state of the given device button. <br/></td></tr>
+<tr class="memdesc:ab73a28bf469b282ada06ddf8a453da02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the bool state of the given device button. <br/></td></tr>
 <tr class="separator:ab73a28bf469b282ada06ddf8a453da02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72a3e47ecea192e5c390d1218962eef3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72a3e47ecea192e5c390d1218962eef3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#a72a3e47ecea192e5c390d1218962eef3">Set</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> buttonId, bool value)</td></tr>
@@ -119,7 +122,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a72a3e47ecea192e5c390d1218962eef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c57b8c2c7b611318be719df3f8b2d51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c57b8c2c7b611318be719df3f8b2d51"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51">GetFloat</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> buttonId) const </td></tr>
-<tr class="memdesc:a8c57b8c2c7b611318be719df3f8b2d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the float state of the given device button. <br/></td></tr>
+<tr class="memdesc:a8c57b8c2c7b611318be719df3f8b2d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the float state of the given device button. <br/></td></tr>
 <tr class="separator:a8c57b8c2c7b611318be719df3f8b2d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21bde23c4661a0ccbaf5984a9808d6ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21bde23c4661a0ccbaf5984a9808d6ae"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputState.html#a21bde23c4661a0ccbaf5984a9808d6ae">Set</a> (<a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a> buttonId, float value)</td></tr>
@@ -168,13 +171,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae698a122076142f88ecd2c83432f4996"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned gainput::InputState::GetButtonCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of buttons in this state. </p>
+<p>Note that not all buttons may be valid.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classgainput_1_1InputDevice.html#a5cd54d96c15584cf330cd85de8447f6c" title="Returns if the given button is valid for this device.">InputDevice::IsValidButtonId()</a> </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>lib/include/gainput/<a class="el" href="GainputInputState_8h_source.html">GainputInputState.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

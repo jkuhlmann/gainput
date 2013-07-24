@@ -9,6 +9,8 @@ var searchData=
   ['_7einputdevicetouch',['~InputDeviceTouch',['../classgainput_1_1InputDeviceTouch.html#af5c05c1eef61af773fafe541092224cb',1,'gainput::InputDeviceTouch']]],
   ['_7einputmanager',['~InputManager',['../classgainput_1_1InputManager.html#a8724718ef6373a8eac682898ba02b0c4',1,'gainput::InputManager']]],
   ['_7einputmap',['~InputMap',['../classgainput_1_1InputMap.html#a4388beac031131b5aee399d32f81aa16',1,'gainput::InputMap']]],
+  ['_7einputplayer',['~InputPlayer',['../classgainput_1_1InputPlayer.html#a426de86fc8a8ee332b65d0abcb9ce0a2',1,'gainput::InputPlayer']]],
+  ['_7einputrecorder',['~InputRecorder',['../classgainput_1_1InputRecorder.html#ae61915efda20b05cab5a18d521c801f6',1,'gainput::InputRecorder']]],
   ['_7einputstate',['~InputState',['../classgainput_1_1InputState.html#a864e428a7253868a86f8f4b8a5acc4a9',1,'gainput::InputState']]],
   ['_7epinchgesture',['~PinchGesture',['../classgainput_1_1PinchGesture.html#aac48b63668cacbad128fe6ab4889c00b',1,'gainput::PinchGesture']]],
   ['_7erotategesture',['~RotateGesture',['../classgainput_1_1RotateGesture.html#a3c7d5cd2b6df83d1010844e53e47cb8e',1,'gainput::RotateGesture']]],

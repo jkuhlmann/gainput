@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -101,37 +101,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>(<a class="code" href="classgainput_1_1Allocator.html" title="Interface used to pass custom allocators to the library.">Allocator</a>&amp; allocator, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> buttonCount);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    ~<a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02">   22</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02" title="Return the bool state of the given device button.">GetBool</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> buttons_[buttonId].b; }</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a72a3e47ecea192e5c390d1218962eef3">   24</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classgainput_1_1InputState.html#a72a3e47ecea192e5c390d1218962eef3" title="Sets the bool state of the given device button.">Set</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId, <span class="keywordtype">bool</span> value) { buttons_[buttonId].b = value; }</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51">   26</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51" title="Return the float state of the given device button.">GetFloat</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> buttons_[buttonId].f; }</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a21bde23c4661a0ccbaf5984a9808d6ae">   28</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classgainput_1_1InputState.html#a21bde23c4661a0ccbaf5984a9808d6ae" title="Sets the float state of the given device button.">Set</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId, <span class="keywordtype">float</span> value) { buttons_[buttonId].f = value; }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>&amp; other);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classgainput_1_1Allocator.html" title="Interface used to pass custom allocators to the library.">Allocator</a>&amp; allocator_;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> buttonCount_;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">struct </span>Button</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">union</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordtype">bool</span> b;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordtype">float</span> f;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    };</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    Button* buttons_;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#ae698a122076142f88ecd2c83432f4996">   27</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classgainput_1_1InputState.html#ae698a122076142f88ecd2c83432f4996" title="Returns the number of buttons in this state.">GetButtonCount</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> buttonCount_; }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02">   30</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputState.html#ab73a28bf469b282ada06ddf8a453da02" title="Returns the bool state of the given device button.">GetBool</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> buttons_[buttonId].b; }</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a72a3e47ecea192e5c390d1218962eef3">   32</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classgainput_1_1InputState.html#a72a3e47ecea192e5c390d1218962eef3" title="Sets the bool state of the given device button.">Set</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId, <span class="keywordtype">bool</span> value) { buttons_[buttonId].b = value; }</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51">   34</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classgainput_1_1InputState.html#a8c57b8c2c7b611318be719df3f8b2d51" title="Returns the float state of the given device button.">GetFloat</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> buttons_[buttonId].f; }</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classgainput_1_1InputState.html#a21bde23c4661a0ccbaf5984a9808d6ae">   36</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classgainput_1_1InputState.html#a21bde23c4661a0ccbaf5984a9808d6ae" title="Sets the float state of the given device button.">Set</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> buttonId, <span class="keywordtype">float</span> value) { buttons_[buttonId].f = value; }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classgainput_1_1InputState.html" title="State of an input device.">InputState</a>&amp; other);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classgainput_1_1Allocator.html" title="Interface used to pass custom allocators to the library.">Allocator</a>&amp; allocator_;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> buttonCount_;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">struct </span>Button</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">union</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordtype">bool</span> b;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordtype">float</span> f;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        };</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    Button* buttons_;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

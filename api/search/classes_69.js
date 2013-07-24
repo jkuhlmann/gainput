@@ -9,5 +9,8 @@ var searchData=
   ['inputlistener',['InputListener',['../classgainput_1_1InputListener.html',1,'gainput']]],
   ['inputmanager',['InputManager',['../classgainput_1_1InputManager.html',1,'gainput']]],
   ['inputmap',['InputMap',['../classgainput_1_1InputMap.html',1,'gainput']]],
+  ['inputplayer',['InputPlayer',['../classgainput_1_1InputPlayer.html',1,'gainput']]],
+  ['inputrecorder',['InputRecorder',['../classgainput_1_1InputRecorder.html',1,'gainput']]],
+  ['inputrecording',['InputRecording',['../classgainput_1_1InputRecording.html',1,'gainput']]],
   ['inputstate',['InputState',['../classgainput_1_1InputState.html',1,'gainput']]]
 ];

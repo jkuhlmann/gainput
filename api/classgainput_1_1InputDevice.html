@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -153,9 +153,9 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a68983ffa017c57053fe2900244e255e4">~InputDevice</a> ()</td></tr>
 <tr class="memdesc:a68983ffa017c57053fe2900244e255e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty virtual destructor. <br/></td></tr>
 <tr class="separator:a68983ffa017c57053fe2900244e255e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a465223e96569253010659f151a3868b1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a465223e96569253010659f151a3868b1">Update</a> (InputDeltaState *delta)=0</td></tr>
-<tr class="memdesc:a465223e96569253010659f151a3868b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this device, internally called by <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>.  <a href="#a465223e96569253010659f151a3868b1"></a><br/></td></tr>
-<tr class="separator:a465223e96569253010659f151a3868b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f9e72c07bb4765feeb14f115f2a778"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ad8f9e72c07bb4765feeb14f115f2a778">Update</a> (InputDeltaState *delta)</td></tr>
+<tr class="memdesc:ad8f9e72c07bb4765feeb14f115f2a778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this device, internally called by <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>.  <a href="#ad8f9e72c07bb4765feeb14f115f2a778"></a><br/></td></tr>
+<tr class="separator:ad8f9e72c07bb4765feeb14f115f2a778"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cbd4ebfca360334846511d717c778a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cbd4ebfca360334846511d717c778a8"></a>
 <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a3cbd4ebfca360334846511d717c778a8">GetDeviceId</a> () const </td></tr>
 <tr class="memdesc:a3cbd4ebfca360334846511d717c778a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this device's ID. <br/></td></tr>
@@ -172,10 +172,14 @@ virtual <a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a5937423f8a7a8807c26c35365b19c54f">GetTypeName</a> () const =0</td></tr>
 <tr class="memdesc:a5937423f8a7a8807c26c35365b19c54f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device type's name. <br/></td></tr>
 <tr class="separator:a5937423f8a7a8807c26c35365b19c54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4a415c82932bcb09da1a64de8aedfbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4a415c82932bcb09da1a64de8aedfbd"></a>
-virtual <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#aa4a415c82932bcb09da1a64de8aedfbd">GetState</a> () const =0</td></tr>
-<tr class="memdesc:aa4a415c82932bcb09da1a64de8aedfbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device state. <br/></td></tr>
-<tr class="separator:aa4a415c82932bcb09da1a64de8aedfbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1ae46621e3a36f194f7279d6f44e469"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1ae46621e3a36f194f7279d6f44e469"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ac1ae46621e3a36f194f7279d6f44e469">IsLateUpdate</a> () const </td></tr>
+<tr class="memdesc:ac1ae46621e3a36f194f7279d6f44e469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if this device should be updated after other devices. <br/></td></tr>
+<tr class="separator:ac1ae46621e3a36f194f7279d6f44e469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ad381c9a71ec70198a787a4526734d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8ad381c9a71ec70198a787a4526734d"></a>
+<a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ab8ad381c9a71ec70198a787a4526734d">GetState</a> () const </td></tr>
+<tr class="memdesc:ab8ad381c9a71ec70198a787a4526734d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device state. <br/></td></tr>
+<tr class="separator:ab8ad381c9a71ec70198a787a4526734d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fac3b3eefad69a8180ceb8d9e35c643"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fac3b3eefad69a8180ceb8d9e35c643"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a3fac3b3eefad69a8180ceb8d9e35c643">IsAvailable</a> () const </td></tr>
 <tr class="memdesc:a3fac3b3eefad69a8180ceb8d9e35c643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if this device is available. <br/></td></tr>
@@ -213,12 +217,32 @@ virtual <a class="el" href="namespacegainput.html#ac936962c0275954961d45e1d2c322
 <tr class="memitem:a515002c4584b7d56efe56ffcb70eaf12"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e">DeviceButtonId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a515002c4584b7d56efe56ffcb70eaf12">GetButtonByName</a> (const char *name) const </td></tr>
 <tr class="memdesc:a515002c4584b7d56efe56ffcb70eaf12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the button's ID if the name is of this device's buttons.  <a href="#a515002c4584b7d56efe56ffcb70eaf12"></a><br/></td></tr>
 <tr class="separator:a515002c4584b7d56efe56ffcb70eaf12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c876bdf8f7d124b9e0bfd4adaa96921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c876bdf8f7d124b9e0bfd4adaa96921"></a>
+<a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a2c876bdf8f7d124b9e0bfd4adaa96921">GetInputState</a> ()</td></tr>
+<tr class="memdesc:a2c876bdf8f7d124b9e0bfd4adaa96921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device's state, probably best if only used internally. <br/></td></tr>
+<tr class="separator:a2c876bdf8f7d124b9e0bfd4adaa96921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fd0e2cf301a3f53549e3a144ba38070"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fd0e2cf301a3f53549e3a144ba38070"></a>
+<a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a7fd0e2cf301a3f53549e3a144ba38070">GetPreviousInputState</a> ()</td></tr>
+<tr class="memdesc:a7fd0e2cf301a3f53549e3a144ba38070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the device's previous state, probably best if only used internally. <br/></td></tr>
+<tr class="separator:a7fd0e2cf301a3f53549e3a144ba38070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3b670f3c6eb1f544560f87b711a5dc7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3b670f3c6eb1f544560f87b711a5dc7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsSynced</b> () const </td></tr>
+<tr class="separator:ab3b670f3c6eb1f544560f87b711a5dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6811fbc312d956c632f4e4ed0f2eb3b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6811fbc312d956c632f4e4ed0f2eb3b2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSynced</b> (bool synced)</td></tr>
+<tr class="separator:a6811fbc312d956c632f4e4ed0f2eb3b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8784e3b6d1201472c4d5acfea6c5eb24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8784e3b6d1201472c4d5acfea6c5eb24"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CheckAllButtonsDown</b> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount, unsigned start, unsigned end, <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> device) const </td></tr>
-<tr class="separator:a8784e3b6d1201472c4d5acfea6c5eb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf4cb639524d9f727efaeb893c41f28d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#abf4cb639524d9f727efaeb893c41f28d">InternalUpdate</a> (InputDeltaState *delta)=0</td></tr>
+<tr class="memdesc:abf4cb639524d9f727efaeb893c41f28d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the device's Update function.  <a href="#abf4cb639524d9f727efaeb893c41f28d"></a><br/></td></tr>
+<tr class="separator:abf4cb639524d9f727efaeb893c41f28d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a471810c3bdb2a0b550c73dd7aa4b7335"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#a471810c3bdb2a0b550c73dd7aa4b7335">InternalGetState</a> () const =0</td></tr>
+<tr class="memdesc:a471810c3bdb2a0b550c73dd7aa4b7335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the device's GetState function.  <a href="#a471810c3bdb2a0b550c73dd7aa4b7335"></a><br/></td></tr>
+<tr class="separator:a471810c3bdb2a0b550c73dd7aa4b7335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2d2a2d7b2c6cd70e92c4baa7a3da67a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#aa2d2a2d7b2c6cd70e92c4baa7a3da67a">CheckAllButtonsDown</a> (<a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *outButtons, size_t maxButtonCount, unsigned start, unsigned end) const </td></tr>
+<tr class="memdesc:aa2d2a2d7b2c6cd70e92c4baa7a3da67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks which buttons are down.  <a href="#aa2d2a2d7b2c6cd70e92c4baa7a3da67a"></a><br/></td></tr>
+<tr class="separator:aa2d2a2d7b2c6cd70e92c4baa7a3da67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -242,6 +266,9 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <a class="el" href="classgainput_1_1InputState.html">InputState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputDevice.html#ad6d7056c154938803191514d3147aac0">previousState_</a></td></tr>
 <tr class="memdesc:ad6d7056c154938803191514d3147aac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The previous state of this device. <br/></td></tr>
 <tr class="separator:ad6d7056c154938803191514d3147aac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea5fa5e15cacd92e7b84cb8aa0a92c6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea5fa5e15cacd92e7b84cb8aa0a92c6c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>synced_</b></td></tr>
+<tr class="separator:aea5fa5e15cacd92e7b84cb8aa0a92c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for anything that provides device inputs. </p>
@@ -355,6 +382,65 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa2d2a2d7b2c6cd70e92c4baa7a3da67a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t gainput::InputDevice::CheckAllButtonsDown </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgainput_1_1DeviceButtonSpec.html">DeviceButtonSpec</a> *&#160;</td>
+          <td class="paramname"><em>outButtons</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxButtonCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks which buttons are down. </p>
+<p>This function is normally used by GetAnyButtonDown implementations internally. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outButtons</td><td>An array to write buttons that are down to. </td></tr>
+    <tr><td class="paramname">maxButtonCount</td><td>The size of outButtons. </td></tr>
+    <tr><td class="paramname">start</td><td>The lowest device button ID to check. </td></tr>
+    <tr><td class="paramname">end</td><td>The biggest device button ID to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of buttons written to outButtons. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="acac931f5f1d77cc903c1a46805611915"></a>
 <div class="memitem">
 <div class="memproto">
@@ -489,7 +575,7 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="a465223e96569253010659f151a3868b1"></a>
+<a class="anchor" id="a471810c3bdb2a0b550c73dd7aa4b7335"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -497,7 +583,35 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void gainput::InputDevice::Update </td>
+          <td class="memname">virtual <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa">DeviceState</a> gainput::InputDevice::InternalGetState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implementation of the device's GetState function. </p>
+<dl class="section return"><dt>Returns</dt><dd>The device's state. </dd></dl>
+
+<p>Implemented in <a class="el" href="classgainput_1_1InputDeviceKeyboard.html#af5192ae781eb8ab7acd9b044e461c40f">gainput::InputDeviceKeyboard</a>, <a class="el" href="classgainput_1_1InputDevicePad.html#a892f78c6e668c0697dc096910419274f">gainput::InputDevicePad</a>, <a class="el" href="classgainput_1_1InputDeviceTouch.html#a21c606fb80b2c0d9cfd8d93715fa004b">gainput::InputDeviceTouch</a>, <a class="el" href="classgainput_1_1InputDeviceMouse.html#aa2fee19e264a1375b2206f5c7145aebc">gainput::InputDeviceMouse</a>, and <a class="el" href="classgainput_1_1InputGesture.html#a51c2910390530842a897cf8656d3369e">gainput::InputGesture</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abf4cb639524d9f727efaeb893c41f28d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void gainput::InputDevice::InternalUpdate </td>
           <td>(</td>
           <td class="paramtype">InputDeltaState *&#160;</td>
           <td class="paramname"><em>delta</em></td><td>)</td>
@@ -506,20 +620,44 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+<p>Implementation of the device's Update function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delta</td><td>The delta state to add changes to. May be 0. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classgainput_1_1InputDeviceKeyboard.html#acfa1d9b46e56ff3b619b392366515dc0">gainput::InputDeviceKeyboard</a>, <a class="el" href="classgainput_1_1InputDevicePad.html#af71c607f55cca2aebc54f6e70ce537a4">gainput::InputDevicePad</a>, <a class="el" href="classgainput_1_1InputDeviceTouch.html#a400c9fa2c766e6047b16767c493fdc6c">gainput::InputDeviceTouch</a>, <a class="el" href="classgainput_1_1InputDeviceMouse.html#a4b407517f8310da9f560b35ada3ead90">gainput::InputDeviceMouse</a>, <a class="el" href="classgainput_1_1DoubleClickGesture.html#a656d65086a923121cc396bc7d0d73baa">gainput::DoubleClickGesture</a>, <a class="el" href="classgainput_1_1HoldGesture.html#a7049e4dfdb39608cbd9f4701dcfec6fb">gainput::HoldGesture</a>, <a class="el" href="classgainput_1_1PinchGesture.html#a9a7cf6605f7aaad9cb3ac91af96ab609">gainput::PinchGesture</a>, <a class="el" href="classgainput_1_1RotateGesture.html#ac6e1355e29f4c74a323397ddffcf2b6e">gainput::RotateGesture</a>, <a class="el" href="classgainput_1_1SimultaneouslyDownGesture.html#a0680236d211b9f5ab7ec11de0d917e00">gainput::SimultaneouslyDownGesture</a>, and <a class="el" href="classgainput_1_1TapGesture.html#a41443e5857bfe0718ffe5398cd44af73">gainput::TapGesture</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8f9e72c07bb4765feeb14f115f2a778"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void gainput::InputDevice::Update </td>
+          <td>(</td>
+          <td class="paramtype">InputDeltaState *&#160;</td>
+          <td class="paramname"><em>delta</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 <p>Update this device, internally called by <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">delta</td><td>The delta state to add changes to. </td></tr>
+    <tr><td class="paramname">delta</td><td>The delta state to add changes to. May be 0. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Implemented in <a class="el" href="classgainput_1_1InputDeviceKeyboard.html#a05ba4983d1f8a55d70063ed84eded1b7">gainput::InputDeviceKeyboard</a>, <a class="el" href="classgainput_1_1InputDevicePad.html#a34081771efb3ce9c60ff5cc6838bb9ab">gainput::InputDevicePad</a>, <a class="el" href="classgainput_1_1InputDeviceTouch.html#a528b4e99410ccd2eb6e224c7869f6a6c">gainput::InputDeviceTouch</a>, <a class="el" href="classgainput_1_1DoubleClickGesture.html#a310879602216dd8de37d3daf49325ca1">gainput::DoubleClickGesture</a>, <a class="el" href="classgainput_1_1InputDeviceMouse.html#a5f6751c53c8b07cf56da6bbec28b8c75">gainput::InputDeviceMouse</a>, <a class="el" href="classgainput_1_1HoldGesture.html#acc703618a35a3f2cdfb035f2a3c77a05">gainput::HoldGesture</a>, <a class="el" href="classgainput_1_1PinchGesture.html#aca6c48ec4cdd142109f7941236623c4f">gainput::PinchGesture</a>, <a class="el" href="classgainput_1_1RotateGesture.html#a56dcaa56726e0903be8f956ae197fd88">gainput::RotateGesture</a>, <a class="el" href="classgainput_1_1SimultaneouslyDownGesture.html#a860e5db6c2a62e5d395b170ccd5b8f5e">gainput::SimultaneouslyDownGesture</a>, and <a class="el" href="classgainput_1_1TapGesture.html#a097cdc3f963bba693a4533a268b41d50">gainput::TapGesture</a>.</p>
 
 </div>
 </div>
@@ -529,7 +667,7 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

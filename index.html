@@ -28,6 +28,8 @@
 			/* Main marketing message and sign up button */
 			.jumbotron {
 				margin: 60px 0;
+				margin-top: 10px;
+				margin-bottom: 10px;
 				text-align: center;
 			}
 			.jumbotron h1 {
@@ -46,6 +48,11 @@
 			.marketing p + h4 {
 				margin-top: 28px;
 			}
+
+			.footer {
+				font-size: x-small;
+				color: #888888;
+			}
 		</style>
 	</head>
 
@@ -61,7 +68,7 @@
 					<li><a href="#">Contact</a></li>
 				</ul>-->
 				<!--<h3 class="muted">Gainput</h3>-->
-				<h3><img src="img/logo.png" alt ="Logo"> Gainput</h3>
+				<h3><img src="img/logo.png" alt ="Gainput"> Gainput</h3>
 
 			</div>
 
@@ -70,9 +77,9 @@
 			<div class="jumbotron">
 				<h1>Get your players!</h1>
 				<p class="lead">Gainput is the new awesome C++ input library for your game. It's easy to use, open source and cross-platform.</p>
-				<!--<a class="btn btn-large btn-success" href="https://github.com/jkuhlmann/gainput">Download</a>-->
+				<a class="btn btn-large btn-success" href="https://github.com/jkuhlmann/gainput/releases/tag/v0.8.0-beta">Download v0.8.0-beta</a>
 				<a class="btn btn-large btn-info" href="https://github.com/jkuhlmann/gainput">Browse Source</a>
-				<a class="btn btn-large btn-warning" href="http://jkuhlmann.github.com/gainput/api/">API Docs</a>
+				<a class="btn btn-large btn-warning" href="api/">API Docs</a>
 
 			</div>
 
@@ -81,10 +88,13 @@
 			<div class="row-fluid marketing">
 				<div class="span6">
 					<h4>Nice Code</h4>
-					<p>Gainput's code is clean, easy to understand and lightweight. It's also easy to use and will hopefully make you a happier person.</p>
+					<p>Gainput's code is clean, easy to understand and lightweight. It's also easy to use and might make you a happier person.</p>
 
 					<h4>Cross-Platform</h4>
 					<p>Gainput provides the same interface (more or less) on all supported platforms. Currently, implementations are provided for: Windows, Linux, and Android NDK.</p>
+
+					<h4>Basic Features</h4>
+					<p>Gainput provides a low-level and high-level interface. Query the state of devices buttons directly or map device buttons to a user button.</p>
 
 				</div>
 
@@ -96,14 +106,16 @@
 					<h4>All the Devices</h4>
 					<p>Gainput aims to support all available input devices. Implementations are provided for keyboard, mouse, pad, and multi-touch surfaces.</p>
 
+					<h4>Advanced Features</h4>
+					<p>Recording/playback of input sequences, syncing of inputs across the network, helps to support remapping of buttons by the player, and more. Most features can be disabled.</p>
+
 				</div>
 			</div>
 
 			<hr>
 
 			<div class="footer">
-				<!--<p>Copyright &copy; 2013!</p>-->
-
+				<p>Copyright &copy; Johannes Kuhlmann, 2013.</p>
 			</div>
 
 		</div>

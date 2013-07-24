@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -113,27 +113,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> ClearButtons();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> Update(InputDeltaState* delta);</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#acfb35796b51e3933321454e17c02ea21">   49</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#acfb35796b51e3933321454e17c02ea21" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton == <a class="code" href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21ad074ff1508e9a8242afc0d7f388634da" title="The button triggered by double-clicking.">SimultaneouslyDownTriggered</a>; }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#acfb35796b51e3933321454e17c02ea21">   51</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#acfb35796b51e3933321454e17c02ea21" title="Returns if the given button is valid for this device.">IsValidButtonId</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deviceButton == <a class="code" href="namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21ad074ff1508e9a8242afc0d7f388634da" title="The button triggered by double-clicking.">SimultaneouslyDownTriggered</a>; }</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#ab647364430968446765fb245329abfe4">   51</a></span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> <a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#ab647364430968446765fb245329abfe4" title="Returns the type of the given button.">GetButtonType</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ GAINPUT_ASSERT(IsValidButtonId(deviceButton)); <span class="keywordflow">return</span> <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222edaf27ecb25022e1e454cf9f185993e5705" title="A boolean value button, either down (true) or up (false).">BT_BOOL</a>; }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#ab647364430968446765fb245329abfe4">   53</a></span>&#160;    <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222ed" title="Type of an input device button.">ButtonType</a> <a class="code" href="classgainput_1_1SimultaneouslyDownGesture.html#ab647364430968446765fb245329abfe4" title="Returns the type of the given button.">GetButtonType</a>(<a class="code" href="namespacegainput.html#a60ad61a221a28f20361a12c0dc027c3e" title="ID of a specific button unique to an input device.">DeviceButtonId</a> deviceButton)<span class="keyword"> const </span>{ GAINPUT_ASSERT(IsValidButtonId(deviceButton)); <span class="keywordflow">return</span> <a class="code" href="namespacegainput.html#ac936962c0275954961d45e1d2c3222edaf27ecb25022e1e454cf9f185993e5705" title="A boolean value button, either down (true) or up (false).">BT_BOOL</a>; }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classgainput_1_1Array.html">Array&lt;DeviceButtonSpec&gt;</a> buttons_;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> InternalUpdate(InputDeltaState* delta);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classgainput_1_1Array.html">Array&lt;DeviceButtonSpec&gt;</a> buttons_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

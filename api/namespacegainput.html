@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -136,6 +136,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html">InputManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages all input devices and some other helpful stuff.  <a href="classgainput_1_1InputManager.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1DeviceStateModifier.html">DeviceStateModifier</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for modifiers that change device input states after they have been updated.  <a href="classgainput_1_1DeviceStateModifier.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputMap.html">InputMap</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps user buttons to device buttons.  <a href="classgainput_1_1InputMap.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +166,18 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1TapGesture.html">TapGesture</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tap-to-trigger gesture.  <a href="classgainput_1_1TapGesture.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputPlayer.html">InputPlayer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays back a previously recorded sequence of device state changes.  <a href="classgainput_1_1InputPlayer.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputRecorder.html">InputRecorder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Records a sequence of button state changes.  <a href="classgainput_1_1InputRecorder.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgainput_1_1RecordedDeviceButtonChange.html">RecordedDeviceButtonChange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single recorded change for a device button.  <a href="structgainput_1_1RecordedDeviceButtonChange.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputRecording.html">InputRecording</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A recorded sequence of input changes.  <a href="classgainput_1_1InputRecording.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -182,6 +197,10 @@ typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class
 typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a></td></tr>
 <tr class="memdesc:aaf8159c0645b08a803bf9dfc974011a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of an input listener. <br/></td></tr>
 <tr class="separator:aaf8159c0645b08a803bf9dfc974011a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ababe5f6e9ed5175e7e6121bdbd51fd71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ababe5f6e9ed5175e7e6121bdbd51fd71"></a>
+typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#ababe5f6e9ed5175e7e6121bdbd51fd71">ModifierId</a></td></tr>
+<tr class="memdesc:ababe5f6e9ed5175e7e6121bdbd51fd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of a device state modifier. <br/></td></tr>
+<tr class="separator:ababe5f6e9ed5175e7e6121bdbd51fd71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -624,10 +643,10 @@ Functions</h2></td></tr>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#a43f6880e8d185275c2168d31f12c82a1">GetLibName</a> ()</td></tr>
 <tr class="memdesc:a43f6880e8d185275c2168d31f12c82a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the library, should be "Gainput". <br/></td></tr>
 <tr class="separator:a43f6880e8d185275c2168d31f12c82a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adac6e560d0fb6196f73459deff7d27d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adac6e560d0fb6196f73459deff7d27d0"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#adac6e560d0fb6196f73459deff7d27d0">GetLibVersion</a> ()</td></tr>
-<tr class="memdesc:adac6e560d0fb6196f73459deff7d27d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version number of the library. <br/></td></tr>
-<tr class="separator:adac6e560d0fb6196f73459deff7d27d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf1a6b4e2d910384160ca9d0af894167"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf1a6b4e2d910384160ca9d0af894167"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#aaf1a6b4e2d910384160ca9d0af894167">GetLibVersion</a> ()</td></tr>
+<tr class="memdesc:aaf1a6b4e2d910384160ca9d0af894167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version number of the library. <br/></td></tr>
+<tr class="separator:aaf1a6b4e2d910384160ca9d0af894167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0a7cdee1c76603bcb263f6e4a6e18b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0a7cdee1c76603bcb263f6e4a6e18b2"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegainput.html#ad0a7cdee1c76603bcb263f6e4a6e18b2">GetLibVersionString</a> ()</td></tr>
 <tr class="memdesc:ad0a7cdee1c76603bcb263f6e4a6e18b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version number of the library as a printable string. <br/></td></tr>
@@ -876,7 +895,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>fmix</b> (uint32_
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

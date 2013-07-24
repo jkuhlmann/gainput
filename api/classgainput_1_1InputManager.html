@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -104,18 +104,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa177bebcb8dc3ba78221e8dd80cfc375"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#aa177bebcb8dc3ba78221e8dd80cfc375">InputManager</a> (<a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=GetDefaultAllocator())</td></tr>
 <tr class="memdesc:aa177bebcb8dc3ba78221e8dd80cfc375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the manager.  <a href="#aa177bebcb8dc3ba78221e8dd80cfc375"></a><br/></td></tr>
 <tr class="separator:aa177bebcb8dc3ba78221e8dd80cfc375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3226c0a595fbc458c36282817476c4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3226c0a595fbc458c36282817476c4c"></a>
-Display *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#aa3226c0a595fbc458c36282817476c4c">GetXDisplay</a> ()</td></tr>
-<tr class="memdesc:aa3226c0a595fbc458c36282817476c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[LINUX ONLY] Returns the XDisplay used to acquire keyboard and mouse inputs. <br/></td></tr>
-<tr class="separator:aa3226c0a595fbc458c36282817476c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac30d75b1ab3d9612bc4de962370aa550"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac30d75b1ab3d9612bc4de962370aa550"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550">SetXDisplay</a> (Display *xDisplay, int width, int height)</td></tr>
-<tr class="memdesc:ac30d75b1ab3d9612bc4de962370aa550"><td class="mdescLeft">&#160;</td><td class="mdescRight">[LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs. <br/></td></tr>
-<tr class="separator:ac30d75b1ab3d9612bc4de962370aa550"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5814f29c09362547c66b59993a23b031"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5814f29c09362547c66b59993a23b031"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031">SetDisplaySize</a> (int width, int height)</td></tr>
-<tr class="memdesc:a5814f29c09362547c66b59993a23b031"><td class="mdescLeft">&#160;</td><td class="mdescRight">[WINDOWS/ANDROID ONLY] Sets the window resolution. <br/></td></tr>
+<tr class="memdesc:a5814f29c09362547c66b59993a23b031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the window resolution. <br/></td></tr>
 <tr class="separator:a5814f29c09362547c66b59993a23b031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af41c221bda26b6efeee1d8d1af602398"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af41c221bda26b6efeee1d8d1af602398"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#af41c221bda26b6efeee1d8d1af602398">HandleEvent</a> (XEvent &amp;event)</td></tr>
+<tr class="memdesc:af41c221bda26b6efeee1d8d1af602398"><td class="mdescLeft">&#160;</td><td class="mdescRight">[LINUX ONLY] Lets the <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a> handle the given X event. <br/></td></tr>
+<tr class="separator:af41c221bda26b6efeee1d8d1af602398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc3450565c648dfbd805094188ddebcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3450565c648dfbd805094188ddebcc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc">HandleMessage</a> (const MSG &amp;msg)</td></tr>
 <tr class="memdesc:abc3450565c648dfbd805094188ddebcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">[WINDOWS ONLY] Lets the <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a> handle the given Windows message. <br/></td></tr>
@@ -157,6 +153,9 @@ uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memitem:af30a7f201c22bc2a5ba78eaa21c5f0f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#af30a7f201c22bc2a5ba78eaa21c5f0f0">FindDeviceId</a> (const char *typeName, unsigned index) const </td></tr>
 <tr class="memdesc:af30a7f201c22bc2a5ba78eaa21c5f0f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ID of the device with the given type and index.  <a href="#af30a7f201c22bc2a5ba78eaa21c5f0f0"></a><br/></td></tr>
 <tr class="separator:af30a7f201c22bc2a5ba78eaa21c5f0f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b139b17fc9aea1c538ef9da674c9667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a6b139b17fc9aea1c538ef9da674c9667">FindDeviceId</a> (<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">InputDevice::DeviceType</a> type, unsigned index) const </td></tr>
+<tr class="memdesc:a6b139b17fc9aea1c538ef9da674c9667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ID of the device with the given type and index.  <a href="#a6b139b17fc9aea1c538ef9da674c9667"></a><br/></td></tr>
+<tr class="separator:a6b139b17fc9aea1c538ef9da674c9667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe8e526ae8ec877895e34fc341a87c84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#abe8e526ae8ec877895e34fc341a87c84">AddListener</a> (<a class="el" href="classgainput_1_1InputListener.html">InputListener</a> *listener)</td></tr>
 <tr class="memdesc:abe8e526ae8ec877895e34fc341a87c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a listener to be notified when a button state changes.  <a href="#abe8e526ae8ec877895e34fc341a87c84"></a><br/></td></tr>
 <tr class="separator:abe8e526ae8ec877895e34fc341a87c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,11 +178,27 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#aec8a80bd3860db93282ec5455aa33b6a">GetDisplayHeight</a> () const </td></tr>
 <tr class="memdesc:aec8a80bd3860db93282ec5455aa33b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the graphical display's height in pixels. <br/></td></tr>
 <tr class="separator:aec8a80bd3860db93282ec5455aa33b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ad4b0a2cbdab3a718c6667185ebd685"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ad4b0a2cbdab3a718c6667185ebd685"></a>
+<a class="el" href="namespacegainput.html#ababe5f6e9ed5175e7e6121bdbd51fd71">ModifierId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a0ad4b0a2cbdab3a718c6667185ebd685">AddDeviceStateModifier</a> (<a class="el" href="classgainput_1_1DeviceStateModifier.html">DeviceStateModifier</a> *modifier)</td></tr>
+<tr class="memdesc:a0ad4b0a2cbdab3a718c6667185ebd685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a modifier that will be called after devices have been updated. <br/></td></tr>
+<tr class="separator:a0ad4b0a2cbdab3a718c6667185ebd685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc407087cf41648e4e5cf74403b4c113"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc407087cf41648e4e5cf74403b4c113"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#acc407087cf41648e4e5cf74403b4c113">RemoveDeviceStateModifier</a> (<a class="el" href="namespacegainput.html#ababe5f6e9ed5175e7e6121bdbd51fd71">ModifierId</a> modifierId)</td></tr>
+<tr class="memdesc:acc407087cf41648e4e5cf74403b4c113"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-registers the given modifier. <br/></td></tr>
+<tr class="separator:acc407087cf41648e4e5cf74403b4c113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63e62c8fbb9f2b95ba6c199b2d436931"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63e62c8fbb9f2b95ba6c199b2d436931"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a63e62c8fbb9f2b95ba6c199b2d436931">ConnectForStateSync</a> (const char *ip, unsigned port)</td></tr>
+<tr class="memdesc:a63e62c8fbb9f2b95ba6c199b2d436931"><td class="mdescLeft">&#160;</td><td class="mdescRight">[IN dev BUILDS ONLY] Connect to a remote host to send device state changes to. <br/></td></tr>
+<tr class="separator:a63e62c8fbb9f2b95ba6c199b2d436931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dfac672fa2f35010432d0e5eae53074"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0dfac672fa2f35010432d0e5eae53074"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a0dfac672fa2f35010432d0e5eae53074">StartDeviceStateSync</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> deviceId)</td></tr>
+<tr class="memdesc:a0dfac672fa2f35010432d0e5eae53074"><td class="mdescLeft">&#160;</td><td class="mdescRight">[IN dev BUILDS ONLY] Initiate sending of device state changes to the given device. <br/></td></tr>
+<tr class="separator:a0dfac672fa2f35010432d0e5eae53074"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages all input devices and some other helpful stuff. </p>
 <p>This manager takes care of all device-related things. Normally, you should only need one that contains all your input devices.</p>
-<p>After instantiating an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>, you probably have to call some platform-specific function (see <a class="el" href="classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550" title="[LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.">SetXDisplay()</a>, <a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="[WINDOWS/ANDROID ONLY] Sets the window resolution.">SetDisplaySize()</a>). You should also create some input devices using the template function <a class="el" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f" title="Creates an input device and registers it with the manager.">CreateDevice()</a> which returns the device ID that is needed to do anything further with the device (for example, see <a class="el" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">InputMap</a>).</p>
+<p>After instantiating an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>, you have to call <a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="Sets the window resolution.">SetDisplaySize()</a>. You should also create some input devices using the template function <a class="el" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f" title="Creates an input device and registers it with the manager.">CreateDevice()</a> which returns the device ID that is needed to do anything further with the device (for example, see <a class="el" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">InputMap</a>).</p>
 <p>The manager has to be updated every frame by calling <a class="el" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">Update()</a>. Depending on the platform, you may have to call another function as part of your message handling code (see <a class="el" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc" title="[WINDOWS ONLY] Lets the InputManager handle the given Windows message.">HandleMessage()</a>, <a class="el" href="classgainput_1_1InputManager.html#ac0b9817822a974de95a3729049e3966c" title="[ANDROID ONLY] Lets the InputManager handle the given input event.">HandleInput()</a>).</p>
 <p>Note that destruction of an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a> invalidates all input maps based on it and all devices created through it. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -209,9 +224,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classgainput_1_1InputManager.html#ac30d75b1ab3d9612bc4de962370aa550" title="[LINUX ONLY] Sets the XDisplay used to acquire keyboard and mouse inputs.">SetXDisplay</a> </dd>
-<dd>
-<a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="[WINDOWS/ANDROID ONLY] Sets the window resolution.">SetDisplaySize</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="Sets the window resolution.">SetDisplaySize</a> </dd></dl>
 
 </div>
 </div>
@@ -339,6 +352,42 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a6b139b17fc9aea1c538ef9da674c9667"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> gainput::InputManager::FindDeviceId </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">InputDevice::DeviceType</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the ID of the device with the given type and index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The device type. Should come from <a class="el" href="classgainput_1_1InputDevice.html#a54f02fe2a25db06c3cd5a486c0df22c3" title="Returns the device type.">InputDevice::GetType()</a>. </td></tr>
+    <tr><td class="paramname">index</td><td>The index of the device. Should come from <a class="el" href="classgainput_1_1InputDevice.html#a09506aa3555652e73f72a6db0b3df26b" title="Returns the device&#39;s index among devices of the same type.">InputDevice::GetIndex()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The device's ID or InvalidDeviceId if no matching device exists. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab3a2692dc1096ab410a0f1f9b63057ee"></a>
 <div class="memitem">
 <div class="memproto">
@@ -435,7 +484,7 @@ template&lt;class T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">Version 0</span>
+   &#160;<span id="projectnumber">v0.8.0-beta</span>
    </div>
   </td>
  </tr>
@@ -110,29 +110,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classgainput_1_1InputGesture.html#a7db6ddeb4a0183adfa08dff8f5d2cf85">   44</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a" title="Type of an input device.">DeviceType</a> <a class="code" href="classgainput_1_1InputGesture.html#a7db6ddeb4a0183adfa08dff8f5d2cf85" title="Returns DT_GESTURE.">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa613026c431dbefbf686b7f92f8f2b517" title="A gesture input device, building on top of other input devices.">DT_GESTURE</a>; }</div>
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classgainput_1_1InputGesture.html#a7ac7852341db5a0d67c388c945456991">   45</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classgainput_1_1InputGesture.html#a7ac7852341db5a0d67c388c945456991" title="Returns the device type&#39;s name.">GetTypeName</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;gesture&quot;</span>; }</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classgainput_1_1InputGesture.html#a5655702a79100c50233bcedd5874bb71">   46</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputGesture.html#a5655702a79100c50233bcedd5874bb71" title="Returns the device state.">GetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aaa017a7969e291594851f1c2ffeedeee5f" title="Everything is okay.">DS_OK</a>; }</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classgainput_1_1InputGesture.html#acf05713bc5307eb81de12d69015c2aec">   46</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classgainput_1_1InputGesture.html#acf05713bc5307eb81de12d69015c2aec" title="Returns if this device should be updated after other devices.">IsLateUpdate</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="classgainput_1_1InputGesture.html" title="Base class for all input gestures.">InputGesture</a>(<a class="code" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>&amp; manager, <a class="code" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753" title="ID of an input device.">DeviceId</a> device) : <a class="code" href="classgainput_1_1InputDevice.html" title="Interface for anything that provides device inputs.">InputDevice</a>(manager, device, manager.GetDeviceCountByType(<a class="code" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa613026c431dbefbf686b7f92f8f2b517" title="A gesture input device, building on top of other input devices.">DT_GESTURE</a>)) { }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classgainput_1_1InputGesture.html#a51c2910390530842a897cf8656d3369e">   51</a></span>&#160;    <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa" title="State of an input device.">DeviceState</a> <a class="code" href="classgainput_1_1InputGesture.html#a51c2910390530842a897cf8656d3369e" title="Implementation of the device&#39;s GetState function.">InternalGetState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aaa017a7969e291594851f1c2ffeedeee5f" title="Everything is okay.">DS_OK</a>; }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputDoubleClickGesture.h&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputHoldGesture.h&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputPinchGesture.h&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputRotateGesture.h&gt;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputSimultaneouslyDownGesture.h&gt;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputTapGesture.h&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputDoubleClickGesture.h&gt;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputHoldGesture.h&gt;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputPinchGesture.h&gt;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputRotateGesture.h&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputSimultaneouslyDownGesture.h&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;gainput/gestures/GainputTapGesture.h&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 4 2013 11:04:58 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
