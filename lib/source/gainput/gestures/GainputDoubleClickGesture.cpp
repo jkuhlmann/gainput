@@ -11,6 +11,8 @@ namespace gainput
 
 DoubleClickGesture::DoubleClickGesture(InputManager& manager, DeviceId device) :
 	InputGesture(manager, device),
+	timeSpan_(1000),
+	firstClickTime_(0),
 	clicksRegistered_(0),
 	clicksTargetCount_(2)
 {

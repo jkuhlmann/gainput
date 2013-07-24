@@ -46,6 +46,7 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 	userButtons_(allocator_),
 	nextUserButtonId_(0),
 	listeners_(allocator_),
+	nextListenerId_(0),
 	managerListener_(0)
 {
 	static unsigned nextId = 0;
@@ -139,8 +140,13 @@ InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId devi
 void
 InputMap::Unmap(UserButtonId userButton)
 {
-	userButtons_.erase(userButton);
-	GAINPUT_DEV_REMOVE_USER_BUTTON(this, userButton);
+	UserButton* ub = GetUserButton(userButton);
+	if (ub)
+	{
+		allocator_.Delete(ub);
+		userButtons_.erase(userButton);
+		GAINPUT_DEV_REMOVE_USER_BUTTON(this, userButton);
+	}
 }
 
 bool

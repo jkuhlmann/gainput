@@ -33,6 +33,12 @@ public:
 		GAINPUT_ASSERT(previousState_);
 	}
 
+	~MultiTouchEmulator()
+	{
+		manager_.GetAllocator().Delete(state_);
+		manager_.GetAllocator().Delete(previousState_);
+	}
+
 	void Initialize(gainput::DeviceId downDevice, gainput::DeviceButtonId downButton,
 		gainput::DeviceId xAxisDevice, gainput::DeviceButtonId xAxisButton,
 		gainput::DeviceId yAxisDevice, gainput::DeviceButtonId yAxisButton,

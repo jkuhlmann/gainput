@@ -62,6 +62,7 @@ void SampleMain()
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	manager.CreateDevice<gainput::InputDevicePad>();
+	manager.CreateDevice<gainput::InputDevicePad>();
 	manager.CreateDevice<gainput::InputDeviceTouch>();
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_WIN)

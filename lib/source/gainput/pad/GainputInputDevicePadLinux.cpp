@@ -209,7 +209,7 @@ private:
 		GAINPUT_LOG("Driver version: %d\n", driverVersion);
 #endif
 
-		char name[128];
+		char name[128] = "";
 		if (ioctl(fd_, JSIOCGNAME(sizeof(name)), name) < 0)
 		{
 			strncpy(name, "Unknown", sizeof(name));

@@ -144,6 +144,8 @@ void SampleMain()
 			SFW_LOG("Playing deserialized recording\n");
 			inputPlayer.SetRecording(serializedRecording);
 			inputPlayer.Start();
+
+			free(serializedRecordingData);
 		}
 	}
 
