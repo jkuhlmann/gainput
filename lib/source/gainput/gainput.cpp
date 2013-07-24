@@ -122,8 +122,8 @@ There is a number of defines that determine what is included in the library and 
 
 Name | Description
 -----|------------
-\c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables lot of internal console output and checks.
-\c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to. Automatically enabled in the \c dev build configuration.
+\c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables a lot of internal console output and checks.
+\c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to. Automatically enabled in the \c debug and \c dev build configuration.
 \c GAINPUT_ENABLE_ALL_GESTURES | Enables all gestures. Note that there is also an individual define for each gesture (see gainput::InputGesture).
 \c GAINPUT_ENABLE_RECORDER | Enables recording of inputs.
 \c GAINPUT_LIB_BUILD | Should be set if Gainput is being built as library.
@@ -329,13 +329,13 @@ GetLibName()
 uint32_t
 GetLibVersion()
 {
-	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (0) );
+	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (8) );
 }
 
 const char*
 GetLibVersionString()
 {
-	return "0.0";
+	return "0.8.0-beta";
 }
 
 }
