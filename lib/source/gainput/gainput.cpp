@@ -16,6 +16,7 @@ These pages are Gainput's API documentation. In order to download Gainput go to 
 - \ref page_samples
 - \ref page_platforms
 - \ref page_dependencies
+- \ref page_faq
 
 \section using Using Gainput
 A minimal usage sample:
@@ -205,6 +206,19 @@ Windows:
 \section sect_building Building
 Gainput is built using <a href="http://code.google.com/p/waf/" target="_blank">Waf</a> which is written in <a href="http://www.python.org/" target="_blank">Python</a>. Therefore you have to have a recent version of Python installed.
 
+
+
+\page page_faq FAQ
+
+\tableofcontents
+
+\section faq0 Why another library when input is included in most engines/libraries?
+There are lots of other ways to acquire input, most are part of more complete engines or more comprehensive libraries. For one, Gainput is meant for those who are using something without input capabilities (for example, pure rendering engines) or those who are developing something themselves and want to skip input handling.
+
+In the long run, Gainput aims to be better and offer more advanced features than built-in input solutions. That's the reason why more advanced features, like input recording/playback, remote syncing, gestures and external tool support, are already part of the library.
+
+\section faq1 Why don't you support OS X or iOS?
+I would love to. However, I don't have the proper hardware at the moment. The plan is to provide implementations for these platforms eventually. If anyone wants to contribute implementations, they are welcome to do so.
 
 
 \page page_devprotocol Development Tool Protocol
