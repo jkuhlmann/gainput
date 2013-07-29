@@ -61,7 +61,7 @@ Features
 - Features a **network server** to obtain information on devices and mappings from.
 - Two Gainput instances can **sync device states over the network**. For example, you can use this to get multi-touch inputs from your smartphone on your PC.
 - Completely written in portable **C++**.
-- **No STL** is used.
+- **No STL** is used. **No exceptions** are thrown. **No RTTI** is used.
 - **No weird external dependencies** ared used. Relies mostly on the existing platform SDKs.
 - **Listeners** can be installed both for devices buttons as well as user buttons. That way you are notified when a button state changes.
 - **Gestures** allow for more complex input patterns to be detected, for example double-clicking, pinch/rotation gestures, or holding several buttons simultaneously.
