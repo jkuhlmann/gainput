@@ -2,7 +2,7 @@
 #include <gainput/gainput.h>
 
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) && !defined(GAINPUT_ENABLE_RAW_INPUT)
 
 #include "GainputInputDeviceMouseLinux.h"
 #include "../GainputInputDeltaState.h"

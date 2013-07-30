@@ -31,6 +31,8 @@
 #define GAINPUT_ENABLE_ALL_GESTURES
 #define GAINPUT_ENABLE_RECORDER
 
+//#define GAINPUT_ENABLE_RAW_INPUT
+
 
 #include <cassert>
 #include <cstring>
@@ -86,6 +88,10 @@ namespace gainput
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 
+#endif
+
+#ifndef GAINPUT_LOG
+#define GAINPUT_LOG(...)
 #endif
 
 

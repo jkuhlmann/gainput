@@ -232,6 +232,7 @@ InputManager::HandleEvent(XEvent& event)
 			GAINPUT_ASSERT(keyboardImpl);
 			keyboardImpl->HandleEvent(event);
 		}
+#if !defined(GAINPUT_ENABLE_RAW_INPUT)
 		else if (it->second->GetType() == InputDevice::DT_MOUSE)
 		{
 			InputDeviceMouse* mouse = static_cast<InputDeviceMouse*>(it->second);
@@ -239,6 +240,7 @@ InputManager::HandleEvent(XEvent& event)
 			GAINPUT_ASSERT(mouseImpl);
 			mouseImpl->HandleEvent(event);
 		}
+#endif
 	}
 
 }
