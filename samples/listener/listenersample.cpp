@@ -73,8 +73,8 @@ void SampleMain()
 
 	gainput::InputMap map(manager, "testmap");
 
-	map.MapBool(ButtonToggleListener, keyboardId, gainput::KEY_F1);
-	map.MapBool(ButtonToggleMapListener, keyboardId, gainput::KEY_F2);
+	map.MapBool(ButtonToggleListener, keyboardId, gainput::KeyF1);
+	map.MapBool(ButtonToggleMapListener, keyboardId, gainput::KeyF2);
 	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
 

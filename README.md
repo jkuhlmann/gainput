@@ -33,7 +33,7 @@ const gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
 const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch>();
 
 gainput::InputMap map(manager);
-map.MapBool(ButtonConfirm, keyboardId, gainput::KEY_RETURN);
+map.MapBool(ButtonConfirm, keyboardId, gainput::KeyReturn);
 map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 map.MapBool(ButtonConfirm, touchId, gainput::TOUCH_0_DOWN);

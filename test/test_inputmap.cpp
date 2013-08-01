@@ -43,13 +43,13 @@ TEST_CASE("InputMap/map_bool", "")
 	const DeviceId mouseId = manager.CreateDevice<InputDeviceMouse>();
 	InputMap map(manager, "testmap");
 
-	REQUIRE(map.MapBool(ButtonA, keyboardId, KEY_A));
-	REQUIRE(map.MapBool(ButtonA, keyboardId, KEY_B));
-	REQUIRE(map.MapBool(ButtonA, keyboardId, KEY_ESCAPE));
+	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyA));
+	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyB));
+	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyEscape));
 	REQUIRE(map.MapBool(ButtonA, mouseId, MOUSE_BUTTON_LEFT));
 	REQUIRE(map.IsMapped(ButtonA));
 
-	REQUIRE(map.MapBool(ButtonB, keyboardId, KEY_F2));
+	REQUIRE(map.MapBool(ButtonB, keyboardId, KeyF2));
 	REQUIRE(map.MapBool(ButtonB, mouseId, MOUSE_BUTTON_LEFT));
 	REQUIRE(map.IsMapped(ButtonB));
 
@@ -69,21 +69,21 @@ TEST_CASE("InputMap/map_bool", "")
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 0);
 
 	REQUIRE(map.MapBool(ButtonA, mouseId, MOUSE_BUTTON_MIDDLE));
-	REQUIRE(map.MapBool(ButtonA, keyboardId, KEY_D));
-	REQUIRE(map.MapBool(ButtonD, keyboardId, KEY_B));
+	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyD));
+	REQUIRE(map.MapBool(ButtonD, keyboardId, KeyB));
 
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 2);
 	REQUIRE(mappings[0].deviceId == mouseId);
 	REQUIRE(mappings[0].buttonId == MOUSE_BUTTON_MIDDLE);
 	REQUIRE(mappings[1].deviceId == keyboardId);
-	REQUIRE(mappings[1].buttonId == KEY_D);
+	REQUIRE(mappings[1].buttonId == KeyD);
 
 	char buf[32];
 	REQUIRE(map.GetUserButtonName(ButtonA, buf, 32));
 
 	REQUIRE(map.GetUserButtonId(mouseId, MOUSE_BUTTON_MIDDLE) == ButtonA);
-	REQUIRE(map.GetUserButtonId(keyboardId, KEY_D) == ButtonA);
-	REQUIRE(map.GetUserButtonId(keyboardId, KEY_B) == ButtonD);
+	REQUIRE(map.GetUserButtonId(keyboardId, KeyD) == ButtonA);
+	REQUIRE(map.GetUserButtonId(keyboardId, KeyB) == ButtonD);
 }
 
 TEST_CASE("InputMap/map_float", "")
@@ -94,15 +94,15 @@ TEST_CASE("InputMap/map_float", "")
 	const DeviceId padId = manager.CreateDevice<InputDevicePad>();
 	InputMap map(manager, "testmap");
 
-	REQUIRE(map.MapFloat(ButtonA, keyboardId, KEY_A));
-	REQUIRE(map.MapFloat(ButtonA, keyboardId, KEY_B));
-	REQUIRE(map.MapFloat(ButtonA, keyboardId, KEY_ESCAPE));
+	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyA));
+	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyB));
+	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyEscape));
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_BUTTON_LEFT));
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_Y));
 	REQUIRE(map.MapFloat(ButtonA, padId, PAD_BUTTON_LEFT_STICK_X));
 	REQUIRE(map.IsMapped(ButtonA));
 
-	REQUIRE(map.MapFloat(ButtonB, keyboardId, KEY_F2));
+	REQUIRE(map.MapFloat(ButtonB, keyboardId, KeyF2));
 	REQUIRE(map.MapFloat(ButtonB, mouseId, MOUSE_AXIS_X));
 	REQUIRE(map.IsMapped(ButtonB));
 
@@ -122,20 +122,20 @@ TEST_CASE("InputMap/map_float", "")
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 0);
 
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_X));
-	REQUIRE(map.MapFloat(ButtonA, keyboardId, KEY_F5));
+	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyF5));
 	REQUIRE(map.MapFloat(ButtonD, padId, PAD_BUTTON_RIGHT_STICK_Y));
 
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 2);
 	REQUIRE(mappings[0].deviceId == mouseId);
 	REQUIRE(mappings[0].buttonId == MOUSE_AXIS_X);
 	REQUIRE(mappings[1].deviceId == keyboardId);
-	REQUIRE(mappings[1].buttonId == KEY_F5);
+	REQUIRE(mappings[1].buttonId == KeyF5);
 
 	char buf[32];
 	REQUIRE(map.GetUserButtonName(ButtonA, buf, 32));
 
 	REQUIRE(map.GetUserButtonId(mouseId, MOUSE_AXIS_X) == ButtonA);
-	REQUIRE(map.GetUserButtonId(keyboardId, KEY_F5) == ButtonA);
+	REQUIRE(map.GetUserButtonId(keyboardId, KeyF5) == ButtonA);
 	REQUIRE(map.GetUserButtonId(padId, PAD_BUTTON_RIGHT_STICK_Y) == ButtonD);
 }
 

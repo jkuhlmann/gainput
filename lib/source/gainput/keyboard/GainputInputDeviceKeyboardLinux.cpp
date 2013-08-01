@@ -2,7 +2,7 @@
 #include <gainput/gainput.h>
 
 
-#if defined(GAINPUT_PLATFORM_LINUX)
+#if defined(GAINPUT_PLATFORM_LINUX) && !defined(GAINPUT_ENABLE_RAW_INPUT)
 
 #include <X11/XKBlib.h>
 #include <X11/Xutil.h>
@@ -15,7 +15,7 @@
 namespace gainput
 {
 
-const unsigned KeyboardButtonCount = KEY_COUNT_;
+const unsigned KeyboardButtonCount = KeyCount_;
 
 InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId device) :
 	manager_(manager),
@@ -31,141 +31,141 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 	GetKeyboardKeyNames(keyNames_);
 
 	// Cf. <X11/keysymdef.h>
-	dialect_[XK_Escape] = KEY_ESCAPE;
-	dialect_[XK_F1] = KEY_F1;
-	dialect_[XK_F2] = KEY_F2;
-	dialect_[XK_F3] = KEY_F3;
-	dialect_[XK_F4] = KEY_F4;
-	dialect_[XK_F5] = KEY_F5;
-	dialect_[XK_F6] = KEY_F6;
-	dialect_[XK_F7] = KEY_F7;
-	dialect_[XK_F8] = KEY_F8;
-	dialect_[XK_F9] = KEY_F9;
-	dialect_[XK_F10] = KEY_F10;
-	dialect_[XK_F11] = KEY_F11;
-	dialect_[XK_F12] = KEY_F12;
-	dialect_[XK_Print] = KEY_PRINT;
-	dialect_[XK_Scroll_Lock] = KEY_SCROLL_LOCK;
-	dialect_[XK_Pause] = KEY_BREAK;
+	dialect_[XK_Escape] = KeyEscape;
+	dialect_[XK_F1] = KeyF1;
+	dialect_[XK_F2] = KeyF2;
+	dialect_[XK_F3] = KeyF3;
+	dialect_[XK_F4] = KeyF4;
+	dialect_[XK_F5] = KeyF5;
+	dialect_[XK_F6] = KeyF6;
+	dialect_[XK_F7] = KeyF7;
+	dialect_[XK_F8] = KeyF8;
+	dialect_[XK_F9] = KeyF9;
+	dialect_[XK_F10] = KeyF10;
+	dialect_[XK_F11] = KeyF11;
+	dialect_[XK_F12] = KeyF12;
+	dialect_[XK_Print] = KeyPrint;
+	dialect_[XK_Scroll_Lock] = KeyScrollLock;
+	dialect_[XK_Pause] = KeyBreak;
 
-	dialect_[XK_space] = KEY_SPACE;
+	dialect_[XK_space] = KeySpace;
 
-	dialect_[XK_apostrophe] = KEY_APOSTROPHE;
-	dialect_[XK_comma] = KEY_COMMA;
-	dialect_[XK_minus] = KEY_MINUS;
-	dialect_[XK_period] = KEY_PERIOD;
-	dialect_[XK_slash] = KEY_SLASH;
+	dialect_[XK_apostrophe] = KeyApostrophe;
+	dialect_[XK_comma] = KeyComma;
+	dialect_[XK_minus] = KeyMinus;
+	dialect_[XK_period] = KeyPeriod;
+	dialect_[XK_slash] = KeySlash;
 
-	dialect_[XK_0] = KEY_0;
-	dialect_[XK_1] = KEY_1;
-	dialect_[XK_2] = KEY_2;
-	dialect_[XK_3] = KEY_3;
-	dialect_[XK_4] = KEY_4;
-	dialect_[XK_5] = KEY_5;
-	dialect_[XK_6] = KEY_6;
-	dialect_[XK_7] = KEY_7;
-	dialect_[XK_8] = KEY_8;
-	dialect_[XK_9] = KEY_9;
+	dialect_[XK_0] = Key0;
+	dialect_[XK_1] = Key1;
+	dialect_[XK_2] = Key2;
+	dialect_[XK_3] = Key3;
+	dialect_[XK_4] = Key4;
+	dialect_[XK_5] = Key5;
+	dialect_[XK_6] = Key6;
+	dialect_[XK_7] = Key7;
+	dialect_[XK_8] = Key8;
+	dialect_[XK_9] = Key9;
 
-	dialect_[XK_semicolon] = KEY_SEMICOLON;
-	dialect_[XK_less] = KEY_LESS;
-	dialect_[XK_equal] = KEY_EQUAL;
+	dialect_[XK_semicolon] = KeySemicolon;
+	dialect_[XK_less] = KeyLess;
+	dialect_[XK_equal] = KeyEqual;
 
-	dialect_[XK_a] = KEY_A;
-	dialect_[XK_b] = KEY_B;
-	dialect_[XK_c] = KEY_C;
-	dialect_[XK_d] = KEY_D;
-	dialect_[XK_e] = KEY_E;
-	dialect_[XK_f] = KEY_F;
-	dialect_[XK_g] = KEY_G;
-	dialect_[XK_h] = KEY_H;
-	dialect_[XK_i] = KEY_I;
-	dialect_[XK_j] = KEY_J;
-	dialect_[XK_k] = KEY_K;
-	dialect_[XK_l] = KEY_L;
-	dialect_[XK_m] = KEY_M;
-	dialect_[XK_n] = KEY_N;
-	dialect_[XK_o] = KEY_O;
-	dialect_[XK_p] = KEY_P;
-	dialect_[XK_q] = KEY_Q;
-	dialect_[XK_r] = KEY_R;
-	dialect_[XK_s] = KEY_S;
-	dialect_[XK_t] = KEY_T;
-	dialect_[XK_u] = KEY_U;
-	dialect_[XK_v] = KEY_V;
-	dialect_[XK_w] = KEY_W;
-	dialect_[XK_x] = KEY_X;
-	dialect_[XK_y] = KEY_Y;
-	dialect_[XK_z] = KEY_Z;
+	dialect_[XK_a] = KeyA;
+	dialect_[XK_b] = KeyB;
+	dialect_[XK_c] = KeyC;
+	dialect_[XK_d] = KeyD;
+	dialect_[XK_e] = KeyE;
+	dialect_[XK_f] = KeyF;
+	dialect_[XK_g] = KeyG;
+	dialect_[XK_h] = KeyH;
+	dialect_[XK_i] = KeyI;
+	dialect_[XK_j] = KeyJ;
+	dialect_[XK_k] = KeyK;
+	dialect_[XK_l] = KeyL;
+	dialect_[XK_m] = KeyM;
+	dialect_[XK_n] = KeyN;
+	dialect_[XK_o] = KeyO;
+	dialect_[XK_p] = KeyP;
+	dialect_[XK_q] = KeyQ;
+	dialect_[XK_r] = KeyR;
+	dialect_[XK_s] = KeyS;
+	dialect_[XK_t] = KeyT;
+	dialect_[XK_u] = KeyU;
+	dialect_[XK_v] = KeyV;
+	dialect_[XK_w] = KeyW;
+	dialect_[XK_x] = KeyX;
+	dialect_[XK_y] = KeyY;
+	dialect_[XK_z] = KeyZ;
 
-	dialect_[XK_bracketleft] = KEY_BRACKET_LEFT;
-	dialect_[XK_backslash] = KEY_BACKSLASH;
-	dialect_[XK_bracketright] = KEY_BRACKET_RIGHT;
+	dialect_[XK_bracketleft] = KeyBracketLeft;
+	dialect_[XK_backslash] = KeyBackslash;
+	dialect_[XK_bracketright] = KeyBracketRight;
 
-	dialect_[XK_grave] = KEY_GRAVE;
+	dialect_[XK_grave] = KeyGrave;
 
-	dialect_[XK_Left] = KEY_LEFT;
-	dialect_[XK_Right] = KEY_RIGHT;
-	dialect_[XK_Up] = KEY_UP;
-	dialect_[XK_Down] = KEY_DOWN;
-	dialect_[XK_Insert] = KEY_INSERT;
-	dialect_[XK_Home] = KEY_HOME;
-	dialect_[XK_Delete] = KEY_DELETE;
-	dialect_[XK_End] = KEY_END;
-	dialect_[XK_Page_Up] = KEY_PAGE_UP;
-	dialect_[XK_Page_Down] = KEY_PAGE_DOWN;
+	dialect_[XK_Left] = KeyLeft;
+	dialect_[XK_Right] = KeyRight;
+	dialect_[XK_Up] = KeyUp;
+	dialect_[XK_Down] = KeyDown;
+	dialect_[XK_Insert] = KeyInsert;
+	dialect_[XK_Home] = KeyHome;
+	dialect_[XK_Delete] = KeyDelete;
+	dialect_[XK_End] = KeyEnd;
+	dialect_[XK_Page_Up] = KeyPageUp;
+	dialect_[XK_Page_Down] = KeyPageDown;
 
-	dialect_[XK_Num_Lock] = KEY_NUM_LOCK;
-	dialect_[XK_KP_Divide] = KEY_KP_DIVIDE;
-	dialect_[XK_KP_Multiply] = KEY_KP_MULTIPLY;
-	dialect_[XK_KP_Subtract] = KEY_KP_SUBTRACT;
-	dialect_[XK_KP_Add] = KEY_KP_ADD;
-	dialect_[XK_KP_Enter] = KEY_KP_ENTER;
-	dialect_[XK_KP_Insert] = KEY_KP_INSERT;
-	dialect_[XK_KP_End] = KEY_KP_END;
-	dialect_[XK_KP_Down] = KEY_KP_DOWN;
-	dialect_[XK_KP_Page_Down] = KEY_KP_PAGE_DOWN;
-	dialect_[XK_KP_Left] = KEY_KP_LEFT;
-	dialect_[XK_KP_Begin] = KEY_KP_BEGIN;
-	dialect_[XK_KP_Right] = KEY_KP_RIGHT;
-	dialect_[XK_KP_Home] = KEY_KP_HOME;
-	dialect_[XK_KP_Up] = KEY_KP_UP;
-	dialect_[XK_KP_Page_Up] = KEY_KP_PAGE_UP;
-	dialect_[XK_KP_Delete] = KEY_KP_DELETE;
+	dialect_[XK_Num_Lock] = KeyNumLock;
+	dialect_[XK_KP_Divide] = KeyKpDivide;
+	dialect_[XK_KP_Multiply] = KeyKpMultiply;
+	dialect_[XK_KP_Subtract] = KeyKpSubtract;
+	dialect_[XK_KP_Add] = KeyKpAdd;
+	dialect_[XK_KP_Enter] = KeyKpEnter;
+	dialect_[XK_KP_Insert] = KeyKpInsert;
+	dialect_[XK_KP_End] = KeyKpEnd;
+	dialect_[XK_KP_Down] = KeyKpDown;
+	dialect_[XK_KP_Page_Down] = KeyKpPageDown;
+	dialect_[XK_KP_Left] = KeyKpLeft;
+	dialect_[XK_KP_Begin] = KeyKpBegin;
+	dialect_[XK_KP_Right] = KeyKpRight;
+	dialect_[XK_KP_Home] = KeyKpHome;
+	dialect_[XK_KP_Up] = KeyKpUp;
+	dialect_[XK_KP_Page_Up] = KeyKpPageUp;
+	dialect_[XK_KP_Delete] = KeyKpDelete;
 
-	dialect_[XK_BackSpace] = KEY_BACK_SPACE;
-	dialect_[XK_Tab] = KEY_TAB;
-	dialect_[XK_Return] = KEY_RETURN;
-	dialect_[XK_Caps_Lock] = KEY_CAPS_LOCK;
-	dialect_[XK_Shift_L] = KEY_SHIFT_L;
-	dialect_[XK_Control_L] = KEY_CTRL_L;
-	dialect_[XK_Super_L] = KEY_SUPER_L;
-	dialect_[XK_Alt_L] = KEY_ALT_L;
-	dialect_[XK_Alt_R] = KEY_ALT_R;
-	dialect_[XK_Super_R] = KEY_SUPER_R;
-	dialect_[XK_Menu] = KEY_MENU;
-	dialect_[XK_Control_R] = KEY_CTRL_R;
-	dialect_[XK_Shift_R] = KEY_SHIFT_R;
+	dialect_[XK_BackSpace] = KeyBackSpace;
+	dialect_[XK_Tab] = KeyTab;
+	dialect_[XK_Return] = KeyReturn;
+	dialect_[XK_Caps_Lock] = KeyCapsLock;
+	dialect_[XK_Shift_L] = KeyShiftL;
+	dialect_[XK_Control_L] = KeyCtrlL;
+	dialect_[XK_Super_L] = KeySuperL;
+	dialect_[XK_Alt_L] = KeyAltL;
+	dialect_[XK_Alt_R] = KeyAltR;
+	dialect_[XK_Super_R] = KeySuperR;
+	dialect_[XK_Menu] = KeyMenu;
+	dialect_[XK_Control_R] = KeyCtrlR;
+	dialect_[XK_Shift_R] = KeyShiftR;
 
-	dialect_[XK_dead_circumflex] = KEY_CIRCUMFLEX;
-	dialect_[XK_ssharp] = KEY_SSHARP;
-	dialect_[XK_dead_acute] = KEY_ACUTE;
-	dialect_[XK_ISO_Level3_Shift] = KEY_ALT_GR;
-	dialect_[XK_plus] = KEY_PLUS;
-	dialect_[XK_numbersign] = KEY_NUMBERSIGN;
-	dialect_[XK_udiaeresis] = KEY_UDIAERESIS;
-	dialect_[XK_adiaeresis] = KEY_ADIAERESIS;
-	dialect_[XK_odiaeresis] = KEY_ODIAERESIS;
-	dialect_[XK_section] = KEY_SECTION;
-	dialect_[XK_aring] = KEY_ARING;
-	dialect_[XK_dead_diaeresis] = KEY_DIAERESIS;
-	dialect_[XK_twosuperior] = KEY_TWOSUPERIOR;
-	dialect_[XK_parenright] = KEY_RIGHT_PARENTHESIS;
-	dialect_[XK_dollar] = KEY_DOLLAR;
-	dialect_[XK_ugrave] = KEY_UGRAVE;
-	dialect_[XK_asterisk] = KEY_ASTERISK;
-	dialect_[XK_colon] = KEY_COLON;
-	dialect_[XK_exclam] = KEY_EXCLAM;
+	dialect_[XK_dead_circumflex] = KeyCircumflex;
+	dialect_[XK_ssharp] = KeySsharp;
+	dialect_[XK_dead_acute] = KeyAcute;
+	dialect_[XK_ISO_Level3_Shift] = KeyAltGr;
+	dialect_[XK_plus] = KeyPlus;
+	dialect_[XK_numbersign] = KeyNumbersign;
+	dialect_[XK_udiaeresis] = KeyUdiaeresis;
+	dialect_[XK_adiaeresis] = KeyAdiaeresis;
+	dialect_[XK_odiaeresis] = KeyOdiaeresis;
+	dialect_[XK_section] = KeySection;
+	dialect_[XK_aring] = KeyAring;
+	dialect_[XK_dead_diaeresis] = KeyDiaeresis;
+	dialect_[XK_twosuperior] = KeyTwosuperior;
+	dialect_[XK_parenright] = KeyRightParenthesis;
+	dialect_[XK_dollar] = KeyDollar;
+	dialect_[XK_ugrave] = KeyUgrave;
+	dialect_[XK_asterisk] = KeyAsterisk;
+	dialect_[XK_colon] = KeyColon;
+	dialect_[XK_exclam] = KeyExclam;
 }
 
 void

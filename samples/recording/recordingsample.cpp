@@ -59,11 +59,11 @@ void SampleMain()
 
 	gainput::InputMap map(manager, "testmap");
 
-	map.MapBool(ButtonStartRecording, keyboardId, gainput::KEY_F1);
-	map.MapBool(ButtonStopRecording, keyboardId, gainput::KEY_F2);
-	map.MapBool(ButtonStartPlaying, keyboardId, gainput::KEY_F3);
-	map.MapBool(ButtonStopPlaying, keyboardId, gainput::KEY_F4);
-	map.MapBool(ButtonSerialize, keyboardId, gainput::KEY_F5);
+	map.MapBool(ButtonStartRecording, keyboardId, gainput::KeyF1);
+	map.MapBool(ButtonStopRecording, keyboardId, gainput::KeyF2);
+	map.MapBool(ButtonStartPlaying, keyboardId, gainput::KeyF3);
+	map.MapBool(ButtonStopPlaying, keyboardId, gainput::KeyF4);
+	map.MapBool(ButtonSerialize, keyboardId, gainput::KeyF5);
 
 	MyDeviceButtonListener myDeviceButtonListener(manager);
 	manager.AddListener(&myDeviceButtonListener);

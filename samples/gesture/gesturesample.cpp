@@ -167,7 +167,7 @@ void SampleMain()
 	gainput::SimultaneouslyDownGesture* sdg = manager.CreateAndGetDevice<gainput::SimultaneouslyDownGesture>();
 	GAINPUT_ASSERT(sdg);
 	sdg->AddButton(mouseId, gainput::MOUSE_BUTTON_LEFT);
-	sdg->AddButton(keyboardId, gainput::KEY_SHIFT_L);
+	sdg->AddButton(keyboardId, gainput::KeyShiftL);
 	map.MapBool(ButtonConfirmExtra, sdg->GetDeviceId(), gainput::SimultaneouslyDownTriggered);
 
 	MultiTouchEmulator* mte = manager.CreateAndGetDevice<MultiTouchEmulator>();

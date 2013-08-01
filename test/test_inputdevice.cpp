@@ -19,27 +19,27 @@ TEST_CASE("InputDevice/keyboard", "")
 	REQUIRE(device->GetState() == InputDevice::DS_OK);
 	REQUIRE(device->IsAvailable());
 
-	REQUIRE(device->IsValidButtonId(KEY_ESCAPE));
-	REQUIRE(device->IsValidButtonId(KEY_RETURN));
-	REQUIRE(device->IsValidButtonId(KEY_1));
-	REQUIRE(device->IsValidButtonId(KEY_A));
-	REQUIRE(device->IsValidButtonId(KEY_Z));
-	REQUIRE(device->IsValidButtonId(KEY_SPACE));
+	REQUIRE(device->IsValidButtonId(KeyEscape));
+	REQUIRE(device->IsValidButtonId(KeyReturn));
+	REQUIRE(device->IsValidButtonId(Key1));
+	REQUIRE(device->IsValidButtonId(KeyA));
+	REQUIRE(device->IsValidButtonId(KeyZ));
+	REQUIRE(device->IsValidButtonId(KeySpace));
 
 	char buf[32];
-	REQUIRE(device->GetButtonName(KEY_F10, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(KEY_RIGHT_PARENTHESIS, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(KEY_PERIOD, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(KEY_V, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(KEY_SPACE, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(KeyF10, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(KeyRightParenthesis, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(KeyPeriod, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(KeyV, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(KeySpace, buf, 32) > 0);
 
-	REQUIRE(device->GetButtonType(KEY_ESCAPE) == BT_BOOL);
-	REQUIRE(device->GetButtonType(KEY_2) == BT_BOOL);
-	REQUIRE(device->GetButtonType(KEY_D) == BT_BOOL);
-	REQUIRE(device->GetButtonType(KEY_BACK_SPACE) == BT_BOOL);
+	REQUIRE(device->GetButtonType(KeyEscape) == BT_BOOL);
+	REQUIRE(device->GetButtonType(Key2) == BT_BOOL);
+	REQUIRE(device->GetButtonType(KeyD) == BT_BOOL);
+	REQUIRE(device->GetButtonType(KeyBackSpace) == BT_BOOL);
 
-	REQUIRE(device->GetButtonByName("space") == KEY_SPACE);
-	REQUIRE(device->GetButtonByName("5") == KEY_5);
+	REQUIRE(device->GetButtonByName("space") == KeySpace);
+	REQUIRE(device->GetButtonByName("5") == Key5);
 
 	REQUIRE(device->GetInputState());
 	REQUIRE(device->GetPreviousInputState());

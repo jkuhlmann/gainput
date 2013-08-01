@@ -117,9 +117,9 @@ void SampleMain()
 	SfwSetInputManager(&manager);
 
 	gainput::InputMap map(manager, "testmap");
-	map.MapBool(ButtonReset, keyboardId, gainput::KEY_ESCAPE);
-	map.MapBool(ButtonSave, keyboardId, gainput::KEY_F1);
-	map.MapBool(ButtonLoad, keyboardId, gainput::KEY_F2);
+	map.MapBool(ButtonReset, keyboardId, gainput::KeyEscape);
+	map.MapBool(ButtonSave, keyboardId, gainput::KeyF1);
+	map.MapBool(ButtonLoad, keyboardId, gainput::KeyF2);
 	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
 
 	gainput::DeviceButtonSpec anyButton[32];

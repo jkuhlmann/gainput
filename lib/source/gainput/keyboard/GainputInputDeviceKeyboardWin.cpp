@@ -13,7 +13,7 @@
 namespace gainput
 {
 
-const unsigned KeyboardButtonCount = KEY_COUNT_;
+const unsigned KeyboardButtonCount = KeyCount_;
 const unsigned LParamExtendedKeymask = 1 << 24;
 
 
@@ -30,108 +30,108 @@ InputDeviceKeyboardImpl::InputDeviceKeyboardImpl(InputManager& manager, DeviceId
 {
 	GetKeyboardKeyNames(keyNames_);
 
-	dialect_[VK_ESCAPE] = KEY_ESCAPE;
-	dialect_[VK_F1] = KEY_F1;
-	dialect_[VK_F2] = KEY_F2;
-	dialect_[VK_F3] = KEY_F3;
-	dialect_[VK_F4] = KEY_F4;
-	dialect_[VK_F5] = KEY_F5;
-	dialect_[VK_F6] = KEY_F6;
-	dialect_[VK_F7] = KEY_F7;
-	dialect_[VK_F8] = KEY_F8;
-	dialect_[VK_F9] = KEY_F9;
-	dialect_[VK_F10] = KEY_F10;
-	dialect_[VK_F11] = KEY_F11;
-	dialect_[VK_F12] = KEY_F12;
-	dialect_[VK_PRINT] = KEY_PRINT;
-	dialect_[VK_SCROLL] = KEY_SCROLL_LOCK;
-	dialect_[VK_PAUSE] = KEY_BREAK;
+	dialect_[VK_ESCAPE] = KeyEscape;
+	dialect_[VK_F1] = KeyF1;
+	dialect_[VK_F2] = KeyF2;
+	dialect_[VK_F3] = KeyF3;
+	dialect_[VK_F4] = KeyF4;
+	dialect_[VK_F5] = KeyF5;
+	dialect_[VK_F6] = KeyF6;
+	dialect_[VK_F7] = KeyF7;
+	dialect_[VK_F8] = KeyF8;
+	dialect_[VK_F9] = KeyF9;
+	dialect_[VK_F10] = KeyF10;
+	dialect_[VK_F11] = KeyF11;
+	dialect_[VK_F12] = KeyF12;
+	dialect_[VK_PRINT] = KeyPrint;
+	dialect_[VK_SCROLL] = KeyScrollLock;
+	dialect_[VK_PAUSE] = KeyBreak;
 
-	dialect_[VK_SPACE] = KEY_SPACE;
+	dialect_[VK_SPACE] = KeySpace;
 
-	dialect_[VK_OEM_5] = KEY_APOSTROPHE;
-	dialect_[VK_OEM_COMMA] = KEY_COMMA;
+	dialect_[VK_OEM_5] = KeyApostrophe;
+	dialect_[VK_OEM_COMMA] = KeyComma;
 
-	dialect_['0'] = KEY_0;
-	dialect_['1'] = KEY_1;
-	dialect_['2'] = KEY_2;
-	dialect_['3'] = KEY_3;
-	dialect_['4'] = KEY_4;
-	dialect_['5'] = KEY_5;
-	dialect_['6'] = KEY_6;
-	dialect_['7'] = KEY_7;
-	dialect_['8'] = KEY_8;
-	dialect_['9'] = KEY_9;
+	dialect_['0'] = Key0;
+	dialect_['1'] = Key1;
+	dialect_['2'] = Key2;
+	dialect_['3'] = Key3;
+	dialect_['4'] = Key4;
+	dialect_['5'] = Key5;
+	dialect_['6'] = Key6;
+	dialect_['7'] = Key7;
+	dialect_['8'] = Key8;
+	dialect_['9'] = Key9;
 
-	dialect_['A'] = KEY_A;
-	dialect_['B'] = KEY_B;
-	dialect_['C'] = KEY_C;
-	dialect_['D'] = KEY_D;
-	dialect_['E'] = KEY_E;
-	dialect_['F'] = KEY_F;
-	dialect_['G'] = KEY_G;
-	dialect_['H'] = KEY_H;
-	dialect_['I'] = KEY_I;
-	dialect_['J'] = KEY_J;
-	dialect_['K'] = KEY_K;
-	dialect_['L'] = KEY_L;
-	dialect_['M'] = KEY_M;
-	dialect_['N'] = KEY_N;
-	dialect_['O'] = KEY_O;
-	dialect_['P'] = KEY_P;
-	dialect_['Q'] = KEY_Q;
-	dialect_['R'] = KEY_R;
-	dialect_['S'] = KEY_S;
-	dialect_['T'] = KEY_T;
-	dialect_['U'] = KEY_U;
-	dialect_['V'] = KEY_V;
-	dialect_['W'] = KEY_W;
-	dialect_['X'] = KEY_X;
-	dialect_['Y'] = KEY_Y;
-	dialect_['Z'] = KEY_Z;
+	dialect_['A'] = KeyA;
+	dialect_['B'] = KeyB;
+	dialect_['C'] = KeyC;
+	dialect_['D'] = KeyD;
+	dialect_['E'] = KeyE;
+	dialect_['F'] = KeyF;
+	dialect_['G'] = KeyG;
+	dialect_['H'] = KeyH;
+	dialect_['I'] = KeyI;
+	dialect_['J'] = KeyJ;
+	dialect_['K'] = KeyK;
+	dialect_['L'] = KeyL;
+	dialect_['M'] = KeyM;
+	dialect_['N'] = KeyN;
+	dialect_['O'] = KeyO;
+	dialect_['P'] = KeyP;
+	dialect_['Q'] = KeyQ;
+	dialect_['R'] = KeyR;
+	dialect_['S'] = KeyS;
+	dialect_['T'] = KeyT;
+	dialect_['U'] = KeyU;
+	dialect_['V'] = KeyV;
+	dialect_['W'] = KeyW;
+	dialect_['X'] = KeyX;
+	dialect_['Y'] = KeyY;
+	dialect_['Z'] = KeyZ;
 
-	dialect_[VK_LEFT] = KEY_LEFT;
-	dialect_[VK_RIGHT] = KEY_RIGHT;
-	dialect_[VK_UP] = KEY_UP;
-	dialect_[VK_DOWN] = KEY_DOWN;
-	dialect_[VK_INSERT] = KEY_INSERT;
-	dialect_[VK_HOME] = KEY_HOME;
-	dialect_[VK_DELETE] = KEY_DELETE;
-	dialect_[VK_END] = KEY_END;
-	dialect_[VK_PRIOR] = KEY_PAGE_UP;
-	dialect_[VK_NEXT] = KEY_PAGE_DOWN;
+	dialect_[VK_LEFT] = KeyLeft;
+	dialect_[VK_RIGHT] = KeyRight;
+	dialect_[VK_UP] = KeyUp;
+	dialect_[VK_DOWN] = KeyDown;
+	dialect_[VK_INSERT] = KeyInsert;
+	dialect_[VK_HOME] = KeyHome;
+	dialect_[VK_DELETE] = KeyDelete;
+	dialect_[VK_END] = KeyEnd;
+	dialect_[VK_PRIOR] = KeyPageUp;
+	dialect_[VK_NEXT] = KeyPageDown;
 
-	dialect_[VK_BACK] = KEY_BACK_SPACE;
-	dialect_[VK_TAB] = KEY_TAB;
-	dialect_[VK_RETURN] = KEY_RETURN;
-	dialect_[VK_CAPITAL] = KEY_CAPS_LOCK;
-	dialect_[VK_LSHIFT] = KEY_SHIFT_L;
-	dialect_[VK_LCONTROL] = KEY_CTRL_L;
-	dialect_[VK_LWIN] = KEY_SUPER_L;
-	dialect_[VK_LMENU] = KEY_ALT_L;
-	dialect_[VK_RMENU] = KEY_ALT_R;
-	dialect_[VK_RWIN] = KEY_SUPER_R;
-	dialect_[VK_APPS] = KEY_MENU;
-	dialect_[VK_RCONTROL] = KEY_CTRL_R;
-	dialect_[VK_RSHIFT] = KEY_SHIFT_R;
+	dialect_[VK_BACK] = KeyBackSpace;
+	dialect_[VK_TAB] = KeyTab;
+	dialect_[VK_RETURN] = KeyReturn;
+	dialect_[VK_CAPITAL] = KeyCapsLock;
+	dialect_[VK_LSHIFT] = KeyShiftL;
+	dialect_[VK_LCONTROL] = KeyCtrlL;
+	dialect_[VK_LWIN] = KeySuperL;
+	dialect_[VK_LMENU] = KeyAltL;
+	dialect_[VK_RMENU] = KeyAltR;
+	dialect_[VK_RWIN] = KeySuperR;
+	dialect_[VK_APPS] = KeyMenu;
+	dialect_[VK_RCONTROL] = KeyCtrlR;
+	dialect_[VK_RSHIFT] = KeyShiftR;
 
-	dialect_[VK_VOLUME_MUTE] = KEY_MUTE;
-	dialect_[VK_VOLUME_DOWN] = KEY_VOLUME_DOWN;
-	dialect_[VK_VOLUME_UP] = KEY_VOLUME_UP;
-	dialect_[VK_SNAPSHOT] = KEY_PRINT;
-	dialect_[VK_OEM_4] = KEY_EXTRA_1;
-	dialect_[VK_OEM_6] = KEY_EXTRA_2;
-	dialect_[VK_BROWSER_BACK] = KEY_BACK;
-	dialect_[VK_BROWSER_FORWARD] = KEY_FORWARD;
-	dialect_[VK_OEM_MINUS] = KEY_MINUS;
-	dialect_[VK_OEM_PERIOD] = KEY_PERIOD;
-	dialect_[VK_OEM_2] = KEY_EXTRA_3;
-	dialect_[VK_OEM_PLUS] = KEY_PLUS;
-	dialect_[VK_OEM_7] = KEY_EXTRA_4;
-	dialect_[VK_OEM_3] = KEY_EXTRA_5;
-	dialect_[VK_OEM_1] = KEY_EXTRA_6;
+	dialect_[VK_VOLUME_MUTE] = KeyMute;
+	dialect_[VK_VOLUME_DOWN] = KeyVolumeDown;
+	dialect_[VK_VOLUME_UP] = KeyVolumeUp;
+	dialect_[VK_SNAPSHOT] = KeyPrint;
+	dialect_[VK_OEM_4] = KeyExtra1;
+	dialect_[VK_OEM_6] = KeyExtra2;
+	dialect_[VK_BROWSER_BACK] = KeyBack;
+	dialect_[VK_BROWSER_FORWARD] = KeyForward;
+	dialect_[VK_OEM_MINUS] = KeyMinus;
+	dialect_[VK_OEM_PERIOD] = KeyPeriod;
+	dialect_[VK_OEM_2] = KeyExtra3;
+	dialect_[VK_OEM_PLUS] = KeyPlus;
+	dialect_[VK_OEM_7] = KeyExtra4;
+	dialect_[VK_OEM_3] = KeyExtra5;
+	dialect_[VK_OEM_1] = KeyExtra6;
 
-	dialect_[0xff] = KEY_FN; // Marked as "reserved".
+	dialect_[0xff] = KeyFn; // Marked as "reserved".
 }
 
 void
@@ -222,11 +222,11 @@ InputDeviceKeyboardImpl::HandleMessage(const MSG& msg)
 		}
 		else
 		{
-			if (previousState_->GetBool(KEY_SHIFT_L) && !(GetKeyState(VK_LSHIFT) & 0x8000))
+			if (previousState_->GetBool(KeyShiftL) && !(GetKeyState(VK_LSHIFT) & 0x8000))
 			{
 				winKey = VK_LSHIFT;
 			} 
-			else if (previousState_->GetBool(KEY_SHIFT_R) && !(GetKeyState(VK_RSHIFT) & 0x8000))
+			else if (previousState_->GetBool(KeyShiftR) && !(GetKeyState(VK_RSHIFT) & 0x8000))
 			{
 				winKey = VK_RSHIFT;
 			}

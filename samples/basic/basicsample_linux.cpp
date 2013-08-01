@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 	const gainput::DeviceId padId = manager.CreateDevice<gainput::InputDevicePad>();
 
 	gainput::InputMap map(manager);
-	map.MapBool(ButtonMenu, keyboardId, gainput::KEY_ESCAPE);
+	map.MapBool(ButtonMenu, keyboardId, gainput::KeyEscape);
 	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
 	map.MapFloat(MouseX, mouseId, gainput::MOUSE_AXIS_X);
 	map.MapFloat(MouseY, mouseId, gainput::MOUSE_AXIS_Y);
