@@ -172,6 +172,9 @@ GetKeyboardKeyNames(HashMap<Key, const char*>& names)
 	names[KeyAsterisk] = "asterisk";
 	names[KeyColon] = "colon";
 	names[KeyExclam] = "exclam";
+	names[KeyBraceLeft] = "brace_left";
+	names[KeyBraceRight] = "brace_right";
+	names[KeySysRq] = "sys_rq";
 }
 
 

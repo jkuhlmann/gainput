@@ -185,6 +185,10 @@ enum Key
 	KeyColon,
 	KeyExclam,
 
+	KeyBraceLeft,
+	KeyBraceRight,
+	KeySysRq,
+
 	KeyCount_
 };
 
