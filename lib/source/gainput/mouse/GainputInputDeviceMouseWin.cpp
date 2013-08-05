@@ -1,7 +1,7 @@
 
 #include <gainput/gainput.h>
 
-#if defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_WIN) && !defined(GAINPUT_ENABLE_RAW_INPUT)
 
 #include "GainputInputDeviceMouseWin.h"
 #include "../GainputInputDeltaState.h"

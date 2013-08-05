@@ -9,7 +9,11 @@
 #include "mouse/GainputInputDeviceMouseLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 #include "keyboard/GainputInputDeviceKeyboardWin.h"
-#include "mouse/GainputInputDeviceMouseWin.h"
+	#if !defined(GAINPUT_ENABLE_RAW_INPUT)
+		#include "mouse/GainputInputDeviceMouseWin.h"
+	#else
+		#include "mouse/GainputInputDeviceMouseWinRaw.h"
+	#endif
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 #include <time.h>
 #include "keyboard/GainputInputDeviceKeyboardAndroid.h"

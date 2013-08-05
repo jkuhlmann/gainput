@@ -7,14 +7,14 @@ namespace gainput
 
 	inline void HandleButton(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
 	{
-		state.Set(buttonId, value);
-
 #ifdef GAINPUT_DEBUG
 		if (value != previousState.GetBool(buttonId))
 		{
 			GAINPUT_LOG("Button changed: %d, %i\n", buttonId, value);
 		}
 #endif
+
+		state.Set(buttonId, value);
 
 		if (delta)
 		{
