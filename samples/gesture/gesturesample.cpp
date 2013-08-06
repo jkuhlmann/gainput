@@ -154,29 +154,29 @@ void SampleMain()
 
 	gainput::InputMap map(manager, "testmap");
 
-	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
+	map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 
 	gainput::DoubleClickGesture* dcg = manager.CreateAndGetDevice<gainput::DoubleClickGesture>();
 	GAINPUT_ASSERT(dcg);
-	dcg->Initialize(mouseId, gainput::MOUSE_BUTTON_LEFT,
-			mouseId, gainput::MOUSE_AXIS_X, 0.01f,
-			mouseId, gainput::MOUSE_AXIS_Y, 0.01f,
+	dcg->Initialize(mouseId, gainput::MouseButtonLeft,
+			mouseId, gainput::MouseAxisX, 0.01f,
+			mouseId, gainput::MouseAxisY, 0.01f,
 			500);
 	map.MapBool(ButtonConfirmDouble, dcg->GetDeviceId(), gainput::DoubleClickTriggered);
 
 	gainput::SimultaneouslyDownGesture* sdg = manager.CreateAndGetDevice<gainput::SimultaneouslyDownGesture>();
 	GAINPUT_ASSERT(sdg);
-	sdg->AddButton(mouseId, gainput::MOUSE_BUTTON_LEFT);
+	sdg->AddButton(mouseId, gainput::MouseButtonLeft);
 	sdg->AddButton(keyboardId, gainput::KeyShiftL);
 	map.MapBool(ButtonConfirmExtra, sdg->GetDeviceId(), gainput::SimultaneouslyDownTriggered);
 
 	MultiTouchEmulator* mte = manager.CreateAndGetDevice<MultiTouchEmulator>();
 	mte->Initialize(sdg->GetDeviceId(), gainput::SimultaneouslyDownTriggered,
-			mouseId, gainput::MOUSE_AXIS_X,
-			mouseId, gainput::MOUSE_AXIS_Y,
-			mouseId, gainput::MOUSE_BUTTON_LEFT,
-			mouseId, gainput::MOUSE_AXIS_X,
-			mouseId, gainput::MOUSE_AXIS_Y);
+			mouseId, gainput::MouseAxisX,
+			mouseId, gainput::MouseAxisY,
+			mouseId, gainput::MouseButtonLeft,
+			mouseId, gainput::MouseAxisX,
+			mouseId, gainput::MouseAxisY);
 
 	if (!touchDevice->IsAvailable())
 	{

@@ -120,7 +120,7 @@ void SampleMain()
 	map.MapBool(ButtonReset, keyboardId, gainput::KeyEscape);
 	map.MapBool(ButtonSave, keyboardId, gainput::KeyF1);
 	map.MapBool(ButtonLoad, keyboardId, gainput::KeyF2);
-	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
+	map.MapFloat(ButtonMouseX, mouseId, gainput::MouseAxisX);
 
 	gainput::DeviceButtonSpec anyButton[32];
 	bool mapped = false;

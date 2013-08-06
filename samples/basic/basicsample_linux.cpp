@@ -75,9 +75,9 @@ int main(int argc, char** argv)
 
 	gainput::InputMap map(manager);
 	map.MapBool(ButtonMenu, keyboardId, gainput::KeyEscape);
-	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
-	map.MapFloat(MouseX, mouseId, gainput::MOUSE_AXIS_X);
-	map.MapFloat(MouseY, mouseId, gainput::MOUSE_AXIS_Y);
+	map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
+	map.MapFloat(MouseX, mouseId, gainput::MouseAxisX);
+	map.MapFloat(MouseY, mouseId, gainput::MouseAxisY);
 	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 
 	manager.SetDisplaySize(width, height);

@@ -8,36 +8,36 @@ namespace gainput
 /// All valid device buttons for InputDeviceMouse.
 enum MouseButton
 {
-	MOUSE_BUTTON_0 = 0,
-	MOUSE_BUTTON_LEFT = MOUSE_BUTTON_0,
-	MOUSE_BUTTON_1,
-	MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_1,
-	MOUSE_BUTTON_2,
-	MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
-	MOUSE_BUTTON_3,
-	MOUSE_BUTTON_WHEEL_UP = MOUSE_BUTTON_3,
-	MOUSE_BUTTON_4,
-	MOUSE_BUTTON_WHEEL_DOWN = MOUSE_BUTTON_4,
-	MOUSE_BUTTON_5,
-	MOUSE_BUTTON_6,
-	MOUSE_BUTTON_7,
-	MOUSE_BUTTON_8,
-	MOUSE_BUTTON_9,
-	MOUSE_BUTTON_10,
-	MOUSE_BUTTON_11,
-	MOUSE_BUTTON_12,
-	MOUSE_BUTTON_13,
-	MOUSE_BUTTON_14,
-	MOUSE_BUTTON_15,
-	MOUSE_BUTTON_16,
-	MOUSE_BUTTON_17,
-	MOUSE_BUTTON_18,
-	MOUSE_BUTTON_19,
-	MOUSE_BUTTON_20,
-	MOUSE_BUTTON_MAX = MOUSE_BUTTON_20,
-	MOUSE_AXIS_X,
-	MOUSE_AXIS_Y,
-	MOUSE_BUTTON_COUNT
+	MouseButton0 = 0,
+	MouseButtonLeft = MouseButton0,
+	MouseButton1,
+	MouseButtonMiddle = MouseButton1,
+	MouseButton2,
+	MouseButtonRight = MouseButton2,
+	MouseButton3,
+	MouseButtonWheelUp = MouseButton3,
+	MouseButton4,
+	MouseButtonWheelDown = MouseButton4,
+	MouseButton5,
+	MouseButton6,
+	MouseButton7,
+	MouseButton8,
+	MouseButton9,
+	MouseButton10,
+	MouseButton11,
+	MouseButton12,
+	MouseButton13,
+	MouseButton14,
+	MouseButton15,
+	MouseButton16,
+	MouseButton17,
+	MouseButton18,
+	MouseButton19,
+	MouseButton20,
+	MouseButtonMax = MouseButton20,
+	MouseAxisX,
+	MouseAxisY,
+	MouseButtonCount_
 };
 
 
@@ -68,7 +68,7 @@ public:
 	/// Returns DT_MOUSE.
 	DeviceType GetType() const { return DT_MOUSE; }
 	const char* GetTypeName() const { return "mouse"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= MOUSE_BUTTON_0 && deviceButton < MOUSE_BUTTON_COUNT; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= MouseButton0 && deviceButton < MouseButtonCount_; }
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 

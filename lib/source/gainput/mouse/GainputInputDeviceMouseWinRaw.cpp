@@ -82,75 +82,75 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	{
 		if (raw->data.mouse.usFlags == MOUSE_MOVE_RELATIVE)
 		{
-			const float prevX = previousState_->GetFloat(MOUSE_AXIS_X);
-			HandleAxis(device_, nextState_, *previousState_, delta_, MOUSE_AXIS_X, prevX + float(raw->data.mouse.lLastX));
-			const float prevY = previousState_->GetFloat(MOUSE_AXIS_Y);
-			HandleAxis(device_, nextState_, *previousState_, delta_, MOUSE_AXIS_Y, prevY + float(raw->data.mouse.lLastY));
+			const float prevX = previousState_->GetFloat(MouseAxisX);
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, prevX + float(raw->data.mouse.lLastX));
+			const float prevY = previousState_->GetFloat(MouseAxisY);
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, prevY + float(raw->data.mouse.lLastY));
 		}
 		else if (raw->data.mouse.usFlags & MOUSE_MOVE_ABSOLUTE)
 		{
-			HandleAxis(device_, nextState_, *previousState_, delta_, MOUSE_AXIS_X, float( raw->data.mouse.lLastX));
-			HandleAxis(device_, nextState_, *previousState_, delta_, MOUSE_AXIS_Y, float( raw->data.mouse.lLastY));
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, float( raw->data.mouse.lLastX));
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, float( raw->data.mouse.lLastY));
 		}
 		
 		if (raw->data.mouse.usButtonFlags == RI_MOUSE_WHEEL)
 		{
 			if (SHORT(raw->data.mouse.usButtonData) < 0)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_WHEEL_DOWN, true);
-				buttonsToReset_.push_back(MOUSE_BUTTON_WHEEL_DOWN);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButtonWheelDown, true);
+				buttonsToReset_.push_back(MouseButtonWheelDown);
 			}
 			else if (SHORT(raw->data.mouse.usButtonData) > 0)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_WHEEL_UP, true);
-				buttonsToReset_.push_back(MOUSE_BUTTON_WHEEL_UP);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButtonWheelUp, true);
+				buttonsToReset_.push_back(MouseButtonWheelUp);
 			}
 		}
 		else
 		{
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_1_DOWN)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_0, true);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton0, true);
 			}
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_1_UP)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_0, false);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton0, false);
 			}
 
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_2_DOWN)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_1, true);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton1, true);
 			}
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_2_UP)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_1, false);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton1, false);
 			}
 
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_3_DOWN)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_2, true);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton2, true);
 			}
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_3_UP)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_2, false);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton2, false);
 			}
 
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_4_DOWN)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_5, true);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton5, true);
 			}
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_4_UP)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_5, false);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton5, false);
 			}
 
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_5_DOWN)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_6, true);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton6, true);
 			}
 			if (raw->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_5_UP)
 			{
-				HandleButton(device_, nextState_, *previousState_, delta_, MOUSE_BUTTON_6, false);
+				HandleButton(device_, nextState_, *previousState_, delta_, MouseButton6, false);
 			}
 		}
 	} 

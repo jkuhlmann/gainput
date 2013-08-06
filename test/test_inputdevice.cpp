@@ -63,30 +63,30 @@ TEST_CASE("InputDevice/mouse", "")
 	REQUIRE(device->GetState() == InputDevice::DS_OK);
 	REQUIRE(device->IsAvailable());
 
-	REQUIRE(device->IsValidButtonId(MOUSE_BUTTON_LEFT));
-	REQUIRE(device->IsValidButtonId(MOUSE_BUTTON_MIDDLE));
-	REQUIRE(device->IsValidButtonId(MOUSE_BUTTON_RIGHT));
-	REQUIRE(device->IsValidButtonId(MOUSE_AXIS_X));
-	REQUIRE(device->IsValidButtonId(MOUSE_AXIS_Y));
+	REQUIRE(device->IsValidButtonId(MouseButtonLeft));
+	REQUIRE(device->IsValidButtonId(MouseButtonMiddle));
+	REQUIRE(device->IsValidButtonId(MouseButtonRight));
+	REQUIRE(device->IsValidButtonId(MouseAxisX));
+	REQUIRE(device->IsValidButtonId(MouseAxisY));
 
 	char buf[32];
-	REQUIRE(device->GetButtonName(MOUSE_BUTTON_LEFT, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(MOUSE_BUTTON_RIGHT, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(MOUSE_BUTTON_14, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(MOUSE_AXIS_X, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(MOUSE_AXIS_Y, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(MouseButtonLeft, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(MouseButtonRight, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(MouseButton14, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(MouseAxisX, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(MouseAxisY, buf, 32) > 0);
 
-	REQUIRE(device->GetButtonType(MOUSE_BUTTON_LEFT) == BT_BOOL);
-	REQUIRE(device->GetButtonType(MOUSE_BUTTON_MIDDLE) == BT_BOOL);
-	REQUIRE(device->GetButtonType(MOUSE_BUTTON_RIGHT) == BT_BOOL);
-	REQUIRE(device->GetButtonType(MOUSE_AXIS_X) == BT_FLOAT);
-	REQUIRE(device->GetButtonType(MOUSE_AXIS_Y) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(MouseButtonLeft) == BT_BOOL);
+	REQUIRE(device->GetButtonType(MouseButtonMiddle) == BT_BOOL);
+	REQUIRE(device->GetButtonType(MouseButtonRight) == BT_BOOL);
+	REQUIRE(device->GetButtonType(MouseAxisX) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(MouseAxisY) == BT_FLOAT);
 
-	REQUIRE(device->GetButtonByName("mouse_left") == MOUSE_BUTTON_LEFT);
-	REQUIRE(device->GetButtonByName("mouse_right") == MOUSE_BUTTON_RIGHT);
-	REQUIRE(device->GetButtonByName("mouse_11") == MOUSE_BUTTON_11);
-	REQUIRE(device->GetButtonByName("mouse_x") == MOUSE_AXIS_X);
-	REQUIRE(device->GetButtonByName("mouse_y") == MOUSE_AXIS_Y);
+	REQUIRE(device->GetButtonByName("mouse_left") == MouseButtonLeft);
+	REQUIRE(device->GetButtonByName("mouse_right") == MouseButtonRight);
+	REQUIRE(device->GetButtonByName("mouse_11") == MouseButton11);
+	REQUIRE(device->GetButtonByName("mouse_x") == MouseAxisX);
+	REQUIRE(device->GetButtonByName("mouse_y") == MouseAxisY);
 
 	REQUIRE(device->GetInputState());
 	REQUIRE(device->GetPreviousInputState());

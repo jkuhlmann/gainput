@@ -89,15 +89,15 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 		{
 			int button = -1;
 			if (event.code == BTN_LEFT)
-				button = MOUSE_BUTTON_LEFT;
+				button = MouseButtonLeft;
 			else if (event.code == BTN_MIDDLE)
-				button = MOUSE_BUTTON_MIDDLE;
+				button = MouseButtonMiddle;
 			else if (event.code == BTN_RIGHT)
-				button = MOUSE_BUTTON_RIGHT;
+				button = MouseButtonRight;
 			else if (event.code == BTN_SIDE)
-				button = MOUSE_BUTTON_5;
+				button = MouseButton5;
 			else if (event.code == BTN_EXTRA)
-				button = MOUSE_BUTTON_6;
+				button = MouseButton6;
 
 			if (button != -1)
 			{
@@ -108,25 +108,25 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 		{
 			int button = -1;
 			if (event.code == REL_X)
-				button = MOUSE_AXIS_X;
+				button = MouseAxisX;
 			else if (event.code == REL_Y)
-				button = MOUSE_AXIS_Y;
+				button = MouseAxisY;
 			else if (event.code == REL_HWHEEL)
-				button = MOUSE_BUTTON_7;
+				button = MouseButton7;
 			else if (event.code == REL_WHEEL)
-				button = MOUSE_BUTTON_WHEEL_UP;
+				button = MouseButtonWheelUp;
 
-			if (button == MOUSE_BUTTON_WHEEL_UP)
+			if (button == MouseButtonWheelUp)
 			{
 				if (event.value < 0)
-					button = MOUSE_BUTTON_WHEEL_DOWN;
+					button = MouseButtonWheelDown;
 				HandleButton(device_, state, previousState, delta, DeviceButtonId(button), true);
 				buttonsToReset_.push_back(button);
 			}
-			else if (button == MOUSE_BUTTON_7)
+			else if (button == MouseButton7)
 			{
 				if (event.value < 0)
-					button = MOUSE_BUTTON_8;
+					button = MouseButton8;
 				HandleButton(device_, state, previousState, delta, DeviceButtonId(button), true);
 				buttonsToReset_.push_back(button);
 			}

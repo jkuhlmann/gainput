@@ -52,9 +52,9 @@ TEST_CASE("InputRecording/serialization", "")
 	const DeviceId deviceId = manager.CreateDevice<InputDeviceMouse>();
 	InputRecording recording;
 
-	recording.AddChange(500, deviceId, MOUSE_BUTTON_LEFT, true);
-	recording.AddChange(600, deviceId, MOUSE_BUTTON_MIDDLE, false);
-	recording.AddChange(700, deviceId, MOUSE_AXIS_X, 0.2f);
+	recording.AddChange(500, deviceId, MouseButtonLeft, true);
+	recording.AddChange(600, deviceId, MouseButtonMiddle, false);
+	recording.AddChange(700, deviceId, MouseAxisX, 0.2f);
 
 	REQUIRE(recording.GetSerializedSize() > 0);
 

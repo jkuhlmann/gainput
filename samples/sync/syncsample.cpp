@@ -57,8 +57,8 @@ void SampleMain()
 
 	gainput::InputMap map(manager, "testmap");
 	map.MapBool(ButtonClient, keyboardId, gainput::KeyF1);
-	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
-	map.MapFloat(ButtonMouseLeft, mouseId, gainput::MOUSE_BUTTON_LEFT);
+	map.MapFloat(ButtonMouseX, mouseId, gainput::MouseAxisX);
+	map.MapFloat(ButtonMouseLeft, mouseId, gainput::MouseButtonLeft);
 
 	MyDeviceButtonListener myDeviceButtonListener(manager);
 	manager.AddListener(&myDeviceButtonListener);

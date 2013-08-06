@@ -33,20 +33,20 @@ InputDeviceMouseImpl::Update(InputState& state, InputState& previousState, Input
 	delta_ = delta;
 
 	// Reset mouse wheel buttons
-	nextState_.Set(MOUSE_BUTTON_3, false);
-	nextState_.Set(MOUSE_BUTTON_4, false);
+	nextState_.Set(MouseButton3, false);
+	nextState_.Set(MouseButton4, false);
 
 	if (delta)
 	{
-		bool oldValue = previousState.GetBool(MOUSE_BUTTON_3);
+		bool oldValue = previousState.GetBool(MouseButton3);
 		if (oldValue)
 		{
-			delta->AddChange(device_, MOUSE_BUTTON_3, oldValue, false);
+			delta->AddChange(device_, MouseButton3, oldValue, false);
 		}
-		oldValue = previousState.GetBool(MOUSE_BUTTON_4);
+		oldValue = previousState.GetBool(MouseButton4);
 		if (oldValue)
 		{
-			delta->AddChange(device_, MOUSE_BUTTON_4, oldValue, false);
+			delta->AddChange(device_, MouseButton4, oldValue, false);
 		}
 	}
 
@@ -67,35 +67,35 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	switch (msg.message)
 	{
 	case WM_LBUTTONDOWN:
-		buttonId = MOUSE_BUTTON_LEFT;
+		buttonId = MouseButtonLeft;
 		pressed = true;
 		break;
 	case WM_LBUTTONUP:
-		buttonId = MOUSE_BUTTON_LEFT;
+		buttonId = MouseButtonLeft;
 		pressed = false;
 		break;
 	case WM_RBUTTONDOWN:
-		buttonId = MOUSE_BUTTON_RIGHT;
+		buttonId = MouseButtonRight;
 		pressed = true;
 		break;
 	case WM_RBUTTONUP:
-		buttonId = MOUSE_BUTTON_RIGHT;
+		buttonId = MouseButtonRight;
 		pressed = false;
 		break;
 	case WM_MBUTTONDOWN:
-		buttonId = MOUSE_BUTTON_MIDDLE;
+		buttonId = MouseButtonMiddle;
 		pressed = true;
 		break;
 	case WM_MBUTTONUP:
-		buttonId = MOUSE_BUTTON_MIDDLE;
+		buttonId = MouseButtonMiddle;
 		pressed = false;
 		break;
 	case WM_XBUTTONDOWN:
-		buttonId = MOUSE_BUTTON_4 + GET_XBUTTON_WPARAM(msg.wParam);
+		buttonId = MouseButton4 + GET_XBUTTON_WPARAM(msg.wParam);
 		pressed = true;
 		break;
 	case WM_XBUTTONUP:
-		buttonId = MOUSE_BUTTON_4 + GET_XBUTTON_WPARAM(msg.wParam);
+		buttonId = MouseButton4 + GET_XBUTTON_WPARAM(msg.wParam);
 		pressed = false;
 		break;
 	case WM_MOUSEMOVE:
@@ -108,12 +108,12 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 			int wheel = GET_WHEEL_DELTA_WPARAM(msg.wParam);
 			if (wheel < 0)
 			{
-				buttonId = MOUSE_BUTTON_4;
+				buttonId = MouseButton4;
 				pressed = true;
 			}
 			else if (wheel > 0)
 			{
-				buttonId = MOUSE_BUTTON_3;
+				buttonId = MouseButton3;
 				pressed = true;
 			}
 			break;
@@ -126,8 +126,8 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 	{
 		float x = float(ax)/float(manager_.GetDisplayWidth());
 		float y = float(ay)/float(manager_.GetDisplayHeight());
-		nextState_.Set(MOUSE_AXIS_X, x);
-		nextState_.Set(MOUSE_AXIS_Y, y);
+		nextState_.Set(MouseAxisX, x);
+		nextState_.Set(MouseAxisY, y);
 
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG("Mouse: %f, %f\n", x, y);
@@ -135,15 +135,15 @@ InputDeviceMouseImpl::HandleMessage(const MSG& msg)
 
 		if (delta_)
 		{
-			const float oldX = previousState_->GetFloat(MOUSE_AXIS_X);
-			const float oldY = previousState_->GetFloat(MOUSE_AXIS_Y);
+			const float oldX = previousState_->GetFloat(MouseAxisX);
+			const float oldY = previousState_->GetFloat(MouseAxisY);
 			if (oldX != x)
 			{
-				delta_->AddChange(device_, MOUSE_AXIS_X, oldX, x);
+				delta_->AddChange(device_, MouseAxisX, oldX, x);
 			}
 			if (oldY != y)
 			{
-				delta_->AddChange(device_, MOUSE_AXIS_Y, oldY, y);
+				delta_->AddChange(device_, MouseAxisY, oldY, y);
 			}
 		}
 	}

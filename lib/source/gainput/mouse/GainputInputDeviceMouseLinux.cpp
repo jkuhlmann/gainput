@@ -77,20 +77,20 @@ InputDeviceMouseImpl::HandleEvent(XEvent& event)
 			const XMotionEvent& motionEvent = event.xmotion;
 			const float x = float(motionEvent.x)/float(manager_.GetDisplayWidth());
 			const float y = float(motionEvent.y)/float(manager_.GetDisplayHeight());
-			nextState_.Set(MOUSE_AXIS_X, x);
-			nextState_.Set(MOUSE_AXIS_Y, y);
+			nextState_.Set(MouseAxisX, x);
+			nextState_.Set(MouseAxisY, y);
 
 			if (delta_)
 			{
-				const float oldX = previousState_->GetFloat(MOUSE_AXIS_X);
-				const float oldY = previousState_->GetFloat(MOUSE_AXIS_Y);
+				const float oldX = previousState_->GetFloat(MouseAxisX);
+				const float oldY = previousState_->GetFloat(MouseAxisY);
 				if (oldX != x)
 				{
-					delta_->AddChange(device_, MOUSE_AXIS_X, oldX, x);
+					delta_->AddChange(device_, MouseAxisX, oldX, x);
 				}
 				if (oldY != y)
 				{
-					delta_->AddChange(device_, MOUSE_AXIS_Y, oldY, y);
+					delta_->AddChange(device_, MouseAxisY, oldY, y);
 				}
 			}
 			break;
@@ -101,7 +101,7 @@ InputDeviceMouseImpl::HandleEvent(XEvent& event)
 			const XButtonEvent& buttonEvent = event.xbutton;
 			GAINPUT_ASSERT(buttonEvent.button > 0);
 			const DeviceButtonId buttonId = buttonEvent.button-1;
-			GAINPUT_ASSERT(buttonId <= MOUSE_BUTTON_MAX);
+			GAINPUT_ASSERT(buttonId <= MouseButtonMax);
 			const bool pressed = event.type == ButtonPress;
 
 			if (!pressed && pressedThisFrame_[buttonId])

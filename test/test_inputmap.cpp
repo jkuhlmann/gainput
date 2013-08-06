@@ -46,11 +46,11 @@ TEST_CASE("InputMap/map_bool", "")
 	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyA));
 	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyB));
 	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyEscape));
-	REQUIRE(map.MapBool(ButtonA, mouseId, MOUSE_BUTTON_LEFT));
+	REQUIRE(map.MapBool(ButtonA, mouseId, MouseButtonLeft));
 	REQUIRE(map.IsMapped(ButtonA));
 
 	REQUIRE(map.MapBool(ButtonB, keyboardId, KeyF2));
-	REQUIRE(map.MapBool(ButtonB, mouseId, MOUSE_BUTTON_LEFT));
+	REQUIRE(map.MapBool(ButtonB, mouseId, MouseButtonLeft));
 	REQUIRE(map.IsMapped(ButtonB));
 
 	map.Clear();
@@ -59,7 +59,7 @@ TEST_CASE("InputMap/map_bool", "")
 		REQUIRE(!map.IsMapped(b));
 	}
 
-	REQUIRE(map.MapBool(ButtonA, mouseId, MOUSE_BUTTON_RIGHT));
+	REQUIRE(map.MapBool(ButtonA, mouseId, MouseButtonRight));
 	REQUIRE(map.IsMapped(ButtonA));
 
 	map.Unmap(ButtonA);
@@ -68,20 +68,20 @@ TEST_CASE("InputMap/map_bool", "")
 	DeviceButtonSpec mappings[32];
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 0);
 
-	REQUIRE(map.MapBool(ButtonA, mouseId, MOUSE_BUTTON_MIDDLE));
+	REQUIRE(map.MapBool(ButtonA, mouseId, MouseButtonMiddle));
 	REQUIRE(map.MapBool(ButtonA, keyboardId, KeyD));
 	REQUIRE(map.MapBool(ButtonD, keyboardId, KeyB));
 
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 2);
 	REQUIRE(mappings[0].deviceId == mouseId);
-	REQUIRE(mappings[0].buttonId == MOUSE_BUTTON_MIDDLE);
+	REQUIRE(mappings[0].buttonId == MouseButtonMiddle);
 	REQUIRE(mappings[1].deviceId == keyboardId);
 	REQUIRE(mappings[1].buttonId == KeyD);
 
 	char buf[32];
 	REQUIRE(map.GetUserButtonName(ButtonA, buf, 32));
 
-	REQUIRE(map.GetUserButtonId(mouseId, MOUSE_BUTTON_MIDDLE) == ButtonA);
+	REQUIRE(map.GetUserButtonId(mouseId, MouseButtonMiddle) == ButtonA);
 	REQUIRE(map.GetUserButtonId(keyboardId, KeyD) == ButtonA);
 	REQUIRE(map.GetUserButtonId(keyboardId, KeyB) == ButtonD);
 }
@@ -97,13 +97,13 @@ TEST_CASE("InputMap/map_float", "")
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyA));
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyB));
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyEscape));
-	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_BUTTON_LEFT));
-	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_Y));
+	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseButtonLeft));
+	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisY));
 	REQUIRE(map.MapFloat(ButtonA, padId, PAD_BUTTON_LEFT_STICK_X));
 	REQUIRE(map.IsMapped(ButtonA));
 
 	REQUIRE(map.MapFloat(ButtonB, keyboardId, KeyF2));
-	REQUIRE(map.MapFloat(ButtonB, mouseId, MOUSE_AXIS_X));
+	REQUIRE(map.MapFloat(ButtonB, mouseId, MouseAxisX));
 	REQUIRE(map.IsMapped(ButtonB));
 
 	map.Clear();
@@ -112,7 +112,7 @@ TEST_CASE("InputMap/map_float", "")
 		REQUIRE(!map.IsMapped(b));
 	}
 
-	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_X));
+	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisX));
 	REQUIRE(map.IsMapped(ButtonA));
 
 	map.Unmap(ButtonA);
@@ -121,20 +121,20 @@ TEST_CASE("InputMap/map_float", "")
 	DeviceButtonSpec mappings[32];
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 0);
 
-	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_X));
+	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisX));
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyF5));
 	REQUIRE(map.MapFloat(ButtonD, padId, PAD_BUTTON_RIGHT_STICK_Y));
 
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 2);
 	REQUIRE(mappings[0].deviceId == mouseId);
-	REQUIRE(mappings[0].buttonId == MOUSE_AXIS_X);
+	REQUIRE(mappings[0].buttonId == MouseAxisX);
 	REQUIRE(mappings[1].deviceId == keyboardId);
 	REQUIRE(mappings[1].buttonId == KeyF5);
 
 	char buf[32];
 	REQUIRE(map.GetUserButtonName(ButtonA, buf, 32));
 
-	REQUIRE(map.GetUserButtonId(mouseId, MOUSE_AXIS_X) == ButtonA);
+	REQUIRE(map.GetUserButtonId(mouseId, MouseAxisX) == ButtonA);
 	REQUIRE(map.GetUserButtonId(keyboardId, KeyF5) == ButtonA);
 	REQUIRE(map.GetUserButtonId(padId, PAD_BUTTON_RIGHT_STICK_Y) == ButtonD);
 }
@@ -153,7 +153,7 @@ TEST_CASE("InputMap/SetDeadZone_SetUserButtonPolicy", "")
 		REQUIRE(!map.SetUserButtonPolicy(b, InputMap::UBP_AVERAGE));
 	}
 
-	REQUIRE(map.MapFloat(ButtonA, mouseId, MOUSE_AXIS_X));
+	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisX));
 
 	REQUIRE(map.SetDeadZone(ButtonA, 0.01f));
 	REQUIRE(map.SetDeadZone(ButtonA, 0.0f));

@@ -34,7 +34,7 @@ const gainput::DeviceId touchId = manager.CreateDevice<gainput::InputDeviceTouch
 
 gainput::InputMap map(manager);
 map.MapBool(ButtonConfirm, keyboardId, gainput::KeyReturn);
-map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
+map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
 map.MapBool(ButtonConfirm, touchId, gainput::TOUCH_0_DOWN);
 

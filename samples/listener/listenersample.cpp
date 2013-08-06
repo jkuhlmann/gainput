@@ -75,8 +75,8 @@ void SampleMain()
 
 	map.MapBool(ButtonToggleListener, keyboardId, gainput::KeyF1);
 	map.MapBool(ButtonToggleMapListener, keyboardId, gainput::KeyF2);
-	map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
-	map.MapFloat(ButtonMouseX, mouseId, gainput::MOUSE_AXIS_X);
+	map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
+	map.MapFloat(ButtonMouseX, mouseId, gainput::MouseAxisX);
 
 	MyDeviceButtonListener myDeviceButtonListener(manager);
 	MyUserButtonListener myUserButtonListener;

@@ -37,7 +37,7 @@ const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse
 manager.SetDisplaySize(width, height);
 
 gainput::InputMap map(manager);
-map.MapBool(ButtonConfirm, mouseId, gainput::MOUSE_BUTTON_LEFT);
+map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 
 while (game_running)
 {
