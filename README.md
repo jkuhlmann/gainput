@@ -36,7 +36,7 @@ gainput::InputMap map(manager);
 map.MapBool(ButtonConfirm, keyboardId, gainput::KeyReturn);
 map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
-map.MapBool(ButtonConfirm, touchId, gainput::TOUCH_0_DOWN);
+map.MapBool(ButtonConfirm, touchId, gainput::Touch0Down);
 
 while (game_running)
 {

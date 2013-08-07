@@ -46,12 +46,12 @@ InputDeviceTouchImpl::HandleInput(AInputEvent* event)
 		const float y = AMotionEvent_getY(event, i);
 		const int32_t w = manager_.GetDisplayWidth();
 		const int32_t h = manager_.GetDisplayHeight();
-		HandleFloat(TOUCH_0_X + i*TouchDataElems, x/float(w));
-		HandleFloat(TOUCH_0_Y + i*TouchDataElems, y/float(h));
+		HandleFloat(Touch0X + i*TouchDataElems, x/float(w));
+		HandleFloat(Touch0Y + i*TouchDataElems, y/float(h));
 		const int motionAction = AMotionEvent_getAction(event);
 		const bool down = (motionAction == AMOTION_EVENT_ACTION_DOWN || motionAction == AMOTION_EVENT_ACTION_MOVE);
-		HandleBool(TOUCH_0_DOWN + i*TouchDataElems, down);
-		HandleFloat(TOUCH_0_PRESSURE + i*TouchDataElems, AMotionEvent_getPressure(event, i));
+		HandleBool(Touch0Down + i*TouchDataElems, down);
+		HandleFloat(Touch0Pressure + i*TouchDataElems, AMotionEvent_getPressure(event, i));
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i, action: %d\n", i, x, y, w, h, motionAction);
 #endif

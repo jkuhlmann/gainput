@@ -8,39 +8,39 @@ namespace gainput
 /// All valid device inputs for InputDeviceTouch.
 enum TouchButton
 {
-	TOUCH_0_DOWN,
-	TOUCH_0_X,
-	TOUCH_0_Y,
-	TOUCH_0_PRESSURE,
-	TOUCH_1_DOWN,
-	TOUCH_1_X,
-	TOUCH_1_Y,
-	TOUCH_1_PRESSURE,
-	TOUCH_2_DOWN,
-	TOUCH_2_X,
-	TOUCH_2_Y,
-	TOUCH_2_PRESSURE,
-	TOUCH_3_DOWN,
-	TOUCH_3_X,
-	TOUCH_3_Y,
-	TOUCH_3_PRESSURE,
-	TOUCH_4_DOWN,
-	TOUCH_4_X,
-	TOUCH_4_Y,
-	TOUCH_4_PRESSURE,
-	TOUCH_5_DOWN,
-	TOUCH_5_X,
-	TOUCH_5_Y,
-	TOUCH_5_PRESSURE,
-	TOUCH_6_DOWN,
-	TOUCH_6_X,
-	TOUCH_6_Y,
-	TOUCH_6_PRESSURE,
-	TOUCH_7_DOWN,
-	TOUCH_7_X,
-	TOUCH_7_Y,
-	TOUCH_7_PRESSURE,
-	TOUCH_COUNT
+	Touch0Down,
+	Touch0X,
+	Touch0Y,
+	Touch0Pressure,
+	Touch1Down,
+	Touch1X,
+	Touch1Y,
+	Touch1Pressure,
+	Touch2Down,
+	Touch2X,
+	Touch2Y,
+	Touch2Pressure,
+	Touch3Down,
+	Touch3X,
+	Touch3Y,
+	Touch3Pressure,
+	Touch4Down,
+	Touch4X,
+	Touch4Y,
+	Touch4Pressure,
+	Touch5Down,
+	Touch5X,
+	Touch5Y,
+	Touch5Pressure,
+	Touch6Down,
+	Touch6X,
+	Touch6Y,
+	Touch6Pressure,
+	Touch7Down,
+	Touch7X,
+	Touch7Y,
+	Touch7Pressure,
+	TouchCount_
 };
 
 
@@ -50,9 +50,9 @@ class InputDeviceTouchImpl;
 /// A touch input device.
 /**
  * This input device provides support for touch screen/surface devices. The valid device buttons are defined
- * in the ::TouchButton enum. For each touch point, there is a boolean input (TOUCH_*_DOWN) showing if the
- * touch point is active, two float inputs (TOUCH_*_X, TOUCH_*_Y) showing the touch point's position, and a
- * float input (TOUCH_*_PRESSURE) showing the touch's pressure.
+ * in the ::TouchButton enum. For each touch point, there is a boolean input (Touch*Down) showing if the
+ * touch point is active, two float inputs (Touch*X, Touch*Y) showing the touch point's position, and a
+ * float input (Touch*Pressure) showing the touch's pressure.
  *
  * Not all touch points must be numbered consecutively, i.e. point #2 may be down even though #0 and #1 are not.
  *
@@ -77,7 +77,7 @@ public:
 	/// Returns DT_TOUCH.
 	DeviceType GetType() const { return DT_TOUCH; }
 	const char* GetTypeName() const { return "touch"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= TOUCH_0_DOWN && deviceButton < TOUCH_COUNT; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= Touch0Down && deviceButton < TouchCount_; }
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 

@@ -67,18 +67,18 @@ public:
 
 	bool IsValidButtonId(gainput::DeviceButtonId deviceButton) const
 	{
-		return deviceButton == gainput::TOUCH_0_DOWN
-			|| deviceButton == gainput::TOUCH_0_X
-			|| deviceButton == gainput::TOUCH_0_Y
-			|| deviceButton == gainput::TOUCH_1_DOWN
-			|| deviceButton == gainput::TOUCH_1_X
-			|| deviceButton == gainput::TOUCH_1_Y;
+		return deviceButton == gainput::Touch0Down
+			|| deviceButton == gainput::Touch0X
+			|| deviceButton == gainput::Touch0Y
+			|| deviceButton == gainput::Touch1Down
+			|| deviceButton == gainput::Touch1X
+			|| deviceButton == gainput::Touch1Y;
 	}
 
 	gainput::ButtonType GetButtonType(gainput::DeviceButtonId deviceButton) const
 	{
 		GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-		return deviceButton == (gainput::TOUCH_0_DOWN || gainput::TOUCH_1_DOWN) ? gainput::BT_BOOL : gainput::BT_FLOAT;
+		return deviceButton == (gainput::Touch0Down || gainput::Touch1Down) ? gainput::BT_BOOL : gainput::BT_FLOAT;
 	}
 
 protected:
@@ -97,9 +97,9 @@ protected:
 			y_ = yDevice->GetFloat(yAxisButton_);
 		}
 
-		state_->Set(gainput::TOUCH_1_DOWN, isDown_);
-		state_->Set(gainput::TOUCH_1_X, x_);
-		state_->Set(gainput::TOUCH_1_Y, y_);
+		state_->Set(gainput::Touch1Down, isDown_);
+		state_->Set(gainput::Touch1X, x_);
+		state_->Set(gainput::Touch1Y, y_);
 
 		const gainput::InputDevice* downDevice2 = manager_.GetDevice(downDevice2_);
 		GAINPUT_ASSERT(downDevice2);
@@ -107,9 +107,9 @@ protected:
 		GAINPUT_ASSERT(xDevice2);
 		const gainput::InputDevice* yDevice2 = manager_.GetDevice(yAxisDevice2_);
 		GAINPUT_ASSERT(yDevice2);
-		state_->Set(gainput::TOUCH_0_DOWN, downDevice2->GetBool(downButton2_));
-		state_->Set(gainput::TOUCH_0_X, xDevice2->GetFloat(xAxisButton2_));
-		state_->Set(gainput::TOUCH_0_Y, yDevice2->GetFloat(yAxisButton2_));
+		state_->Set(gainput::Touch0Down, downDevice2->GetBool(downButton2_));
+		state_->Set(gainput::Touch0X, xDevice2->GetFloat(xAxisButton2_));
+		state_->Set(gainput::Touch0Y, yDevice2->GetFloat(yAxisButton2_));
 	}
 
 	DeviceState InternalGetState() const { return DS_OK; }
@@ -185,38 +185,38 @@ void SampleMain()
 
 	gainput::HoldGesture* hg = manager.CreateAndGetDevice<gainput::HoldGesture>();
 	GAINPUT_ASSERT(hg);
-	hg->Initialize(touchId, gainput::TOUCH_0_DOWN,
-			touchId, gainput::TOUCH_0_X, 0.1f,
-			touchId, gainput::TOUCH_0_Y, 0.1f,
+	hg->Initialize(touchId, gainput::Touch0Down,
+			touchId, gainput::Touch0X, 0.1f,
+			touchId, gainput::Touch0Y, 0.1f,
 			true,
 			800);
 	map.MapBool(ButtonHoldGesture, hg->GetDeviceId(), gainput::HoldTriggered);
 
 	gainput::TapGesture* tg = manager.CreateAndGetDevice<gainput::TapGesture>();
 	GAINPUT_ASSERT(tg);
-	tg->Initialize(touchId, gainput::TOUCH_0_DOWN,
+	tg->Initialize(touchId, gainput::Touch0Down,
 			500);
 	map.MapBool(ButtonTapGesture, tg->GetDeviceId(), gainput::TapTriggered);
 	
 	gainput::PinchGesture* pg = manager.CreateAndGetDevice<gainput::PinchGesture>();
 	GAINPUT_ASSERT(pg);
-	pg->Initialize(touchId, gainput::TOUCH_0_DOWN,
-			touchId, gainput::TOUCH_0_X,
-			touchId, gainput::TOUCH_0_Y,
-			touchId, gainput::TOUCH_1_DOWN,
-			touchId, gainput::TOUCH_1_X,
-			touchId, gainput::TOUCH_1_Y);
+	pg->Initialize(touchId, gainput::Touch0Down,
+			touchId, gainput::Touch0X,
+			touchId, gainput::Touch0Y,
+			touchId, gainput::Touch1Down,
+			touchId, gainput::Touch1X,
+			touchId, gainput::Touch1Y);
 	map.MapBool(ButtonPinching, pg->GetDeviceId(), gainput::PinchTriggered);
 	map.MapFloat(ButtonPinchScale, pg->GetDeviceId(), gainput::PinchScale);
 
 	gainput::RotateGesture* rg = manager.CreateAndGetDevice<gainput::RotateGesture>();
 	GAINPUT_ASSERT(rg);
-	rg->Initialize(touchId, gainput::TOUCH_0_DOWN,
-			touchId, gainput::TOUCH_0_X,
-			touchId, gainput::TOUCH_0_Y,
-			touchId, gainput::TOUCH_1_DOWN,
-			touchId, gainput::TOUCH_1_X,
-			touchId, gainput::TOUCH_1_Y);
+	rg->Initialize(touchId, gainput::Touch0Down,
+			touchId, gainput::Touch0X,
+			touchId, gainput::Touch0Y,
+			touchId, gainput::Touch1Down,
+			touchId, gainput::Touch1X,
+			touchId, gainput::Touch1Y);
 	map.MapBool(ButtonRotating, rg->GetDeviceId(), gainput::RotateTriggered);
 	map.MapFloat(ButtonRotateAngle, rg->GetDeviceId(), gainput::RotateAngle);
 

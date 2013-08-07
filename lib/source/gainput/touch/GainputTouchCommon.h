@@ -40,7 +40,7 @@ InputDeviceTouch::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButto
 {
 	GAINPUT_ASSERT(outButtons);
 	GAINPUT_ASSERT(maxButtonCount > 0);
-	return CheckAllButtonsDown(outButtons, maxButtonCount, TOUCH_0_DOWN, TOUCH_COUNT);
+	return CheckAllButtonsDown(outButtons, maxButtonCount, Touch0Down, TouchCount_);
 }
 
 size_t

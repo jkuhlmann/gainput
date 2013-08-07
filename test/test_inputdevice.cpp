@@ -155,32 +155,32 @@ TEST_CASE("InputDevice/touch", "")
 	REQUIRE(device->GetType() == InputDevice::DT_TOUCH);
 	REQUIRE(device->GetTypeName());
 
-	REQUIRE(device->IsValidButtonId(TOUCH_0_DOWN));
-	REQUIRE(device->IsValidButtonId(TOUCH_0_X));
-	REQUIRE(device->IsValidButtonId(TOUCH_0_Y));
-	REQUIRE(device->IsValidButtonId(TOUCH_1_DOWN));
-	REQUIRE(device->IsValidButtonId(TOUCH_1_X));
-	REQUIRE(device->IsValidButtonId(TOUCH_1_Y));
+	REQUIRE(device->IsValidButtonId(Touch0Down));
+	REQUIRE(device->IsValidButtonId(Touch0X));
+	REQUIRE(device->IsValidButtonId(Touch0Y));
+	REQUIRE(device->IsValidButtonId(Touch1Down));
+	REQUIRE(device->IsValidButtonId(Touch1X));
+	REQUIRE(device->IsValidButtonId(Touch1Y));
 
 	char buf[32];
-	REQUIRE(device->GetButtonName(TOUCH_0_DOWN, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(TOUCH_0_X, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(TOUCH_0_Y, buf, 32) > 0);
-	REQUIRE(device->GetButtonName(TOUCH_2_DOWN, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(Touch0Down, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(Touch0X, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(Touch0Y, buf, 32) > 0);
+	REQUIRE(device->GetButtonName(Touch2Down, buf, 32) > 0);
 
-	REQUIRE(device->GetButtonType(TOUCH_0_DOWN) == BT_BOOL);
-	REQUIRE(device->GetButtonType(TOUCH_0_X) == BT_FLOAT);
-	REQUIRE(device->GetButtonType(TOUCH_0_Y) == BT_FLOAT);
-	REQUIRE(device->GetButtonType(TOUCH_3_DOWN) == BT_BOOL);
-	REQUIRE(device->GetButtonType(TOUCH_3_X) == BT_FLOAT);
-	REQUIRE(device->GetButtonType(TOUCH_3_Y) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(Touch0Down) == BT_BOOL);
+	REQUIRE(device->GetButtonType(Touch0X) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(Touch0Y) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(Touch3Down) == BT_BOOL);
+	REQUIRE(device->GetButtonType(Touch3X) == BT_FLOAT);
+	REQUIRE(device->GetButtonType(Touch3Y) == BT_FLOAT);
 
-	REQUIRE(device->GetButtonByName("touch_0_down") == TOUCH_0_DOWN);
-	REQUIRE(device->GetButtonByName("touch_0_x") == TOUCH_0_X);
-	REQUIRE(device->GetButtonByName("touch_0_y") == TOUCH_0_Y);
-	REQUIRE(device->GetButtonByName("touch_6_down") == TOUCH_6_DOWN);
-	REQUIRE(device->GetButtonByName("touch_6_x") == TOUCH_6_X);
-	REQUIRE(device->GetButtonByName("touch_6_y") == TOUCH_6_Y);
+	REQUIRE(device->GetButtonByName("touch_0_down") == Touch0Down);
+	REQUIRE(device->GetButtonByName("touch_0_x") == Touch0X);
+	REQUIRE(device->GetButtonByName("touch_0_y") == Touch0Y);
+	REQUIRE(device->GetButtonByName("touch_6_down") == Touch6Down);
+	REQUIRE(device->GetButtonByName("touch_6_x") == Touch6X);
+	REQUIRE(device->GetButtonByName("touch_6_y") == Touch6Y);
 
 	REQUIRE(device->GetInputState());
 	REQUIRE(device->GetPreviousInputState());
