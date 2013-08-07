@@ -77,8 +77,8 @@ public:
 			event.type &= ~JS_EVENT_INIT;
 			if (event.type == JS_EVENT_AXIS)
 			{
-				GAINPUT_ASSERT(event.number >= PAD_BUTTON_LEFT_STICK_X);
-				GAINPUT_ASSERT(event.number < PAD_BUTTON_AXIS_COUNT);
+				GAINPUT_ASSERT(event.number >= PadButtonLeftStickX);
+				GAINPUT_ASSERT(event.number < PadButtonAxisCount_);
 				DeviceButtonId buttonId = event.number;
 
 				const float value = float(event.value)/MaxAxisValue;
@@ -88,15 +88,15 @@ public:
 					buttonId = axisDialect_[buttonId];
 				}
 
-				if (buttonId == PAD_BUTTON_UP)
+				if (buttonId == PadButtonUp)
 				{
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_UP, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_DOWN, value > 0.0f);
+					HandleButton(device_, state, previousState, delta, PadButtonUp, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PadButtonDown, value > 0.0f);
 				}
-				else if (buttonId == PAD_BUTTON_LEFT)
+				else if (buttonId == PadButtonLeft)
 				{
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_LEFT, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PAD_BUTTON_RIGHT, value > 0.0f);
+					HandleButton(device_, state, previousState, delta, PadButtonLeft, value < 0.0f);
+					HandleButton(device_, state, previousState, delta, PadButtonRight, value > 0.0f);
 				}
 				else
 				{
@@ -106,7 +106,7 @@ public:
 			else if (event.type == JS_EVENT_BUTTON)
 			{
 				GAINPUT_ASSERT(event.number >= 0);
-				GAINPUT_ASSERT(event.number < PAD_BUTTON_COUNT);
+				GAINPUT_ASSERT(event.number < PadButtonCount_);
 				if (buttonDialect_.count(event.number))
 				{
 					DeviceButtonId buttonId = buttonDialect_[event.number];
@@ -148,7 +148,7 @@ public:
 	{
 		if (buttonDialect_.empty())
 		{
-			return deviceButton >= PAD_BUTTON_LEFT_STICK_X && deviceButton < PAD_BUTTON_MAX;
+			return deviceButton >= PadButtonLeftStickX && deviceButton < PadButtonMax_;
 		}
 
 		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();
@@ -218,7 +218,7 @@ private:
 		GAINPUT_LOG("Name: %s\n", name);
 #endif
 
-		for (unsigned i = PAD_BUTTON_LEFT_STICK_X; i < PAD_BUTTON_AXIS_COUNT; ++i)
+		for (unsigned i = PadButtonLeftStickX; i < PadButtonAxisCount_; ++i)
 		{
 			axisDialect_[i] = i;
 		}
@@ -228,51 +228,51 @@ private:
 #ifdef GAINPUT_DEBUG
 			GAINPUT_LOG("  --> known controller\n");
 #endif
-			buttonDialect_[0] = PAD_BUTTON_SELECT;
-			buttonDialect_[1] = PAD_BUTTON_L3;
-			buttonDialect_[2] = PAD_BUTTON_R3;
-			buttonDialect_[3] = PAD_BUTTON_START;
-			buttonDialect_[4] = PAD_BUTTON_UP;
-			buttonDialect_[5] = PAD_BUTTON_RIGHT;
-			buttonDialect_[6] = PAD_BUTTON_DOWN;
-			buttonDialect_[7] = PAD_BUTTON_LEFT;
-			buttonDialect_[8] = PAD_BUTTON_L2;
-			buttonDialect_[9] = PAD_BUTTON_R2;
-			buttonDialect_[10] = PAD_BUTTON_L1;
-			buttonDialect_[11] = PAD_BUTTON_R1;
-			buttonDialect_[12] = PAD_BUTTON_Y;
-			buttonDialect_[13] = PAD_BUTTON_B;
-			buttonDialect_[14] = PAD_BUTTON_A;
-			buttonDialect_[15] = PAD_BUTTON_X;
-			buttonDialect_[16] = PAD_BUTTON_HOME;
+			buttonDialect_[0] = PadButtonSelect;
+			buttonDialect_[1] = PadButtonL3;
+			buttonDialect_[2] = PadButtonR3;
+			buttonDialect_[3] = PadButtonStart;
+			buttonDialect_[4] = PadButtonUp;
+			buttonDialect_[5] = PadButtonRight;
+			buttonDialect_[6] = PadButtonDown;
+			buttonDialect_[7] = PadButtonLeft;
+			buttonDialect_[8] = PadButtonL2;
+			buttonDialect_[9] = PadButtonR2;
+			buttonDialect_[10] = PadButtonL1;
+			buttonDialect_[11] = PadButtonR1;
+			buttonDialect_[12] = PadButtonY;
+			buttonDialect_[13] = PadButtonB;
+			buttonDialect_[14] = PadButtonA;
+			buttonDialect_[15] = PadButtonX;
+			buttonDialect_[16] = PadButtonHome;
 		}
 		else if (strcmp(name, "Microsoft X-Box 360 pad") == 0)
 		{
 #ifdef GAINPUT_DEBUG
 			GAINPUT_LOG("  --> known controller\n");
 #endif
-			buttonDialect_[6] = PAD_BUTTON_SELECT;
-			buttonDialect_[9] = PAD_BUTTON_L3;
-			buttonDialect_[10] = PAD_BUTTON_R3;
-			buttonDialect_[7] = PAD_BUTTON_START;
-			buttonDialect_[4] = PAD_BUTTON_L1;
-			buttonDialect_[5] = PAD_BUTTON_R1;
-			buttonDialect_[3] = PAD_BUTTON_Y;
-			buttonDialect_[1] = PAD_BUTTON_B;
-			buttonDialect_[0] = PAD_BUTTON_A;
-			buttonDialect_[2] = PAD_BUTTON_X;
-			buttonDialect_[8] = PAD_BUTTON_HOME;
+			buttonDialect_[6] = PadButtonSelect;
+			buttonDialect_[9] = PadButtonL3;
+			buttonDialect_[10] = PadButtonR3;
+			buttonDialect_[7] = PadButtonStart;
+			buttonDialect_[4] = PadButtonL1;
+			buttonDialect_[5] = PadButtonR1;
+			buttonDialect_[3] = PadButtonY;
+			buttonDialect_[1] = PadButtonB;
+			buttonDialect_[0] = PadButtonA;
+			buttonDialect_[2] = PadButtonX;
+			buttonDialect_[8] = PadButtonHome;
 
-			axisDialect_[3] = PAD_BUTTON_RIGHT_STICK_X;
-			axisDialect_[4] = PAD_BUTTON_RIGHT_STICK_Y;
-			axisDialect_[2] = PAD_BUTTON_AXIS_4;
-			axisDialect_[5] = PAD_BUTTON_AXIS_5;
-			axisDialect_[7] = PAD_BUTTON_UP;
-			axisDialect_[6] = PAD_BUTTON_LEFT;
+			axisDialect_[3] = PadButtonRightStickX;
+			axisDialect_[4] = PadButtonRightStickY;
+			axisDialect_[2] = PadButtonAxis4;
+			axisDialect_[5] = PadButtonAxis5;
+			axisDialect_[7] = PadButtonUp;
+			axisDialect_[6] = PadButtonLeft;
 
 			// Dummy entries for IsValidButton
-			axisDialect_[-1] = PAD_BUTTON_DOWN;
-			axisDialect_[-2] = PAD_BUTTON_RIGHT;
+			axisDialect_[-1] = PadButtonDown;
+			axisDialect_[-2] = PadButtonRight;
 		}
 
 		state_ = InputDevice::DS_OK;

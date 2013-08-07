@@ -111,21 +111,21 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_X, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_Y, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_ACCELERATION_Z, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_X, event.vector.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_Y, event.vector.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_GYROSCOPE_Z, event.vector.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_MAGNETIC_FIELD)
 			{
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_X, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Y, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state, previousState, delta, PAD_BUTTON_MAGNETICFIELD_Z, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
 			}
 		}
 	}
@@ -140,17 +140,17 @@ public:
 
 	bool IsValidButton(DeviceButtonId deviceButton) const
 	{
-		if (deviceButton >= PAD_BUTTON_ACCELERATION_X && deviceButton <= PAD_BUTTON_ACCELERATION_Z && accelerometerSensor_)
+		if (deviceButton >= PadButtonAccelerationX && deviceButton <= PadButtonAccelerationZ && accelerometerSensor_)
 		{
 			return true;
 		}
 		
-		if (deviceButton >= PAD_BUTTON_GYROSCOPE_X && deviceButton <= PAD_BUTTON_GYROSCOPE_Z && gyroscopeSensor_)
+		if (deviceButton >= PadButtonGyroscopeX && deviceButton <= PadButtonGyroscopeZ && gyroscopeSensor_)
 		{
 			return true;
 		}
 
-		if (deviceButton >= PAD_BUTTON_MAGNETICFIELD_X && deviceButton <= PAD_BUTTON_MAGNETICFIELD_Z && magneticFieldSensor_)
+		if (deviceButton >= PadButtonMagneticFieldX && deviceButton <= PadButtonMagneticFieldZ && magneticFieldSensor_)
 		{
 			return true;
 		}

@@ -92,8 +92,8 @@ DeviceButtonInfo deviceButtonInfos[] =
 
 }
 
-const unsigned PadButtonCount = PAD_BUTTON_COUNT;
-const unsigned PadAxisCount = PAD_BUTTON_AXIS_COUNT;
+const unsigned PadButtonCount = PadButtonCount_;
+const unsigned PadAxisCount = PadButtonAxisCount_;
 
 
 InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device) :
@@ -137,7 +137,7 @@ InputDevicePad::GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonC
 {
 	GAINPUT_ASSERT(outButtons);
 	GAINPUT_ASSERT(maxButtonCount > 0);
-	return CheckAllButtonsDown(outButtons, maxButtonCount, PAD_BUTTON_LEFT_STICK_X, PAD_BUTTON_MAX);
+	return CheckAllButtonsDown(outButtons, maxButtonCount, PadButtonLeftStickX, PadButtonMax_);
 }
 
 size_t

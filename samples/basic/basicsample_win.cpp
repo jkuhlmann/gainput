@@ -105,7 +105,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 	map.MapFloat(MouseX, mouseId, gainput::MouseAxisX);
 	map.MapFloat(MouseY, mouseId, gainput::MouseAxisY);
-	map.MapBool(ButtonConfirm, padId, gainput::PAD_BUTTON_A);
+	map.MapBool(ButtonConfirm, padId, gainput::PadButtonA);
 
 	while (!doExit)
 	{

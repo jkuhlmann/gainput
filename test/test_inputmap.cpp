@@ -99,7 +99,7 @@ TEST_CASE("InputMap/map_float", "")
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyEscape));
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseButtonLeft));
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisY));
-	REQUIRE(map.MapFloat(ButtonA, padId, PAD_BUTTON_LEFT_STICK_X));
+	REQUIRE(map.MapFloat(ButtonA, padId, PadButtonLeftStickX));
 	REQUIRE(map.IsMapped(ButtonA));
 
 	REQUIRE(map.MapFloat(ButtonB, keyboardId, KeyF2));
@@ -123,7 +123,7 @@ TEST_CASE("InputMap/map_float", "")
 
 	REQUIRE(map.MapFloat(ButtonA, mouseId, MouseAxisX));
 	REQUIRE(map.MapFloat(ButtonA, keyboardId, KeyF5));
-	REQUIRE(map.MapFloat(ButtonD, padId, PAD_BUTTON_RIGHT_STICK_Y));
+	REQUIRE(map.MapFloat(ButtonD, padId, PadButtonLeftStickY));
 
 	REQUIRE(map.GetMappings(ButtonA, mappings, 32) == 2);
 	REQUIRE(mappings[0].deviceId == mouseId);
@@ -136,7 +136,7 @@ TEST_CASE("InputMap/map_float", "")
 
 	REQUIRE(map.GetUserButtonId(mouseId, MouseAxisX) == ButtonA);
 	REQUIRE(map.GetUserButtonId(keyboardId, KeyF5) == ButtonA);
-	REQUIRE(map.GetUserButtonId(padId, PAD_BUTTON_RIGHT_STICK_Y) == ButtonD);
+	REQUIRE(map.GetUserButtonId(padId, PadButtonLeftStickY) == ButtonD);
 }
 
 TEST_CASE("InputMap/SetDeadZone_SetUserButtonPolicy", "")
