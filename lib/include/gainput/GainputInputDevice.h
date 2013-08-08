@@ -89,13 +89,13 @@ public:
 	virtual bool IsValidButtonId(DeviceButtonId deviceButton) const = 0;
 
 	/// Returns the current state of the given button.
-	virtual bool GetBool(DeviceButtonId deviceButton) const;
+	bool GetBool(DeviceButtonId deviceButton) const;
 	/// Returns the previous state of the given button.
-	virtual bool GetBoolPrevious(DeviceButtonId deviceButton) const;
+	bool GetBoolPrevious(DeviceButtonId deviceButton) const;
 	/// Returns the current state of the given button.
-	virtual float GetFloat(DeviceButtonId deviceButton) const;
+	float GetFloat(DeviceButtonId deviceButton) const;
 	/// Returns the previous state of the given button.
-	virtual float GetFloatPrevious(DeviceButtonId deviceButton) const;
+	float GetFloatPrevious(DeviceButtonId deviceButton) const;
 
 	/// Checks if any button on this device is down.
 	/**
