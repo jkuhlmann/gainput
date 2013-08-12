@@ -3,6 +3,7 @@
 #define GAINPUTINPUTDEVICEMOUSEWIN_H_
 
 #include "GainputInputDeviceMouseImpl.h"
+#include "../GainputHelpers.h"
 
 #include <windows.h>
 #include <Windowsx.h>
@@ -13,7 +14,7 @@ namespace gainput
 class InputDeviceMouseImplWin : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImpl(InputManager& manager, DeviceId device) :
+	InputDeviceMouseImplWin(InputManager& manager, DeviceId device) :
 		manager_(manager),
 		device_(device),
 		state_(0),

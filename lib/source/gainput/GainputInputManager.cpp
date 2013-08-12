@@ -277,7 +277,7 @@ InputManager::HandleMessage(const MSG& msg)
 				GAINPUT_ASSERT(mouseImpl);
 				mouseImpl->HandleMessage(msg);
 			}
-			else if (it->second->GetVariant() == InputDevice::DV_STANDARD)
+			else if (it->second->GetVariant() == InputDevice::DV_RAW)
 			{
 				InputDeviceMouseImplWinRaw* mouseImpl = static_cast<InputDeviceMouseImplWinRaw*>(mouse->GetPimpl());
 				GAINPUT_ASSERT(mouseImpl);
