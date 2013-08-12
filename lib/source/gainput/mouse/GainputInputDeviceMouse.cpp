@@ -1,15 +1,53 @@
 
-#ifndef GAINPUTMOUSECOMMON_H_
-#define GAINPUTMOUSECOMMON_H_
+#include <gainput/gainput.h>
+
+#include "GainputInputDeviceMouseImpl.h"
+#include "GainputInputDeviceMouseNull.h"
+#include "GainputMouseInfo.h"
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
+
+#if defined(GAINPUT_PLATFORM_LINUX)
+	#include "GainputInputDeviceMouseLinux.h"
+	#include "GainputInputDeviceMouseEvdev.h"
+#elif defined(GAINPUT_PLATFORM_WIN)
+	#include "GainputInputDeviceMouseWin.h"
+	#include "GainputInputDeviceMouseWinRaw.h"
+#endif
 
 namespace gainput
 {
 
-InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE))
+InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, DeviceVariant variant) :
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE)),
+	impl_(0)
 {
-	impl_ = manager.GetAllocator().New<InputDeviceMouseImpl>(manager, device);
+#if defined(GAINPUT_PLATFORM_LINUX)
+	if (variant == DV_STANDARD)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplLinux>(manager, device);
+	}
+	else if (variant == DV_RAW)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplEvdev>(manager, device);
+	}
+#elif defined(GAINPUT_PLATFORM_WIN)
+	if (variant == DV_STANDARD)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWin>(manager, device);
+	}
+	else if (variant == DV_RAW)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, device);
+	}
+#endif
+
+	if (!impl_)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplNull>(manager, device);
+	}
 	GAINPUT_ASSERT(impl_);
+
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
 	GAINPUT_ASSERT(state_);
 	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
@@ -18,15 +56,21 @@ InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device) :
 
 InputDeviceMouse::~InputDeviceMouse()
 {
-	impl_->GetManager().GetAllocator().Delete(state_);
-	impl_->GetManager().GetAllocator().Delete(previousState_);
-	impl_->GetManager().GetAllocator().Delete(impl_);
+	manager_.GetAllocator().Delete(state_);
+	manager_.GetAllocator().Delete(previousState_);
+	manager_.GetAllocator().Delete(impl_);
 }
 
 void
 InputDeviceMouse::InternalUpdate(InputDeltaState* delta)
 {
 	impl_->Update(*state_, *previousState_, delta);
+}
+
+InputDevice::DeviceVariant
+InputDeviceMouse::GetVariant() const
+{
+	return impl_->GetVariant();
 }
 
 size_t
@@ -71,6 +115,4 @@ InputDeviceMouse::GetButtonByName(const char* name) const
 }
 
 }
-
-#endif
 

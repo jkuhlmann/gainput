@@ -213,7 +213,7 @@ public:
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
-	InputDeviceKeyboard(InputManager& manager, DeviceId device);
+	InputDeviceKeyboard(InputManager& manager, DeviceId device, DeviceVariant variant);
 	/// Shuts down the device.
 	~InputDeviceKeyboard();
 

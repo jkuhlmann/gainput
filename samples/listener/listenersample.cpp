@@ -60,6 +60,7 @@ void SampleMain()
 	gainput::InputManager manager;
 
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
+	manager.CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
 	manager.CreateDevice<gainput::InputDevicePad>();
 	manager.CreateDevice<gainput::InputDevicePad>();

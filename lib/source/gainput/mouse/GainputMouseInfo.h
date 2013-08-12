@@ -42,9 +42,6 @@ DeviceButtonInfo deviceButtonInfos[] =
 }
 
 
-const unsigned MouseButtonCount = 21;
-const unsigned MouseAxisCount = 2;
-
 }
 
 #endif

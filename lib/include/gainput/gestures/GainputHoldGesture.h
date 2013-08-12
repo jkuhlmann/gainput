@@ -32,7 +32,7 @@ class GAINPUT_LIBEXPORT HoldGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	HoldGesture(InputManager& manager, DeviceId device);
+	HoldGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~HoldGesture();
 

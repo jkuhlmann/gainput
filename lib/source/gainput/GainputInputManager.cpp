@@ -9,11 +9,8 @@
 #include "mouse/GainputInputDeviceMouseLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 #include "keyboard/GainputInputDeviceKeyboardWin.h"
-	#if !defined(GAINPUT_ENABLE_RAW_INPUT)
-		#include "mouse/GainputInputDeviceMouseWin.h"
-	#else
-		#include "mouse/GainputInputDeviceMouseWinRaw.h"
-	#endif
+#include "mouse/GainputInputDeviceMouseWin.h"
+#include "mouse/GainputInputDeviceMouseWinRaw.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 #include <time.h>
 #include "keyboard/GainputInputDeviceKeyboardAndroid.h"
@@ -237,10 +234,11 @@ InputManager::HandleEvent(XEvent& event)
 			GAINPUT_ASSERT(keyboardImpl);
 			keyboardImpl->HandleEvent(event);
 		}
-		else if (it->second->GetType() == InputDevice::DT_MOUSE)
+		else if (it->second->GetType() == InputDevice::DT_MOUSE
+			&& it->second->GetVariant() == InputDevice::DV_STANDARD)
 		{
 			InputDeviceMouse* mouse = static_cast<InputDeviceMouse*>(it->second);
-			InputDeviceMouseImpl* mouseImpl = mouse->GetPimpl();
+			InputDeviceMouseImplLinux* mouseImpl = static_cast<InputDeviceMouseImplLinux*>(mouse->GetPimpl());
 			GAINPUT_ASSERT(mouseImpl);
 			mouseImpl->HandleEvent(event);
 		}
@@ -273,9 +271,18 @@ InputManager::HandleMessage(const MSG& msg)
 		else if (it->second->GetType() == InputDevice::DT_MOUSE)
 		{
 			InputDeviceMouse* mouse = static_cast<InputDeviceMouse*>(it->second);
-			InputDeviceMouseImpl* mouseImpl = mouse->GetPimpl();
-			GAINPUT_ASSERT(mouseImpl);
-			mouseImpl->HandleMessage(msg);
+			if (it->second->GetVariant() == InputDevice::DV_STANDARD)
+			{
+				InputDeviceMouseImplWin* mouseImpl = static_cast<InputDeviceMouseImplWin*>(mouse->GetPimpl());
+				GAINPUT_ASSERT(mouseImpl);
+				mouseImpl->HandleMessage(msg);
+			}
+			else if (it->second->GetVariant() == InputDevice::DV_STANDARD)
+			{
+				InputDeviceMouseImplWinRaw* mouseImpl = static_cast<InputDeviceMouseImplWinRaw*>(mouse->GetPimpl());
+				GAINPUT_ASSERT(mouseImpl);
+				mouseImpl->HandleMessage(msg);
+			}
 		}
 	}
 }

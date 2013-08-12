@@ -35,9 +35,11 @@ enum MouseButton
 	MouseButton19,
 	MouseButton20,
 	MouseButtonMax = MouseButton20,
-	MouseAxisX,
+	MouseButtonCount,
+	MouseAxisX = MouseButtonCount,
 	MouseAxisY,
-	MouseButtonCount_
+	MouseButtonCount_,
+	MouseAxisCount = MouseButtonCount_ - MouseAxisX,
 };
 
 
@@ -61,12 +63,13 @@ public:
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
-	InputDeviceMouse(InputManager& manager, DeviceId device);
+	InputDeviceMouse(InputManager& manager, DeviceId device, DeviceVariant variant);
 	/// Shuts down the device.
 	~InputDeviceMouse();
 
 	/// Returns DT_MOUSE.
 	DeviceType GetType() const { return DT_MOUSE; }
+	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "mouse"; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= MouseButton0 && deviceButton < MouseButtonCount_; }
 

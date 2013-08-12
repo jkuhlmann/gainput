@@ -96,7 +96,7 @@ const unsigned PadButtonCount = PadButtonCount_;
 const unsigned PadAxisCount = PadButtonAxisCount_;
 
 
-InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device) :
+InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_PAD))
 {
 	impl_ = manager.GetAllocator().New<InputDevicePadImpl>(manager, device, index_);

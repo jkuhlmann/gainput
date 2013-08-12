@@ -5,7 +5,7 @@
 namespace gainput
 {
 
-InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device) :
+InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
 {
 	impl_ = manager.GetAllocator().New<InputDeviceTouchImpl>(manager, device);

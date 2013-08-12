@@ -9,7 +9,7 @@
 namespace gainput
 {
 
-SimultaneouslyDownGesture::SimultaneouslyDownGesture(InputManager& manager, DeviceId device) :
+SimultaneouslyDownGesture::SimultaneouslyDownGesture(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputGesture(manager, device),
 	buttons_(manager.GetAllocator())
 {

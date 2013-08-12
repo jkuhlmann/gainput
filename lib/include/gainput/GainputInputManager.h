@@ -65,13 +65,13 @@ public:
 	 * \tparam T The input device class, muste be derived from InputDevice.
 	 * \return The ID of the newly created input device.
 	 */
-	template<class T> DeviceId CreateDevice();
+	template<class T> DeviceId CreateDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
 	/// Creates an input device, registers it with the manager and returns it.
 	/**
 	 * \tparam T The input device class, muste be derived from InputDevice.
 	 * \return The newly created input device.
 	 */
-	template<class T> T* CreateAndGetDevice();
+	template<class T> T* CreateAndGetDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
 	/// Returns the input device with the given ID.
 	/**
 	 * \return The input device or 0 if it doesn't exist.
@@ -160,9 +160,9 @@ private:
 template<class T>
 inline
 DeviceId
-InputManager::CreateDevice()
+InputManager::CreateDevice(InputDevice::DeviceVariant variant)
 {
-	T* device = allocator_.New<T>(*this, nextDeviceId_);
+	T* device = allocator_.New<T>(*this, nextDeviceId_, variant);
 	devices_[nextDeviceId_] = device;
 	DeviceCreated(device);
 	return nextDeviceId_++;
@@ -171,9 +171,9 @@ InputManager::CreateDevice()
 template<class T>
 inline
 T*
-InputManager::CreateAndGetDevice()
+InputManager::CreateAndGetDevice(InputDevice::DeviceVariant variant)
 {
-	T* device = allocator_.New<T>(*this, nextDeviceId_);
+	T* device = allocator_.New<T>(*this, nextDeviceId_, variant);
 	devices_[nextDeviceId_] = device;
 	++nextDeviceId_;
 	DeviceCreated(device);

@@ -31,8 +31,6 @@
 #define GAINPUT_ENABLE_ALL_GESTURES
 #define GAINPUT_ENABLE_RECORDER
 
-//#define GAINPUT_ENABLE_RAW_INPUT
-
 
 #include <cassert>
 #include <cstring>

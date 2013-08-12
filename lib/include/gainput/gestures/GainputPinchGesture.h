@@ -33,7 +33,7 @@ class GAINPUT_LIBEXPORT PinchGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	PinchGesture(InputManager& manager, DeviceId device);
+	PinchGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~PinchGesture();
 
