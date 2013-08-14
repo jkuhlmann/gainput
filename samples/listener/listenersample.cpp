@@ -59,6 +59,7 @@ void SampleMain()
 
 	gainput::InputManager manager;
 
+	manager.CreateDevice<gainput::InputDeviceKeyboard>(gainput::InputDevice::DV_RAW);
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	manager.CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();

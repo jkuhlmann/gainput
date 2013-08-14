@@ -219,6 +219,7 @@ public:
 
 	/// Returns DT_KEYBOARD.
 	DeviceType GetType() const { return DT_KEYBOARD; }
+	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "keyboard"; }
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton < KeyCount_; }
 
@@ -245,6 +246,8 @@ protected:
 
 private:
 	InputDeviceKeyboardImpl* impl_;
+
+	HashMap<Key, const char*> keyNames_;
 };
 
 }

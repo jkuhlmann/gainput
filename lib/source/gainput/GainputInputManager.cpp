@@ -216,7 +216,6 @@ InputManager::DeviceCreated(InputDevice* device)
 void
 InputManager::HandleEvent(XEvent& event)
 {
-#if !defined(GAINPUT_ENABLE_RAW_INPUT)
 	for (DeviceMap::const_iterator it = devices_.begin();
 			it != devices_.end();
 			++it)
@@ -227,10 +226,11 @@ InputManager::HandleEvent(XEvent& event)
 			continue;
 		}
 #endif
-		if (it->second->GetType() == InputDevice::DT_KEYBOARD)
+		if (it->second->GetType() == InputDevice::DT_KEYBOARD
+			&& it->second->GetVariant() == InputDevice::DV_STANDARD)
 		{
 			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
-			InputDeviceKeyboardImpl* keyboardImpl = keyboard->GetPimpl();
+			InputDeviceKeyboardImplLinux* keyboardImpl = static_cast<InputDeviceKeyboardImplLinux*>(keyboard->GetPimpl());
 			GAINPUT_ASSERT(keyboardImpl);
 			keyboardImpl->HandleEvent(event);
 		}
@@ -243,7 +243,6 @@ InputManager::HandleEvent(XEvent& event)
 			mouseImpl->HandleEvent(event);
 		}
 	}
-#endif
 }
 #endif
 
@@ -264,7 +263,7 @@ InputManager::HandleMessage(const MSG& msg)
 		if (it->second->GetType() == InputDevice::DT_KEYBOARD)
 		{
 			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
-			InputDeviceKeyboardImpl* keyboardImpl = keyboard->GetPimpl();
+			InputDeviceKeyboardImplWin* keyboardImpl = static_cast<InputDeviceKeyboardImplWin*>(keyboard->GetPimpl());
 			GAINPUT_ASSERT(keyboardImpl);
 			keyboardImpl->HandleMessage(msg);
 		}
@@ -313,7 +312,7 @@ InputManager::HandleInput(AInputEvent* event)
 		else if (it->second->GetType() == InputDevice::DT_KEYBOARD)
 		{
 			InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(it->second);
-			InputDeviceKeyboardImpl* keyboardImpl = keyboard->GetPimpl();
+			InputDeviceKeyboardImplAndroid* keyboardImpl = static_cast<InputDeviceKeyboardImplAndroid*>(keyboard->GetPimpl());
 			GAINPUT_ASSERT(keyboardImpl);
 			handled |= keyboardImpl->HandleInput(event);
 		}
