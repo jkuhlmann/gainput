@@ -241,8 +241,7 @@ public:
 
 protected:
 	void InternalUpdate(InputDeltaState* delta);
-
-	DeviceState InternalGetState() const { return DS_OK; }
+	DeviceState InternalGetState() const;
 
 private:
 	InputDeviceKeyboardImpl* impl_;

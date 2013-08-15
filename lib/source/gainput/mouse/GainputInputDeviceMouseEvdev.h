@@ -42,8 +42,6 @@ public:
 			close(fd_);
 			fd_ = -1;
 		}
-
-		GAINPUT_ASSERT(fd_ != -1);
 	}
 
 	~InputDeviceMouseImplEvdev()
@@ -57,6 +55,11 @@ public:
 	InputDevice::DeviceVariant GetVariant() const
 	{
 		return InputDevice::DV_RAW;
+	}
+
+	InputDevice::DeviceState GetState() const
+	{
+		return fd_ != -1 ? InputDevice::DS_OK : InputDevice::DS_UNAVAILABLE;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)

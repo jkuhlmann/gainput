@@ -24,6 +24,7 @@ public:
 	InputDeviceMouseImplWinRaw(InputManager& manager, DeviceId device) :
 		manager_(manager),
 		device_(device),
+		deviceState_(InputDevice::DS_UNAVAILABLE),
 		state_(0),
 		previousState_(0),
 		nextState_(manager.GetAllocator(), MouseButtonCount + MouseAxisCount),
@@ -35,13 +36,20 @@ public:
 		Rid[0].usUsage = HID_USAGE_GENERIC_MOUSE;
 		Rid[0].dwFlags = 0;//RIDEV_NOLEGACY;
 		Rid[0].hwndTarget = 0;
-		BOOL deviceRegistered = RegisterRawInputDevices(Rid, 1, sizeof(Rid[0]));
-		GAINPUT_ASSERT(deviceRegistered);
+		if (RegisterRawInputDevices(Rid, 1, sizeof(Rid[0])))
+		{
+			deviceState_ = InputDevice::DS_OK;
+		}
 	}
 
 	InputDevice::DeviceVariant GetVariant() const
 	{
 		return InputDevice::DV_RAW;
+	}
+
+	InputDevice::DeviceState GetState() const
+	{
+		return deviceState_;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
@@ -161,6 +169,7 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
+	InputDevice::DeviceState deviceState_;
 	InputState* state_;
 	InputState* previousState_;
 	InputState nextState_;

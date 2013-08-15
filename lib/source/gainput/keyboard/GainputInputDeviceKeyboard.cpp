@@ -60,6 +60,12 @@ InputDeviceKeyboard::InternalUpdate(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
+InputDevice::DeviceState
+InputDeviceKeyboard::InternalGetState() const
+{
+	return impl_->GetState();
+}
+
 InputDevice::DeviceVariant
 InputDeviceKeyboard::GetVariant() const
 {

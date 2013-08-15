@@ -47,8 +47,6 @@ public:
 			fd_ = -1;
 		}
 
-		GAINPUT_ASSERT(fd_ != -1);
-
 		dialect_[KEY_ESC] = KeyEscape;
 		dialect_[KEY_1] = Key1;
 		dialect_[KEY_2] = Key2;
@@ -182,6 +180,11 @@ public:
 	InputDevice::DeviceVariant GetVariant() const
 	{
 		return InputDevice::DV_RAW;
+	}
+
+	InputDevice::DeviceState GetState() const
+	{
+		return fd_ != -1 ? InputDevice::DS_OK : InputDevice::DS_UNAVAILABLE;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)

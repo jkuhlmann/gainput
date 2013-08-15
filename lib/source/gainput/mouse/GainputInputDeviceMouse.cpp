@@ -67,6 +67,12 @@ InputDeviceMouse::InternalUpdate(InputDeltaState* delta)
 	impl_->Update(*state_, *previousState_, delta);
 }
 
+InputDevice::DeviceState
+InputDeviceMouse::InternalGetState() const
+{
+	return impl_->GetState();
+}
+
 InputDevice::DeviceVariant
 InputDeviceMouse::GetVariant() const
 {
