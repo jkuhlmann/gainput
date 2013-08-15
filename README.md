@@ -66,6 +66,7 @@ Features
 - **Listeners** can be installed both for devices buttons as well as user buttons. That way you are notified when a button state changes.
 - **Gestures** allow for more complex input patterns to be detected, for example double-clicking, pinch/rotation gestures, or holding several buttons simultaneously.
 - An **external allocator** can be supplied to the library so that all memory management is done the way you want it.
+- Supports **raw input** on Linux and Windows.
 - Gamepad rumbling is supported where available.
 - It's easy to check for all pressed buttons so that offering a way to the players to remap their buttons is easy to implement. Similarly it's easy to save and load mappings.
 - Unwanted features like gestures or the network server are easily disabled.
