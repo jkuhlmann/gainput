@@ -11,6 +11,7 @@
 	#include "GainputInputDeviceKeyboardEvdev.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 	#include "GainputInputDeviceKeyboardWin.h"
+	#include "GainputInputDeviceKeyboardWinRaw.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	#include "GainputInputDeviceKeyboardAndroid.h"
 #endif
@@ -32,7 +33,14 @@ InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device,
 		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplEvdev>(manager, device);
 	}
 #elif defined(GAINPUT_PLATFORM_WIN)
-	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWin>(manager, device);
+	if (variant == DV_STANDARD)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWin>(manager, device);
+	}
+	else if (variant == DV_RAW)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWinRaw>(manager, device);
+	}
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplAndroid>(manager, device);
 #endif
