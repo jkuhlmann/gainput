@@ -202,6 +202,8 @@ class InputDeviceKeyboardImpl;
  *
  * This device is implemented on Android NDK, Linux, and Windows. Note that no support for
  * virtual keyboards (on-screen) is present.
+ *
+ * The raw variants (InputDevice::DV_RAW) of this device do not support text input.
  */
 class GAINPUT_LIBEXPORT InputDeviceKeyboard : public InputDevice
 {

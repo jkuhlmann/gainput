@@ -63,12 +63,18 @@ public:
 	/// Creates an input device and registers it with the manager.
 	/**
 	 * \tparam T The input device class, muste be derived from InputDevice.
+	 * \param variant Requests the specified device variant. Note that this is only
+	 * a request. Another implementation variant of the device may silently be instantiated
+	 * instead. To determine what variant was instantiated, call InputDevice::GetVariant().
 	 * \return The ID of the newly created input device.
 	 */
 	template<class T> DeviceId CreateDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
 	/// Creates an input device, registers it with the manager and returns it.
 	/**
 	 * \tparam T The input device class, muste be derived from InputDevice.
+	 * \param variant Requests the specified device variant. Note that this is only
+	 * a request. Another implementation variant of the device may silently be instantiated
+	 * instead. To determine what variant was instantiated, call InputDevice::GetVariant().
 	 * \return The newly created input device.
 	 */
 	template<class T> T* CreateAndGetDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);

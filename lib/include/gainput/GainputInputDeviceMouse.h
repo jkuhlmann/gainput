@@ -52,6 +52,10 @@ class InputDeviceMouseImpl;
  * in the ::MouseButton enum.
  *
  * This device is implemented on Linux and Windows.
+ *
+ * The raw variants (InputDevice::DV_RAW) of this device do not offer normalized absolute axis values. 
+ * That means that the values of MouseAxisX and MouseAxisY don't have defined mininum or maximum 
+ * values. Therefore only the delta (InputMap::GetFloatDelta()) should be used with raw mouse devices.
  */
 class GAINPUT_LIBEXPORT InputDeviceMouse : public InputDevice
 {

@@ -46,11 +46,12 @@ public:
 		DT_COUNT		///< The count of input device types.
 	};
 
+	/// Variant of an input device type.
 	enum DeviceVariant
 	{
-		DV_STANDARD,
-		DV_RAW,
-		DV_NULL
+		DV_STANDARD,		///< The standard implementation of the given device type.
+		DV_RAW,			///< The raw input implementation of the given device type.
+		DV_NULL			///< The null/empty implementation of the given device type.
 	};
 
 	/// State of an input device.
@@ -83,6 +84,7 @@ public:
 
 	/// Returns the device type.
 	virtual DeviceType GetType() const = 0;
+	/// Returns the device variant.
 	virtual DeviceVariant GetVariant() const { return DV_STANDARD; }
 	/// Returns the device type's name.
 	virtual const char* GetTypeName() const = 0;

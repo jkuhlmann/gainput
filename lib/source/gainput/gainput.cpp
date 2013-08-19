@@ -179,10 +179,12 @@ The keyboard support is limited to hardware keyboards, including, for example, h
 The gamepad support is limited to the device-internal sensors, i.e. gyroscope, magnetic field, and acceleration. Externally connected gamepads are not support yet.
 
 \section platform_linux Linux
-Supported devices: keyboard, mouse, gamepad.
+Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.
+
+Evdev is used for the raw input variants. Evdev has permission issues on some Linux distributions where the devices (\c /dev/input/event*) are only readable by root or a specific group. If a raw device's state is gainput::InputDevice::DS_UNAVAILABLE this may very well be the cause.
 
 \section platform_windows Windows
-Supported devices: keyboard, mouse, gamepad.
+Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.
 
 The gamepad support is implemented using XINPUT which is Microsoft's most current API for such devices. However, that means that only Xbox 360 pads and compatible devices are supported.
 
