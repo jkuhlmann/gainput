@@ -183,6 +183,10 @@ Supported devices: keyboard (standard and raw variants), mouse (standard and raw
 
 Evdev is used for the raw input variants. Evdev has permission issues on some Linux distributions where the devices (\c /dev/input/event*) are only readable by root or a specific group. If a raw device's state is gainput::InputDevice::DS_UNAVAILABLE this may very well be the cause.
 
+These gamepads have been tested and are explicitly supported:
+- Microsoft X-Box 360 pad
+- Sony PLAYSTATION(R)3 Controller
+
 \section platform_windows Windows
 Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.
 

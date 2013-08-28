@@ -9,7 +9,7 @@ Gainput is the new awesome C++ input library for your game:
 - well-documented, clean, lightweight, and easy to use
 - a unified interface on all supported platforms: Windows, Linux, Android NDK
 - supported devices: keyboard, mouse, pad, multi-touch
-- Open Source (MIT license)
+- [Open Source (MIT license)](https://github.com/jkuhlmann/gainput/blob/master/LICENSE)
 - [complete list of features](#features)
 - [API documentation](http://gainput.johanneskuhlmann.de/api/)
 
@@ -85,12 +85,33 @@ By default, Gainput is built using [Waf](http://code.google.com/p/waf/).
 1. The executables can be found in `build/debug/` or `build/release/` respectively.
 
 
+Contributing
+------------
+
+Everyone is welcome to contribute to the library. If you find any problems, you can submit them using [GitHub's issue system](https://github.com/jkuhlmann/gainput/issues). If you want to contribute code, you should fork the project and then send a pull request.
+
+
 Dependencies
 ------------
 
 Gainput has a minimal number of external dependencies to make it as self-contained as possible. It uses the platforms' default ways of getting inputs and doesn't use any STL.
 
 [Python](http://www.python.org/) is required for building.
+
+
+Testing
+-------
+
+Generally, testing should be done by building and running Gainput on all supported platforms. The samples in the `samples/` folder should be used in order to determine if the library is functional.
+
+The unit tests in the `test/` folder are built and run like this:
+
+1. `cd test/`
+1. `../waf configure`
+1. `../waf build`
+1. `build/gainputtest`
+
+Furthermore, all build configurations and unit tests are built and run by Travis CI whenever something is pushed into the repository.
 
 
 Alternatives
