@@ -80,6 +80,18 @@ Stream::Read(int32_t& dest)
 template<>
 inline
 size_t
+Stream::Read(float& dest)
+{
+	const size_t result = Read(&dest, sizeof(dest));
+	const uint32_t tmpInt = ntohl(*(uint32_t*)&dest);
+	dest = *(float*)&tmpInt;
+	return result;
+}
+
+
+template<>
+inline
+size_t
 Stream::Write(const uint16_t& src)
 {
 	const uint16_t tmp = htons(src);
@@ -110,6 +122,16 @@ size_t
 Stream::Write(const int32_t& src)
 {
 	const int32_t tmp = htonl((uint32_t)src);
+	return Write(&tmp, sizeof(tmp));
+}
+
+template<>
+inline
+size_t
+Stream::Write(const float& src)
+{
+	const uint32_t tmpInt = htonl(*(uint32_t*)&src);
+	const float tmp = *(float*)&tmpInt;
 	return Write(&tmp, sizeof(tmp));
 }
 
