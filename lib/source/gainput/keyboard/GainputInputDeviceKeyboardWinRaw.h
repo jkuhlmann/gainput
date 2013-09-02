@@ -142,6 +142,23 @@ public:
 		dialect_[VK_OEM_3] = KeyExtra5;
 		dialect_[VK_OEM_1] = KeyExtra6;
 
+		dialect_[VK_NUMLOCK] = KeyNumLock;
+		dialect_[VK_NUMPAD0] = KeyKpInsert;
+		dialect_[VK_NUMPAD1] = KeyKpEnd;
+		dialect_[VK_NUMPAD2] = KeyKpDown;
+		dialect_[VK_NUMPAD3] = KeyKpPageDown;
+		dialect_[VK_NUMPAD4] = KeyKpLeft;
+		dialect_[VK_NUMPAD5] = KeyKpBegin;
+		dialect_[VK_NUMPAD6] = KeyKpRight;
+		dialect_[VK_NUMPAD7] = KeyKpHome;
+		dialect_[VK_NUMPAD8] = KeyKpUp;
+		dialect_[VK_NUMPAD9] = KeyKpPageUp;
+		dialect_[VK_DECIMAL] = KeyKpDelete;
+		dialect_[VK_DIVIDE] = KeyKpDivide;
+		dialect_[VK_MULTIPLY] = KeyKpMultiply;
+		dialect_[VK_SUBTRACT] = KeyKpSubtract;
+		dialect_[VK_ADD] = KeyKpAdd;
+
 		dialect_[0xff] = KeyFn; // Marked as "reserved".
 	}
 
