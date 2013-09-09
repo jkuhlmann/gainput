@@ -42,6 +42,9 @@ NetListener::Start(bool shouldBlock)
 		return false;
 	}
 
+	const int sock_reuse_optval = 1;
+	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &sock_reuse_optval, sizeof(sock_reuse_optval));
+
 	if (bind(fd, (struct sockaddr*)&address.GetAddr(), sizeof(struct sockaddr_in)) == -1)
 	{
 		return false;
