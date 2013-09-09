@@ -103,6 +103,15 @@ public:
 	 */
 	DeviceId FindDeviceId(InputDevice::DeviceType type, unsigned index) const;
 
+	typedef HashMap<DeviceId, InputDevice*> DeviceMap;
+	typedef DeviceMap::iterator iterator;
+	typedef DeviceMap::const_iterator const_iterator;
+
+	iterator begin() { return devices_.begin(); }
+	iterator end() { return devices_.end(); }
+	const_iterator begin() const { return devices_.begin(); }
+	const_iterator end() const { return devices_.end(); }
+
 	/// Registers a listener to be notified when a button state changes.
 	/**
 	 * If there are listeners registered, all input devices will have to record their state changes. This incurs extra runtime costs.
@@ -139,7 +148,6 @@ public:
 private:
 	Allocator& allocator_;
 
-	typedef HashMap<DeviceId, InputDevice*> DeviceMap;
 	DeviceMap devices_;
 	unsigned nextDeviceId_;
 

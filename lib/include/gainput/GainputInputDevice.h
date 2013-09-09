@@ -135,6 +135,8 @@ public:
 
 	/// Returns the device's state, probably best if only used internally.
 	InputState* GetInputState() { return state_; }
+	/// Returns the device's state, probably best if only used internally.
+	const InputState* GetInputState() const { return state_; }
 	/// Returns the device's previous state, probably best if only used internally.
 	InputState* GetPreviousInputState() { return previousState_; }
 

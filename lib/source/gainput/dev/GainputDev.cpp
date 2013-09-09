@@ -134,7 +134,7 @@ SendDevice(const InputDevice* device, Stream* stream, NetConnection* devConnecti
 	stream->SeekBegin(0);
 	devConnection->Send(*stream);
 
-	for (DeviceButtonId buttonId = 0; buttonId < 1000; ++buttonId)
+	for (DeviceButtonId buttonId = 0; buttonId < device->GetInputState()->GetButtonCount(); ++buttonId)
 	{
 		if (device->IsValidButtonId(buttonId))
 		{
@@ -307,17 +307,15 @@ DevUpdate(InputDeltaState* delta)
 
 			int count = 0;
 			// Send existing devices
-			for (DeviceId deviceId = 0; deviceId < 1000; ++deviceId)
+			for (InputManager::const_iterator it = inputManager->begin();
+					it != inputManager->end();
+					++it)
 			{
-				const InputDevice* device = inputManager->GetDevice(deviceId);
-				if (!device)
-				{
-					break;
-				}
+				const InputDevice* device = it->second;
 				SendDevice(device, stream, devConnection);
 				++count;
 			}
-			GAINPUT_LOG("TOOL: Sent %d devics.\n", count);
+			GAINPUT_LOG("TOOL: Sent %d devices.\n", count);
 
 			// Send existing maps
 			count = 0;
@@ -568,7 +566,7 @@ DevStartDeviceSync(DeviceId deviceId)
 	devConnection->Send(*stream);
 
 	// Send device state
-	for (DeviceButtonId buttonId = 0; buttonId < 1000; ++buttonId)
+	for (DeviceButtonId buttonId = 0; buttonId < device->GetInputState()->GetButtonCount(); ++buttonId)
 	{
 		if (device->IsValidButtonId(buttonId))
 		{

@@ -92,15 +92,14 @@ InputRecorder::Start()
 	recordingListenerId_ = manager_.AddListener(recordingListener_);
 
 	// Record the initial state
-	for (DeviceId deviceId = 0; deviceId < 1000; ++deviceId)
+	for (InputManager::iterator it = manager_.begin();
+			it != manager_.end();
+			++it)
 	{
-		if (!IsDeviceToRecord(deviceId))
-		{
-			continue;
-		}
+		InputDevice* device = it->second;
+		const DeviceId deviceId = device->GetDeviceId();
 
-		InputDevice* device = manager_.GetDevice(deviceId);
-		if (!device)
+		if (!IsDeviceToRecord(deviceId))
 		{
 			continue;
 		}
