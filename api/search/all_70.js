@@ -5,7 +5,7 @@ var searchData=
   ['platform_20notes',['Platform Notes',['../page_platforms.html',1,'']]],
   ['pinchaction',['PinchAction',['../namespacegainput.html#a2afbae28940bf2248ff9fbbec40dd4c6',1,'gainput']]],
   ['pinchgesture',['PinchGesture',['../classgainput_1_1PinchGesture.html',1,'gainput']]],
-  ['pinchgesture',['PinchGesture',['../classgainput_1_1PinchGesture.html#a640eb5d1bb3087c4130470cc049f400c',1,'gainput::PinchGesture']]],
+  ['pinchgesture',['PinchGesture',['../classgainput_1_1PinchGesture.html#afdc25988c9e2f348f7482d6850af3e6e',1,'gainput::PinchGesture']]],
   ['pinchscale',['PinchScale',['../namespacegainput.html#a2afbae28940bf2248ff9fbbec40dd4c6aea4a62695a7a8a61995133d5912f5f28',1,'gainput']]],
   ['pinchtriggered',['PinchTriggered',['../namespacegainput.html#a2afbae28940bf2248ff9fbbec40dd4c6a3db6962fd2b78fc7653a8a96dd82f836',1,'gainput']]],
   ['previousstate_5f',['previousState_',['../classgainput_1_1InputDevice.html#ad6d7056c154938803191514d3147aac0',1,'gainput::InputDevice']]]

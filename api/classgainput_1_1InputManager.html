@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">v0.8.0-beta</span>
+   &#160;<span id="projectnumber">v0.9.0-beta</span>
    </div>
   </td>
  </tr>
@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classgainput_1_1InputManager-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -99,6 +100,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="GainputInputManager_8h_source.html">GainputInputManager.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a357b9311ee629109358e8a1af8860ba5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a357b9311ee629109358e8a1af8860ba5"></a>
+typedef <a class="el" href="classgainput_1_1HashMap.html">HashMap</a>&lt; <a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>, <br class="typebreak"/>
+<a class="el" href="classgainput_1_1InputDevice.html">InputDevice</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>DeviceMap</b></td></tr>
+<tr class="separator:a357b9311ee629109358e8a1af8860ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f5219960812eb8c8f3ff8c22794806"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63f5219960812eb8c8f3ff8c22794806"></a>
+typedef DeviceMap::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b></td></tr>
+<tr class="separator:a63f5219960812eb8c8f3ff8c22794806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a101f22fcd4f99caafb962efd67c10f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a101f22fcd4f99caafb962efd67c10f"></a>
+typedef DeviceMap::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b></td></tr>
+<tr class="separator:a0a101f22fcd4f99caafb962efd67c10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa177bebcb8dc3ba78221e8dd80cfc375"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#aa177bebcb8dc3ba78221e8dd80cfc375">InputManager</a> (<a class="el" href="classgainput_1_1Allocator.html">Allocator</a> &amp;allocator=GetDefaultAllocator())</td></tr>
@@ -136,14 +150,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a11f3567c80c60de896693a6e17471ef6">GetTime</a> () const </td></tr>
 <tr class="memdesc:a11f3567c80c60de896693a6e17471ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a monotonic time in milliseconds. <br/></td></tr>
 <tr class="separator:a11f3567c80c60de896693a6e17471ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24e0eea56e8da6c9abb775325ad3aa0f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a24e0eea56e8da6c9abb775325ad3aa0f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f">CreateDevice</a> ()</td></tr>
-<tr class="memdesc:a24e0eea56e8da6c9abb775325ad3aa0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input device and registers it with the manager.  <a href="#a24e0eea56e8da6c9abb775325ad3aa0f"></a><br/></td></tr>
-<tr class="separator:a24e0eea56e8da6c9abb775325ad3aa0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa69692c3420d3ebfac48ff1b1a062740"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:aa69692c3420d3ebfac48ff1b1a062740"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#aa69692c3420d3ebfac48ff1b1a062740">CreateAndGetDevice</a> ()</td></tr>
-<tr class="memdesc:aa69692c3420d3ebfac48ff1b1a062740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input device, registers it with the manager and returns it.  <a href="#aa69692c3420d3ebfac48ff1b1a062740"></a><br/></td></tr>
-<tr class="separator:aa69692c3420d3ebfac48ff1b1a062740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1445792f38d9ffbad191ba7da0fdbfe5"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a1445792f38d9ffbad191ba7da0fdbfe5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a1445792f38d9ffbad191ba7da0fdbfe5">CreateDevice</a> (<a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22">InputDevice::DeviceVariant</a> variant=<a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768">InputDevice::DV_STANDARD</a>)</td></tr>
+<tr class="memdesc:a1445792f38d9ffbad191ba7da0fdbfe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input device and registers it with the manager.  <a href="#a1445792f38d9ffbad191ba7da0fdbfe5"></a><br/></td></tr>
+<tr class="separator:a1445792f38d9ffbad191ba7da0fdbfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae228b31470a85efc94393c042e6565ce"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ae228b31470a85efc94393c042e6565ce"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#ae228b31470a85efc94393c042e6565ce">CreateAndGetDevice</a> (<a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22">InputDevice::DeviceVariant</a> variant=<a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768">InputDevice::DV_STANDARD</a>)</td></tr>
+<tr class="memdesc:ae228b31470a85efc94393c042e6565ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input device, registers it with the manager and returns it.  <a href="#ae228b31470a85efc94393c042e6565ce"></a><br/></td></tr>
+<tr class="separator:ae228b31470a85efc94393c042e6565ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5844c94c6d74856bbc999cb89b8ec5cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgainput_1_1InputDevice.html">InputDevice</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a5844c94c6d74856bbc999cb89b8ec5cf">GetDevice</a> (<a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> deviceId)</td></tr>
 <tr class="memdesc:a5844c94c6d74856bbc999cb89b8ec5cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the input device with the given ID.  <a href="#a5844c94c6d74856bbc999cb89b8ec5cf"></a><br/></td></tr>
 <tr class="separator:a5844c94c6d74856bbc999cb89b8ec5cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,6 +170,18 @@ uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memitem:a6b139b17fc9aea1c538ef9da674c9667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#a6b139b17fc9aea1c538ef9da674c9667">FindDeviceId</a> (<a class="el" href="classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a">InputDevice::DeviceType</a> type, unsigned index) const </td></tr>
 <tr class="memdesc:a6b139b17fc9aea1c538ef9da674c9667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ID of the device with the given type and index.  <a href="#a6b139b17fc9aea1c538ef9da674c9667"></a><br/></td></tr>
 <tr class="separator:a6b139b17fc9aea1c538ef9da674c9667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa885e9ac14e0cc54399ec1190fa555f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa885e9ac14e0cc54399ec1190fa555f5"></a>
+iterator&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
+<tr class="separator:aa885e9ac14e0cc54399ec1190fa555f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9a13d68b3eaa64f060b5b62539ea94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe9a13d68b3eaa64f060b5b62539ea94"></a>
+iterator&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
+<tr class="separator:afe9a13d68b3eaa64f060b5b62539ea94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c2b9b38baad3d4e5e0ab1199f45958"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70c2b9b38baad3d4e5e0ab1199f45958"></a>
+const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const </td></tr>
+<tr class="separator:a70c2b9b38baad3d4e5e0ab1199f45958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0405f0f3c07a9c7dc2558f40279528f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0405f0f3c07a9c7dc2558f40279528f2"></a>
+const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const </td></tr>
+<tr class="separator:a0405f0f3c07a9c7dc2558f40279528f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe8e526ae8ec877895e34fc341a87c84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegainput.html#aaf8159c0645b08a803bf9dfc974011a3">ListenerId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgainput_1_1InputManager.html#abe8e526ae8ec877895e34fc341a87c84">AddListener</a> (<a class="el" href="classgainput_1_1InputListener.html">InputListener</a> *listener)</td></tr>
 <tr class="memdesc:abe8e526ae8ec877895e34fc341a87c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a listener to be notified when a button state changes.  <a href="#abe8e526ae8ec877895e34fc341a87c84"></a><br/></td></tr>
 <tr class="separator:abe8e526ae8ec877895e34fc341a87c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,7 +224,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages all input devices and some other helpful stuff. </p>
 <p>This manager takes care of all device-related things. Normally, you should only need one that contains all your input devices.</p>
-<p>After instantiating an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>, you have to call <a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="Sets the window resolution.">SetDisplaySize()</a>. You should also create some input devices using the template function <a class="el" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f" title="Creates an input device and registers it with the manager.">CreateDevice()</a> which returns the device ID that is needed to do anything further with the device (for example, see <a class="el" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">InputMap</a>).</p>
+<p>After instantiating an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a>, you have to call <a class="el" href="classgainput_1_1InputManager.html#a5814f29c09362547c66b59993a23b031" title="Sets the window resolution.">SetDisplaySize()</a>. You should also create some input devices using the template function <a class="el" href="classgainput_1_1InputManager.html#a1445792f38d9ffbad191ba7da0fdbfe5" title="Creates an input device and registers it with the manager.">CreateDevice()</a> which returns the device ID that is needed to do anything further with the device (for example, see <a class="el" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">InputMap</a>).</p>
 <p>The manager has to be updated every frame by calling <a class="el" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">Update()</a>. Depending on the platform, you may have to call another function as part of your message handling code (see <a class="el" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc" title="[WINDOWS ONLY] Lets the InputManager handle the given Windows message.">HandleMessage()</a>, <a class="el" href="classgainput_1_1InputManager.html#ac0b9817822a974de95a3729049e3966c" title="[ANDROID ONLY] Lets the InputManager handle the given input event.">HandleInput()</a>).</p>
 <p>Note that destruction of an <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">InputManager</a> invalidates all input maps based on it and all devices created through it. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -248,7 +274,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="aa69692c3420d3ebfac48ff1b1a062740"></a>
+<a class="anchor" id="ae228b31470a85efc94393c042e6565ce"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -260,7 +286,8 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="memname">T * gainput::InputManager::CreateAndGetDevice </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22">InputDevice::DeviceVariant</a>&#160;</td>
+          <td class="paramname"><em>variant</em> = <code><a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768">InputDevice::DV_STANDARD</a></code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -278,11 +305,17 @@ template&lt;class T &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">variant</td><td>Requests the specified device variant. Note that this is only a request. Another implementation variant of the device may silently be instantiated instead. To determine what variant was instantiated, call <a class="el" href="classgainput_1_1InputDevice.html#aff296bbbdf0193f6f9f3bc047dd39f14" title="Returns the device variant.">InputDevice::GetVariant()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>The newly created input device. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a24e0eea56e8da6c9abb775325ad3aa0f"></a>
+<a class="anchor" id="a1445792f38d9ffbad191ba7da0fdbfe5"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -294,7 +327,8 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="namespacegainput.html#adddb432e0e83ff3d018e7ce4bf50e753">DeviceId</a> gainput::InputManager::CreateDevice </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22">InputDevice::DeviceVariant</a>&#160;</td>
+          <td class="paramname"><em>variant</em> = <code><a class="el" href="classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768">InputDevice::DV_STANDARD</a></code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -309,6 +343,12 @@ template&lt;class T &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The input device class, muste be derived from <a class="el" href="classgainput_1_1InputDevice.html" title="Interface for anything that provides device inputs.">InputDevice</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">variant</td><td>Requests the specified device variant. Note that this is only a request. Another implementation variant of the device may silently be instantiated instead. To determine what variant was instantiated, call <a class="el" href="classgainput_1_1InputDevice.html#aff296bbbdf0193f6f9f3bc047dd39f14" title="Returns the device variant.">InputDevice::GetVariant()</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -484,7 +524,7 @@ template&lt;class T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 11 2013 22:49:38 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -7,7 +7,7 @@ var searchData=
   ['setrecording',['SetRecording',['../classgainput_1_1InputPlayer.html#a3b16f6fb34ec7206d68a7afbfe1f0966',1,'gainput::InputPlayer']]],
   ['settextinputenabled',['SetTextInputEnabled',['../classgainput_1_1InputDeviceKeyboard.html#a02606aecbbb56b585d8c406035802d94',1,'gainput::InputDeviceKeyboard']]],
   ['setuserbuttonpolicy',['SetUserButtonPolicy',['../classgainput_1_1InputMap.html#a0dbe4f6c75f59b6b863adf68def5d1fc',1,'gainput::InputMap']]],
-  ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#afe5f7306714d5bd32b2ba32abc8795e2',1,'gainput::SimultaneouslyDownGesture']]],
+  ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#a885c74627ff09a89e66cf1fdd01f9504',1,'gainput::SimultaneouslyDownGesture']]],
   ['start',['Start',['../classgainput_1_1InputPlayer.html#a12f8825f00c76d83913b5e3bac024efe',1,'gainput::InputPlayer::Start()'],['../classgainput_1_1InputRecorder.html#a98ece241a9c3f1cffce7be6441d321dc',1,'gainput::InputRecorder::Start()']]],
   ['startdevicestatesync',['StartDeviceStateSync',['../classgainput_1_1InputManager.html#a0dfac672fa2f35010432d0e5eae53074',1,'gainput::InputManager']]],
   ['stop',['Stop',['../classgainput_1_1InputPlayer.html#a733d8df6162446a53154ba646377d368',1,'gainput::InputPlayer::Stop()'],['../classgainput_1_1InputRecorder.html#abdb9e30d1f804d6a8b574ac9343af108',1,'gainput::InputRecorder::Stop()']]]

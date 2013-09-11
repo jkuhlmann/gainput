@@ -11,7 +11,7 @@ var searchData=
   ['setuserbuttonpolicy',['SetUserButtonPolicy',['../classgainput_1_1InputMap.html#a0dbe4f6c75f59b6b863adf68def5d1fc',1,'gainput::InputMap']]],
   ['simultaneouslydownaction',['SimultaneouslyDownAction',['../namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21',1,'gainput']]],
   ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html',1,'gainput']]],
-  ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#afe5f7306714d5bd32b2ba32abc8795e2',1,'gainput::SimultaneouslyDownGesture']]],
+  ['simultaneouslydowngesture',['SimultaneouslyDownGesture',['../classgainput_1_1SimultaneouslyDownGesture.html#a885c74627ff09a89e66cf1fdd01f9504',1,'gainput::SimultaneouslyDownGesture']]],
   ['simultaneouslydowntriggered',['SimultaneouslyDownTriggered',['../namespacegainput.html#a5d56fad0a562c92ce3c9b337b760cb21ad074ff1508e9a8242afc0d7f388634da',1,'gainput']]],
   ['start',['Start',['../classgainput_1_1InputPlayer.html#a12f8825f00c76d83913b5e3bac024efe',1,'gainput::InputPlayer::Start()'],['../classgainput_1_1InputRecorder.html#a98ece241a9c3f1cffce7be6441d321dc',1,'gainput::InputRecorder::Start()']]],
   ['startdevicestatesync',['StartDeviceStateSync',['../classgainput_1_1InputManager.html#a0dfac672fa2f35010432d0e5eae53074',1,'gainput::InputManager']]],

@@ -10,9 +10,10 @@ var searchData=
   ['devicestate',['DeviceState',['../classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aa',1,'gainput::InputDevice']]],
   ['devicestatemodifier',['DeviceStateModifier',['../classgainput_1_1DeviceStateModifier.html',1,'gainput']]],
   ['devicetype',['DeviceType',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6a',1,'gainput::InputDevice']]],
+  ['devicevariant',['DeviceVariant',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22',1,'gainput::InputDevice']]],
   ['doubleclickaction',['DoubleClickAction',['../namespacegainput.html#a2dd97693aa7da4c0d94e56bdc7211d38',1,'gainput']]],
   ['doubleclickgesture',['DoubleClickGesture',['../classgainput_1_1DoubleClickGesture.html',1,'gainput']]],
-  ['doubleclickgesture',['DoubleClickGesture',['../classgainput_1_1DoubleClickGesture.html#a6d6aae97364f08515ac97e7bffca8587',1,'gainput::DoubleClickGesture']]],
+  ['doubleclickgesture',['DoubleClickGesture',['../classgainput_1_1DoubleClickGesture.html#abdd7b1a9878ac14e5b2fd244ece149fc',1,'gainput::DoubleClickGesture']]],
   ['doubleclicktriggered',['DoubleClickTriggered',['../namespacegainput.html#a2dd97693aa7da4c0d94e56bdc7211d38a9961bae8429020339c1bd3c96e90c03e',1,'gainput']]],
   ['ds_5flow_5fbattery',['DS_LOW_BATTERY',['../classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aaae2eff88b377caf1ac969b4586780f6d5',1,'gainput::InputDevice']]],
   ['ds_5fok',['DS_OK',['../classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aaa017a7969e291594851f1c2ffeedeee5f',1,'gainput::InputDevice']]],
@@ -25,6 +26,9 @@ var searchData=
   ['dt_5fpad',['DT_PAD',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaccfae3f37523f283a5c46f8e623ddb03',1,'gainput::InputDevice']]],
   ['dt_5fremote',['DT_REMOTE',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaa98ae78f6516eaf8b76d436dcb4599c6',1,'gainput::InputDevice']]],
   ['dt_5ftouch',['DT_TOUCH',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa3c6089fd6504b1fa647b1683482edcdb',1,'gainput::InputDevice']]],
+  ['dv_5fnull',['DV_NULL',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22a2e6f1d9432f3b79e33457cfc7d4a2c25',1,'gainput::InputDevice']]],
+  ['dv_5fraw',['DV_RAW',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22a27d423b8204aa9926627fd43911245ef',1,'gainput::InputDevice']]],
+  ['dv_5fstandard',['DV_STANDARD',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768',1,'gainput::InputDevice']]],
   ['dependencies',['Dependencies',['../page_dependencies.html',1,'']]],
   ['development_20tool_20protocol',['Development Tool Protocol',['../page_devprotocol.html',1,'']]]
 ];

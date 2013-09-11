@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">v0.8.0-beta</span>
+   &#160;<span id="projectnumber">v0.9.0-beta</span>
    </div>
   </td>
  </tr>
@@ -91,15 +91,21 @@ Android NDK</h1>
 <p>The gamepad support is limited to the device-internal sensors, i.e. gyroscope, magnetic field, and acceleration. Externally connected gamepads are not support yet.</p>
 <h1><a class="anchor" id="platform_linux"></a>
 Linux</h1>
-<p>Supported devices: keyboard, mouse, gamepad.</p>
+<p>Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.</p>
+<p>Evdev is used for the raw input variants. Evdev has permission issues on some Linux distributions where the devices (<code>/dev/input/event*</code>) are only readable by root or a specific group. If a raw device's state is <a class="el" href="classgainput_1_1InputDevice.html#a39157bf78af48ac2c0cb4482c81716aaacdcca6bc2a27ee94f8516690fcd67302" title="The input device is currently not available.">gainput::InputDevice::DS_UNAVAILABLE</a> this may very well be the cause.</p>
+<p>These gamepads have been tested and are explicitly supported:</p>
+<ul>
+<li>Microsoft X-Box 360 pad</li>
+<li>Sony PLAYSTATION(R)3 Controller</li>
+</ul>
 <h1><a class="anchor" id="platform_windows"></a>
 Windows</h1>
-<p>Supported devices: keyboard, mouse, gamepad.</p>
+<p>Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.</p>
 <p>The gamepad support is implemented using XINPUT which is Microsoft's most current API for such devices. However, that means that only Xbox 360 pads and compatible devices are supported. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 11 2013 22:49:38 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

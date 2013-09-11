@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Gainput
-   &#160;<span id="projectnumber">v0.8.0-beta</span>
+   &#160;<span id="projectnumber">v0.9.0-beta</span>
    </div>
   </td>
  </tr>
@@ -101,7 +101,7 @@ Integration Into Your Project</h1>
 </div><!-- fragment --><p>You should have the <code>lib/include/</code> folder as an include folder in your project settings for this to work. The file includes most of Gainput's other header files so that you shouldn't need to include anything else.</p>
 <h1><a class="anchor" id="sect_setup"></a>
 Setting up Gainput</h1>
-<p>Gainput's most important class is <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">gainput::InputManager</a>. You should create one that you use throughout your game. Create some input devices using <a class="el" href="classgainput_1_1InputManager.html#a24e0eea56e8da6c9abb775325ad3aa0f" title="Creates an input device and registers it with the manager.">gainput::InputManager::CreateDevice()</a>. And then, during your game loop, call <a class="el" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">gainput::InputManager::Update()</a> every frame.</p>
+<p>Gainput's most important class is <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">gainput::InputManager</a>. You should create one that you use throughout your game. Create some input devices using <a class="el" href="classgainput_1_1InputManager.html#a1445792f38d9ffbad191ba7da0fdbfe5" title="Creates an input device and registers it with the manager.">gainput::InputManager::CreateDevice()</a>. And then, during your game loop, call <a class="el" href="classgainput_1_1InputManager.html#a3cfcd26de850329177519a281df4f023" title="Updates the input state, call this every frame.">gainput::InputManager::Update()</a> every frame.</p>
 <p>Some platform-specific function calls may be necessary, like <a class="el" href="classgainput_1_1InputManager.html#abc3450565c648dfbd805094188ddebcc" title="[WINDOWS ONLY] Lets the InputManager handle the given Windows message.">gainput::InputManager::HandleMessage()</a>.</p>
 <p>On top of your <a class="el" href="classgainput_1_1InputManager.html" title="Manages all input devices and some other helpful stuff.">gainput::InputManager</a>, you should create at least one <a class="el" href="classgainput_1_1InputMap.html" title="Maps user buttons to device buttons.">gainput::InputMap</a> and map some device-specific buttons to your custom user buttons using <a class="el" href="classgainput_1_1InputMap.html#acd8e038d6d839b056b834fcfccc2cbfd" title="Maps a bool-type button.">gainput::InputMap::MapBool()</a> or <a class="el" href="classgainput_1_1InputMap.html#adece48ccc4cba961f85af02249e699e8" title="Maps a float-type button, possibly to a custom range.">gainput::InputMap::MapFloat()</a>. This will allow you to more conventienly provide alternative input methods or enable the player to change button mappings.</p>
 <h1><a class="anchor" id="sect_using"></a>
@@ -110,7 +110,7 @@ Using Gainput</h1>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 24 2013 14:23:45 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 11 2013 22:49:38 for Gainput by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

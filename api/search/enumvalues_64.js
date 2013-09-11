@@ -11,5 +11,8 @@ var searchData=
   ['dt_5fmouse',['DT_MOUSE',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aabb0057b79cfc8e574f8d37299c831349',1,'gainput::InputDevice']]],
   ['dt_5fpad',['DT_PAD',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaccfae3f37523f283a5c46f8e623ddb03',1,'gainput::InputDevice']]],
   ['dt_5fremote',['DT_REMOTE',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aaa98ae78f6516eaf8b76d436dcb4599c6',1,'gainput::InputDevice']]],
-  ['dt_5ftouch',['DT_TOUCH',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa3c6089fd6504b1fa647b1683482edcdb',1,'gainput::InputDevice']]]
+  ['dt_5ftouch',['DT_TOUCH',['../classgainput_1_1InputDevice.html#a4e851f5fda7f6db653f2aa9a15fede6aa3c6089fd6504b1fa647b1683482edcdb',1,'gainput::InputDevice']]],
+  ['dv_5fnull',['DV_NULL',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22a2e6f1d9432f3b79e33457cfc7d4a2c25',1,'gainput::InputDevice']]],
+  ['dv_5fraw',['DV_RAW',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22a27d423b8204aa9926627fd43911245ef',1,'gainput::InputDevice']]],
+  ['dv_5fstandard',['DV_STANDARD',['../classgainput_1_1InputDevice.html#a70782f6fda773960e2146e5fc3bc5a22ab9c6b09c33790f4bb464f88fe219c768',1,'gainput::InputDevice']]]
 ];
