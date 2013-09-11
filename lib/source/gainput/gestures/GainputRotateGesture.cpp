@@ -23,9 +23,9 @@ RotateGesture::RotateGesture(InputManager& manager, DeviceId device, DeviceVaria
 	xAxis2_.buttonId = InvalidDeviceButtonId;
 	yAxis2_.buttonId = InvalidDeviceButtonId;
 
-	state_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 1);
+	state_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 2);
 	GAINPUT_ASSERT(state_);
-	previousState_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 1);
+	previousState_ = manager_.GetAllocator().New<InputState>(manager.GetAllocator(), 2);
 	GAINPUT_ASSERT(previousState_);
 }
 
