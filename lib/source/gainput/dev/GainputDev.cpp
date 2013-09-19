@@ -25,6 +25,35 @@ static Array<const InputMap*> devMaps(GetDefaultAllocator());
 static Array<const InputDevice*> devDevices(GetDefaultAllocator());
 static bool devSendInfos = false;
 static Array<DeviceId> devSyncedDevices(GetDefaultAllocator());
+static size_t devFrame = 0;
+
+static size_t SendMessage(Stream& stream)
+{
+	const uint8_t length = stream.GetSize();
+	GAINPUT_ASSERT(length > 0);
+	size_t sent = devConnection->Send(&length, sizeof(length));
+	sent += devConnection->Send(stream);
+	return sent;
+}
+
+static bool ReadMessage(Stream& stream)
+{
+	stream.Reset();
+	size_t received = devConnection->Receive(stream, 1);
+	if (!received)
+		return false;
+	uint8_t length;
+	stream.Read(length);
+	stream.Reset();
+	received = 0;
+	while (received < length)
+	{
+		stream.SeekEnd(0);
+		received += devConnection->Receive(stream, length - received);
+	}
+	stream.SeekBegin(0);
+	return true;
+}
 
 class DevUserButtonListener : public MappedInputListener
 {
@@ -45,7 +74,7 @@ public:
 		stream->Write(uint8_t(0));
 		stream->Write(uint8_t(newValue));
 		stream->SeekBegin(0);
-		devConnection->Send(*stream);
+		SendMessage(*stream);
 		allocator->Delete(stream);
 	}
 
@@ -63,7 +92,7 @@ public:
 		stream->Write(uint8_t(1));
 		stream->Write(newValue);
 		stream->SeekBegin(0);
-		devConnection->Send(*stream);
+		SendMessage(*stream);
 		allocator->Delete(stream);
 	}
 
@@ -89,7 +118,7 @@ public:
 		stream->Write(uint32_t(deviceButton));
 		stream->Write(uint8_t(newValue));
 		stream->SeekBegin(0);
-		devConnection->Send(*stream);
+		SendMessage(*stream);
 		allocator->Delete(stream);
 	}
 
@@ -106,7 +135,7 @@ public:
 		stream->Write(uint32_t(deviceButton));
 		stream->Write(newValue);
 		stream->SeekBegin(0);
-		devConnection->Send(*stream);
+		SendMessage(*stream);
 		allocator->Delete(stream);
 	}
 
@@ -132,7 +161,7 @@ SendDevice(const InputDevice* device, Stream* stream, NetConnection* devConnecti
 	stream->Write(uint8_t(strlen(deviceName)));
 	stream->Write(deviceName, strlen(deviceName));
 	stream->SeekBegin(0);
-	devConnection->Send(*stream);
+	SendMessage(*stream);
 
 	for (DeviceButtonId buttonId = 0; buttonId < device->GetInputState()->GetButtonCount(); ++buttonId)
 	{
@@ -149,7 +178,7 @@ SendDevice(const InputDevice* device, Stream* stream, NetConnection* devConnecti
 				stream->Write(buttonName, len);
 			stream->Write(uint8_t(device->GetButtonType(buttonId)));
 			stream->SeekBegin(0);
-			devConnection->Send(*stream);
+			SendMessage(*stream);
 		}
 	}
 }
@@ -163,7 +192,7 @@ SendMap(const InputMap* map, Stream* stream, NetConnection* devConnection)
 	stream->Write(uint8_t(strlen(map->GetName())));
 	stream->Write(map->GetName(), strlen(map->GetName()));
 	stream->SeekBegin(0);
-	devConnection->Send(*stream);
+	SendMessage(*stream);
 
 	DeviceButtonSpec mappings[32];
 	for (UserButtonId buttonId = 0; buttonId < 1000; ++buttonId)
@@ -181,7 +210,7 @@ SendMap(const InputMap* map, Stream* stream, NetConnection* devConnection)
 				stream->Write(uint32_t(mappings[i].buttonId));
 				stream->Write(map->GetFloat(buttonId));
 				stream->SeekBegin(0);
-				devConnection->Send(*stream);
+				SendMessage(*stream);
 			}
 		}
 	}
@@ -278,7 +307,7 @@ DevUpdate(InputDeltaState* delta)
 			stream->Write(uint32_t(DevProtocolVersion));
 			stream->Write(uint32_t(GetLibVersion()));
 			stream->SeekBegin(0);
-			devConnection->Send(*stream);
+			SendMessage(*stream);
 
 			allocator->Delete(stream);
 		}
@@ -290,17 +319,11 @@ DevUpdate(InputDeltaState* delta)
 	}
 
 	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
-	size_t received = 1;
-	size_t r;
-	while (received > 0)
+	while (ReadMessage(*stream))
 	{
-		stream->Reset();
-		received = devConnection->Receive(*stream, 1024);
-		if (!received)
-			break;
 		uint8_t cmd;
-		r = stream->Read(cmd);
-		GAINPUT_ASSERT(r);
+		stream->Read(cmd);
+
 		if (cmd == DevCmdGetAllInfos)
 		{
 			devSendInfos = true;
@@ -333,9 +356,8 @@ DevUpdate(InputDeltaState* delta)
 		{
 			uint8_t deviceType;
 			uint8_t deviceIndex;
-			r = stream->Read(deviceType);
-			r += stream->Read(deviceIndex);
-			GAINPUT_ASSERT(r == sizeof(uint8_t)*2);
+			stream->Read(deviceType);
+			stream->Read(deviceIndex);
 			const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
 			InputDevice* device = inputManager->GetDevice(deviceId);
 			GAINPUT_ASSERT(device);
@@ -348,10 +370,9 @@ DevUpdate(InputDeltaState* delta)
 			uint8_t deviceType;
 			uint8_t deviceIndex;
 			uint32_t deviceButtonId;
-			r = stream->Read(deviceType);
-			r += stream->Read(deviceIndex);
-			r += stream->Read(deviceButtonId);
-			GAINPUT_ASSERT(r == sizeof(uint8_t)*2 + sizeof(uint32_t));
+			stream->Read(deviceType);
+			stream->Read(deviceIndex);
+			stream->Read(deviceButtonId);
 			const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
 			InputDevice* device = inputManager->GetDevice(deviceId);
 			GAINPUT_ASSERT(device);
@@ -361,24 +382,34 @@ DevUpdate(InputDeltaState* delta)
 			if (device->GetButtonType(deviceButtonId) == BT_BOOL)
 			{
 				uint8_t value;
-				r = stream->Read(value);
-				GAINPUT_ASSERT(r == 1);
+				stream->Read(value);
 				bool boolValue = bool(value);
 				HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, boolValue);
 			}
 			else
 			{
 				float value;
-				r = stream->Read(value);
-				GAINPUT_ASSERT(r == sizeof(float));
+				stream->Read(value);
 				HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
 			}
 		}
 	}
+
+	bool pingFailed = false;
+	if (devFrame % 100 == 0 && devConnection->IsConnected())
+	{
+		stream->Reset();
+		stream->Write(uint8_t(DevCmdPing));
+		stream->SeekBegin(0);
+		if (SendMessage(*stream) == 0)
+		{
+			pingFailed = true;
+		}
+	}
+
 	allocator->Delete(stream);
 
-	const uint8_t cmd = DevCmdPing;
-	if (!devConnection->IsConnected() || devConnection->Send(&cmd, sizeof(cmd)) == 0)
+	if (!devConnection->IsConnected() || pingFailed)
 	{
 		GAINPUT_LOG("TOOL: Disconnected\n");
 		devConnection->Close();
@@ -405,6 +436,8 @@ DevUpdate(InputDeltaState* delta)
 
 		return;
 	}
+
+	++devFrame;
 }
 
 void
@@ -444,7 +477,7 @@ DevNewUserButton(InputMap* inputMap, UserButtonId userButton, DeviceId device, D
 	stream->Write(uint32_t(deviceButton));
 	stream->Write(inputMap->GetFloat(userButton));
 	stream->SeekBegin(0);
-	devConnection->Send(*stream);
+	SendMessage(*stream);
 	allocator->Delete(stream);
 }
 
@@ -461,7 +494,7 @@ DevRemoveUserButton(InputMap* inputMap, UserButtonId userButton)
 	stream->Write(uint32_t(inputMap->GetId()));
 	stream->Write(uint32_t(userButton));
 	stream->SeekBegin(0);
-	devConnection->Send(*stream);
+	SendMessage(*stream);
 	allocator->Delete(stream);
 }
 
@@ -479,7 +512,7 @@ DevRemoveMap(InputMap* inputMap)
 		stream->Write(uint8_t(DevCmdRemoveMap));
 		stream->Write(uint32_t(inputMap->GetId()));
 		stream->SeekBegin(0);
-		devConnection->Send(*stream);
+		SendMessage(*stream);
 		allocator->Delete(stream);
 	}
 
@@ -563,7 +596,7 @@ DevStartDeviceSync(DeviceId deviceId)
 	stream->Write(uint8_t(device->GetType()));
 	stream->Write(uint8_t(device->GetIndex()));
 	stream->SeekBegin(0);
-	devConnection->Send(*stream);
+	SendMessage(*stream);
 
 	// Send device state
 	for (DeviceButtonId buttonId = 0; buttonId < device->GetInputState()->GetButtonCount(); ++buttonId)
@@ -584,7 +617,7 @@ DevStartDeviceSync(DeviceId deviceId)
 				stream->Write(device->GetFloat(buttonId));
 			}
 			stream->SeekBegin(0);
-			devConnection->Send(*stream);
+			SendMessage(*stream);
 		}
 	}
 

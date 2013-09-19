@@ -324,6 +324,8 @@ set device button
 
 The message IDs (\c cmd) are defined in GainputDevProtocol.h.
 
+Each message is prefaced with a \c uint8_t that specifies the message's length.
+
 All integers are in network byte order.
 
 Strings are represented like this:

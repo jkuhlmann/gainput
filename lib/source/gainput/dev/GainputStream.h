@@ -27,6 +27,7 @@ public:
 
 	virtual bool SeekBegin(int offset) = 0;
 	virtual bool SeekCurrent(int offset) = 0;
+	virtual bool SeekEnd(int offset) = 0;
 
 	virtual void Reset() = 0;
 

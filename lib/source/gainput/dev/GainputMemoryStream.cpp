@@ -75,6 +75,17 @@ MemoryStream::SeekCurrent(int offset)
 	return true;
 }
 
+bool
+MemoryStream::SeekEnd(int offset)
+{
+	if (offset > 0)
+	{
+		return false;
+	}
+	position = length + offset;
+	return true;
+}
+
 }
 #endif
 

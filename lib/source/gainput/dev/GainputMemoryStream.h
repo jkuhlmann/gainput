@@ -20,6 +20,7 @@ public:
 
 	bool SeekBegin(int offset);
 	bool SeekCurrent(int offset);
+	bool SeekEnd(int offset);
 
 	virtual void Reset() { length = 0; position = 0; }
 

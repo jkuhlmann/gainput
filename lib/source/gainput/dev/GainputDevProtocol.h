@@ -20,7 +20,7 @@ enum DevCmd
 	DevCmdSetDeviceButton,
 };
 
-const static unsigned DevProtocolVersion = 0x2;
+const static unsigned DevProtocolVersion = 0x3;
 
 }
 
