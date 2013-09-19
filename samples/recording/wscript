@@ -26,9 +26,9 @@ def build(bld):
 			target=APPNAME,
 			linkflags='-lstdc++ -landroid -llog')
 	else:
-		usethese = 'gainput'
+		usethese = 'gainputstatic'
 		if (sys.platform.startswith('win')):
-			usethese = 'gainput KERNEL32 USER32 GDI32 XINPUT'
+			usethese = 'gainputstatic KERNEL32 USER32 GDI32 XINPUT'
 		bld.program(features='cxx cxxprogram',
 			source=sources, 
 			includes='../../lib/include/', 
