@@ -191,6 +191,10 @@ NetConnection::IsReady(bool read, bool write)
 size_t
 NetConnection::Send(const void* buf, size_t length)
 {
+	if (!IsConnected())
+	{
+		return 0;
+	}
 	assert(IsConnected());
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	const int result = send(fd, buf, length, MSG_NOSIGNAL);
