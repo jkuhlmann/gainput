@@ -85,7 +85,8 @@ Stream::Read(float& dest)
 {
 	const size_t result = Read(&dest, sizeof(dest));
 	const uint32_t tmpInt = ntohl(*(uint32_t*)&dest);
-	dest = *(float*)&tmpInt;
+	const float* tmpFloatP = (float*)&tmpInt;
+	dest = *tmpFloatP;
 	return result;
 }
 
@@ -132,7 +133,8 @@ size_t
 Stream::Write(const float& src)
 {
 	const uint32_t tmpInt = htonl(*(uint32_t*)&src);
-	const float tmp = *(float*)&tmpInt;
+	const float* tmpFloatP = (float*)&tmpInt;
+	const float tmp = *tmpFloatP;
 	return Write(&tmp, sizeof(tmp));
 }
 
