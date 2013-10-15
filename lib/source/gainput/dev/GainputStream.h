@@ -85,7 +85,7 @@ Stream::Read(float& dest)
 {
 	const size_t result = Read(&dest, sizeof(dest));
 	const uint32_t tmpInt = ntohl(*(uint32_t*)&dest);
-	dest = *(float*)(char*)&tmpInt;
+	dest = *(float*)&tmpInt;
 	return result;
 }
 

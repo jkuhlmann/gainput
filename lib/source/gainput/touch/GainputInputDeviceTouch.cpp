@@ -1,6 +1,16 @@
 
-#ifndef GAINPUTTOUCHCOMMON_H_
-#define GAINPUTTOUCHCOMMON_H_
+#include <gainput/gainput.h>
+
+#include "GainputInputDeviceTouchImpl.h"
+#include "GainputTouchInfo.h"
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
+
+#include "GainputInputDeviceTouchNull.h"
+
+#if defined(GAINPUT_PLATFORM_ANDROID)
+	#include "GainputInputDeviceTouchAndroid.h"
+#endif
 
 namespace gainput
 {
@@ -8,7 +18,18 @@ namespace gainput
 InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
 {
-	impl_ = manager.GetAllocator().New<InputDeviceTouchImpl>(manager, device);
+#if defined(GAINPUT_PLATFORM_ANDROID)
+	if (variant != DV_NULL)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplAndroid>(manager, device);
+	}
+#endif
+
+	if (!impl_)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplNull>(manager, device);
+	}
+
 	GAINPUT_ASSERT(impl_);
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
 	GAINPUT_ASSERT(state_);
@@ -18,9 +39,9 @@ InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, Devic
 
 InputDeviceTouch::~InputDeviceTouch()
 {
-	impl_->GetManager().GetAllocator().Delete(state_);
-	impl_->GetManager().GetAllocator().Delete(previousState_);
-	impl_->GetManager().GetAllocator().Delete(impl_);
+	manager_.GetAllocator().Delete(state_);
+	manager_.GetAllocator().Delete(previousState_);
+	manager_.GetAllocator().Delete(impl_);
 }
 
 void
@@ -33,6 +54,12 @@ InputDevice::DeviceState
 InputDeviceTouch::InternalGetState() const
 {
 	return impl_->GetState();
+}
+
+InputDevice::DeviceVariant
+InputDeviceTouch::GetVariant() const
+{
+	return impl_->GetVariant();
 }
 
 size_t
@@ -77,6 +104,4 @@ InputDeviceTouch::GetButtonByName(const char* name) const
 }
 
 }
-
-#endif
 

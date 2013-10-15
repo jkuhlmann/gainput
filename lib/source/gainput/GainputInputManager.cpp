@@ -315,7 +315,7 @@ InputManager::HandleInput(AInputEvent* event)
 		if (it->second->GetType() == InputDevice::DT_TOUCH)
 		{
 			InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);
-			InputDeviceTouchImpl* touchImpl = touch->GetPimpl();
+			InputDeviceTouchImplAndroid* touchImpl = static_cast<InputDeviceTouchImplAndroid*>(touch->GetPimpl());
 			GAINPUT_ASSERT(touchImpl);
 			handled |= touchImpl->HandleInput(event);
 		}
