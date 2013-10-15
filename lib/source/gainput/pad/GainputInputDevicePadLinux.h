@@ -1,17 +1,11 @@
 
-#include <gainput/gainput.h>
-
-
-#if defined(GAINPUT_PLATFORM_LINUX)
+#ifndef GAINPUTINPUTDEVICEPADLINUX_H_
+#define GAINPUTINPUTDEVICEPADLINUX_H_
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <linux/joystick.h>
 #include <errno.h>
-
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-
 
 // Cf. http://www.kernel.org/doc/Documentation/input/joystick-api.txt
 // Cf. http://ps3.jim.sh/sixaxis/usb/
@@ -37,10 +31,10 @@ static const char* PadDeviceIds[MaxPadCount] =
 	"/dev/input/js9"
 };
 
-class InputDevicePadImpl
+class InputDevicePadImplLinux : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplLinux(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
 		index_(index),
@@ -52,12 +46,17 @@ public:
 		CheckForDevice();
 	}
 
-	~InputDevicePadImpl()
+	~InputDevicePadImplLinux()
 	{
 		if (fd_ != -1)
 		{
 			close(fd_);
 		}
+	}
+
+	InputDevice::DeviceVariant GetVariant() const
+	{
+		return InputDevice::DV_STANDARD;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
@@ -136,9 +135,6 @@ public:
 		}
 	}
 
-	InputManager& GetManager() const { return manager_; }
-	DeviceId GetDevice() const { return device_; }
-
 	InputDevice::DeviceState GetState() const
 	{
 		return state_;
@@ -172,6 +168,11 @@ public:
 		}
 
 		return false;
+	}
+
+	bool Vibrate(float leftMotor, float rightMotor)
+	{
+		return false; // TODO
 	}
 
 private:
@@ -281,17 +282,5 @@ private:
 
 }
 
-#include "GainputPadCommon.h"
-
-namespace gainput
-{
-
-bool
-InputDevicePad::Vibrate(float leftMotor, float rightMotor)
-{
-	return false; // TODO
-}
-
-}
-
 #endif
+

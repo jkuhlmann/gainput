@@ -1,6 +1,17 @@
 
-#ifndef GAINPUTPADCOMMON_H_
-#define GAINPUTPADCOMMON_H_
+#include <gainput/gainput.h>
+
+#include "GainputInputDevicePadImpl.h"
+#include "../GainputInputDeltaState.h"
+#include "../GainputHelpers.h"
+
+#if defined(GAINPUT_PLATFORM_LINUX)
+	#include "GainputInputDevicePadLinux.h"
+#elif defined(GAINPUT_PLATFORM_WIN)
+	#include "GainputInputDevicePadWin.h"
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	#include "GainputInputDevicePadAndroid.h"
+#endif
 
 namespace gainput
 {
@@ -90,17 +101,25 @@ DeviceButtonInfo deviceButtonInfos[] =
 		{ BT_BOOL, "pad_button_31"}
 };
 
-}
-
 const unsigned PadButtonCount = PadButtonCount_;
 const unsigned PadAxisCount = PadButtonAxisCount_;
 
+}
+
 
 InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_PAD))
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_PAD)),
+	impl_(0)
 {
-	impl_ = manager.GetAllocator().New<InputDevicePadImpl>(manager, device, index_);
+#if defined(GAINPUT_PLATFORM_LINUX)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, device, index_);
+#elif defined(GAINPUT_PLATFORM_WIN)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, device, index_);
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, device, index_);
+#endif
 	GAINPUT_ASSERT(impl_);
+
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
 	GAINPUT_ASSERT(state_);
 	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
@@ -109,9 +128,9 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, DeviceVar
 
 InputDevicePad::~InputDevicePad()
 {
-	impl_->GetManager().GetAllocator().Delete(state_);
-	impl_->GetManager().GetAllocator().Delete(previousState_);
-	impl_->GetManager().GetAllocator().Delete(impl_);
+	manager_.GetAllocator().Delete(state_);
+	manager_.GetAllocator().Delete(previousState_);
+	manager_.GetAllocator().Delete(impl_);
 }
 
 void
@@ -124,6 +143,12 @@ InputDevice::DeviceState
 InputDevicePad::InternalGetState() const
 {
 	return impl_->GetState();
+}
+
+InputDevice::DeviceVariant
+InputDevicePad::GetVariant() const
+{
+	return impl_->GetVariant();
 }
 
 bool
@@ -172,7 +197,12 @@ InputDevicePad::GetButtonByName(const char* name) const
 	}
 	return InvalidDeviceButtonId;
 }
+
+bool
+InputDevicePad::Vibrate(float leftMotor, float rightMotor)
+{
+	return impl_->Vibrate(leftMotor, rightMotor);
 }
 
-#endif
+}
 

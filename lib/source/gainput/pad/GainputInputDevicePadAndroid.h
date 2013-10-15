@@ -1,20 +1,14 @@
 
-#include <gainput/gainput.h>
-
-
-#if defined(GAINPUT_PLATFORM_ANDROID)
-
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-
+#ifndef GAINPUTINPUTDEVICEPADANDROID_H_
+#define GAINPUTINPUTDEVICEPADANDROID_H_
 
 namespace gainput
 {
 
-class InputDevicePadImpl
+class InputDevicePadImplAndroid : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplAndroid(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
 		state_(InputDevice::DS_UNAVAILABLE),
@@ -72,7 +66,7 @@ public:
 		state_ = InputDevice::DS_OK;
 	}
 
-	~InputDevicePadImpl()
+	~InputDevicePadImplAndroid()
 	{
 		if (!sensorManager_)
 		{
@@ -103,6 +97,11 @@ public:
 		ASensorManager_destroyEventQueue(sensorManager_, sensorEventQueue_);
 	}
 
+	InputDevice::DeviceVariant GetVariant() const
+	{
+		return InputDevice::DV_STANDARD;
+	}
+
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
 	{
 		ASensorEvent event;
@@ -130,9 +129,6 @@ public:
 		}
 	}
 
-	InputManager& GetManager() const { return manager_; }
-	DeviceId GetDevice() const { return device_; }
-
 	InputDevice::DeviceState GetState() const
 	{
 		return state_;
@@ -158,6 +154,11 @@ public:
 		return false;
 	}
 
+	bool Vibrate(float leftMotor, float rightMotor)
+	{
+		return false;
+	}
+
 private:
 	InputManager& manager_;
 	DeviceId device_;
@@ -172,17 +173,5 @@ private:
 
 }
 
-#include "GainputPadCommon.h"
-
-namespace gainput
-{
-
-bool
-InputDevicePad::Vibrate(float leftMotor, float rightMotor)
-{
-	return false;
-}
-
-}
-
 #endif
+

@@ -1,16 +1,12 @@
 
-#include <gainput/gainput.h>
-
-#if defined(GAINPUT_PLATFORM_WIN)
+#ifndef GAINPUTINPUTDEVICEPADWIN_H_
+#define GAINPUTINPUTDEVICEPADWIN_H_
 
 // Cf. http://msdn.microsoft.com/en-us/library/windows/desktop/ee417005%28v=vs.85%29.aspx
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <XInput.h>
-
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
 
 
 namespace gainput
@@ -22,10 +18,10 @@ const float MaxAxisValue = 32767.0f;
 const float MaxMotorSpeed = 65535.0f;
 
 
-class InputDevicePadImpl
+class InputDevicePadImplWin : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImpl(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplWin(InputManager& manager, DeviceId device, unsigned index) :
 		manager_(manager),
 		device_(device),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
@@ -44,6 +40,11 @@ public:
 				|| xbattery.BatteryType == BATTERY_TYPE_NIMH);
 		}
 #endif
+	}
+
+	InputDevice::DeviceVariant GetVariant() const
+	{
+		return InputDevice::DV_STANDARD;
 	}
 
 	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
@@ -110,9 +111,6 @@ public:
 		HandleAxis(device_, state, previousState, delta, PadButtonRightStickY, float(xstate.Gamepad.sThumbRY)/MaxAxisValue);
 	}
 
-	InputManager& GetManager() const { return manager_; }
-	DeviceId GetDevice() const { return device_; }
-
 	InputDevice::DeviceState GetState() const
 	{
 		return deviceState_;
@@ -146,17 +144,5 @@ private:
 
 }
 
-#include "GainputPadCommon.h"
-
-namespace gainput
-{
-
-bool
-InputDevicePad::Vibrate(float leftMotor, float rightMotor)
-{
-	return impl_->Vibrate(leftMotor, rightMotor);
-}
-
-}
-
 #endif
+
