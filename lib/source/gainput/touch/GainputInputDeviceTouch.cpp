@@ -16,7 +16,9 @@ namespace gainput
 {
 
 InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH))
+	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH)),
+	impl_(0)
+
 {
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	if (variant != DV_NULL)
