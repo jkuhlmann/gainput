@@ -2,6 +2,8 @@
 #ifndef GAINPUTINPUTDEVICEKEYBOARDANDROID_H_
 #define GAINPUTINPUTDEVICEKEYBOARDANDROID_H_
 
+#include <android/native_activity.h>
+
 #include "GainputInputDeviceKeyboardImpl.h"
 
 namespace gainput

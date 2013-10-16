@@ -44,8 +44,10 @@
 #if defined(GAINPUT_PLATFORM_LINUX)
 
 #include <cstdlib>
-#include <X11/Xlib.h>
 #include <stdint.h>
+
+union _XEvent;
+typedef _XEvent XEvent;
 
 #if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#include <stdio.h>
@@ -78,9 +80,8 @@ namespace gainput
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 
 #include <stdint.h>
-#include <android/sensor.h>
-#include <android/native_activity.h>
-#include <android/log.h>
+
+struct AInputEvent;
 
 #if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))

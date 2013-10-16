@@ -5,6 +5,7 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 #include <time.h>
+#include <X11/Xlib.h>
 #include "keyboard/GainputInputDeviceKeyboardLinux.h"
 #include "mouse/GainputInputDeviceMouseLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)

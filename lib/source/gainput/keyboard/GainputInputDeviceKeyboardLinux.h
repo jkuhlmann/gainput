@@ -2,6 +2,7 @@
 #ifndef GAINPUTINPUTDEVICEKEYBOARDLINUX_H_
 #define GAINPUTINPUTDEVICEKEYBOARDLINUX_H_
 
+#include <X11/Xlib.h>
 #include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 

@@ -2,6 +2,8 @@
 #ifndef GAINPUTINPUTDEVICEPADANDROID_H_
 #define GAINPUTINPUTDEVICEPADANDROID_H_
 
+#include <android/sensor.h>
+
 namespace gainput
 {
 

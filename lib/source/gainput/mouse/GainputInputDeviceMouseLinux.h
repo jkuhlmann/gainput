@@ -2,6 +2,8 @@
 #ifndef GAINPUTINPUTDEVICEMOUSELINUX_H_
 #define GAINPUTINPUTDEVICEMOUSELINUX_H_
 
+#include <X11/Xlib.h>
+
 #include "GainputInputDeviceMouseImpl.h"
 
 namespace gainput

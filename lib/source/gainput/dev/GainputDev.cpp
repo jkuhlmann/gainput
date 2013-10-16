@@ -2,6 +2,11 @@
 #include <gainput/gainput.h>
 
 #ifdef GAINPUT_DEV
+
+#if defined(GAINPUT_PLATFORM_ANDROID)
+#include <android/log.h>
+#endif
+
 #include "GainputDev.h"
 #include "GainputNetAddress.h"
 #include "GainputNetListener.h"

@@ -2,6 +2,8 @@
 #ifndef GAINPUTINPUTDEVICETOUCHANDROID_H_
 #define GAINPUTINPUTDEVICETOUCHANDROID_H_
 
+#include <android/native_activity.h>
+
 #include "GainputInputDeviceTouchImpl.h"
 #include "GainputTouchInfo.h"
 

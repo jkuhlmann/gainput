@@ -15,6 +15,7 @@ int SfwGetHeight();
 
 
 #if defined(GAINPUT_PLATFORM_LINUX)
+#include <X11/Xlib.h>
 
 Display* SfwGetXDisplay();
 #include <stdio.h>
