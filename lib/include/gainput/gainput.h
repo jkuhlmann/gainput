@@ -58,11 +58,7 @@ typedef _XEvent XEvent;
 
 #include <cstdlib>
 
-#ifndef GAINPUT_NO_WINDOWS_H
-	#define WIN32_LEAN_AND_MEAN
-	#define NOMINMAX
-	#include <windows.h>
-#endif
+typedef struct tagMSG MSG;
 
 namespace gainput
 {

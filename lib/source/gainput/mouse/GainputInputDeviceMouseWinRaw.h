@@ -5,6 +5,8 @@
 #include "GainputInputDeviceMouseImpl.h"
 #include "../GainputHelpers.h"
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
 #include <Windowsx.h>
 

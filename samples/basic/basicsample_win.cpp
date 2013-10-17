@@ -3,6 +3,10 @@
 
 #if defined(GAINPUT_PLATFORM_WIN)
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+
 #include <stdio.h>
 #define LOG(...) {char buf[256]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
 

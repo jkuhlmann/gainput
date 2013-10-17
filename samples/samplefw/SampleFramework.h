@@ -23,6 +23,10 @@ Display* SfwGetXDisplay();
 
 #elif defined(GAINPUT_PLATFORM_WIN)
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+
 HWND SfwGetHWnd();
 
 #include <stdio.h>
