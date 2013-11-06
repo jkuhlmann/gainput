@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Gainput Javascript touch client</title>
+<style type="text/css">
+body {
+	background-color: #f00;
+	margin: 0;
+	padding: 0;
+}
+#can {
+	background-color: #222;
+}
+</style>
+<script type="text/javascript">
+var can, ctx;
+
+var touches = [];
+
+function setTouchAll(idx, down, x, y) {
+	touches[idx].down = down;
+	touches[idx].x = (x + 0.0) / can.width;
+	touches[idx].y = (y + 0.0) / can.height;
+}
+
+function setTouchPos(idx, x, y) {
+	if (idx >= touches.length) {
+		touches[idx] = { down: false, x: 0, y: 0 };
+	}
+	touches[idx].x = (x + 0.0) / can.width;
+	touches[idx].y = (y + 0.0) / can.height;
+}
+
+function setTouchDown(idx, down) {
+	if (idx >= touches.length) {
+		touches[idx] = { down: false, x: 0, y: 0 };
+	}
+	touches[idx].down = down;
+}
+
+function init() {
+	can = document.getElementById("can");
+	ctx = can.getContext("2d");
+	can.addEventListener("mousedown", mouseDown, false);
+	can.addEventListener("mousemove", mouseXY, false);
+	can.addEventListener("touchstart", touchDown, false);
+	can.addEventListener("touchmove", touchXY, true);
+	can.addEventListener("touchend", touchUp, false);
+	can.width = window.innerWidth;
+	can.height = window.innerHeight;
+	document.body.addEventListener("mouseup", mouseUp, false);
+	document.body.addEventListener("touchcancel", touchUp, false);
+	window.addEventListener('resize', resizeCanvas);
+}
+
+function resizeCanvas() {
+	if (can.width != can.clientWidth || can.height != can.clientHeight) {
+		can.width = can.clientWidth;
+		can.height = can.clientHeight;
+	}
+}
+
+function mouseUp() {
+	setTouchDown(0, false);
+	showTouches();
+}
+
+function mouseDown() {
+	setTouchDown(0, true);
+	showTouches();
+}
+
+function mouseXY(e) {
+	canX = e.pageX - can.offsetLeft;
+	canY = e.pageY - can.offsetTop;
+	setTouchPos(0, canX, canY);
+	showTouches();
+}
+
+function touchUp(e) {
+	e.preventDefault();
+	for (i = 0; i < e.changedTouches.length; ++i) {
+		setTouchDown(e.changedTouches[i].identifier, false);
+	}
+	showTouches();
+}
+
+function touchDown(e) {
+	e.preventDefault();
+	for (i = 0; i < e.changedTouches.length; ++i) {
+		setTouchDown(e.changedTouches[i].identifier, true);
+	}
+	showTouches();
+}
+
+function touchXY(e) {
+	e.preventDefault();
+	for (i = 0; i < e.changedTouches.length; ++i) {
+		canX = e.changedTouches[i].pageX - can.offsetLeft;
+		canY = e.changedTouches[i].pageY - can.offsetTop;
+		setTouchPos(e.changedTouches[i].identifier, canX, canY);
+	}
+	showTouches();
+}
+
+function showTouches() {
+	ctx.font = "12pt sans";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "top";
+	ctx.fillStyle = "rgb(255, 255, 255)";
+	ctx.strokeStyle = "rgb(255, 0, 0)";
+
+	ctx.clearRect(0, 0, can.width, can.height);
+
+	var y = 0;
+	for (i = 0; i < touches.length; ++i) {
+		var str = i + ": " + touches[i].x.toFixed(4) + ", " + touches[i].y.toFixed(4);
+		if (touches[i].down)
+			str += ", down";
+		else
+			str += ", up";
+		str += "\n";
+		ctx.fillText(str, 0, y, can.width - 10);
+		y += 15;
+
+		if (touches[i].down) {
+			ctx.beginPath();
+			ctx.arc(touches[i].x*can.width, touches[i].y*can.height, 10, 0, 2*Math.PI);
+			ctx.stroke();
+		}
+	}
+}
+</script>
+</head>
+<body onload="init()">
+
+<canvas id="can"></canvas>
+
+</body>
+</html>
+
