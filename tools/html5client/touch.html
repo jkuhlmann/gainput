@@ -127,6 +127,10 @@ function showTouches() {
 			ctx.arc(touches[i].x*can.width, touches[i].y*can.height, 10, 0, 2*Math.PI);
 			ctx.stroke();
 		}
+
+		var req = new XMLHttpRequest();
+		req.open("get", "http://127.0.0.1:1211/" + i + "/" + touches[i].x.toFixed(8) + "/" + touches[i].y.toFixed(8) + "/" + touches[i].down*1);
+		req.send();
 	}
 }
 </script>

@@ -19,6 +19,8 @@
 #define snprintf _snprintf
 #endif
 
+#define GAINPUT_DEV_USE_HTTP
+
 namespace gainput
 {
 
@@ -303,6 +305,7 @@ DevUpdate(InputDeltaState* delta)
 	if (!devConnection && devListener)
 	{
 		devConnection = devListener->Accept();
+#ifndef GAINPUT_DEV_USE_HTTP
 		if (devConnection)
 		{
 			GAINPUT_LOG("TOOL: New connection\n");
@@ -316,6 +319,7 @@ DevUpdate(InputDeltaState* delta)
 
 			allocator->Delete(stream);
 		}
+#endif
 	}
 
 	if (!devConnection)
@@ -323,6 +327,29 @@ DevUpdate(InputDeltaState* delta)
 		return;
 	}
 
+#ifdef GAINPUT_DEV_USE_HTTP
+	Stream* stream = allocator->New<MemoryStream>(128, *allocator);
+	stream->Reset();
+	size_t received = devConnection->Receive(*stream, 128);
+	if (received > 0)
+	{
+		char* buf = (char*)allocator->Allocate(received+1);
+		stream->Read(buf, received);
+		buf[received] = 0;
+		int id;
+		float x;
+		float y;
+		int down;
+		sscanf(buf, "GET /%i/%f/%f/%i HTTP", &id, &x, &y, &down);
+		GAINPUT_LOG("Touch state #%d: %f/%f - %d\n", id, x, y, down);
+		allocator->Deallocate(buf);
+
+		allocator->Delete(stream);
+		devConnection->Close();
+		allocator->Delete(devConnection);
+		devConnection = 0;
+	}
+#else
 	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 	while (ReadMessage(*stream))
 	{
@@ -441,6 +468,7 @@ DevUpdate(InputDeltaState* delta)
 
 		return;
 	}
+#endif
 
 	++devFrame;
 }
