@@ -28,7 +28,7 @@ NetAddress::NetAddress(const char* ip, unsigned port)
 #endif
 
 	addr.sin_family = AF_INET;
-	addr.sin_port = port;
+	addr.sin_port = htons(port);
 }
 
 NetAddress::NetAddress(const struct sockaddr_in& rhs)
