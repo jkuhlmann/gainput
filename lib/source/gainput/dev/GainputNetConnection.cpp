@@ -12,6 +12,7 @@
 #include <cassert>
 #include <fcntl.h>
 #include <errno.h>
+#include <unistd.h>
 #endif
 
 namespace gainput {
@@ -74,7 +75,7 @@ NetConnection::Close()
 		return;
 	}
 
-	shutdown(fd, SHUT_RDWR);
+	close(fd);
 	fd = -1;
 }
 #elif defined(GAINPUT_PLATFORM_WIN)
