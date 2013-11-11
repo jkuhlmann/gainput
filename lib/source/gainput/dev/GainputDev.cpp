@@ -19,7 +19,6 @@
 #define snprintf _snprintf
 #endif
 
-#define GAINPUT_DEV_USE_HTTP
 
 namespace gainput
 {
@@ -336,12 +335,13 @@ DevUpdate(InputDeltaState* delta)
 		char* buf = (char*)allocator->Allocate(received+1);
 		stream->Read(buf, received);
 		buf[received] = 0;
+		int touchDevice;
 		int id;
 		float x;
 		float y;
 		int down;
-		sscanf(buf, "GET /%i/%f/%f/%i HTTP", &id, &x, &y, &down);
-		//GAINPUT_LOG("Touch state #%d: %f/%f - %d\n", id, x, y, down);
+		sscanf(buf, "GET /%i/%i/%f/%f/%i HTTP", &touchDevice, &id, &x, &y, &down);
+		//GAINPUT_LOG("Touch device #%d state #%d: %f/%f - %d\n", touchDevice, id, x, y, down);
 		allocator->Deallocate(buf);
 
 		allocator->Delete(stream);
@@ -349,7 +349,7 @@ DevUpdate(InputDeltaState* delta)
 		allocator->Delete(devConnection);
 		devConnection = 0;
 
-		const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DT_TOUCH, 0);
+		const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DT_TOUCH, touchDevice);
 		InputDevice* device = inputManager->GetDevice(deviceId);
 		GAINPUT_ASSERT(device);
 		GAINPUT_ASSERT(device->GetInputState());
