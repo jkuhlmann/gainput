@@ -12,7 +12,7 @@ body {
 }
 </style>
 <script type="text/javascript">
-var can, ctx;
+var can, ctx, host, port, touchDevice;
 
 var touches = [];
 
@@ -50,6 +50,17 @@ function init() {
 	document.body.addEventListener("mouseup", mouseUp, false);
 	document.body.addEventListener("touchcancel", touchUp, false);
 	window.addEventListener('resize', resizeCanvas);
+
+	var paramString = window.location.search.substr(1);
+	var paramsSplit = paramString.split("&");
+	var params = {};
+	for (var i = 0; i < paramsSplit.length; i++) {
+		var t = paramsSplit[i].split("=");
+		params[t[0]] = t[1];
+	}
+	host = params.host || "127.0.0.1";
+	port = params.port || "1211";
+	touchDevice = params.device || "0";
 }
 
 function resizeCanvas() {
@@ -129,7 +140,7 @@ function showTouches() {
 		}
 
 		var req = new XMLHttpRequest();
-		req.open("get", "http://127.0.0.1:1211/" + i + "/" + touches[i].x.toFixed(8) + "/" + touches[i].y.toFixed(8) + "/" + touches[i].down*1);
+		req.open("get", "http://" + host + ":" + port + "/" + touchDevice + "/" + i + "/" + touches[i].x.toFixed(8) + "/" + touches[i].y.toFixed(8) + "/" + touches[i].down*1);
 		req.send();
 	}
 }
