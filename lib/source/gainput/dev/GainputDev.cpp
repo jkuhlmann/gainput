@@ -341,13 +341,22 @@ DevUpdate(InputDeltaState* delta)
 		float y;
 		int down;
 		sscanf(buf, "GET /%i/%f/%f/%i HTTP", &id, &x, &y, &down);
-		GAINPUT_LOG("Touch state #%d: %f/%f - %d\n", id, x, y, down);
+		//GAINPUT_LOG("Touch state #%d: %f/%f - %d\n", id, x, y, down);
 		allocator->Deallocate(buf);
 
 		allocator->Delete(stream);
 		devConnection->Close();
 		allocator->Delete(devConnection);
 		devConnection = 0;
+
+		const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DT_TOUCH, 0);
+		InputDevice* device = inputManager->GetDevice(deviceId);
+		GAINPUT_ASSERT(device);
+		GAINPUT_ASSERT(device->GetInputState());
+		GAINPUT_ASSERT(device->GetPreviousInputState());
+		HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Down + id*4, down != 0);
+		HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0X + id*4, x);
+		HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Pressure + id*4, float(down)*1.0f);
 	}
 #else
 	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
