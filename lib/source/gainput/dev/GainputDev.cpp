@@ -32,6 +32,7 @@ static Array<const InputDevice*> devDevices(GetDefaultAllocator());
 static bool devSendInfos = false;
 static Array<DeviceId> devSyncedDevices(GetDefaultAllocator());
 static size_t devFrame = 0;
+static bool useHttp = false;
 
 static size_t SendMessage(Stream& stream)
 {
@@ -223,6 +224,12 @@ SendMap(const InputMap* map, Stream* stream, NetConnection* devConnection)
 }
 
 void
+DevSetHttp(bool enable)
+{
+	useHttp = enable;
+}
+
+void
 DevInit(InputManager* manager)
 {
 	if (devListener)
@@ -304,8 +311,7 @@ DevUpdate(InputDeltaState* delta)
 	if (!devConnection && devListener)
 	{
 		devConnection = devListener->Accept();
-#ifndef GAINPUT_DEV_USE_HTTP
-		if (devConnection)
+		if (!useHttp && devConnection)
 		{
 			GAINPUT_LOG("TOOL: New connection\n");
 			Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
@@ -318,7 +324,6 @@ DevUpdate(InputDeltaState* delta)
 
 			allocator->Delete(stream);
 		}
-#endif
 	}
 
 	if (!devConnection)
@@ -326,158 +331,161 @@ DevUpdate(InputDeltaState* delta)
 		return;
 	}
 
-#ifdef GAINPUT_DEV_USE_HTTP
-	Stream* stream = allocator->New<MemoryStream>(128, *allocator);
-	stream->Reset();
-	size_t received = devConnection->Receive(*stream, 128);
-	if (received > 0)
+	if (useHttp)
 	{
-		char* buf = (char*)allocator->Allocate(received+1);
-		stream->Read(buf, received);
-		buf[received] = 0;
-		int touchDevice;
-		int id;
-		float x;
-		float y;
-		int down;
-		sscanf(buf, "GET /%i/%i/%f/%f/%i HTTP", &touchDevice, &id, &x, &y, &down);
-		//GAINPUT_LOG("Touch device #%d state #%d: %f/%f - %d\n", touchDevice, id, x, y, down);
-		allocator->Deallocate(buf);
-
-		allocator->Delete(stream);
-		devConnection->Close();
-		allocator->Delete(devConnection);
-		devConnection = 0;
-
-		const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DT_TOUCH, touchDevice);
-		InputDevice* device = inputManager->GetDevice(deviceId);
-		GAINPUT_ASSERT(device);
-		GAINPUT_ASSERT(device->GetInputState());
-		GAINPUT_ASSERT(device->GetPreviousInputState());
-		HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Down + id*4, down != 0);
-		HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0X + id*4, x);
-		HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Pressure + id*4, float(down)*1.0f);
-	}
-#else
-	Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
-	while (ReadMessage(*stream))
-	{
-		uint8_t cmd;
-		stream->Read(cmd);
-
-		if (cmd == DevCmdGetAllInfos)
+		Stream* stream = allocator->New<MemoryStream>(128, *allocator);
+		stream->Reset();
+		size_t received = devConnection->Receive(*stream, 128);
+		if (received > 0)
 		{
-			devSendInfos = true;
+			char* buf = (char*)allocator->Allocate(received+1);
+			stream->Read(buf, received);
+			buf[received] = 0;
+			int touchDevice;
+			int id;
+			float x;
+			float y;
+			int down;
+			sscanf(buf, "GET /%i/%i/%f/%f/%i HTTP", &touchDevice, &id, &x, &y, &down);
+			//GAINPUT_LOG("Touch device #%d state #%d: %f/%f - %d\n", touchDevice, id, x, y, down);
+			allocator->Deallocate(buf);
 
-			int count = 0;
-			// Send existing devices
-			for (InputManager::const_iterator it = inputManager->begin();
-					it != inputManager->end();
-					++it)
-			{
-				const InputDevice* device = it->second;
-				SendDevice(device, stream, devConnection);
-				++count;
-			}
-			GAINPUT_LOG("TOOL: Sent %d devices.\n", count);
+			allocator->Delete(stream);
+			devConnection->Close();
+			allocator->Delete(devConnection);
+			devConnection = 0;
 
-			// Send existing maps
-			count = 0;
-			for (Array<const InputMap*>::const_iterator it = devMaps.begin();
-					it != devMaps.end();
-					++it)
-			{
-				const InputMap* map = *it;
-				SendMap(map, stream, devConnection);
-				++count;
-			}
-			GAINPUT_LOG("TOOL: Sent %d maps.\n", count);
-		}
-		else if (cmd == DevCmdStartDeviceSync)
-		{
-			uint8_t deviceType;
-			uint8_t deviceIndex;
-			stream->Read(deviceType);
-			stream->Read(deviceIndex);
-			const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
+			const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DT_TOUCH, touchDevice);
 			InputDevice* device = inputManager->GetDevice(deviceId);
 			GAINPUT_ASSERT(device);
-			device->SetSynced(true);
-			devSyncedDevices.push_back(deviceId);
-			GAINPUT_LOG("TOOL: Starting to sync device #%d.\n", deviceId);
-		}
-		else if (cmd == DevCmdSetDeviceButton)
-		{
-			uint8_t deviceType;
-			uint8_t deviceIndex;
-			uint32_t deviceButtonId;
-			stream->Read(deviceType);
-			stream->Read(deviceIndex);
-			stream->Read(deviceButtonId);
-			const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
-			InputDevice* device = inputManager->GetDevice(deviceId);
-			GAINPUT_ASSERT(device);
-			GAINPUT_ASSERT(device->IsValidButtonId(deviceButtonId));
 			GAINPUT_ASSERT(device->GetInputState());
 			GAINPUT_ASSERT(device->GetPreviousInputState());
-			if (device->GetButtonType(deviceButtonId) == BT_BOOL)
-			{
-				uint8_t value;
-				stream->Read(value);
-				bool boolValue = bool(value);
-				HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, boolValue);
-			}
-			else
-			{
-				float value;
-				stream->Read(value);
-				HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
-			}
+			HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Down + id*4, down != 0);
+			HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0X + id*4, x);
+			HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Pressure + id*4, float(down)*1.0f);
 		}
 	}
-
-	bool pingFailed = false;
-	if (devFrame % 100 == 0 && devConnection->IsConnected())
+	else
 	{
-		stream->Reset();
-		stream->Write(uint8_t(DevCmdPing));
-		stream->SeekBegin(0);
-		if (SendMessage(*stream) == 0)
+		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
+		while (ReadMessage(*stream))
 		{
-			pingFailed = true;
+			uint8_t cmd;
+			stream->Read(cmd);
+
+			if (cmd == DevCmdGetAllInfos)
+			{
+				devSendInfos = true;
+
+				int count = 0;
+				// Send existing devices
+				for (InputManager::const_iterator it = inputManager->begin();
+						it != inputManager->end();
+						++it)
+				{
+					const InputDevice* device = it->second;
+					SendDevice(device, stream, devConnection);
+					++count;
+				}
+				GAINPUT_LOG("TOOL: Sent %d devices.\n", count);
+
+				// Send existing maps
+				count = 0;
+				for (Array<const InputMap*>::const_iterator it = devMaps.begin();
+						it != devMaps.end();
+						++it)
+				{
+					const InputMap* map = *it;
+					SendMap(map, stream, devConnection);
+					++count;
+				}
+				GAINPUT_LOG("TOOL: Sent %d maps.\n", count);
+			}
+			else if (cmd == DevCmdStartDeviceSync)
+			{
+				uint8_t deviceType;
+				uint8_t deviceIndex;
+				stream->Read(deviceType);
+				stream->Read(deviceIndex);
+				const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
+				InputDevice* device = inputManager->GetDevice(deviceId);
+				GAINPUT_ASSERT(device);
+				device->SetSynced(true);
+				devSyncedDevices.push_back(deviceId);
+				GAINPUT_LOG("TOOL: Starting to sync device #%d.\n", deviceId);
+			}
+			else if (cmd == DevCmdSetDeviceButton)
+			{
+				uint8_t deviceType;
+				uint8_t deviceIndex;
+				uint32_t deviceButtonId;
+				stream->Read(deviceType);
+				stream->Read(deviceIndex);
+				stream->Read(deviceButtonId);
+				const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
+				InputDevice* device = inputManager->GetDevice(deviceId);
+				GAINPUT_ASSERT(device);
+				GAINPUT_ASSERT(device->IsValidButtonId(deviceButtonId));
+				GAINPUT_ASSERT(device->GetInputState());
+				GAINPUT_ASSERT(device->GetPreviousInputState());
+				if (device->GetButtonType(deviceButtonId) == BT_BOOL)
+				{
+					uint8_t value;
+					stream->Read(value);
+					bool boolValue = bool(value);
+					HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, boolValue);
+				}
+				else
+				{
+					float value;
+					stream->Read(value);
+					HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
+				}
+			}
+		}
+
+		bool pingFailed = false;
+		if (devFrame % 100 == 0 && devConnection->IsConnected())
+		{
+			stream->Reset();
+			stream->Write(uint8_t(DevCmdPing));
+			stream->SeekBegin(0);
+			if (SendMessage(*stream) == 0)
+			{
+				pingFailed = true;
+			}
+		}
+
+		allocator->Delete(stream);
+
+		if (!devConnection->IsConnected() || pingFailed)
+		{
+			GAINPUT_LOG("TOOL: Disconnected\n");
+			devConnection->Close();
+			allocator->Delete(devConnection);
+			devConnection = 0;
+
+			for (Array<DeviceId>::iterator it = devSyncedDevices.begin();
+					it != devSyncedDevices.end();
+					++it)
+			{
+				InputDevice* device = inputManager->GetDevice(*it);
+				GAINPUT_ASSERT(device);
+				device->SetSynced(false);
+				GAINPUT_LOG("TOOL: Stopped syncing device #%d.\n", *it);
+			}
+			devSyncedDevices.clear();
+
+			if (devDeviceButtonListener)
+			{
+				inputManager->RemoveListener(devDeviceButtonListenerId);
+				allocator->Delete(devDeviceButtonListener);
+				devDeviceButtonListener = 0;
+			}
+
+			return;
 		}
 	}
-
-	allocator->Delete(stream);
-
-	if (!devConnection->IsConnected() || pingFailed)
-	{
-		GAINPUT_LOG("TOOL: Disconnected\n");
-		devConnection->Close();
-		allocator->Delete(devConnection);
-		devConnection = 0;
-
-		for (Array<DeviceId>::iterator it = devSyncedDevices.begin();
-				it != devSyncedDevices.end();
-				++it)
-		{
-			InputDevice* device = inputManager->GetDevice(*it);
-			GAINPUT_ASSERT(device);
-			device->SetSynced(false);
-			GAINPUT_LOG("TOOL: Stopped syncing device #%d.\n", *it);
-		}
-		devSyncedDevices.clear();
-
-		if (devDeviceButtonListener)
-		{
-			inputManager->RemoveListener(devDeviceButtonListenerId);
-			allocator->Delete(devDeviceButtonListener);
-			devDeviceButtonListener = 0;
-		}
-
-		return;
-	}
-#endif
 
 	++devFrame;
 }
@@ -666,6 +674,15 @@ DevStartDeviceSync(DeviceId deviceId)
 	allocator->Delete(stream);
 }
 
+}
+
+#else
+
+namespace gainput
+{
+void
+DevSetHttp(bool enable)
+{ }
 }
 
 #endif
