@@ -79,7 +79,7 @@ Build Gainput as described on the \ref page_building page.
 \section sect_integrating Integration Into Your Project
 To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.so (static library). On Windows, the filenames are \c gainput.lib (used with \c gainput.dll) and \c gainputstatic.lib. In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
 
-To have the API availale, you have to include Gainput's main header file:
+To have the API available, you have to include Gainput's main header file:
 
 \code
 #include <gainput/gainput.h>

@@ -136,6 +136,18 @@ class DeviceStateModifier;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }
 
+/// Switches the library's internal development server to HTTP mode.
+/**
+ * When the server is in HTTP mode, it is possible to control touch
+ * input using an external HTML page that connects to the library
+ * via HTTP.
+ *
+ * The HTML page(s) can be found under `tools/html5client/` and should
+ * be placed on an HTTP server that can be reached from the touch device
+ * that should send touch events to the library. The touch device then
+ * in turn connects to the library's internal HTTP server and periodically
+ * sends touch input information.
+ */
 void DevSetHttp(bool enable);
 }
 
