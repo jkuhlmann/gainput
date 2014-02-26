@@ -135,6 +135,8 @@ class InputManager;
 class DeviceStateModifier;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }
+
+void DevSetHttp(bool enable);
 }
 
 #define GAINPUT_VER_MAJOR_SHIFT		16
@@ -160,7 +162,6 @@ template <class T> T Abs(T a) { return a < T() ? -a : a; }
 #include <gainput/recorder/GainputInputRecording.h>
 #include <gainput/recorder/GainputInputPlayer.h>
 #include <gainput/recorder/GainputInputRecorder.h>
-
 
 #endif
 

@@ -18,6 +18,7 @@ enum Button
 	ButtonSave,
 	ButtonTest,
 	ButtonMouseX,
+	ButtonHttp,
 	ButtonCount
 };
 
@@ -120,6 +121,7 @@ void SampleMain()
 	map.MapBool(ButtonReset, keyboardId, gainput::KeyEscape);
 	map.MapBool(ButtonSave, keyboardId, gainput::KeyF1);
 	map.MapBool(ButtonLoad, keyboardId, gainput::KeyF2);
+	map.MapBool(ButtonHttp, keyboardId, gainput::KeyF3);
 	map.MapFloat(ButtonMouseX, mouseId, gainput::MouseAxisX);
 
 	gainput::DeviceButtonSpec anyButton[32];
@@ -172,6 +174,13 @@ void SampleMain()
 		if (map.GetBoolWasDown(ButtonLoad))
 		{
 			LoadInputMap(map);
+		}
+
+		if (map.GetBoolWasDown(ButtonHttp))
+		{
+			static bool enabled = false;
+			enabled = !enabled;
+			gainput::DevSetHttp(enabled);
 		}
 
 
