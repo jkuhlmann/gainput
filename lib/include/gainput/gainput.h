@@ -20,7 +20,6 @@
 	#else
 		#define GAINPUT_LIBEXPORT		__declspec(dllimport)
 	#endif
-	#define _HAS_EXCEPTIONS 0
 #else
 	#error Gainput: Unknown/unsupported platform!
 #endif
