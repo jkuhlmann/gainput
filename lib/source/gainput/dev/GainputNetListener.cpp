@@ -7,6 +7,7 @@
 
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 #include <fcntl.h>
+#include <unistd.h>
 
 namespace gainput {
 
