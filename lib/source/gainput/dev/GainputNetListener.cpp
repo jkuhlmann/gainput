@@ -66,7 +66,7 @@ NetListener::Stop()
 		return;
 	}
 
-	shutdown(fd, SHUT_RDWR);
+	close(fd);
 	fd = -1;
 }
 
