@@ -50,6 +50,11 @@ public:
 		return new (Allocate(sizeof(T))) T(p0);
 	}
 
+	/// An operator new-like function that allocates memory and calls T's constructor with one parameter.
+	/**
+	 * \return A pointer to an initialized instance of T.
+	 */
+	template <class T, class P0>
 	template <class T, class P0>
 	T* New(const P0& p0)
 	{
@@ -141,6 +146,10 @@ public:
 };
 
 
+/// Returns the default instance of the default allocator.
+/**
+ * \sa DefaultAllocator
+ */
 GAINPUT_LIBEXPORT DefaultAllocator& GetDefaultAllocator();
 
 }

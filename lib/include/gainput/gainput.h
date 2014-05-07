@@ -146,6 +146,9 @@ template <class T> T Abs(T a) { return a < T() ? -a : a; }
  * that should send touch events to the library. The touch device then
  * in turn connects to the library's internal HTTP server and periodically
  * sends touch input information.
+ *
+ * The pages can also be found hosted here:
+ * http://gainput.johanneskuhlmann.de/html5client/
  */
 void DevSetHttp(bool enable);
 }

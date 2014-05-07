@@ -54,7 +54,7 @@ public:
 	/// Updates the input state, call this every frame.
 	void Update();
 
-	/// Returns the allocator to be used by for memory allocations.
+	/// Returns the allocator to be used for memory allocations.
 	Allocator& GetAllocator() const { return allocator_; }
 
 	/// Returns a monotonic time in milliseconds.
@@ -104,12 +104,18 @@ public:
 	DeviceId FindDeviceId(InputDevice::DeviceType type, unsigned index) const;
 
 	typedef HashMap<DeviceId, InputDevice*> DeviceMap;
+	/// Iterator over all registered devices.
 	typedef DeviceMap::iterator iterator;
+	/// Const iterator over all registered devices.
 	typedef DeviceMap::const_iterator const_iterator;
 
+	/// Returns the begin iterator over all registered devices.
 	iterator begin() { return devices_.begin(); }
+	/// Returns the end iterator over all registered devices.
 	iterator end() { return devices_.end(); }
+	/// Returns the begin iterator over all registered devices.
 	const_iterator begin() const { return devices_.begin(); }
+	/// Returns the end iterator over all registered devices.
 	const_iterator end() const { return devices_.end(); }
 
 	/// Registers a listener to be notified when a button state changes.

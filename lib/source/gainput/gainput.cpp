@@ -13,7 +13,6 @@ These pages are Gainput's API documentation. In order to download Gainput go to 
 \section contents Contents
 - \ref page_start
 - \ref page_building
-- \ref page_samples
 - \ref page_platforms
 - \ref page_dependencies
 - \ref page_faq
@@ -77,7 +76,7 @@ Build Gainput as described on the \ref page_building page.
 
 
 \section sect_integrating Integration Into Your Project
-To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.so (static library). On Windows, the filenames are \c gainput.lib (used with \c gainput.dll) and \c gainputstatic.lib. In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
+To begin with, your project should link to the dynamic or static version of the Gainput library. On Linux, the files are \c libgainput.so (dynamic library) and \c libgainputstatic.a (static library). On Windows, the filenames are \c gainput.lib (used with \c gainput.dll) and \c gainputstatic.lib. In case you decide to use the dynamic library, make sure to distribute the dynamic library together with your executable.
 
 To have the API available, you have to include Gainput's main header file:
 
@@ -150,22 +149,34 @@ The samples for Android need to be treated a little more to be deployed to a dev
 Where ANDROID_SDK_PATH is the path to your Android SDK installation.
 
 
-\page page_samples Samples Overview
-
-Name | Path | Description
------|------|------------
-Basic Sample | samples/basic/ | Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
-Dynamic Sample | samples/dynamic/ | Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
-Gesture Sample | samples/gesture/ | Shows how to use input gestures. Also shows how to implement your own custom input device. Uses the \ref sample_fw.
-Listener Sample | samples/listener/ | Shows how to use device button listeners as well as user button listeners. Uses the \ref sample_fw.
-Recording Sample | samples/recording/ | Shows how to record, play and serialize/deserialize input sequences. Uses the \ref sample_fw.
-Sync Sample | samples/sync/ | Shows how to connect two Gainput instances to each other and send the device state over the network. Uses the \ref sample_fw. Works only in the \c dev build configuration.
-
-\section sample_fw Sample Framework
+\page sample_fw Sample Framework
 This framework makes it easier to provide succinct samples by taking care of the platform-dependent window creation/destruction.
 
 In a proper project, everything that is handled by the sample framework should be handled for you by some other library or engine. The sample framework is not meant for production use.
 
+\example ../../../samples/basic/basicsample_win.cpp
+Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
+
+\example ../../../samples/basic/basicsample_linux.cpp
+Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
+
+\example ../../../samples/basic/basicsample_android.cpp
+Shows the most basic initialization and usage of Gainput. It has separate implementations for all supported platforms.
+
+\example ../../../samples/dynamic/dynamicsample.cpp
+Shows how to let the user dynamically change button mappings as well as how to load and save mappings. Uses the \ref sample_fw.
+
+\example ../../../samples/gesture/gesturesample.cpp
+Shows how to use input gestures. Also shows how to implement your own custom input device. Uses the \ref sample_fw.
+
+\example ../../../samples/listener/listenersample.cpp
+Shows how to use device button listeners as well as user button listeners. Uses the \ref sample_fw.
+
+\example ../../../samples/recording/recordingsample.cpp
+Shows how to record, play and serialize/deserialize input sequences. Uses the \ref sample_fw.
+
+\example ../../../samples/sync/syncsample.cpp
+Shows how to connect two Gainput instances to each other and send the device state over the network. Uses the \ref sample_fw. Works only in the \c dev build configuration.
 
 
 \page page_platforms Platform Notes

@@ -46,6 +46,7 @@ public:
 	bool IsLateUpdate() const { return true; }
 
 protected:
+	/// Gesture base constructor.
 	InputGesture(InputManager& manager, DeviceId device) : InputDevice(manager, device, manager.GetDeviceCountByType(DT_GESTURE)) { }
 
 	DeviceState InternalGetState() const { return DS_OK; }
