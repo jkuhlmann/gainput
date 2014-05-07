@@ -55,7 +55,6 @@ public:
 	 * \return A pointer to an initialized instance of T.
 	 */
 	template <class T, class P0>
-	template <class T, class P0>
 	T* New(const P0& p0)
 	{
 		return new (Allocate(sizeof(T))) T(p0);
