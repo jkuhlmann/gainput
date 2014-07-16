@@ -93,7 +93,7 @@ inline void MurmurHash3_x86_32(const void * key, int len, uint32_t seed, void * 
  * \tparam T A POD-type to hold in this container.
  */
 template<class T>
-class Array
+class GAINPUT_LIBEXPORT Array
 {
 public:
 	static const size_t DefaultCapacity = 8;
@@ -229,7 +229,7 @@ private:
  * \tparam V POD-type being stored in the table.
  */
 template<class K, class V>
-class HashMap
+class GAINPUT_LIBEXPORT HashMap
 {
 public:
 	static const unsigned Seed = 329856235;
@@ -462,7 +462,7 @@ private:
  * \tparam T Type of the elements stored in the ring buffer.
  */
 template<int N, class T>
-class RingBuffer
+class GAINPUT_LIBEXPORT RingBuffer
 {
 public:
 	RingBuffer() :

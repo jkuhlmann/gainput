@@ -37,7 +37,7 @@ namespace gainput
  * define for each gesture. The names of these are documented in the descriptions of the 
  * individual gesture classes. If no such define is defined, no gesture will be included.
  */
-class InputGesture : public InputDevice
+class GAINPUT_LIBEXPORT InputGesture : public InputDevice
 {
 public:
 	/// Returns DT_GESTURE.
