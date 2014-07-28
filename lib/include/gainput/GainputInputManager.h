@@ -33,6 +33,10 @@ public:
 	InputManager(Allocator& allocator = GetDefaultAllocator());
 
 	/// Sets the window resolution.
+	/**
+	 * Informs the InputManager and its devices of the size of the window that is used for
+	 * receiving inputs. For example, the size is used to to normalize mouse inputs.
+	 */
 	void SetDisplaySize(int width, int height) { displayWidth_ = width; displayHeight_ = height; }
 
 #if defined(GAINPUT_PLATFORM_LINUX)
