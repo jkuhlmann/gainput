@@ -117,6 +117,8 @@ The \c debug configuration supports debugging while the \c release configuration
 
 Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/CONFIGNAME/ folder.
 
+It may be necessary to build Gainput as administrator on Windows under certain circumstances. If you encounter a "Permission denied" error message, try this.
+
 \section sect_defines Build Configuration Defines
 There is a number of defines that determine what is included in the library and how it behaves. Normally, most of these are set by the build scripts or in gainput.h, but it may be necessary to set these when doing custom builds or modifying the build process. All defines must be set during compilation of the library itself.
 
