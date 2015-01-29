@@ -89,20 +89,20 @@ public:
 
 		lastPacketNumber_ = xstate.dwPacketNumber;
 
-		HandleButton(device_, state, previousState, delta, PadButtonUp, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
-		HandleButton(device_, state, previousState, delta, PadButtonDown, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
-		HandleButton(device_, state, previousState, delta, PadButtonLeft, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
-		HandleButton(device_, state, previousState, delta, PadButtonRight, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
-		HandleButton(device_, state, previousState, delta, PadButtonA, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A);
-		HandleButton(device_, state, previousState, delta, PadButtonB, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B);
-		HandleButton(device_, state, previousState, delta, PadButtonX, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_X);
-		HandleButton(device_, state, previousState, delta, PadButtonY, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_Y);
-		HandleButton(device_, state, previousState, delta, PadButtonStart, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_START);
-		HandleButton(device_, state, previousState, delta, PadButtonSelect, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
-		HandleButton(device_, state, previousState, delta, PadButtonL3, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB);
-		HandleButton(device_, state, previousState, delta, PadButtonR3, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
-		HandleButton(device_, state, previousState, delta, PadButtonL1, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
-		HandleButton(device_, state, previousState, delta, PadButtonR1, xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+		HandleButton(device_, state, previousState, delta, PadButtonUp, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonDown, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonLeft, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonRight, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonA, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonB, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonX, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonY, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonStart, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonSelect, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonL3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonR3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonL1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0);
+		HandleButton(device_, state, previousState, delta, PadButtonR1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
 
 		HandleAxis(device_, state, previousState, delta, PadButtonL2, float(xstate.Gamepad.bLeftTrigger)/MaxTriggerValue);
 		HandleAxis(device_, state, previousState, delta, PadButtonR2, float(xstate.Gamepad.bRightTrigger)/MaxTriggerValue);
@@ -127,8 +127,8 @@ public:
 		GAINPUT_ASSERT(leftMotor >= 0.0f && leftMotor <= 1.0f);
 		GAINPUT_ASSERT(rightMotor >= 0.0f && rightMotor <= 1.0f);
 		XINPUT_VIBRATION xvibration;
-		xvibration.wLeftMotorSpeed = leftMotor*MaxMotorSpeed;
-		xvibration.wRightMotorSpeed = rightMotor*MaxMotorSpeed;
+		xvibration.wLeftMotorSpeed = static_cast<WORD>(leftMotor*MaxMotorSpeed);
+		xvibration.wRightMotorSpeed = static_cast<WORD>(rightMotor*MaxMotorSpeed);
 		DWORD result = XInputSetState(padIndex_, &xvibration);
 		return result == ERROR_SUCCESS;
 	}

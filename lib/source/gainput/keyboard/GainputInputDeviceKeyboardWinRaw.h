@@ -197,7 +197,6 @@ public:
 			return;
 		}
 
-		DeviceButtonId buttonId;
 		UINT dwSize = 40;
 		static BYTE lpb[40];
 	    

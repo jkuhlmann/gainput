@@ -115,7 +115,7 @@ InputManager::GetTime() const
 	LARGE_INTEGER count;
 	QueryPerformanceCounter(&count);
 	double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
-	return t;
+	return static_cast<uint64_t>(t);
 #else
 #error No time support
 #endif
