@@ -32,6 +32,9 @@ public:
 	 */
 	InputManager(Allocator& allocator = GetDefaultAllocator());
 
+	/// Destructs the manager.
+	~InputManager();
+
 	/// Sets the window resolution.
 	/**
 	 * Informs the InputManager and its devices of the size of the window that is used for
@@ -51,9 +54,6 @@ public:
 	/// [ANDROID ONLY] Lets the InputManager handle the given input event.
 	int32_t HandleInput(AInputEvent* event);
 #endif
-
-	/// Destructs the manager.
-	~InputManager();
 
 	/// Updates the input state, call this every frame.
 	void Update();

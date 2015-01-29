@@ -33,7 +33,9 @@ InputManager::InputManager(Allocator& allocator) :
 		nextListenerId_(0),
 		modifiers_(allocator_),
 		nextModifierId_(0),
-		deltaState_(allocator_.New<InputDeltaState>(allocator_))
+		deltaState_(allocator_.New<InputDeltaState>(allocator_)),
+		displayWidth_(-1),
+		displayHeight_(-1)
 {
 	GAINPUT_DEV_INIT(this);
 }
