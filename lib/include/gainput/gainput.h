@@ -15,10 +15,12 @@
 	#define GAINPUT_LIBEXPORT
 #elif defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER)
 	#define GAINPUT_PLATFORM_WIN
-	#if defined(GAINPUT_LIB_BUILD)
+	#if defined(GAINPUT_LIB_DYNAMIC)
 		#define GAINPUT_LIBEXPORT		__declspec(dllexport)
-	#else
+	#elif defined(GAINPUT_LIB_DYNAMIC_USE)
 		#define GAINPUT_LIBEXPORT		__declspec(dllimport)
+	#else
+		#define GAINPUT_LIBEXPORT
 	#endif
 #else
 	#error Gainput: Unknown/unsupported platform!
