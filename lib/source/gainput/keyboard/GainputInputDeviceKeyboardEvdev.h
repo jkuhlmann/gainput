@@ -10,14 +10,14 @@ namespace gainput
 class InputDeviceKeyboardImplEvdev : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplEvdev(InputManager& manager, DeviceId device) :
+	InputDeviceKeyboardImplEvdev(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
 		dialect_(manager_.GetAllocator()),
 		fd_(-1),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		delta_(0)
 	{
 		unsigned matchingDeviceCount = 0;
@@ -187,7 +187,7 @@ public:
 		return fd_ != -1 ? InputDevice::DS_OK : InputDevice::DS_UNAVAILABLE;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 		if (fd_ < 0)
 		{
@@ -209,7 +209,7 @@ public:
 				if (dialect_.count(event.code))
 				{
 					const DeviceButtonId button = dialect_[event.code];
-					HandleButton(device_, state, previousState, delta, button, bool(event.value));
+					HandleButton(device_, *state_, *previousState_, delta, button, bool(event.value));
 				}
 			}
 		}

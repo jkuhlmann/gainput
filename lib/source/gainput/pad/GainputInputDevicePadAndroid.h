@@ -10,10 +10,12 @@ namespace gainput
 class InputDevicePadImplAndroid : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplAndroid(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplAndroid(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
-		state_(InputDevice::DS_UNAVAILABLE),
+		state_(state),
+		previousState_(previousState),
+		deviceState_(InputDevice::DS_UNAVAILABLE),
 		buttonDialect_(manager_.GetAllocator()),
 		sensorManager_(0),
 		accelerometerSensor_(0),
@@ -36,7 +38,6 @@ public:
 		{
 			return;
 		}
-
 
 		sensorEventQueue_ = ASensorManager_createEventQueue(sensorManager_, looper, ALOOPER_POLL_CALLBACK, NULL, NULL);
 		if (!sensorEventQueue_)
@@ -65,7 +66,7 @@ public:
 			ASensorEventQueue_enableSensor(sensorEventQueue_, magneticFieldSensor_);
 		}
 
-		state_ = InputDevice::DS_OK;
+		deviceState_ = InputDevice::DS_OK;
 	}
 
 	~InputDevicePadImplAndroid()
@@ -104,7 +105,7 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 		ASensorEvent event;
 
@@ -112,28 +113,28 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
-				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state, previousState, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_MAGNETIC_FIELD)
 			{
-				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state, previousState, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
 			}
 		}
 	}
 
 	InputDevice::DeviceState GetState() const
 	{
-		return state_;
+		return deviceState_;
 	}
 
 	bool IsValidButton(DeviceButtonId deviceButton) const
@@ -164,7 +165,9 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
-	InputDevice::DeviceState state_;
+	InputState& state_;
+	InputState& previousState_;
+	InputDevice::DeviceState deviceState_;
 	HashMap<unsigned, DeviceButtonId> buttonDialect_;
 	ASensorManager* sensorManager_;
 	const ASensor* accelerometerSensor_;

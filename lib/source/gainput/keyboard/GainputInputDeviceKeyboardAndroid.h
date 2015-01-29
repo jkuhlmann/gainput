@@ -12,13 +12,13 @@ namespace gainput
 class InputDeviceKeyboardImplAndroid : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplAndroid(InputManager& manager, DeviceId device) :
+	InputDeviceKeyboardImplAndroid(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
 		dialect_(manager_.GetAllocator()),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		delta_(0)
 	{
 		dialect_[AKEYCODE_SPACE] = KeySpace;
@@ -130,10 +130,8 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
 	}
 

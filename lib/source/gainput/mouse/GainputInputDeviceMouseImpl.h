@@ -11,7 +11,7 @@ public:
 	virtual ~InputDeviceMouseImpl() { }
 	virtual InputDevice::DeviceVariant GetVariant() const = 0;
 	virtual InputDevice::DeviceState GetState() const { return InputDevice::DS_OK; }
-	virtual void Update(InputState& state, InputState& previousState, InputDeltaState* delta) = 0;
+	virtual void Update(InputDeltaState* delta) = 0;
 };
 
 }

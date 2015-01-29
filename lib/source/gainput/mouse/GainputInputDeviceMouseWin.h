@@ -16,11 +16,11 @@ namespace gainput
 class InputDeviceMouseImplWin : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplWin(InputManager& manager, DeviceId device) :
+	InputDeviceMouseImplWin(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), MouseButtonCount + MouseAxisCount),
 		delta_(0)
 	{
@@ -31,10 +31,8 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
@@ -43,12 +41,12 @@ public:
 
 		if (delta)
 		{
-			bool oldValue = previousState.GetBool(MouseButton3);
+			bool oldValue = previousState_->GetBool(MouseButton3);
 			if (oldValue)
 			{
 				delta->AddChange(device_, MouseButton3, oldValue, false);
 			}
-			oldValue = previousState.GetBool(MouseButton4);
+			oldValue = previousState_->GetBool(MouseButton4);
 			if (oldValue)
 			{
 				delta->AddChange(device_, MouseButton4, oldValue, false);

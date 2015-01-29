@@ -1,6 +1,7 @@
 /**
- * Gainput.
- * Copyright (c) 2013 Johannes Kuhlmann.
+ * Gainput - C++ input library for games.
+ *
+ * Copyright (c) 2013-2015 Johannes Kuhlmann.
  * Licensed under the MIT license. See LICENSE file.
  */
 

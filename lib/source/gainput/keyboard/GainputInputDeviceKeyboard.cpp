@@ -23,34 +23,34 @@ InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device,
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_KEYBOARD)),
 	keyNames_(manager_.GetAllocator())
 {
-#if defined(GAINPUT_PLATFORM_LINUX)
-	if (variant == DV_STANDARD)
-	{
-		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplLinux>(manager, device);
-	}
-	else if (variant == DV_RAW)
-	{
-		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplEvdev>(manager, device);
-	}
-#elif defined(GAINPUT_PLATFORM_WIN)
-	if (variant == DV_STANDARD)
-	{
-		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWin>(manager, device);
-	}
-	else if (variant == DV_RAW)
-	{
-		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWinRaw>(manager, device);
-	}
-#elif defined(GAINPUT_PLATFORM_ANDROID)
-	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplAndroid>(manager, device);
-#endif
-
-	GAINPUT_ASSERT(impl_);
-
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), KeyCount_);
 	GAINPUT_ASSERT(state_);
 	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), KeyCount_);
 	GAINPUT_ASSERT(previousState_);
+
+#if defined(GAINPUT_PLATFORM_LINUX)
+	if (variant == DV_STANDARD)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplLinux>(manager, device, *state_, *previousState_);
+	}
+	else if (variant == DV_RAW)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplEvdev>(manager, device, *state_, *previousState_);
+	}
+#elif defined(GAINPUT_PLATFORM_WIN)
+	if (variant == DV_STANDARD)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWin>(manager, device, *state_, *previousState_);
+	}
+	else if (variant == DV_RAW)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplWinRaw>(manager, device, *state_, *previousState_);
+	}
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplAndroid>(manager, device, *state_, *previousState_);
+#endif
+
+	GAINPUT_ASSERT(impl_);
 
 	GetKeyboardKeyNames(keyNames_);
 }
@@ -65,13 +65,14 @@ InputDeviceKeyboard::~InputDeviceKeyboard()
 void
 InputDeviceKeyboard::InternalUpdate(InputDeltaState* delta)
 {
-	impl_->Update(*state_, *previousState_, delta);
+	impl_->Update(delta);
 }
 
 InputDevice::DeviceState
 InputDeviceKeyboard::InternalGetState() const
 {
 	return impl_->GetState();
+
 }
 
 InputDevice::DeviceVariant

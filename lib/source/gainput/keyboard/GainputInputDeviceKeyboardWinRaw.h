@@ -23,13 +23,13 @@ namespace gainput
 class InputDeviceKeyboardImplWinRaw : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplWinRaw(InputManager& manager, DeviceId device) :
+	InputDeviceKeyboardImplWinRaw(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
 		dialect_(manager_.GetAllocator()),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), KeyCount_),
 		delta_(0)
 	{
@@ -174,12 +174,9 @@ public:
 		return deviceState_;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
-
 		*state_ = nextState_;
 	}
 

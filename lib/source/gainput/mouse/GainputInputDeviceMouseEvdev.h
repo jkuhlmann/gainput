@@ -10,9 +10,11 @@ namespace gainput
 class InputDeviceMouseImplEvdev : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplEvdev(InputManager& manager, DeviceId device) :
+	InputDeviceMouseImplEvdev(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
+		state_(state),
+		previousState_(previousState),
 		fd_(-1),
 		buttonsToReset_(manager.GetAllocator())
 	{
@@ -62,13 +64,13 @@ public:
 		return fd_ != -1 ? InputDevice::DS_OK : InputDevice::DS_UNAVAILABLE;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 		for (Array<DeviceButtonId>::const_iterator it = buttonsToReset_.begin();
 				it != buttonsToReset_.end();
 				++it)
 		{
-			HandleButton(device_, state, previousState, delta, *it, false);
+			HandleButton(device_, state_, previousState_, delta, *it, false);
 		}
 		buttonsToReset_.clear();
 
@@ -103,7 +105,7 @@ public:
 
 				if (button != -1)
 				{
-					HandleButton(device_, state, previousState, delta, DeviceButtonId(button), bool(event.value));
+					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), bool(event.value));
 				}
 			}
 			else if (event.type == EV_REL)
@@ -122,21 +124,21 @@ public:
 				{
 					if (event.value < 0)
 						button = MouseButtonWheelDown;
-					HandleButton(device_, state, previousState, delta, DeviceButtonId(button), true);
+					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), true);
 					buttonsToReset_.push_back(button);
 				}
 				else if (button == MouseButton7)
 				{
 					if (event.value < 0)
 						button = MouseButton8;
-					HandleButton(device_, state, previousState, delta, DeviceButtonId(button), true);
+					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), true);
 					buttonsToReset_.push_back(button);
 				}
 				else if (button != -1)
 				{
 					const DeviceButtonId buttonId(button);
-					const float prevValue = previousState.GetFloat(buttonId);
-					HandleAxis(device_, state, previousState, delta, DeviceButtonId(button), prevValue + float(event.value));
+					const float prevValue = previousState_.GetFloat(buttonId);
+					HandleAxis(device_, state_, previousState_, delta, DeviceButtonId(button), prevValue + float(event.value));
 				}
 			}
 		}
@@ -147,6 +149,8 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
+	InputState& state_;
+	InputState& previousState_;
 	int fd_;
 	Array<DeviceButtonId> buttonsToReset_;
 };

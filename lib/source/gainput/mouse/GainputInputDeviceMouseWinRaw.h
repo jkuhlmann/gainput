@@ -23,12 +23,12 @@ namespace gainput
 class InputDeviceMouseImplWinRaw : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplWinRaw(InputManager& manager, DeviceId device) :
+	InputDeviceMouseImplWinRaw(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), MouseButtonCount + MouseAxisCount),
 		delta_(0),
 		buttonsToReset_(manager.GetAllocator())
@@ -54,10 +54,8 @@ public:
 		return deviceState_;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
 
 		for (Array<DeviceButtonId>::const_iterator it = buttonsToReset_.begin();

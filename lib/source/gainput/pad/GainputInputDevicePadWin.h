@@ -22,9 +22,11 @@ const float MaxMotorSpeed = 65535.0f;
 class InputDevicePadImplWin : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplWin(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplWin(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
+		state_(state),
+		previousState_(previousState),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
 		lastPacketNumber_(-1),
 		hasBattery_(false)
@@ -48,7 +50,7 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 		XINPUT_STATE xstate;
 		DWORD result = XInputGetState(padIndex_, &xstate);
@@ -89,27 +91,27 @@ public:
 
 		lastPacketNumber_ = xstate.dwPacketNumber;
 
-		HandleButton(device_, state, previousState, delta, PadButtonUp, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonDown, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonLeft, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonRight, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonA, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonB, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonX, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonY, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonStart, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonSelect, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonL3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonR3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonL1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0);
-		HandleButton(device_, state, previousState, delta, PadButtonR1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonUp, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonDown, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonLeft, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonRight, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonA, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonB, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonX, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonY, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonStart, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonSelect, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonL3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonR3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonL1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0);
+		HandleButton(device_, state_, previousState_, delta, PadButtonR1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
 
-		HandleAxis(device_, state, previousState, delta, PadButtonL2, float(xstate.Gamepad.bLeftTrigger)/MaxTriggerValue);
-		HandleAxis(device_, state, previousState, delta, PadButtonR2, float(xstate.Gamepad.bRightTrigger)/MaxTriggerValue);
-		HandleAxis(device_, state, previousState, delta, PadButtonLeftStickX, float(xstate.Gamepad.sThumbLX)/MaxAxisValue);
-		HandleAxis(device_, state, previousState, delta, PadButtonLeftStickY, float(xstate.Gamepad.sThumbLY)/MaxAxisValue);
-		HandleAxis(device_, state, previousState, delta, PadButtonRightStickX, float(xstate.Gamepad.sThumbRX)/MaxAxisValue);
-		HandleAxis(device_, state, previousState, delta, PadButtonRightStickY, float(xstate.Gamepad.sThumbRY)/MaxAxisValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonL2, float(xstate.Gamepad.bLeftTrigger)/MaxTriggerValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonR2, float(xstate.Gamepad.bRightTrigger)/MaxTriggerValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonLeftStickX, float(xstate.Gamepad.sThumbLX)/MaxAxisValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonLeftStickY, float(xstate.Gamepad.sThumbLY)/MaxAxisValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonRightStickX, float(xstate.Gamepad.sThumbRX)/MaxAxisValue);
+		HandleAxis(device_, state_, previousState_, delta, PadButtonRightStickY, float(xstate.Gamepad.sThumbRY)/MaxAxisValue);
 	}
 
 	InputDevice::DeviceState GetState() const
@@ -136,6 +138,8 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
+	InputState& state_;
+	InputState& previousState_;
 	InputDevice::DeviceState deviceState_;
 	unsigned padIndex_;
 	DWORD lastPacketNumber_;

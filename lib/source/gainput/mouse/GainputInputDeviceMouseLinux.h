@@ -12,11 +12,11 @@ namespace gainput
 class InputDeviceMouseImplLinux : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplLinux(InputManager& manager, DeviceId device) :
+	InputDeviceMouseImplLinux(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), MouseButtonCount + MouseAxisCount),
 		delta_(0)
 	{
@@ -39,17 +39,15 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
 		for (unsigned i = 0; i < MouseButtonCount; ++i)
 		{
 			const DeviceButtonId buttonId = i;
-			const bool oldValue = previousState.GetBool(buttonId);
+			const bool oldValue = previousState_->GetBool(buttonId);
 			if (isWheel_[i] && oldValue)
 			{
 				const bool pressed = false;
@@ -74,6 +72,9 @@ public:
 
 	void HandleEvent(XEvent& event)
 	{
+		GAINPUT_ASSERT(state_);
+		GAINPUT_ASSERT(previousState_);
+
 		switch (event.type)
 		{
 		case MotionNotify:

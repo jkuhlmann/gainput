@@ -18,27 +18,33 @@
 namespace gainput
 {
 
+
 InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE)),
 	impl_(0)
 {
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
+	GAINPUT_ASSERT(state_);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
+	GAINPUT_ASSERT(previousState_);
+
 #if defined(GAINPUT_PLATFORM_LINUX)
 	if (variant == DV_STANDARD)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplLinux>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplLinux>(manager, device, *state_, *previousState_);
 	}
 	else if (variant == DV_RAW)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplEvdev>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplEvdev>(manager, device, *state_, *previousState_);
 	}
 #elif defined(GAINPUT_PLATFORM_WIN)
 	if (variant == DV_STANDARD)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWin>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWin>(manager, device, *state_, *previousState_);
 	}
 	else if (variant == DV_RAW)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, device, *state_, *previousState_);
 	}
 #endif
 
@@ -47,11 +53,6 @@ InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, Devic
 		impl_ = manager.GetAllocator().New<InputDeviceMouseImplNull>(manager, device);
 	}
 	GAINPUT_ASSERT(impl_);
-
-	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
-	GAINPUT_ASSERT(state_);
-	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);
-	GAINPUT_ASSERT(previousState_);
 }
 
 InputDeviceMouse::~InputDeviceMouse()
@@ -64,7 +65,7 @@ InputDeviceMouse::~InputDeviceMouse()
 void
 InputDeviceMouse::InternalUpdate(InputDeltaState* delta)
 {
-	impl_->Update(*state_, *previousState_, delta);
+	impl_->Update(delta);
 }
 
 InputDevice::DeviceState

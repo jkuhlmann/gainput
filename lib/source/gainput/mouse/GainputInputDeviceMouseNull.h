@@ -17,7 +17,7 @@ public:
 		return InputDevice::DV_NULL;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 	}
 };

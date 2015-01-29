@@ -111,19 +111,19 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, DeviceVar
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_PAD)),
 	impl_(0)
 {
-#if defined(GAINPUT_PLATFORM_LINUX)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, device, index_);
-#elif defined(GAINPUT_PLATFORM_WIN)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, device, index_);
-#elif defined(GAINPUT_PLATFORM_ANDROID)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, device, index_);
-#endif
-	GAINPUT_ASSERT(impl_);
-
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
 	GAINPUT_ASSERT(state_);
 	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), PadButtonCount + PadAxisCount);
 	GAINPUT_ASSERT(previousState_);
+
+#if defined(GAINPUT_PLATFORM_LINUX)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, device, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_WIN)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, device, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, device, index_, *state_, *previousState_);
+#endif
+	GAINPUT_ASSERT(impl_);
 }
 
 InputDevicePad::~InputDevicePad()
@@ -136,7 +136,7 @@ InputDevicePad::~InputDevicePad()
 void
 InputDevicePad::InternalUpdate(InputDeltaState* delta)
 {
-	impl_->Update(*state_, *previousState_, delta);
+	impl_->Update(delta);
 }
 
 InputDevice::DeviceState

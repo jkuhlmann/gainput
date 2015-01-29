@@ -18,12 +18,16 @@ namespace gainput
 InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_TOUCH)),
 	impl_(0)
-
 {
+	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
+	GAINPUT_ASSERT(state_);
+	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
+	GAINPUT_ASSERT(previousState_);
+
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	if (variant != DV_NULL)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceTouchImplAndroid>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplAndroid>(manager, device, *state_, *previousState_);
 	}
 #endif
 
@@ -31,12 +35,7 @@ InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, Devic
 	{
 		impl_ = manager.GetAllocator().New<InputDeviceTouchImplNull>(manager, device);
 	}
-
 	GAINPUT_ASSERT(impl_);
-	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
-	GAINPUT_ASSERT(state_);
-	previousState_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
-	GAINPUT_ASSERT(previousState_);
 }
 
 InputDeviceTouch::~InputDeviceTouch()
@@ -49,7 +48,7 @@ InputDeviceTouch::~InputDeviceTouch()
 void
 InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 {
-	impl_->Update(*state_, *previousState_, delta);
+	impl_->Update(delta);
 }
 
 InputDevice::DeviceState

@@ -14,13 +14,13 @@ namespace gainput
 class InputDeviceKeyboardImplLinux : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplLinux(InputManager& manager, DeviceId device) :
+	InputDeviceKeyboardImplLinux(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
 		dialect_(manager_.GetAllocator()),
-		state_(0),
-		previousState_(0),
+		state_(&state),
+		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), KeyCount_),
 		delta_(0)
 	{
@@ -167,12 +167,9 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
-		state_ = &state;
-		previousState_ = &previousState;
 		delta_ = delta;
-
 		*state_ = nextState_;
 	}
 
@@ -190,6 +187,9 @@ public:
 
 	void HandleEvent(XEvent& event)
 	{
+		GAINPUT_ASSERT(state_);
+		GAINPUT_ASSERT(previousState_);
+
 		if (event.type == KeyPress || event.type == KeyRelease)
 		{
 			XKeyEvent& keyEvent = event.xkey;

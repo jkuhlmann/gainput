@@ -34,11 +34,13 @@ static const char* PadDeviceIds[MaxPadCount] =
 class InputDevicePadImplLinux : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplLinux(InputManager& manager, DeviceId device, unsigned index) :
+	InputDevicePadImplLinux(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
+		state_(state),
+		previousState_(previousState),
 		index_(index),
-		state_(InputDevice::DS_UNAVAILABLE),
+		deviceState_(InputDevice::DS_UNAVAILABLE),
 		fd_(-1),
 		buttonDialect_(manager_.GetAllocator())
 	{
@@ -59,7 +61,7 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputState& state, InputState& previousState, InputDeltaState* delta)
+	void Update(InputDeltaState* delta)
 	{
 		CheckForDevice();
 
@@ -89,17 +91,17 @@ public:
 
 				if (buttonId == PadButtonUp)
 				{
-					HandleButton(device_, state, previousState, delta, PadButtonUp, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PadButtonDown, value > 0.0f);
+					HandleButton(device_, state_, previousState_, delta, PadButtonUp, value < 0.0f);
+					HandleButton(device_, state_, previousState_, delta, PadButtonDown, value > 0.0f);
 				}
 				else if (buttonId == PadButtonLeft)
 				{
-					HandleButton(device_, state, previousState, delta, PadButtonLeft, value < 0.0f);
-					HandleButton(device_, state, previousState, delta, PadButtonRight, value > 0.0f);
+					HandleButton(device_, state_, previousState_, delta, PadButtonLeft, value < 0.0f);
+					HandleButton(device_, state_, previousState_, delta, PadButtonRight, value > 0.0f);
 				}
 				else
 				{
-					HandleAxis(device_, state, previousState, delta, buttonId, value);
+					HandleAxis(device_, state_, previousState_, delta, buttonId, value);
 				}
 			}
 			else if (event.type == JS_EVENT_BUTTON)
@@ -110,9 +112,9 @@ public:
 				{
 					DeviceButtonId buttonId = buttonDialect_[event.number];
 					const bool value(event.value);
-					state.Set(buttonId, value);
+					state_.Set(buttonId, value);
 
-					HandleButton(device_, state, previousState, delta, buttonId, value);
+					HandleButton(device_, state_, previousState_, delta, buttonId, value);
 				}
 #ifdef GAINPUT_DEBUG
 				else
@@ -130,14 +132,14 @@ public:
 #ifdef GAINPUT_DEBUG
 			GAINPUT_LOG("Pad lost.\n");
 #endif
-			state_ = InputDevice::DS_UNAVAILABLE;
+			deviceState_ = InputDevice::DS_UNAVAILABLE;
 			fd_ = -1;
 		}
 	}
 
 	InputDevice::DeviceState GetState() const
 	{
-		return state_;
+		return deviceState_;
 	}
 
 	bool IsValidButton(DeviceButtonId deviceButton) const
@@ -178,8 +180,10 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
+	InputState& state_;
+	InputState& previousState_;
 	unsigned index_;
-	InputDevice::DeviceState state_;
+	InputDevice::DeviceState deviceState_;
 	int fd_;
 	HashMap<unsigned, DeviceButtonId> buttonDialect_;
 	HashMap<unsigned, DeviceButtonId> axisDialect_;
@@ -191,7 +195,7 @@ private:
 			return;
 		}
 
-		state_ = InputDevice::DS_UNAVAILABLE;
+		deviceState_ = InputDevice::DS_UNAVAILABLE;
 
 		fd_ = open(PadDeviceIds[index_], O_RDONLY | O_NONBLOCK);
 		if (fd_ < 0)
@@ -276,7 +280,7 @@ private:
 			axisDialect_[-2] = PadButtonRight;
 		}
 
-		state_ = InputDevice::DS_OK;
+		deviceState_ = InputDevice::DS_OK;
 	}
 };
 
