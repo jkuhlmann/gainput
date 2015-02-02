@@ -16,6 +16,9 @@
 	#include "GainputInputDeviceKeyboardAndroid.h"
 #endif
 
+#include "GainputInputDeviceKeyboardNull.h"
+
+
 namespace gainput
 {
 
@@ -49,6 +52,11 @@ InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device,
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplAndroid>(manager, device, *state_, *previousState_);
 #endif
+
+    if (!impl_)
+    {
+        impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplNull>(manager, device);
+    }
 
 	GAINPUT_ASSERT(impl_);
 
