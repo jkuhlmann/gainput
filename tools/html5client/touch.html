@@ -16,23 +16,17 @@ var can, ctx, host, port, touchDevice;
 
 var touches = [];
 
-function setTouchAll(idx, down, x, y) {
-	touches[idx].down = down;
-	touches[idx].x = (x + 0.0) / can.width;
-	touches[idx].y = (y + 0.0) / can.height;
-}
-
 function setTouchPos(idx, x, y) {
-	if (idx >= touches.length) {
-		touches[idx] = { down: false, x: 0, y: 0 };
+	if (!(idx in touches)) {
+		touches[idx] = { down: false, x: 0.0, y: 0.0 };
 	}
 	touches[idx].x = (x + 0.0) / can.width;
 	touches[idx].y = (y + 0.0) / can.height;
 }
 
 function setTouchDown(idx, down) {
-	if (idx >= touches.length) {
-		touches[idx] = { down: false, x: 0, y: 0 };
+	if (!(idx in touches)) {
+		touches[idx] = { down: false, x: 0.0, y: 0.0 };
 	}
 	touches[idx].down = down;
 }
@@ -123,9 +117,12 @@ function showTouches() {
 	ctx.clearRect(0, 0, can.width, can.height);
 
 	var y = 0;
-	for (i = 0; i < touches.length; ++i) {
-		var str = i + ": " + touches[i].x.toFixed(4) + ", " + touches[i].y.toFixed(4);
-		if (touches[i].down)
+	var i = 0; 
+	for (var id in touches) {
+		var touch = touches[id];
+
+		var str = i + ": " + touch.x.toFixed(4) + ", " + touch.y.toFixed(4);
+		if (touch.down)
 			str += ", down";
 		else
 			str += ", up";
@@ -133,15 +130,22 @@ function showTouches() {
 		ctx.fillText(str, 0, y, can.width - 10);
 		y += 15;
 
-		if (touches[i].down) {
+		if (touch.down) {
 			ctx.beginPath();
-			ctx.arc(touches[i].x*can.width, touches[i].y*can.height, 10, 0, 2*Math.PI);
+			ctx.arc(touch.x*can.width, touch.y*can.height, 10, 0, 2*Math.PI);
 			ctx.stroke();
 		}
 
 		var req = new XMLHttpRequest();
-		req.open("get", "http://" + host + ":" + port + "/" + touchDevice + "/" + i + "/" + touches[i].x.toFixed(8) + "/" + touches[i].y.toFixed(8) + "/" + touches[i].down*1);
+		req.open("get", "http://" + host + ":" + port + "/" + touchDevice + "/" + i + "/" + touch.x.toFixed(8) + "/" + touch.y.toFixed(8) + "/" + touch.down*1);
 		req.send();
+
+		if (!touch.down)
+		{
+			delete touches[id];
+		}
+
+		++i;
 	}
 }
 </script>
