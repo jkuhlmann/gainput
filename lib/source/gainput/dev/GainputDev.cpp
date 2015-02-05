@@ -16,6 +16,7 @@
 #include "GainputMemoryStream.h"
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
+#include "../GainputLog.h"
 
 #if _MSC_VER
 #define snprintf _snprintf

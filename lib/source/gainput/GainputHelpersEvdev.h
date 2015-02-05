@@ -7,6 +7,8 @@
 #include <errno.h>
 #include <linux/uinput.h>
 
+#include "GainputLog.h"
+
 namespace gainput
 {
 namespace

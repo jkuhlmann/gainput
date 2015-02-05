@@ -2,6 +2,8 @@
 #ifndef GAINPUTHELPERS_H_
 #define GAINPUTHELPERS_H_
 
+#include "GainputLog.h"
+
 namespace gainput
 {
 

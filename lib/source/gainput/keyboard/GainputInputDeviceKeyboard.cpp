@@ -5,6 +5,7 @@
 #include "GainputKeyboardKeyNames.h"
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
+#include "../GainputLog.h"
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	#include "GainputInputDeviceKeyboardLinux.h"

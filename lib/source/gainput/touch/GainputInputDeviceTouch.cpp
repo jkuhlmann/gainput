@@ -5,6 +5,7 @@
 #include "GainputTouchInfo.h"
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
+#include "../GainputLog.h"
 
 #include "GainputInputDeviceTouchNull.h"
 

@@ -42,16 +42,13 @@
 //#define GAINPUT_DEV
 #define GAINPUT_ENABLE_ALL_GESTURES
 #define GAINPUT_ENABLE_RECORDER
-
+#define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
 
 #include <cassert>
 #include <cstring>
 #include <new>
 
-
 #define GAINPUT_ASSERT assert
-#define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
-
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
@@ -60,11 +57,6 @@
 
 union _XEvent;
 typedef _XEvent XEvent;
-
-#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
-	#include <stdio.h>
-	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
-#endif
 
 #elif defined(GAINPUT_PLATFORM_WIN)
 
@@ -80,29 +72,13 @@ namespace gainput
 	typedef unsigned __int64 uint64_t;
 }
 
-#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
-	#include <stdio.h>
-	#define GAINPUT_LOG(...) { char buf[1024]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
-#endif
-
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 
 #include <stdint.h>
-
 struct AInputEvent;
 
-#if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
-	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 
-#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
-	#include <stdio.h>
-	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
-#endif
-
-#ifndef GAINPUT_LOG
-#define GAINPUT_LOG(...)
-#endif
 
 
 /// Contains all Gainput related classes, types, and functions.

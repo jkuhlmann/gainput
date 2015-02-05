@@ -5,6 +5,7 @@
 
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
+#include "../GainputLog.h"
 
 
 namespace gainput

@@ -6,6 +6,7 @@
 #include "GainputKeyboardKeyNames.h"
 #include "../GainputInputDeltaState.h"
 #include "../GainputHelpers.h"
+#include "../GainputLog.h"
 
 #include "GainputInputDeviceKeyboardMac.h"
 
