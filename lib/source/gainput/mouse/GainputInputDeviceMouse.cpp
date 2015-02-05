@@ -13,6 +13,8 @@
 #elif defined(GAINPUT_PLATFORM_WIN)
 	#include "GainputInputDeviceMouseWin.h"
 	#include "GainputInputDeviceMouseWinRaw.h"
+#elif defined(GAINPUT_PLATFORM_MAC)
+	#include "GainputInputDeviceMouseMac.h"
 #endif
 
 namespace gainput
@@ -46,6 +48,8 @@ InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, Devic
 	{
 		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, device, *state_, *previousState_);
 	}
+#elif defined(GAINPUT_PLATFORM_MAC)
+	impl_ = manager.GetAllocator().New<InputDeviceMouseImplMac>(manager, device, *state_, *previousState_);
 #endif
 
 	if (!impl_)
