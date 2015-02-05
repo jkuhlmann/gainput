@@ -23,6 +23,16 @@
 	#else
 		#define GAINPUT_LIBEXPORT
 	#endif
+#elif defined(__APPLE__)
+	#define GAINPUT_LIBEXPORT
+	#include <TargetConditionals.h>
+	#if TARGET_OS_IPHONE
+		#define GAINPUT_PLATFORM_IOS
+	#elif TARGET_OS_MAC
+		#define GAINPUT_PLATFORM_MAC
+	#else
+		#error Gainput: Unknown/unsupported Apple platform!
+	#endif
 #else
 	#error Gainput: Unknown/unsupported platform!
 #endif
@@ -85,6 +95,9 @@ struct AInputEvent;
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+	#include <stdio.h>
+	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
 #endif
 
 #ifndef GAINPUT_LOG

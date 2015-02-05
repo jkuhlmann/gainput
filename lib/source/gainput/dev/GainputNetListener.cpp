@@ -5,7 +5,7 @@
 #include "GainputNetConnection.h"
 #include "GainputNetListener.h"
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 #include <fcntl.h>
 #include <unistd.h>
 

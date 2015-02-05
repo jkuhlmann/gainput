@@ -11,7 +11,7 @@ class NetConnection
 {
 public:
 	NetConnection(const NetAddress& address, Allocator& allocator = GetDefaultAllocator());
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 	NetConnection(const NetAddress& remoteAddress, int fd, Allocator& allocator = GetDefaultAllocator());
 #elif defined(GAINPUT_PLATFORM_WIN)
 	NetConnection(const NetAddress& remoteAddress, SOCKET fd, Allocator& allocator = GetDefaultAllocator());
@@ -33,7 +33,7 @@ private:
 	Allocator& allocator;
 	NetAddress address;
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 	int fd;
 #elif defined(GAINPUT_PLATFORM_WIN)
 	SOCKET fd;

@@ -3,6 +3,8 @@
 
 #ifdef GAINPUT_DEV
 
+#include <stdio.h>
+
 #if defined(GAINPUT_PLATFORM_ANDROID)
 #include <android/log.h>
 #endif

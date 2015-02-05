@@ -24,7 +24,7 @@ private:
 	Allocator& allocator;
 	bool blocking;
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 	int fd;
 #elif defined(GAINPUT_PLATFORM_WIN)
 	SOCKET listenSocket;

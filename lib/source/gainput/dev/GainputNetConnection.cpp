@@ -6,18 +6,20 @@
 
 #include "GainputStream.h"
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_WIN)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 #include <cassert>
 #include <fcntl.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #endif
 
 namespace gainput {
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 NetConnection::NetConnection(const NetAddress& address, Allocator& allocator) :
 	allocator(allocator),
 	address(address),
@@ -200,6 +202,9 @@ NetConnection::Send(const void* buf, size_t length)
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
 	const int result = send(fd, buf, length, MSG_NOSIGNAL);
 	if (result == -1 && errno == EPIPE)
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+	const int result = send(fd, buf, length, 0);
+	if (result == -1 && errno == EPIPE)
 #elif defined(GAINPUT_PLATFORM_WIN)
 	const int result = send(fd, (const char*)buf, length, 0);
 	if (result == -1)
@@ -225,7 +230,7 @@ size_t
 NetConnection::Receive(void* buffer, size_t length)
 {
 	assert(IsConnected());
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 	ssize_t receivedLength = recv(fd, (char*)buffer, length, 0);
 	if (receivedLength == -1)
 #elif defined(GAINPUT_PLATFORM_WIN)
