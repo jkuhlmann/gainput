@@ -7,7 +7,7 @@ Gainput is the new awesome C++ input library for your game:
 
 - handles your input needs from low-level device reading to high-level mapping of user-defined buttons
 - well-documented, clean, lightweight, and easy to use
-- a unified interface on all supported platforms: Windows, Linux, Android NDK
+- a unified interface on all supported platforms: **Windows, Linux, Android NDK, iOS, OS X**
 - supported devices: keyboard, mouse, pad, multi-touch
 - [Open Source (MIT license)](https://github.com/jkuhlmann/gainput/blob/master/LICENSE)
 - [complete list of features](#features)
@@ -38,7 +38,7 @@ map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 map.MapBool(ButtonConfirm, padId, gainput::PadButtonA);
 map.MapBool(ButtonConfirm, touchId, gainput::Touch0Down);
 
-while (game_running)
+while (running)
 {
 	manager.Update();
 
@@ -62,14 +62,15 @@ Features
 - Two Gainput instances can **sync device states over the network**. It's also possible to receive **multi-touch inputs from a smartphone**'s regular browser.
 - Completely written in portable **C++**.
 - **No STL** is used. **No exceptions** are thrown. **No RTTI** is used. **No C++11**, and **no boost**.
-- **No weird external dependencies** ared used. Relies mostly on the existing platform SDKs.
+- **No weird external dependencies** ared used. Relies on the existing platform SDKs.
+- **Easily set up and built** using your favorite IDE/build tool.
 - **Listeners** can be installed both for devices buttons as well as user buttons. That way you are notified when a button state changes.
 - **Gestures** allow for more complex input patterns to be detected, for example double-clicking, pinch/rotation gestures, or holding several buttons simultaneously.
 - An **external allocator** can be supplied to the library so that all memory management is done the way you want it.
 - Supports **raw input** on Linux and Windows.
 - Gamepad rumbling is supported where available.
 - It's easy to check for all pressed buttons so that offering a way to the players to remap their buttons is easy to implement. Similarly it's easy to save and load mappings.
-- Unwanted features like gestures or the network server are easily disabled.
+- Possibly unnecessary features, like gestures or the network server, are easily disabled.
 - **Dead zones** can be set up for any float-value button.
 - **State changes**, i.e. if a button is newly down or just released, can be checked for.
 
