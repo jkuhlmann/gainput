@@ -414,6 +414,8 @@ InputMap::GetUserButtonId(DeviceId device, DeviceButtonId deviceButton) const
 	return InvalidUserButtonId;
 }
 
+namespace {
+
 class ManagerToMapListener : public InputListener
 {
 public:
@@ -424,29 +426,31 @@ public:
 
 	void OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue)
 	{
+		const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
+		if (userButton == InvalidUserButtonId)
+		{
+			return;
+		}
 		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
 				it != listeners_.end();
 				++it)
 		{
-			const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
-			if (userButton != InvalidUserButtonId)
-			{
-				it->second->OnUserButtonBool(userButton, oldValue, newValue);
-			}
+			it->second->OnUserButtonBool(userButton, oldValue, newValue);
 		}
 	}
 
 	void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue)
 	{
+		const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
+		if (userButton == InvalidUserButtonId)
+		{
+			return;
+		}
 		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
 				it != listeners_.end();
 				++it)
 		{
-			const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
-			if (userButton != InvalidUserButtonId)
-			{
-				it->second->OnUserButtonFloat(userButton, oldValue, newValue);
-			}
+			it->second->OnUserButtonFloat(userButton, oldValue, newValue);
 		}
 	}
 
@@ -454,6 +458,8 @@ private:
 	InputMap& inputMap_;
 	HashMap<ListenerId, MappedInputListener*>& listeners_;
 };
+
+}
 
 unsigned
 InputMap::AddListener(MappedInputListener* listener)
