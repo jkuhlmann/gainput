@@ -14,6 +14,8 @@
 	#include "GainputInputDeviceKeyboardWinRaw.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	#include "GainputInputDeviceKeyboardAndroid.h"
+#elif defined(GAINPUT_PLATFORM_MAC)
+	#include "GainputInputDeviceKeyboardMac.h"
 #endif
 
 #include "GainputInputDeviceKeyboardNull.h"
@@ -24,6 +26,7 @@ namespace gainput
 
 InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device, DeviceVariant variant) :
 	InputDevice(manager, device, manager.GetDeviceCountByType(DT_KEYBOARD)),
+	impl_(0),
 	keyNames_(manager_.GetAllocator())
 {
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), KeyCount_);
@@ -51,12 +54,14 @@ InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device,
 	}
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplAndroid>(manager, device, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_MAC)
+	impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplMac>(manager, device, *state_, *previousState_);
 #endif
 
-    if (!impl_)
-    {
-        impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplNull>(manager, device);
-    }
+	if (!impl_)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceKeyboardImplNull>(manager, device);
+	}
 
 	GAINPUT_ASSERT(impl_);
 
