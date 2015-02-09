@@ -15,16 +15,25 @@ public:
 	 * \param deviceButton The ID of the device button that changed.
 	 * \param oldValue Previous state of the button.
 	 * \param newValue New state of the button.
+	 * \return true if the button may be processed by listeners with a lower priority, false otherwise.
 	 */
-	virtual void OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue) { }
+	virtual bool OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue) { return true; }
+
 	/// Called when a float-type button state changes.
 	/**
 	 * \param device The input device's ID the state change occurred on.
 	 * \param deviceButton The ID of the device button that changed.
 	 * \param oldValue Previous state of the button.
 	 * \param newValue New state of the button.
+	 * \return true if the button may be processed by listeners with a lower priority, false otherwise.
 	 */
-	virtual void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue) { }
+	virtual bool OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue) { return true; }
+
+	/// Returns the priority which influences the order in which listeners are called by InputManager.
+	/**
+	 * \sa InputManager::ReorderListeners()
+	 */
+	virtual int GetPriority() const { return 0; }
 };
 
 
@@ -37,15 +46,24 @@ public:
 	 * \param userButton The user button's ID.
 	 * \param oldValue Previous state of the button.
 	 * \param newValue New state of the button.
+	 * \return true if the button may be processed by listeners with a lower priority, false otherwise.
 	 */
-	virtual void OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue) { }
+	virtual bool OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue) { return true; }
+
 	/// Called when a float-type button state changes.
 	/**
 	 * \param userButton The user button's ID.
 	 * \param oldValue Previous state of the button.
 	 * \param newValue New state of the button.
+	 * \return true if the button may be processed by listeners with a lower priority, false otherwise.
 	 */
-	virtual void OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue) { }
+	virtual bool OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue) { return true; }
+
+	/// Returns the priority which influences the order in which listeners are called by InputMap.
+	/**
+	 * \sa InputMap::ReorderListeners()
+	 */
+	virtual int GetPriority() const { return 0; }
 
 };
 

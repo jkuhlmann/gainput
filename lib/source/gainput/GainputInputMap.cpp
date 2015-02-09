@@ -2,6 +2,8 @@
 #include <gainput/gainput.h>
 #include "dev/GainputDev.h"
 
+#include <stdlib.h>
+
 namespace
 {
 	template<class T> T Min(const T&a, const T& b) { return a < b ? a : b; }
@@ -46,6 +48,7 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 	userButtons_(allocator_),
 	nextUserButtonId_(0),
 	listeners_(allocator_),
+	sortedListeners_(allocator_),
 	nextListenerId_(0),
 	managerListener_(0)
 {
@@ -419,44 +422,52 @@ namespace {
 class ManagerToMapListener : public InputListener
 {
 public:
-	ManagerToMapListener(InputMap& inputMap, HashMap<ListenerId, MappedInputListener*>& listeners_) :
+	ManagerToMapListener(InputMap& inputMap, Array<MappedInputListener*>& listeners_) :
 		inputMap_(inputMap),
 		listeners_(listeners_)
 	{ }
 
-	void OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	bool OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue)
 	{
 		const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
 		if (userButton == InvalidUserButtonId)
 		{
-			return;
+			return true;
 		}
-		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
+		for (Array<MappedInputListener*>::iterator it = listeners_.begin();
 				it != listeners_.end();
 				++it)
 		{
-			it->second->OnUserButtonBool(userButton, oldValue, newValue);
+			if(!(*it)->OnUserButtonBool(userButton, oldValue, newValue))
+			{
+				break;
+			}
 		}
+		return true;
 	}
 
-	void OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue)
+	bool OnDeviceButtonFloat(DeviceId device, DeviceButtonId deviceButton, float oldValue, float newValue)
 	{
 		const UserButtonId userButton = inputMap_.GetUserButtonId(device, deviceButton);
 		if (userButton == InvalidUserButtonId)
 		{
-			return;
+			return true;
 		}
-		for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
+		for (Array<MappedInputListener*>::iterator it = listeners_.begin();
 				it != listeners_.end();
 				++it)
 		{
-			it->second->OnUserButtonFloat(userButton, oldValue, newValue);
+			if (!(*it)->OnUserButtonFloat(userButton, oldValue, newValue))
+			{
+				break;
+			}
 		}
+		return true;
 	}
 
 private:
 	InputMap& inputMap_;
-	HashMap<ListenerId, MappedInputListener*>& listeners_;
+	Array<MappedInputListener*>& listeners_;
 };
 
 }
@@ -466,10 +477,11 @@ InputMap::AddListener(MappedInputListener* listener)
 {
 	if (!managerListener_)
 	{
-		managerListener_ = allocator_.New<ManagerToMapListener>(*this, listeners_);
+		managerListener_ = allocator_.New<ManagerToMapListener>(*this, sortedListeners_);
 		managerListenerId_ = manager_.AddListener(managerListener_);
 	}
 	listeners_[nextListenerId_] = listener;
+	ReorderListeners();
 	return nextListenerId_++;
 }
 
@@ -477,6 +489,7 @@ void
 InputMap::RemoveListener(unsigned listenerId)
 {
 	listeners_.erase(listenerId);
+	ReorderListeners();
 
 	if (listeners_.empty())
 	{
@@ -484,6 +497,37 @@ InputMap::RemoveListener(unsigned listenerId)
 		allocator_.Delete(managerListener_);
 		managerListener_ = 0;
 	}
+}
+
+namespace {
+static int CompareListeners(const void* a, const void* b)
+{
+	const MappedInputListener* listener1 = *reinterpret_cast<const MappedInputListener* const*>(a);
+	const MappedInputListener* listener2 = *reinterpret_cast<const MappedInputListener* const*>(b);
+	return listener2->GetPriority() - listener1->GetPriority();
+}
+}
+
+void
+InputMap::ReorderListeners()
+{
+	sortedListeners_.clear();
+	for (HashMap<ListenerId, MappedInputListener*>::iterator it = listeners_.begin();
+		it != listeners_.end();
+		++it)
+	{
+		sortedListeners_.push_back(it->second);
+	}
+
+	if (sortedListeners_.empty())
+	{
+		return;
+	}
+
+	qsort(&sortedListeners_[0], 
+		sortedListeners_.size(), 
+		sizeof(MappedInputListener*), 
+		&CompareListeners);
 }
 
 UserButton*

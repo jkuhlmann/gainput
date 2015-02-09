@@ -34,6 +34,7 @@ InputManager::InputManager(Allocator& allocator) :
 		nextDeviceId_(0),
 		listeners_(allocator_),
 		nextListenerId_(0),
+		sortedListeners_(allocator_),
 		modifiers_(allocator_),
 		nextModifierId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_)),
@@ -93,7 +94,7 @@ InputManager::Update()
 
 	if (ds)
 	{
-		ds->NotifyListeners(listeners_);
+		ds->NotifyListeners(sortedListeners_);
 		ds->Clear();
 	}
 }
@@ -170,6 +171,7 @@ ListenerId
 InputManager::AddListener(InputListener* listener)
 {
 	listeners_[nextListenerId_] = listener;
+	ReorderListeners();
 	return nextListenerId_++;
 }
 
@@ -177,6 +179,38 @@ void
 InputManager::RemoveListener(ListenerId listenerId)
 {
 	listeners_.erase(listenerId);
+	ReorderListeners();
+}
+
+namespace {
+static int CompareListeners(const void* a, const void* b)
+{
+	const InputListener* listener1 = *reinterpret_cast<const InputListener* const*>(a);
+	const InputListener* listener2 = *reinterpret_cast<const InputListener* const*>(b);
+	return listener2->GetPriority() - listener1->GetPriority();
+}
+}
+
+void
+InputManager::ReorderListeners()
+{
+	sortedListeners_.clear();
+	for (HashMap<ListenerId, InputListener*>::iterator it = listeners_.begin();
+		it != listeners_.end();
+		++it)
+	{
+		sortedListeners_.push_back(it->second);
+	}
+
+	if (sortedListeners_.empty())
+	{
+		return;
+	}
+
+	qsort(&sortedListeners_[0], 
+		sortedListeners_.size(), 
+		sizeof(InputListener*), 
+		&CompareListeners);
 }
 
 ModifierId

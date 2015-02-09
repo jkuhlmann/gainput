@@ -70,11 +70,11 @@ class DevUserButtonListener : public MappedInputListener
 public:
 	DevUserButtonListener(const InputMap* map) : map_(map) { }
 
-	void OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue)
+	bool OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue)
 	{
 		if (!devConnection || !devSendInfos)
 		{
-			return;
+			return true;
 		}
 
 		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
@@ -86,13 +86,15 @@ public:
 		stream->SeekBegin(0);
 		SendMessage(*stream);
 		allocator->Delete(stream);
+
+		return true;
 	}
 
-	void OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue)
+	bool OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue)
 	{
 		if (!devConnection || !devSendInfos)
 		{
-			return;
+			return true;
 		}
 
 		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
@@ -104,6 +106,8 @@ public:
 		stream->SeekBegin(0);
 		SendMessage(*stream);
 		allocator->Delete(stream);
+
+		return true;
 	}
 
 private:
@@ -115,10 +119,10 @@ class DevDeviceButtonListener : public InputListener
 public:
 	DevDeviceButtonListener(const InputManager* inputManager) : inputManager_(inputManager) { }
 
-	void OnDeviceButtonBool(DeviceId deviceId, DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	bool OnDeviceButtonBool(DeviceId deviceId, DeviceButtonId deviceButton, bool oldValue, bool newValue)
 	{
 		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
-			return;
+			return true;
 		const InputDevice* device = inputManager_->GetDevice(deviceId);
 		GAINPUT_ASSERT(device);
 		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
@@ -130,12 +134,13 @@ public:
 		stream->SeekBegin(0);
 		SendMessage(*stream);
 		allocator->Delete(stream);
+		return true;
 	}
 
-	void OnDeviceButtonFloat(DeviceId deviceId, DeviceButtonId deviceButton, float oldValue, float newValue)
+	bool OnDeviceButtonFloat(DeviceId deviceId, DeviceButtonId deviceButton, float oldValue, float newValue)
 	{
 		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
-			return;
+			return true;
 		const InputDevice* device = inputManager_->GetDevice(deviceId);
 		GAINPUT_ASSERT(device);
 		Stream* stream = allocator->New<MemoryStream>(32, *allocator);
@@ -147,6 +152,7 @@ public:
 		stream->SeekBegin(0);
 		SendMessage(*stream);
 		allocator->Delete(stream);
+		return true;
 	}
 
 private:

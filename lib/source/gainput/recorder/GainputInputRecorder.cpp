@@ -16,11 +16,11 @@ namespace
 			recorder_(recorder)
 		{ }
 
-		void OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
+		bool OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
 		{
 			if (!recorder_.IsDeviceToRecord(deviceId))
 			{
-				return;
+				return true;
 			}
 
 			InputRecording* recording = recorder_.GetRecording();
@@ -28,13 +28,15 @@ namespace
 			GAINPUT_ASSERT(manager_.GetTime() >= recorder_.GetStartTime());
 			const uint64_t time = manager_.GetTime() - recorder_.GetStartTime();
 			recording->AddChange(time, deviceId, deviceButton, newValue);
+
+			return true;
 		}
 
-		void OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
+		bool OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
 		{
 			if (!recorder_.IsDeviceToRecord(deviceId))
 			{
-				return;
+				return true;
 			}
 
 			InputRecording* recording = recorder_.GetRecording();
@@ -42,6 +44,8 @@ namespace
 			GAINPUT_ASSERT(manager_.GetTime() >= recorder_.GetStartTime());
 			const uint64_t time = manager_.GetTime() - recorder_.GetStartTime();
 			recording->AddChange(time, deviceId, deviceButton, newValue);
+
+			return true;
 		}
 
 	private:

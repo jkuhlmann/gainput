@@ -129,6 +129,13 @@ public:
 	ListenerId AddListener(InputListener* listener);
 	/// De-registers the given listener.
 	void RemoveListener(ListenerId listenerId);
+	/// Sorts the list of listeners which controls the order in which listeners are called.
+	/**
+	 * The order of listeners may be important as the functions being called to notify a listener of a state change can control if
+	 * the state change will be passed to any consequent listeners. Call this function whenever listener priorites have changed. It
+	 * is automatically called by AddListener() and RemoveListener().
+	 */
+	void ReorderListeners();
 
 	/// Checks if any button on any device is down.
 	/**
@@ -163,6 +170,7 @@ private:
 
 	HashMap<ListenerId, InputListener*> listeners_;
 	unsigned nextListenerId_;
+	Array<InputListener*> sortedListeners_;
 
 	HashMap<ModifierId, DeviceStateModifier*> modifiers_;
 	unsigned nextModifierId_;

@@ -18,20 +18,22 @@ class MyDeviceButtonListener : public gainput::InputListener
 public:
 	MyDeviceButtonListener(gainput::InputManager& manager) : manager(manager) { }
 
-	void OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	bool OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
 	{
 		const gainput::InputDevice* device = manager.GetDevice(deviceId);
 		char buttonName[64];
 		device->GetButtonName(deviceButton, buttonName, 64);
 		SFW_LOG("Device %d (%s%d) bool button (%d/%s) changed: %d -> %d\n", deviceId, device->GetTypeName(), device->GetIndex(), deviceButton, buttonName, oldValue, newValue);
+		return true;
 	}
 
-	void OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
+	bool OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
 	{
 		const gainput::InputDevice* device = manager.GetDevice(deviceId);
 		char buttonName[64];
 		device->GetButtonName(deviceButton, buttonName, 64);
 		SFW_LOG("Device %d (%s%d) float button (%d/%s) changed: %f -> %f\n", deviceId, device->GetTypeName(), device->GetIndex(), deviceButton, buttonName, oldValue, newValue);
+		return true;
 	}
 
 private:

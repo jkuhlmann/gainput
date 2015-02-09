@@ -148,6 +148,13 @@ public:
 	ListenerId AddListener(MappedInputListener* listener);
 	/// De-registers the given listener.
 	void RemoveListener(ListenerId listenerId);
+	/// Sorts the list of listeners which controls the order in which listeners are called.
+	/**
+	 * The order of listeners may be important as the functions being called to notify a listener of a state change can control if
+	 * the state change will be passed to any consequent listeners. Call this function whenever listener priorites have changed. It
+	 * is automatically called by AddListener() and RemoveListener().
+	 */
+	void ReorderListeners();
 
 private:
 	InputManager& manager_;
@@ -160,6 +167,7 @@ private:
 	UserButtonId nextUserButtonId_;
 
 	HashMap<ListenerId, MappedInputListener*> listeners_;
+	Array<MappedInputListener*> sortedListeners_;
 	unsigned nextListenerId_;
 	InputListener* managerListener_;
 	ListenerId managerListenerId_;
