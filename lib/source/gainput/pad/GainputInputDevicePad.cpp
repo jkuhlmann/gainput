@@ -12,6 +12,8 @@
 	#include "GainputInputDevicePadWin.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	#include "GainputInputDevicePadAndroid.h"
+#elif defined(GAINPUT_PLATFORM_IOS)
+	#include "GainputInputDevicePadIos.h"
 #endif
 
 namespace gainput
@@ -123,6 +125,8 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, DeviceVar
 	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, device, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, device, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_IOS)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, device, index_, *state_, *previousState_);
 #endif
 	GAINPUT_ASSERT(impl_);
 }
@@ -181,7 +185,6 @@ InputDevicePad::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t 
 ButtonType
 InputDevicePad::GetButtonType(DeviceButtonId deviceButton) const
 {
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	return deviceButtonInfos[deviceButton].type;
 }
 
