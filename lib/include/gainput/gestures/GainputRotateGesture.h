@@ -33,7 +33,7 @@ class GAINPUT_LIBEXPORT RotateGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	RotateGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
+	RotateGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~RotateGesture();
 

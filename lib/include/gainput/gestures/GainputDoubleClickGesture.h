@@ -33,7 +33,7 @@ class GAINPUT_LIBEXPORT DoubleClickGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	DoubleClickGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
+	DoubleClickGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~DoubleClickGesture();
 

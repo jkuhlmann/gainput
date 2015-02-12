@@ -24,8 +24,8 @@ const unsigned TouchDataElems = 4;
 class MultiTouchEmulator : public gainput::InputDevice
 {
 public:
-	MultiTouchEmulator(gainput::InputManager& manager, gainput::DeviceId device, gainput::InputDevice::DeviceVariant variant) : 
-		gainput::InputDevice(manager, device, manager.GetDeviceCountByType(DT_CUSTOM))
+	MultiTouchEmulator(gainput::InputManager& manager, gainput::DeviceId device, unsigned index, gainput::InputDevice::DeviceVariant variant) : 
+		gainput::InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_CUSTOM) : 0)
 	{
 		state_ = manager.GetAllocator().New<gainput::InputState>(manager.GetAllocator(), TouchPointCount*TouchDataElems);
 		GAINPUT_ASSERT(state_);

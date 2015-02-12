@@ -22,8 +22,8 @@ namespace gainput
 {
 
 
-InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_MOUSE)),
+InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+	InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_MOUSE) : index),
 	impl_(0)
 {
 	state_ = manager.GetAllocator().New<InputState>(manager.GetAllocator(), MouseButtonCount + MouseAxisCount);

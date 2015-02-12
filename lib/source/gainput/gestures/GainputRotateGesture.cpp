@@ -12,8 +12,8 @@
 namespace gainput
 {
 
-RotateGesture::RotateGesture(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputGesture(manager, device),
+RotateGesture::RotateGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+	InputGesture(manager, device, index),
 	rotating_(false)
 {
 	downButton_.buttonId = InvalidDeviceButtonId;

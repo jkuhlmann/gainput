@@ -62,6 +62,8 @@ public:
 		DS_UNAVAILABLE		///< The input device is currently not available.
 	};
 
+	static const unsigned AutoIndex = unsigned(-1);
+
 	/// Initializes the input device.
 	/**
 	 * Do not instantiate any input device directly. Call InputManager::CreateDevice() instead.

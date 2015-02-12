@@ -72,7 +72,7 @@ public:
 	 * instead. To determine what variant was instantiated, call InputDevice::GetVariant().
 	 * \return The ID of the newly created input device.
 	 */
-	template<class T> DeviceId CreateDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
+	template<class T> DeviceId CreateDevice(unsigned index = InputDevice::AutoIndex, InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
 	/// Creates an input device, registers it with the manager and returns it.
 	/**
 	 * \tparam T The input device class, muste be derived from InputDevice.
@@ -81,7 +81,7 @@ public:
 	 * instead. To determine what variant was instantiated, call InputDevice::GetVariant().
 	 * \return The newly created input device.
 	 */
-	template<class T> T* CreateAndGetDevice(InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
+	template<class T> T* CreateAndGetDevice(unsigned index = InputDevice::AutoIndex, InputDevice::DeviceVariant variant = InputDevice::DV_STANDARD);
 	/// Returns the input device with the given ID.
 	/**
 	 * \return The input device or 0 if it doesn't exist.
@@ -192,9 +192,9 @@ private:
 template<class T>
 inline
 DeviceId
-InputManager::CreateDevice(InputDevice::DeviceVariant variant)
+InputManager::CreateDevice(unsigned index, InputDevice::DeviceVariant variant)
 {
-	T* device = allocator_.New<T>(*this, nextDeviceId_, variant);
+	T* device = allocator_.New<T>(*this, nextDeviceId_, index, variant);
 	devices_[nextDeviceId_] = device;
 	DeviceCreated(device);
 	return nextDeviceId_++;
@@ -203,9 +203,9 @@ InputManager::CreateDevice(InputDevice::DeviceVariant variant)
 template<class T>
 inline
 T*
-InputManager::CreateAndGetDevice(InputDevice::DeviceVariant variant)
+InputManager::CreateAndGetDevice(unsigned index, InputDevice::DeviceVariant variant)
 {
-	T* device = allocator_.New<T>(*this, nextDeviceId_, variant);
+	T* device = allocator_.New<T>(*this, nextDeviceId_, index, variant);
 	devices_[nextDeviceId_] = device;
 	++nextDeviceId_;
 	DeviceCreated(device);

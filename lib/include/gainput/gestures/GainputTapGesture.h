@@ -31,7 +31,7 @@ class GAINPUT_LIBEXPORT TapGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	TapGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
+	TapGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~TapGesture();
 

@@ -48,7 +48,7 @@ public:
 
 protected:
 	/// Gesture base constructor.
-	InputGesture(InputManager& manager, DeviceId device) : InputDevice(manager, device, manager.GetDeviceCountByType(DT_GESTURE)) { }
+	InputGesture(InputManager& manager, DeviceId device, unsigned index) : InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_GESTURE) : 0) { }
 
 	DeviceState InternalGetState() const { return DS_OK; }
 

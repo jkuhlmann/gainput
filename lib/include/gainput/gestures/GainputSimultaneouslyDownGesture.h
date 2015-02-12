@@ -32,7 +32,7 @@ class GAINPUT_LIBEXPORT SimultaneouslyDownGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	SimultaneouslyDownGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
+	SimultaneouslyDownGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~SimultaneouslyDownGesture();
 

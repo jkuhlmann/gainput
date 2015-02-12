@@ -18,7 +18,7 @@ class GAINPUT_LIBEXPORT ButtonStickGesture : public InputGesture
 {
 public:
 	/// Initializes the gesture.
-	ButtonStickGesture(InputManager& manager, DeviceId device, DeviceVariant variant);
+	ButtonStickGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Uninitializes the gesture.
 	~ButtonStickGesture();
 

@@ -25,8 +25,8 @@
 namespace gainput
 {
 
-InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputDevice(manager, device, manager.GetDeviceCountByType(DT_KEYBOARD)),
+InputDeviceKeyboard::InputDeviceKeyboard(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+	InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_KEYBOARD): index),
 	impl_(0),
 	keyNames_(manager_.GetAllocator())
 {

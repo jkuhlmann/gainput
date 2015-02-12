@@ -118,7 +118,7 @@ public:
 	 * \param manager The input manager this device is managed by.
 	 * \param device The ID of this device.
 	 */
-	InputDevicePad(InputManager& manager, DeviceId device, DeviceVariant variant);
+	InputDevicePad(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant);
 	/// Shuts down the device.
 	~InputDevicePad();
 

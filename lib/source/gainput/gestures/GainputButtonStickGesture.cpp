@@ -9,8 +9,8 @@
 namespace gainput
 {
 
-ButtonStickGesture::ButtonStickGesture(InputManager& manager, DeviceId device, DeviceVariant variant) :
-	InputGesture(manager, device)
+ButtonStickGesture::ButtonStickGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+	InputGesture(manager, device, index)
 {
 	negativeAxis_.buttonId = InvalidDeviceButtonId;
 	positiveAxis_.buttonId = InvalidDeviceButtonId;
