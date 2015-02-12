@@ -205,7 +205,6 @@ InputDevice::GetBool(DeviceButtonId deviceButton) const
 	{
 		return false;
 	}
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	GAINPUT_ASSERT(state_);
 	return state_->GetBool(deviceButton);
 }
@@ -218,7 +217,6 @@ InputDevice::GetBoolPrevious(DeviceButtonId deviceButton) const
 	{
 		return false;
 	}
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	GAINPUT_ASSERT(previousState_);
 	return previousState_->GetBool(deviceButton);
 }
@@ -231,7 +229,6 @@ InputDevice::GetFloat(DeviceButtonId deviceButton) const
 	{
 		return 0.0f;
 	}
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	GAINPUT_ASSERT(state_);
 	return state_->GetFloat(deviceButton);
 }
@@ -244,7 +241,6 @@ InputDevice::GetFloatPrevious(DeviceButtonId deviceButton) const
 	{
 		return 0.0f;
 	}
-	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	GAINPUT_ASSERT(previousState_);
 	return previousState_->GetFloat(deviceButton);
 }
