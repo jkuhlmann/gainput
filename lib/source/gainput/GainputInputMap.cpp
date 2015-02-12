@@ -345,7 +345,10 @@ InputMap::GetFloatState(UserButtonId userButton, bool previous) const
 			}
 			else if (ub->policy == UBP_MAX)
 			{
-				value = Max(value, deviceValue);
+				if (Abs(deviceValue) > Abs(value))
+				{
+					value = deviceValue;
+				}
 			}
 			else if (ub->policy == UBP_MIN)
 			{
@@ -355,7 +358,10 @@ InputMap::GetFloatState(UserButtonId userButton, bool previous) const
 				}
 				else
 				{
-					value = Min(value, deviceValue);
+					if (Abs(deviceValue) < Abs(value))
+					{
+						value = deviceValue;
+					}
 				}
 			}
 			else if (ub->policy == UBP_AVERAGE)
