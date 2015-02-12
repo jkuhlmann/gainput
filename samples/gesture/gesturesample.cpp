@@ -178,7 +178,7 @@ void SampleMain()
 			mouseId, gainput::MouseAxisX,
 			mouseId, gainput::MouseAxisY);
 
-	if (!touchDevice->IsAvailable())
+	if (!touchDevice->IsAvailable() || touchDevice->GetVariant() == gainput::InputDevice::DV_NULL)
 	{
 		touchId = mte->GetDeviceId();
 	}
