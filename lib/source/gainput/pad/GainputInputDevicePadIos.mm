@@ -114,6 +114,7 @@ void InputDevicePadImplIos::Update(InputDeltaState* delta)
 			deviceState_ = InputDevice::DS_UNAVAILABLE;
 			isExtended_ = false;
 			supportsMotion_ = false;
+			return;
 		}
 
 		deviceState_ = InputDevice::DS_OK;
