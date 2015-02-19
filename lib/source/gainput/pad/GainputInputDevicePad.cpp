@@ -16,6 +16,8 @@
 	#include "GainputInputDevicePadIos.h"
 #endif
 
+#include "GainputInputDevicePadNull.h"
+
 namespace gainput
 {
 
@@ -131,6 +133,12 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 #elif defined(GAINPUT_PLATFORM_IOS)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, device, index_, *state_, *previousState_);
 #endif
+
+	if (!impl_)
+	{
+		impl_ = manager.GetAllocator().New<InputDevicePadImplNull>(manager, device, index_, *state_, *previousState_);
+	}
+
 	GAINPUT_ASSERT(impl_);
 }
 
