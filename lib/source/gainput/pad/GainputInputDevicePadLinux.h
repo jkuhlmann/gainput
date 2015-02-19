@@ -78,7 +78,6 @@ public:
 			event.type &= ~JS_EVENT_INIT;
 			if (event.type == JS_EVENT_AXIS)
 			{
-				GAINPUT_ASSERT(event.number >= PadButtonLeftStickX);
 				GAINPUT_ASSERT(event.number < PadButtonAxisCount_);
 				DeviceButtonId buttonId = event.number;
 
@@ -106,7 +105,6 @@ public:
 			}
 			else if (event.type == JS_EVENT_BUTTON)
 			{
-				GAINPUT_ASSERT(event.number >= 0);
 				GAINPUT_ASSERT(event.number < PadButtonCount_);
 				if (buttonDialect_.count(event.number))
 				{
@@ -146,7 +144,7 @@ public:
 	{
 		if (buttonDialect_.empty())
 		{
-			return deviceButton >= PadButtonLeftStickX && deviceButton < PadButtonMax_;
+			return deviceButton < PadButtonMax_;
 		}
 
 		for (HashMap<unsigned, DeviceButtonId>::const_iterator it = buttonDialect_.begin();

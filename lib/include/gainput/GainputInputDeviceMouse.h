@@ -75,7 +75,7 @@ public:
 	DeviceType GetType() const { return DT_MOUSE; }
 	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "mouse"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton >= MouseButton0 && deviceButton < MouseButtonCount_; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton < MouseButtonCount_; }
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
