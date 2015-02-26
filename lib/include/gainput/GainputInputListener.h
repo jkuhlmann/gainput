@@ -9,6 +9,8 @@ namespace gainput
 class GAINPUT_LIBEXPORT InputListener
 {
 public:
+	virtual ~InputListener() { }
+
 	/// Called when a bool-type button state changes.
 	/**
 	 * \param device The input device's ID the state change occurred on.
@@ -41,6 +43,8 @@ public:
 class GAINPUT_LIBEXPORT MappedInputListener
 {
 public:
+	virtual ~MappedInputListener() { }
+
 	/// Called when a bool-type button state changes.
 	/**
 	 * \param userButton The user button's ID.
