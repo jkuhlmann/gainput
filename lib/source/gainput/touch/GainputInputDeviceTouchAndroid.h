@@ -18,6 +18,7 @@ public:
 		device_(device),
 		state_(&state),
 		previousState_(&previousState),
+		nextState_(manager.GetAllocator(), TouchPointCount*TouchDataElems),
 		delta_(0)
 	{
 	}
@@ -30,6 +31,7 @@ public:
 	void Update(InputDeltaState* delta)
 	{
 		delta_ = delta;
+		*state_ = nextState_;
 	}
 
 	InputDevice::DeviceState GetState() const { return InputDevice::DS_OK; }
@@ -88,15 +90,16 @@ private:
 	DeviceId device_;
 	InputState* state_;
 	InputState* previousState_;
+	InputState nextState_;
 	InputDeltaState* delta_;
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{
-		state_->Set(buttonId, value);
+		nextState_.Set(buttonId, value);
 
 		if (delta_)
 		{
-			const bool oldValue = previousState_->GetBool(buttonId);
+			const bool oldValue = nextState_.GetBool(buttonId);
 			if (value != oldValue)
 			{
 				delta_->AddChange(device_, buttonId, oldValue, value);
@@ -106,16 +109,16 @@ private:
 
 	void HandleFloat(DeviceButtonId buttonId, float value)
 	{
-		if (value < -1.0f) // Because theoretical min value is -32768
+		if (value < -1.0f)
 		{
 			value = -1.0f;
 		}
 
-		state_->Set(buttonId, value);
+		nextState_.Set(buttonId, value);
 
 		if (delta_)
 		{
-			const float oldValue = previousState_->GetFloat(buttonId);
+			const float oldValue = nextState_.GetFloat(buttonId);
 			if (value != oldValue)
 			{
 				delta_->AddChange(device_, buttonId, oldValue, value);

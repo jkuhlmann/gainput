@@ -120,29 +120,25 @@ private:
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{
+		const bool oldValue = nextState_.GetBool(buttonId);
+
 		nextState_.Set(buttonId, value);
 
-		if (delta_)
+		if (delta_ && value != oldValue)
 		{
-			const bool oldValue = previousState_->GetBool(buttonId);
-			if (value != oldValue)
-			{
-				delta_->AddChange(device_, buttonId, oldValue, value);
-			}
+			delta_->AddChange(device_, buttonId, oldValue, value);
 		}
 	}
 
 	void HandleFloat(DeviceButtonId buttonId, float value)
 	{
+		const float oldValue = nextState_.GetFloat(buttonId);
+
 		nextState_.Set(buttonId, value);
 
-		if (delta_)
+		if (delta_ && value != oldValue)
 		{
-			const float oldValue = previousState_->GetFloat(buttonId);
-			if (value != oldValue)
-			{
-				delta_->AddChange(device_, buttonId, oldValue, value);
-			}
+			delta_->AddChange(device_, buttonId, oldValue, value);
 		}
 	}
 };
