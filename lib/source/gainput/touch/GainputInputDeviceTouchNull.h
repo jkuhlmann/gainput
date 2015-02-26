@@ -28,9 +28,6 @@ public:
 private:
 	InputManager& manager_;
 	DeviceId device_;
-
-	void HandleBool(DeviceButtonId buttonId, bool value);
-	void HandleFloat(DeviceButtonId buttonId, float value);
 };
 
 }

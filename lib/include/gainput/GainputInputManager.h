@@ -53,6 +53,7 @@ public:
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	/// [ANDROID ONLY] Lets the InputManager handle the given input event.
 	int32_t HandleInput(AInputEvent* event);
+	void HandleTouchInput(int id, int action, int x, int y);
 #endif
 
 	/// Updates the input state, call this every frame.

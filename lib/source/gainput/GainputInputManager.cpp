@@ -22,6 +22,8 @@
 #include <mach/clock.h>
 #endif
 
+#include <stdlib.h>
+
 #include "dev/GainputDev.h"
 
 
@@ -376,6 +378,29 @@ InputManager::HandleInput(AInputEvent* event)
 		}
 	}
 	return handled;
+}
+
+void
+InputManager::HandleTouchInput(int id, int action, int x, int y)
+{
+	for (DeviceMap::const_iterator it = devices_.begin();
+			it != devices_.end();
+			++it)
+	{
+#if defined(GAINPUT_DEV)
+		if (it->second->IsSynced())
+		{
+			continue;
+		}
+#endif
+		if (it->second->GetType() == InputDevice::DT_TOUCH)
+		{
+			InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);
+			InputDeviceTouchImplAndroid* touchImpl = static_cast<InputDeviceTouchImplAndroid*>(touch->GetPimpl());
+			GAINPUT_ASSERT(touchImpl);
+			touchImpl->HandleInput(id, action, x, y);
+		}
+	}
 }
 #endif
 
