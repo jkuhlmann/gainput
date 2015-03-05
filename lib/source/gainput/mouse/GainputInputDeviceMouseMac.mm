@@ -94,6 +94,8 @@ InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, DeviceId
 		| CGEventMaskBit(kCGEventOtherMouseDown)
 		| CGEventMaskBit(kCGEventOtherMouseUp)
 		| CGEventMaskBit(kCGEventMouseMoved)
+		| CGEventMaskBit(kCGEventLeftMouseDragged)
+		| CGEventMaskBit(kCGEventRightMouseDragged)
 		;
 
 	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap,
