@@ -16,8 +16,6 @@ namespace gainput
 		}
 #endif
 
-		state.Set(buttonId, value);
-
 		if (delta)
 		{
 			const bool oldValue = state.GetBool(buttonId);
@@ -26,12 +24,12 @@ namespace gainput
 				delta->AddChange(device, buttonId, oldValue, value);
 			}
 		}
+
+		state.Set(buttonId, value);
 	}
 
 	inline void HandleAxis(DeviceId device, InputState& state, InputState& previousState, InputDeltaState* delta, DeviceButtonId buttonId, float value)
 	{
-		state.Set(buttonId, value);
-		
 #ifdef GAINPUT_DEBUG
 		if (value != state.GetFloat(buttonId))
 		{
@@ -47,6 +45,8 @@ namespace gainput
 				delta->AddChange(device, buttonId, oldValue, value);
 			}
 		}
+
+		state.Set(buttonId, value);
 	}
 
 }
