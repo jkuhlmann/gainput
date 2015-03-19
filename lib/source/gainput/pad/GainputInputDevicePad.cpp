@@ -1,5 +1,6 @@
 
 #include <gainput/gainput.h>
+#include <gainput/GainputDebugRenderer.h>
 
 #include "GainputInputDevicePadImpl.h"
 #include "../GainputInputDeltaState.h"
@@ -153,6 +154,40 @@ void
 InputDevicePad::InternalUpdate(InputDeltaState* delta)
 {
 	impl_->Update(delta);
+
+	if (manager_.IsDebugRenderingEnabled() && manager_.GetDebugRenderer())
+	{
+		DebugRenderer* debugRenderer = manager_.GetDebugRenderer();
+		InputState* state = GetInputState();
+		char buf[64];
+		float x = 0.4f;
+		float y = 0.2f;
+		for (int i = PadButtonStart; i < PadButtonMax_; ++i)
+		{
+			if (state->GetBool(i))
+			{
+				GetButtonName(i, buf, 64);
+				debugRenderer->DrawText(x, y, buf);
+				y += 0.025f;
+			}
+		}
+
+		x = 0.8f;
+		y = 0.2f;
+		const float circleRadius = 0.1f;
+		debugRenderer->DrawCircle(x, y, 0.01f);
+		debugRenderer->DrawCircle(x, y, circleRadius);
+		float dirX = state->GetFloat(PadButtonLeftStickX) * circleRadius;
+		float dirY = state->GetFloat(PadButtonLeftStickY) * circleRadius;
+		debugRenderer->DrawLine(x, y, x + dirX, y + dirY);
+
+		y = 0.6f;
+		debugRenderer->DrawCircle(x, y, 0.01f);
+		debugRenderer->DrawCircle(x, y, circleRadius);
+		dirX = state->GetFloat(PadButtonRightStickX) * circleRadius;
+		dirY = state->GetFloat(PadButtonRightStickY) * circleRadius;
+		debugRenderer->DrawLine(x, y, x + dirX, y + dirY);
+	}
 }
 
 InputDevice::DeviceState

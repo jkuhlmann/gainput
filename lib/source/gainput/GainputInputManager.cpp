@@ -41,7 +41,9 @@ InputManager::InputManager(Allocator& allocator) :
 		nextModifierId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_)),
 		displayWidth_(-1),
-		displayHeight_(-1)
+		displayHeight_(-1),
+		debugRenderingEnabled_(false),
+		debugRenderer_(0)
 {
 	GAINPUT_DEV_INIT(this);
 }
@@ -416,6 +418,22 @@ InputManager::StartDeviceStateSync(DeviceId deviceId)
 	GAINPUT_ASSERT(GetDevice(deviceId));
 	GAINPUT_ASSERT(GetDevice(deviceId)->GetType() != InputDevice::DT_GESTURE);
 	GAINPUT_DEV_START_SYNC(deviceId);
+}
+
+void
+InputManager::SetDebugRenderingEnabled(bool enabled)
+{
+	debugRenderingEnabled_ = enabled;
+	if (enabled)
+	{
+		GAINPUT_ASSERT(debugRenderer_);
+	}
+}
+
+void
+InputManager::SetDebugRenderer(DebugRenderer* debugRenderer)
+{
+	debugRenderer_ = debugRenderer;
 }
 
 }

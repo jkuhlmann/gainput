@@ -1,5 +1,6 @@
 
 #include <gainput/gainput.h>
+#include <gainput/GainputDebugRenderer.h>
 
 #include "GainputInputDeviceTouchImpl.h"
 #include "GainputTouchInfo.h"
@@ -57,6 +58,22 @@ void
 InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 {
 	impl_->Update(delta);
+
+	if (manager_.IsDebugRenderingEnabled() && manager_.GetDebugRenderer())
+	{
+		DebugRenderer* debugRenderer = manager_.GetDebugRenderer();
+		InputState* state = GetInputState();
+
+		for (int i = 0; i < TouchPointCount; ++i)
+		{
+			if (state->GetBool(Touch0Down + i*4))
+			{
+				const float x = state->GetFloat(Touch0X + i*4);
+				const float y = state->GetFloat(Touch0Y + i*4);
+				debugRenderer->DrawCircle(x, y, 0.03f);
+			}
+		}
+	}
 }
 
 InputDevice::DeviceState

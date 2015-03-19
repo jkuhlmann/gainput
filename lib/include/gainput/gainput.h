@@ -123,6 +123,7 @@ const char* GetLibVersionString();
 class InputDeltaState;
 class InputListener;
 class InputManager;
+class DebugRenderer;
 class DeviceStateModifier;
 
 template <class T> T Abs(T a) { return a < T() ? -a : a; }

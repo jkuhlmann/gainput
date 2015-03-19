@@ -1,5 +1,6 @@
 
 #include <gainput/gainput.h>
+#include <gainput/GainputDebugRenderer.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
 #include "GainputKeyboardKeyNames.h"
@@ -80,6 +81,24 @@ void
 InputDeviceKeyboard::InternalUpdate(InputDeltaState* delta)
 {
 	impl_->Update(delta);
+
+	if (manager_.IsDebugRenderingEnabled() && manager_.GetDebugRenderer())
+	{
+		DebugRenderer* debugRenderer = manager_.GetDebugRenderer();
+		InputState* state = GetInputState();
+		char buf[64];
+		const float x = 0.2f;
+		float y = 0.2f;
+		for (int i = 0; i < KeyCount_; ++i)
+		{
+			if (state->GetBool(i))
+			{
+				GetButtonName(i, buf, 64);
+				debugRenderer->DrawText(x, y, buf);
+				y += 0.025f;
+			}
+		}
+	}
 }
 
 InputDevice::DeviceState
