@@ -213,19 +213,20 @@ public:
 			if (dialect_.count(keySym))
 			{
 				const DeviceButtonId buttonId = dialect_[keySym];
-				nextState_.Set(buttonId, pressed);
 #ifdef GAINPUT_DEBUG
 				GAINPUT_LOG("buttonId: %d, pressed: %d\n", buttonId, pressed);
 #endif
 
 				if (delta_)
 				{
-					const bool oldValue = previousState_->GetBool(buttonId);
+					const bool oldValue = nextState_.GetBool(buttonId);
 					if (oldValue != pressed)
 					{
 						delta_->AddChange(device_, buttonId, oldValue, pressed);
 					}
 				}
+
+				nextState_.Set(buttonId, pressed);
 			}
 #ifdef GAINPUT_DEBUG
 			else

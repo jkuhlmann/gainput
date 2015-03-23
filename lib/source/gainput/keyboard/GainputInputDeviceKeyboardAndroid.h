@@ -166,17 +166,17 @@ public:
 #ifdef GAINPUT_DEBUG
 			GAINPUT_LOG("%d --> %d: %d\n", keyCode, buttonId, pressed);
 #endif
-			state_->Set(buttonId, pressed);
-
 			if (delta_)
 			{
 				GAINPUT_ASSERT(previousState_);
-				const bool oldValue = previousState_->GetBool(buttonId);
+				const bool oldValue = state_->GetBool(buttonId);
 				if (oldValue != pressed)
 				{
 					delta_->AddChange(device_, buttonId, oldValue, pressed);
 				}
 			}
+
+			state_->Set(buttonId, pressed);
 
 			return 1;
 		}

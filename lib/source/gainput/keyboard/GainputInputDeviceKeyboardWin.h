@@ -259,16 +259,16 @@ public:
 #ifdef GAINPUT_DEBUG
 			GAINPUT_LOG(" --> Mapped to: %d\n", buttonId);
 #endif
-			nextState_.Set(buttonId, pressed);
-
 			if (delta_)
 			{
-				const bool oldValue = previousState_->GetBool(buttonId);
+				const bool oldValue = nextState_.GetBool(buttonId);
 				if (oldValue != pressed)
 				{
 					delta_->AddChange(device_, buttonId, oldValue, pressed);
 				}
 			}
+
+			nextState_.Set(buttonId, pressed);
 		}
 	}
 

@@ -64,7 +64,7 @@ InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 		DebugRenderer* debugRenderer = manager_.GetDebugRenderer();
 		InputState* state = GetInputState();
 
-		for (int i = 0; i < TouchPointCount; ++i)
+		for (unsigned i = 0; i < TouchPointCount; ++i)
 		{
 			if (state->GetBool(Touch0Down + i*4))
 			{

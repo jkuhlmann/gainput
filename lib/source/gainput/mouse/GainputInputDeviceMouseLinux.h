@@ -82,13 +82,11 @@ public:
 				const XMotionEvent& motionEvent = event.xmotion;
 				const float x = float(motionEvent.x)/float(manager_.GetDisplayWidth());
 				const float y = float(motionEvent.y)/float(manager_.GetDisplayHeight());
-				nextState_.Set(MouseAxisX, x);
-				nextState_.Set(MouseAxisY, y);
 
 				if (delta_)
 				{
-					const float oldX = previousState_->GetFloat(MouseAxisX);
-					const float oldY = previousState_->GetFloat(MouseAxisY);
+					const float oldX = nextState_.GetFloat(MouseAxisX);
+					const float oldY = nextState_.GetFloat(MouseAxisY);
 					if (oldX != x)
 					{
 						delta_->AddChange(device_, MouseAxisX, oldX, x);
@@ -98,6 +96,9 @@ public:
 						delta_->AddChange(device_, MouseAxisY, oldY, y);
 					}
 				}
+
+				nextState_.Set(MouseAxisX, x);
+				nextState_.Set(MouseAxisY, y);
 				break;
 			}
 		case ButtonPress:
@@ -116,20 +117,20 @@ public:
 				}
 				else if (buttonEvent.button < MouseButtonCount)
 				{
-					nextState_.Set(buttonId, pressed);
-
-#ifdef GAINPUT_DEBUG
-					GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
-#endif
-
 					if (delta_)
 					{
-						const bool oldValue = previousState_->GetBool(buttonId);
+						const bool oldValue = nextState_.GetBool(buttonId);
 						if (oldValue != pressed)
 						{
 							delta_->AddChange(device_, buttonId, oldValue, pressed);
 						}
 					}
+
+					nextState_.Set(buttonId, pressed);
+
+#ifdef GAINPUT_DEBUG
+					GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
+#endif
 				}
 
 				if (pressed)
