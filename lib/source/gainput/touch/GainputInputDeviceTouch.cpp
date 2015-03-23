@@ -59,7 +59,8 @@ InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 {
 	impl_->Update(delta);
 
-	if (manager_.IsDebugRenderingEnabled() && manager_.GetDebugRenderer())
+	if ((manager_.IsDebugRenderingEnabled() || IsDebugRenderingEnabled())
+		&& manager_.GetDebugRenderer())
 	{
 		DebugRenderer* debugRenderer = manager_.GetDebugRenderer();
 		InputState* state = GetInputState();

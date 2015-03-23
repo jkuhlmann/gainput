@@ -142,6 +142,11 @@ public:
 	/// Returns the device's previous state, probably best if only used internally.
 	InputState* GetPreviousInputState() { return previousState_; }
 
+	/// Enable/disable debug rendering of this device.
+	void SetDebugRenderingEnabled(bool enabled);
+	/// Returns true if debug rendering is enabled, false otherwise.
+	bool IsDebugRenderingEnabled() const { return debugRenderingEnabled_; }
+
 #if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	/// Returns true if this device is being controlled by a remote device 
 	/// or a recorded input sequence, false otherwise.
@@ -167,6 +172,9 @@ protected:
 	InputState* state_;
 	/// The previous state of this device.
 	InputState* previousState_;
+
+	/// Specifies if this device is currently rendering debug information.
+	bool debugRenderingEnabled_;
 
 #if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	/// Specifies if this device's state is actually set from a device

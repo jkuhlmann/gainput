@@ -8,7 +8,8 @@ namespace gainput
 InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index) :
 	manager_(manager),
 	deviceId_(device),
-	index_(index)
+	index_(index),
+	debugRenderingEnabled_(false)
 #if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	, synced_(false)
 #endif
@@ -38,6 +39,12 @@ InputDevice::GetState() const
 	}
 #endif
 	return InternalGetState();
+}
+
+void
+InputDevice::SetDebugRenderingEnabled(bool enabled)
+{
+	debugRenderingEnabled_ = enabled;
 }
 
 size_t
