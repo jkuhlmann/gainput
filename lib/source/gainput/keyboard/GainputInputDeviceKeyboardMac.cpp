@@ -18,10 +18,17 @@
 namespace gainput
 {
 
+extern bool MacIsApplicationKey();
+
 namespace {
 
 static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IOHIDValueRef value)
 {
+	if (!MacIsApplicationKey())
+	{
+		return;
+	}
+
 	IOHIDElementRef elem = IOHIDValueGetElement(value);
 
 	InputDeviceKeyboardImplMac* device = reinterpret_cast<InputDeviceKeyboardImplMac*>(inContext);
