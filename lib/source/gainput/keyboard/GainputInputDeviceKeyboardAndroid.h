@@ -162,22 +162,7 @@ public:
 		if (dialect_.count(keyCode))
 		{
 			const DeviceButtonId buttonId = dialect_[keyCode];
-
-#ifdef GAINPUT_DEBUG
-			GAINPUT_LOG("%d --> %d: %d\n", keyCode, buttonId, pressed);
-#endif
-			if (delta_)
-			{
-				GAINPUT_ASSERT(previousState_);
-				const bool oldValue = state_->GetBool(buttonId);
-				if (oldValue != pressed)
-				{
-					delta_->AddChange(device_, buttonId, oldValue, pressed);
-				}
-			}
-
-			state_->Set(buttonId, pressed);
-
+			HandleButton(device_, *state_, *previousState_, delta_, buttonId, pressed);
 			return 1;
 		}
 

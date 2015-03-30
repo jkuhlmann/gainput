@@ -8,6 +8,7 @@
 #include <Windowsx.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -256,19 +257,7 @@ public:
 		if (dialect_.count(winKey))
 		{
 			const DeviceButtonId buttonId = dialect_[winKey];
-#ifdef GAINPUT_DEBUG
-			GAINPUT_LOG(" --> Mapped to: %d\n", buttonId);
-#endif
-			if (delta_)
-			{
-				const bool oldValue = nextState_.GetBool(buttonId);
-				if (oldValue != pressed)
-				{
-					delta_->AddChange(device_, buttonId, oldValue, pressed);
-				}
-			}
-
-			nextState_.Set(buttonId, pressed);
+			HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
 		}
 	}
 

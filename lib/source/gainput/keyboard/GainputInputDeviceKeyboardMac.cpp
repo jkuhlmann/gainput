@@ -53,20 +53,7 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 	if (device->dialect_.count(scancode))
 	{
 		const DeviceButtonId buttonId = device->dialect_[scancode];
-#ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("buttonId: %d, pressed: %d\n", buttonId, pressed);
-#endif
-
-		if (device->delta_)
-		{
-			const bool oldValue = device->nextState_.GetBool(buttonId);
-			if (oldValue != pressed)
-			{
-				device->delta_->AddChange(device->device_, buttonId, oldValue, pressed);
-			}
-		}
-
-		device->nextState_.Set(buttonId, pressed);
+		HandleButton(device->device_, device->nextState_, *device->previousState_, device->delta_, buttonId, pressed);
 	}
 #ifdef GAINPUT_DEBUG
 	else

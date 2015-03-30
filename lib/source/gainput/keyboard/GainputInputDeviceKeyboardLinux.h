@@ -7,6 +7,7 @@
 #include <X11/Xutil.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -213,20 +214,7 @@ public:
 			if (dialect_.count(keySym))
 			{
 				const DeviceButtonId buttonId = dialect_[keySym];
-#ifdef GAINPUT_DEBUG
-				GAINPUT_LOG("buttonId: %d, pressed: %d\n", buttonId, pressed);
-#endif
-
-				if (delta_)
-				{
-					const bool oldValue = nextState_.GetBool(buttonId);
-					if (oldValue != pressed)
-					{
-						delta_->AddChange(device_, buttonId, oldValue, pressed);
-					}
-				}
-
-				nextState_.Set(buttonId, pressed);
+				HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
 			}
 #ifdef GAINPUT_DEBUG
 			else

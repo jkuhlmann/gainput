@@ -5,6 +5,7 @@
 #include <X11/Xlib.h>
 
 #include "GainputInputDeviceMouseImpl.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -51,17 +52,7 @@ public:
 			if (isWheel_[i] && oldValue)
 			{
 				const bool pressed = false;
-				nextState_.Set(buttonId, pressed);
-#ifdef GAINPUT_DEBUG
-				GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
-#endif
-				if (delta_)
-				{
-					if (oldValue != pressed)
-					{
-						delta_->AddChange(device_, buttonId, oldValue, pressed);
-					}
-				}
+				HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
 			}
 		}
 
@@ -82,23 +73,8 @@ public:
 				const XMotionEvent& motionEvent = event.xmotion;
 				const float x = float(motionEvent.x)/float(manager_.GetDisplayWidth());
 				const float y = float(motionEvent.y)/float(manager_.GetDisplayHeight());
-
-				if (delta_)
-				{
-					const float oldX = nextState_.GetFloat(MouseAxisX);
-					const float oldY = nextState_.GetFloat(MouseAxisY);
-					if (oldX != x)
-					{
-						delta_->AddChange(device_, MouseAxisX, oldX, x);
-					}
-					if (oldY != y)
-					{
-						delta_->AddChange(device_, MouseAxisY, oldY, y);
-					}
-				}
-
-				nextState_.Set(MouseAxisX, x);
-				nextState_.Set(MouseAxisY, y);
+				HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, x);
+				HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, y);
 				break;
 			}
 		case ButtonPress:
@@ -117,20 +93,7 @@ public:
 				}
 				else if (buttonEvent.button < MouseButtonCount)
 				{
-					if (delta_)
-					{
-						const bool oldValue = nextState_.GetBool(buttonId);
-						if (oldValue != pressed)
-						{
-							delta_->AddChange(device_, buttonId, oldValue, pressed);
-						}
-					}
-
-					nextState_.Set(buttonId, pressed);
-
-#ifdef GAINPUT_DEBUG
-					GAINPUT_LOG("Button: %i, %d\n", buttonId, pressed);
-#endif
+					HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
 				}
 
 				if (pressed)

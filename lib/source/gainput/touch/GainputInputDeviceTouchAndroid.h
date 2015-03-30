@@ -6,6 +6,7 @@
 
 #include "GainputInputDeviceTouchImpl.h"
 #include "GainputTouchInfo.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
@@ -95,35 +96,12 @@ private:
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{
-		if (delta_)
-		{
-			const bool oldValue = nextState_.GetBool(buttonId);
-			if (value != oldValue)
-			{
-				delta_->AddChange(device_, buttonId, oldValue, value);
-			}
-		}
-
-		nextState_.Set(buttonId, value);
+		HandleButton(device_, nextState_, *previousState_, delta_, buttonId, value);
 	}
 
 	void HandleFloat(DeviceButtonId buttonId, float value)
 	{
-		if (value < -1.0f)
-		{
-			value = -1.0f;
-		}
-
-		if (delta_)
-		{
-			const float oldValue = nextState_.GetFloat(buttonId);
-			if (value != oldValue)
-			{
-				delta_->AddChange(device_, buttonId, oldValue, value);
-			}
-		}
-
-		nextState_.Set(buttonId, value);
+		HandleAxis(device_, nextState_, *previousState_, delta_, buttonId, value);
 	}
 };
 

@@ -36,22 +36,8 @@ public:
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
-		nextState_.Set(MouseButton3, false);
-		nextState_.Set(MouseButton4, false);
-
-		if (delta)
-		{
-			bool oldValue = previousState_->GetBool(MouseButton3);
-			if (oldValue)
-			{
-				delta->AddChange(device_, MouseButton3, oldValue, false);
-			}
-			oldValue = previousState_->GetBool(MouseButton4);
-			if (oldValue)
-			{
-				delta->AddChange(device_, MouseButton4, oldValue, false);
-			}
-		}
+		HandleButton(device_, nextState_, *previousState_, delta_, MouseButton3, false);
+		HandleButton(device_, nextState_, *previousState_, delta_, MouseButton4, false);
 
 		*state_ = nextState_;
 	}
@@ -128,44 +114,12 @@ public:
 		{
 			float x = float(ax)/float(manager_.GetDisplayWidth());
 			float y = float(ay)/float(manager_.GetDisplayHeight());
-
-			if (delta_)
-			{
-				const float oldX = nextState_.GetFloat(MouseAxisX);
-				const float oldY = nextState_.GetFloat(MouseAxisY);
-				if (oldX != x)
-				{
-					delta_->AddChange(device_, MouseAxisX, oldX, x);
-				}
-				if (oldY != y)
-				{
-					delta_->AddChange(device_, MouseAxisY, oldY, y);
-				}
-			}
-
-			nextState_.Set(MouseAxisX, x);
-			nextState_.Set(MouseAxisY, y);
-
-#ifdef GAINPUT_DEBUG
-			GAINPUT_LOG("Mouse: %f, %f\n", x, y);
-#endif
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, x);
+			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, y);
 		}
 		else
 		{
-			if (delta_)
-			{
-				const bool oldValue = nextState_.GetBool(buttonId);
-				if (oldValue != pressed)
-				{
-					delta_->AddChange(device_, buttonId, oldValue, pressed);
-				}
-			}
-
-			nextState_.Set(buttonId, pressed);
-
-#ifdef GAINPUT_DEBUG
-			GAINPUT_LOG("Button: %i: %i\n", buttonId, pressed);
-#endif
+			HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
 		}
 	}
 
