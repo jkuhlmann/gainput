@@ -5,10 +5,7 @@
 #include "GainputInputDeviceMouseImpl.h"
 #include "../GainputHelpers.h"
 
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <windows.h>
-#include <Windowsx.h>
+#include "../GainputWindows.h"
 
 #ifndef HID_USAGE_PAGE_GENERIC
 #define HID_USAGE_PAGE_GENERIC         ((USHORT) 0x01)

@@ -4,11 +4,8 @@
 
 // Cf. http://msdn.microsoft.com/en-us/library/windows/desktop/ee417005%28v=vs.85%29.aspx
 
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <windows.h>
+#include "../GainputWindows.h"
 #include <XInput.h>
-
 
 namespace gainput
 {

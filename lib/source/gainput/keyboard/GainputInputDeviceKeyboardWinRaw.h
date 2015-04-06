@@ -2,10 +2,7 @@
 #ifndef GAINPUTINPUTDEVICEKEYBOARDWINRAW_H_
 #define GAINPUTINPUTDEVICEKEYBOARDWINRAW_H_
 
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <windows.h>
-#include <Windowsx.h>
+#include "../GainputWindows.h"
 
 #include "GainputInputDeviceKeyboardImpl.h"
 #include "../GainputHelpers.h"
