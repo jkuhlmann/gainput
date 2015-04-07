@@ -78,7 +78,7 @@ public:
 	gainput::ButtonType GetButtonType(gainput::DeviceButtonId deviceButton) const
 	{
 		GAINPUT_ASSERT(IsValidButtonId(deviceButton));
-		return deviceButton == (gainput::Touch0Down || gainput::Touch1Down) ? gainput::BT_BOOL : gainput::BT_FLOAT;
+		return (deviceButton == gainput::Touch0Down || deviceButton == gainput::Touch1Down) ? gainput::BT_BOOL : gainput::BT_FLOAT;
 	}
 
 protected:
