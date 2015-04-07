@@ -32,7 +32,7 @@ def options(opt):
 
 def configure(cnf):
 	cnf.setenv('debug')
-	cnf.define('GAINPUT_LIB_BUILD', 1)
+	cnf.define('GAINPUT_LIB_DYNAMIC', 1)
 	cnf.define('DEBUG', 1)
 	cnf.define('GAINPUT_DEV', 1)
 	cnf.env.CXXFLAGS += []
