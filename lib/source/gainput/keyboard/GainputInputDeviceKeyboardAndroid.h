@@ -12,7 +12,7 @@ namespace gainput
 class InputDeviceKeyboardImplAndroid : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplAndroid(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceKeyboardImplAndroid(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
@@ -162,7 +162,7 @@ public:
 		if (dialect_.count(keyCode))
 		{
 			const DeviceButtonId buttonId = dialect_[keyCode];
-			HandleButton(device_, *state_, *previousState_, delta_, buttonId, pressed);
+			HandleButton(device_, *state_, delta_, buttonId, pressed);
 			return 1;
 		}
 
@@ -171,7 +171,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;

@@ -31,18 +31,18 @@ InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, unsig
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	if (variant != DV_NULL)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceTouchImplAndroid>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplAndroid>(manager, *this, *state_, *previousState_);
 	}
 #elif defined(GAINPUT_PLATFORM_IOS)
 	if (variant != DV_NULL)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceTouchImplIos>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplIos>(manager, *this, *state_, *previousState_);
 	}
 #endif
 
 	if (!impl_)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceTouchImplNull>(manager, device);
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplNull>(manager, *this);
 	}
 	GAINPUT_ASSERT(impl_);
 }

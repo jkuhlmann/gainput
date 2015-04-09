@@ -78,12 +78,12 @@ PinchGesture::InternalUpdate(InputDeltaState* delta)
 
 	if (!isDown || !isDown2)
 	{
-		HandleButton(deviceId_, *state_, *previousState_, delta, PinchTriggered, false);
+		HandleButton(*this, *state_, delta, PinchTriggered, false);
 		pinching_ = false;
 		return;
 	}
 
-	HandleButton(deviceId_, *state_, *previousState_, delta, PinchTriggered, true);
+	HandleButton(*this, *state_, delta, PinchTriggered, true);
 
 	const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);
 	GAINPUT_ASSERT(xAxisDevice);
@@ -107,11 +107,11 @@ PinchGesture::InternalUpdate(InputDeltaState* delta)
 	{
 		pinching_ = true;
 		initialDistance_ = dist;
-		HandleAxis(deviceId_, *state_, *previousState_, delta, PinchScale, 1.0f);
+		HandleAxis(*this, *state_, delta, PinchScale, 1.0f);
 		return;
 	}
 
-	HandleAxis(deviceId_, *state_, *previousState_, delta, PinchScale, dist / initialDistance_);
+	HandleAxis(*this, *state_, delta, PinchScale, dist / initialDistance_);
 }
 
 }

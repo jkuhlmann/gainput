@@ -54,7 +54,7 @@ SimultaneouslyDownGesture::InternalUpdate(InputDeltaState* delta)
 		allDown = allDown && device->GetBool(it->buttonId);
 	}
 
-	HandleButton(deviceId_, *state_, *previousState_, delta, SimultaneouslyDownTriggered, allDown);
+	HandleButton(*this, *state_, delta, SimultaneouslyDownTriggered, allDown);
 }
 
 }

@@ -80,12 +80,12 @@ RotateGesture::InternalUpdate(InputDeltaState* delta)
 
 	if (!isDown || !isDown2)
 	{
-		HandleButton(deviceId_, *state_, *previousState_, delta, RotateTriggered, false);
+		HandleButton(*this, *state_, delta, RotateTriggered, false);
 		rotating_ = false;
 		return;
 	}
 
-	HandleButton(deviceId_, *state_, *previousState_, delta, RotateTriggered, true);
+	HandleButton(*this, *state_, delta, RotateTriggered, true);
 
 	const InputDevice* xAxisDevice = manager_.GetDevice(xAxis_.deviceId);
 	GAINPUT_ASSERT(xAxisDevice);
@@ -107,7 +107,7 @@ RotateGesture::InternalUpdate(InputDeltaState* delta)
 	{
 		rotating_ = true;
 		initialAngle_ = angle;
-		HandleAxis(deviceId_, *state_, *previousState_, delta, RotateAngle, 0.0f);
+		HandleAxis(*this, *state_, delta, RotateAngle, 0.0f);
 		return;
 	}
 
@@ -117,7 +117,7 @@ RotateGesture::InternalUpdate(InputDeltaState* delta)
 		currentAngle += M_PI*2.0f;
 	}
 
-	HandleAxis(deviceId_, *state_, *previousState_, delta, RotateAngle, currentAngle);
+	HandleAxis(*this, *state_, delta, RotateAngle, currentAngle);
 }
 
 }

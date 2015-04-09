@@ -110,11 +110,11 @@ DoubleClickGesture::InternalUpdate(InputDeltaState* delta)
 	if (clicksRegistered_ >= clicksTargetCount_)
 	{
 		clicksRegistered_ = 0;
-		HandleButton(deviceId_, *state_, *previousState_, delta, DoubleClickTriggered, true);
+		HandleButton(*this, *state_, delta, DoubleClickTriggered, true);
 	}
 	else
 	{
-		HandleButton(deviceId_, *state_, *previousState_, delta, DoubleClickTriggered, false);
+		HandleButton(*this, *state_, delta, DoubleClickTriggered, false);
 	}
 }
 

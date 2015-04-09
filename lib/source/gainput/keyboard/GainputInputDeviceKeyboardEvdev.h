@@ -10,7 +10,7 @@ namespace gainput
 class InputDeviceKeyboardImplEvdev : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplEvdev(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceKeyboardImplEvdev(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
@@ -209,7 +209,7 @@ public:
 				if (dialect_.count(event.code))
 				{
 					const DeviceButtonId button = dialect_[event.code];
-					HandleButton(device_, *state_, *previousState_, delta, button, bool(event.value));
+					HandleButton(device_, *state_, delta, button, bool(event.value));
 				}
 			}
 		}
@@ -229,7 +229,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;

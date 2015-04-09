@@ -56,11 +56,11 @@ InputPlayer::Update(InputDeltaState* delta)
 
 		if (device->GetButtonType(change.buttonId) == BT_BOOL)
 		{
-			HandleButton(change.deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, change.buttonId, change.b);
+			HandleButton(*device, *device->GetInputState(), delta, change.buttonId, change.b);
 		}
 		else
 		{
-			HandleAxis(change.deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, change.buttonId, change.f);
+			HandleAxis(*device, *device->GetInputState(), delta, change.buttonId, change.f);
 		}
 	}
 

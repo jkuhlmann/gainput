@@ -9,7 +9,7 @@ namespace gainput
 class InputDevicePadImplIos : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplIos(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState);
+	InputDevicePadImplIos(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState);
 	~InputDevicePadImplIos();
 
 	InputDevice::DeviceVariant GetVariant() const
@@ -35,7 +35,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	unsigned index_;
 	bool padFound_;
 	InputState& state_;

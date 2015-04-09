@@ -13,7 +13,7 @@ namespace gainput
 class InputDeviceMouseImplWin : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplWin(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceMouseImplWin(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(&state),
@@ -33,8 +33,8 @@ public:
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
-		HandleButton(device_, nextState_, *previousState_, delta_, MouseButton3, false);
-		HandleButton(device_, nextState_, *previousState_, delta_, MouseButton4, false);
+		HandleButton(device_, nextState_, delta_, MouseButton3, false);
+		HandleButton(device_, nextState_, delta_, MouseButton4, false);
 
 		*state_ = nextState_;
 	}
@@ -111,18 +111,18 @@ public:
 		{
 			float x = float(ax)/float(manager_.GetDisplayWidth());
 			float y = float(ay)/float(manager_.GetDisplayHeight());
-			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, x);
-			HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, y);
+			HandleAxis(device_, nextState_, delta_, MouseAxisX, x);
+			HandleAxis(device_, nextState_, delta_, MouseAxisY, y);
 		}
 		else
 		{
-			HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+			HandleButton(device_, nextState_, delta_, buttonId, pressed);
 		}
 	}
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState* state_;
 	InputState* previousState_;
 	InputState nextState_;

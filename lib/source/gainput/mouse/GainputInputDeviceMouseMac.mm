@@ -47,16 +47,16 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 		const float x = rect2.origin.x / window.frame.size.width;
 		const float y = rect2.origin.y / window.frame.size.height;
 
-		gainput::HandleAxis(device->device_, device->nextState_, *device->previousState_, device->delta_, gainput::MouseAxisX, x);
-		gainput::HandleAxis(device->device_, device->nextState_, *device->previousState_, device->delta_, gainput::MouseAxisY, y);
+		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisX, x);
+		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisY, y);
 
 		if (type == kCGEventLeftMouseDown || type == kCGEventLeftMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, *device->previousState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
+			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
 		}
 		else if (type == kCGEventRightMouseDown || type == kCGEventRightMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, *device->previousState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
+			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
 		}
 		else if (type == kCGEventOtherMouseDown || type == kCGEventOtherMouseUp)
 		{
@@ -66,7 +66,7 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 			{
 				buttonId = gainput::MouseButton3 + buttonNum - kCGMouseButtonCenter;
 			}
-			gainput::HandleButton(device->device_, device->nextState_, *device->previousState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
+			gainput::HandleButton(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
 		}
 	}
 
@@ -78,7 +78,7 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 namespace gainput
 {
 
-InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 	manager_(manager),
 	device_(device),
 	state_(&state),

@@ -8,7 +8,7 @@ namespace gainput
 class InputDeviceTouchImplNull : public InputDeviceTouchImpl
 {
 public:
-	InputDeviceTouchImplNull(InputManager& manager, DeviceId device) :
+	InputDeviceTouchImplNull(InputManager& manager, InputDevice& device) :
 		manager_(manager),
 		device_(device)
 	{
@@ -27,7 +27,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 };
 
 }

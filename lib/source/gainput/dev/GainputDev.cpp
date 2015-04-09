@@ -369,9 +369,9 @@ DevUpdate(InputDeltaState* delta)
 			GAINPUT_ASSERT(device);
 			GAINPUT_ASSERT(device->GetInputState());
 			GAINPUT_ASSERT(device->GetPreviousInputState());
-			HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Down + id*4, down != 0);
-			HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0X + id*4, x);
-			HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, Touch0Pressure + id*4, float(down)*1.0f);
+			HandleButton(*device, *device->GetInputState(), delta, Touch0Down + id*4, down != 0);
+			HandleAxis(*device, *device->GetInputState(), delta, Touch0X + id*4, x);
+			HandleAxis(*device, *device->GetInputState(), delta, Touch0Pressure + id*4, float(down)*1.0f);
 		}
 	}
 	else
@@ -442,13 +442,13 @@ DevUpdate(InputDeltaState* delta)
 					uint8_t value;
 					stream->Read(value);
 					bool boolValue = bool(value);
-					HandleButton(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, boolValue);
+					HandleButton(*device, *device->GetInputState(), delta, deviceButtonId, boolValue);
 				}
 				else
 				{
 					float value;
 					stream->Read(value);
-					HandleAxis(deviceId, *device->GetInputState(), *device->GetPreviousInputState(), delta, deviceButtonId, value);
+					HandleAxis(*device, *device->GetInputState(), delta, deviceButtonId, value);
 				}
 			}
 		}

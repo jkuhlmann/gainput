@@ -10,7 +10,7 @@ namespace gainput
 class InputDeviceKeyboardImplMac : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplMac(InputManager& manager, DeviceId device, InputState& state, InputState& previousState);
+	InputDeviceKeyboardImplMac(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState);
 	~InputDeviceKeyboardImplMac();
 
 	InputDevice::DeviceVariant GetVariant() const
@@ -39,7 +39,7 @@ public:
 	}
 
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputDevice::DeviceState deviceState_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;

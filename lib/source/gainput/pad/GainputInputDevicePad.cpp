@@ -126,18 +126,18 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	GAINPUT_ASSERT(previousState_);
 
 #if defined(GAINPUT_PLATFORM_LINUX)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, device, index_, *state_, *previousState_);
+	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_WIN)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, device, index_, *state_, *previousState_);
+	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_ANDROID)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, device, index_, *state_, *previousState_);
+	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_IOS)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, device, index_, *state_, *previousState_);
+	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, *this, index_, *state_, *previousState_);
 #endif
 
 	if (!impl_)
 	{
-		impl_ = manager.GetAllocator().New<InputDevicePadImplNull>(manager, device, index_, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDevicePadImplNull>(manager, *this, index_, *state_, *previousState_);
 	}
 
 	GAINPUT_ASSERT(impl_);

@@ -56,15 +56,15 @@ ButtonStickGesture::InternalUpdate(InputDeltaState* delta)
 
 	if (isDown && !isDown2)
 	{
-		HandleAxis(deviceId_, *state_, *previousState_, delta, ButtonStickAxis, -1.0f);
+		HandleAxis(*this, *state_, delta, ButtonStickAxis, -1.0f);
 	}
 	else if (!isDown && isDown2)
 	{
-		HandleAxis(deviceId_, *state_, *previousState_, delta, ButtonStickAxis, 1.0f);
+		HandleAxis(*this, *state_, delta, ButtonStickAxis, 1.0f);
 	}
 	else
 	{
-		HandleAxis(deviceId_, *state_, *previousState_, delta, ButtonStickAxis, 0.0f);
+		HandleAxis(*this, *state_, delta, ButtonStickAxis, 0.0f);
 	}
 }
 

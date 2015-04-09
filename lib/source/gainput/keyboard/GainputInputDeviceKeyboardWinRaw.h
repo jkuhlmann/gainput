@@ -20,7 +20,7 @@ namespace gainput
 class InputDeviceKeyboardImplWinRaw : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplWinRaw(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceKeyboardImplWinRaw(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
@@ -230,7 +230,7 @@ public:
 				GAINPUT_LOG("%d mapped to: %d\n", vkey, buttonId);
 #endif
 				const bool pressed = raw->data.keyboard.Message == WM_KEYDOWN || raw->data.keyboard.Message == WM_SYSKEYDOWN;
-				HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+				HandleButton(device_, nextState_, delta_, buttonId, pressed);
 			}
 #ifdef GAINPUT_DEBUG
 			else
@@ -243,7 +243,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputDevice::DeviceState deviceState_;
 	HashMap<unsigned, DeviceButtonId> dialect_;
 	InputState* state_;

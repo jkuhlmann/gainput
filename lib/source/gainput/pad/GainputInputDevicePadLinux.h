@@ -34,7 +34,7 @@ static const char* PadDeviceIds[MaxPadCount] =
 class InputDevicePadImplLinux : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplLinux(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState) :
+	InputDevicePadImplLinux(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(state),
@@ -90,17 +90,17 @@ public:
 
 				if (buttonId == PadButtonUp)
 				{
-					HandleButton(device_, state_, previousState_, delta, PadButtonUp, value < 0.0f);
-					HandleButton(device_, state_, previousState_, delta, PadButtonDown, value > 0.0f);
+					HandleButton(device_, state_, delta, PadButtonUp, value < 0.0f);
+					HandleButton(device_, state_, delta, PadButtonDown, value > 0.0f);
 				}
 				else if (buttonId == PadButtonLeft)
 				{
-					HandleButton(device_, state_, previousState_, delta, PadButtonLeft, value < 0.0f);
-					HandleButton(device_, state_, previousState_, delta, PadButtonRight, value > 0.0f);
+					HandleButton(device_, state_, delta, PadButtonLeft, value < 0.0f);
+					HandleButton(device_, state_, delta, PadButtonRight, value > 0.0f);
 				}
 				else
 				{
-					HandleAxis(device_, state_, previousState_, delta, buttonId, value);
+					HandleAxis(device_, state_, delta, buttonId, value);
 				}
 			}
 			else if (event.type == JS_EVENT_BUTTON)
@@ -112,7 +112,7 @@ public:
 					const bool value(event.value);
 					state_.Set(buttonId, value);
 
-					HandleButton(device_, state_, previousState_, delta, buttonId, value);
+					HandleButton(device_, state_, delta, buttonId, value);
 				}
 #ifdef GAINPUT_DEBUG
 				else
@@ -177,7 +177,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState& state_;
 	InputState& previousState_;
 	unsigned index_;

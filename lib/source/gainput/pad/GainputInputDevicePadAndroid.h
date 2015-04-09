@@ -10,7 +10,7 @@ namespace gainput
 class InputDevicePadImplAndroid : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplAndroid(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState) :
+	InputDevicePadImplAndroid(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(state),
@@ -113,21 +113,21 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
-				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_MAGNETIC_FIELD)
 			{
-				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
 			}
 		}
 	}
@@ -164,7 +164,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState& state_;
 	InputState& previousState_;
 	InputDevice::DeviceState deviceState_;

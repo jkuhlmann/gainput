@@ -46,7 +46,7 @@ TapGesture::InternalUpdate(InputDeltaState* delta)
 	const InputDevice* actionDevice = manager_.GetDevice(actionButton_.deviceId);
 	GAINPUT_ASSERT(actionDevice);
 
-	HandleButton(deviceId_, *state_, *previousState_, delta, TapTriggered, false);
+	HandleButton(*this, *state_, delta, TapTriggered, false);
 
 	if (actionDevice->GetBool(actionButton_.buttonId))
 	{
@@ -59,7 +59,7 @@ TapGesture::InternalUpdate(InputDeltaState* delta)
 	{
 		if (firstDownTime_ > 0 && firstDownTime_ + timeSpan_ >= manager_.GetTime())
 		{
-			HandleButton(deviceId_, *state_, *previousState_, delta, TapTriggered, true);
+			HandleButton(*this, *state_, delta, TapTriggered, true);
 		}
 		firstDownTime_ = 0;
 	}

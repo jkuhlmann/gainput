@@ -15,7 +15,7 @@
 namespace gainput
 {
 
-InputDevicePadImplIos::InputDevicePadImplIos(InputManager& manager, DeviceId device, unsigned index, InputState& state, InputState& previousState)
+InputDevicePadImplIos::InputDevicePadImplIos(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState)
 	: pausePressed_(false),
 	manager_(manager),
 	device_(device),
@@ -61,24 +61,24 @@ void InputDevicePadImplIos::Update(InputDeltaState* delta)
 
 		supportsMotion_ = true;
 
-		HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationX, motion.userAcceleration.x);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationY, motion.userAcceleration.y);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationZ, motion.userAcceleration.z);
+		HandleAxis(device_, state_, delta, PadButtonAccelerationX, motion.userAcceleration.x);
+		HandleAxis(device_, state_, delta, PadButtonAccelerationY, motion.userAcceleration.y);
+		HandleAxis(device_, state_, delta, PadButtonAccelerationZ, motion.userAcceleration.z);
 
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGravityX, motion.gravity.x);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGravityY, motion.gravity.y);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGravityZ, motion.gravity.z);
+		HandleAxis(device_, state_, delta, PadButtonGravityX, motion.gravity.x);
+		HandleAxis(device_, state_, delta, PadButtonGravityY, motion.gravity.y);
+		HandleAxis(device_, state_, delta, PadButtonGravityZ, motion.gravity.z);
 
 		const float gyroX = 2.0f * (motion.attitude.quaternion.x * motion.attitude.quaternion.z + motion.attitude.quaternion.w * motion.attitude.quaternion.y);
 		const float gyroY = 2.0f * (motion.attitude.quaternion.y * motion.attitude.quaternion.z - motion.attitude.quaternion.w * motion.attitude.quaternion.x);
 		const float gyroZ = 1.0f - 2.0f * (motion.attitude.quaternion.x * motion.attitude.quaternion.x + motion.attitude.quaternion.y * motion.attitude.quaternion.y);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeX, gyroX);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeY, gyroY);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeZ, gyroZ);
+		HandleAxis(device_, state_, delta, PadButtonGyroscopeX, gyroX);
+		HandleAxis(device_, state_, delta, PadButtonGyroscopeY, gyroY);
+		HandleAxis(device_, state_, delta, PadButtonGyroscopeZ, gyroZ);
 
-		HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldX, motion.magneticField.field.x);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldY, motion.magneticField.field.y);
-		HandleAxis(device_, state_, previousState_, delta, PadButtonMagneticFieldZ, motion.magneticField.field.z);
+		HandleAxis(device_, state_, delta, PadButtonMagneticFieldX, motion.magneticField.field.x);
+		HandleAxis(device_, state_, delta, PadButtonMagneticFieldY, motion.magneticField.field.y);
+		HandleAxis(device_, state_, delta, PadButtonMagneticFieldZ, motion.magneticField.field.z);
 	}
 	else
 	{
@@ -123,69 +123,69 @@ void InputDevicePadImplIos::Update(InputDeltaState* delta)
 		{
 			isExtended_ = true;
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonL1, gamepad.leftShoulder.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonR1, gamepad.rightShoulder.pressed);
+			HandleButton(device_, state_, delta, PadButtonL1, gamepad.leftShoulder.pressed);
+			HandleButton(device_, state_, delta, PadButtonR1, gamepad.rightShoulder.pressed);
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonLeft, gamepad.dpad.left.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonRight, gamepad.dpad.right.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonUp, gamepad.dpad.up.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonDown, gamepad.dpad.down.pressed);
+			HandleButton(device_, state_, delta, PadButtonLeft, gamepad.dpad.left.pressed);
+			HandleButton(device_, state_, delta, PadButtonRight, gamepad.dpad.right.pressed);
+			HandleButton(device_, state_, delta, PadButtonUp, gamepad.dpad.up.pressed);
+			HandleButton(device_, state_, delta, PadButtonDown, gamepad.dpad.down.pressed);
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonA, gamepad.buttonA.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonB, gamepad.buttonB.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonX, gamepad.buttonX.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonY, gamepad.buttonY.pressed);
+			HandleButton(device_, state_, delta, PadButtonA, gamepad.buttonA.pressed);
+			HandleButton(device_, state_, delta, PadButtonB, gamepad.buttonB.pressed);
+			HandleButton(device_, state_, delta, PadButtonX, gamepad.buttonX.pressed);
+			HandleButton(device_, state_, delta, PadButtonY, gamepad.buttonY.pressed);
 
-			HandleAxis(device_, state_, previousState_, delta, PadButtonLeftStickX, gamepad.leftThumbstick.xAxis.value);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonLeftStickY, gamepad.leftThumbstick.yAxis.value);
+			HandleAxis(device_, state_, delta, PadButtonLeftStickX, gamepad.leftThumbstick.xAxis.value);
+			HandleAxis(device_, state_, delta, PadButtonLeftStickY, gamepad.leftThumbstick.yAxis.value);
 
-			HandleAxis(device_, state_, previousState_, delta, PadButtonRightStickX, gamepad.rightThumbstick.xAxis.value);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonRightStickY, gamepad.rightThumbstick.yAxis.value);
+			HandleAxis(device_, state_, delta, PadButtonRightStickX, gamepad.rightThumbstick.xAxis.value);
+			HandleAxis(device_, state_, delta, PadButtonRightStickY, gamepad.rightThumbstick.yAxis.value);
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonL2, gamepad.leftTrigger.pressed);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonAxis4, gamepad.leftTrigger.value);
-			HandleButton(device_, state_, previousState_, delta, PadButtonR2, gamepad.rightTrigger.pressed);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonAxis5, gamepad.rightTrigger.value);
+			HandleButton(device_, state_, delta, PadButtonL2, gamepad.leftTrigger.pressed);
+			HandleAxis(device_, state_, delta, PadButtonAxis4, gamepad.leftTrigger.value);
+			HandleButton(device_, state_, delta, PadButtonR2, gamepad.rightTrigger.pressed);
+			HandleAxis(device_, state_, delta, PadButtonAxis5, gamepad.rightTrigger.value);
 		}
 		else if (GCGamepad* gamepad = [controller gamepad])
 		{
 			isExtended_ = false;
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonL1, gamepad.leftShoulder.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonR1, gamepad.rightShoulder.pressed);
+			HandleButton(device_, state_, delta, PadButtonL1, gamepad.leftShoulder.pressed);
+			HandleButton(device_, state_, delta, PadButtonR1, gamepad.rightShoulder.pressed);
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonLeft, gamepad.dpad.left.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonRight, gamepad.dpad.right.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonUp, gamepad.dpad.up.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonDown, gamepad.dpad.down.pressed);
+			HandleButton(device_, state_, delta, PadButtonLeft, gamepad.dpad.left.pressed);
+			HandleButton(device_, state_, delta, PadButtonRight, gamepad.dpad.right.pressed);
+			HandleButton(device_, state_, delta, PadButtonUp, gamepad.dpad.up.pressed);
+			HandleButton(device_, state_, delta, PadButtonDown, gamepad.dpad.down.pressed);
 
-			HandleButton(device_, state_, previousState_, delta, PadButtonA, gamepad.buttonA.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonB, gamepad.buttonB.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonX, gamepad.buttonX.pressed);
-			HandleButton(device_, state_, previousState_, delta, PadButtonY, gamepad.buttonY.pressed);
+			HandleButton(device_, state_, delta, PadButtonA, gamepad.buttonA.pressed);
+			HandleButton(device_, state_, delta, PadButtonB, gamepad.buttonB.pressed);
+			HandleButton(device_, state_, delta, PadButtonX, gamepad.buttonX.pressed);
+			HandleButton(device_, state_, delta, PadButtonY, gamepad.buttonY.pressed);
 		}
 
 		if (GCMotion* motion = [controller motion])
 		{
 			supportsMotion_ = true;
 
-			HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationX, motion.userAcceleration.x);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationY, motion.userAcceleration.y);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonAccelerationZ, motion.userAcceleration.z);
+			HandleAxis(device_, state_, delta, PadButtonAccelerationX, motion.userAcceleration.x);
+			HandleAxis(device_, state_, delta, PadButtonAccelerationY, motion.userAcceleration.y);
+			HandleAxis(device_, state_, delta, PadButtonAccelerationZ, motion.userAcceleration.z);
 
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGravityX, motion.gravity.x);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGravityY, motion.gravity.y);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGravityZ, motion.gravity.z);
+			HandleAxis(device_, state_, delta, PadButtonGravityX, motion.gravity.x);
+			HandleAxis(device_, state_, delta, PadButtonGravityY, motion.gravity.y);
+			HandleAxis(device_, state_, delta, PadButtonGravityZ, motion.gravity.z);
 
 			const float gyroX = 2.0f * (motion.attitude.x * motion.attitude.z + motion.attitude.w * motion.attitude.y);
 			const float gyroY = 2.0f * (motion.attitude.y * motion.attitude.z - motion.attitude.w * motion.attitude.x);
 			const float gyroZ = 1.0f - 2.0f * (motion.attitude.x * motion.attitude.x + motion.attitude.y * motion.attitude.y);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeX, gyroX);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeY, gyroY);
-			HandleAxis(device_, state_, previousState_, delta, PadButtonGyroscopeZ, gyroZ);
+			HandleAxis(device_, state_, delta, PadButtonGyroscopeX, gyroX);
+			HandleAxis(device_, state_, delta, PadButtonGyroscopeY, gyroY);
+			HandleAxis(device_, state_, delta, PadButtonGyroscopeZ, gyroZ);
 		}
 
-		HandleButton(device_, state_, previousState_, delta, PadButtonHome, pausePressed_);
+		HandleButton(device_, state_, delta, PadButtonHome, pausePressed_);
 		pausePressed_ = false;
 	}
 }

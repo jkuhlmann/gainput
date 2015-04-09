@@ -10,7 +10,7 @@ namespace gainput
 class InputDeviceMouseImplEvdev : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplEvdev(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceMouseImplEvdev(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(state),
@@ -70,7 +70,7 @@ public:
 				it != buttonsToReset_.end();
 				++it)
 		{
-			HandleButton(device_, state_, previousState_, delta, *it, false);
+			HandleButton(device_, state_, delta, *it, false);
 		}
 		buttonsToReset_.clear();
 
@@ -105,7 +105,7 @@ public:
 
 				if (button != -1)
 				{
-					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), bool(event.value));
+					HandleButton(device_, state_, delta, DeviceButtonId(button), bool(event.value));
 				}
 			}
 			else if (event.type == EV_REL)
@@ -124,21 +124,21 @@ public:
 				{
 					if (event.value < 0)
 						button = MouseButtonWheelDown;
-					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), true);
+					HandleButton(device_, state_, delta, DeviceButtonId(button), true);
 					buttonsToReset_.push_back(button);
 				}
 				else if (button == MouseButton7)
 				{
 					if (event.value < 0)
 						button = MouseButton8;
-					HandleButton(device_, state_, previousState_, delta, DeviceButtonId(button), true);
+					HandleButton(device_, state_, delta, DeviceButtonId(button), true);
 					buttonsToReset_.push_back(button);
 				}
 				else if (button != -1)
 				{
 					const DeviceButtonId buttonId(button);
 					const float prevValue = previousState_.GetFloat(buttonId);
-					HandleAxis(device_, state_, previousState_, delta, DeviceButtonId(button), prevValue + float(event.value));
+					HandleAxis(device_, state_, delta, DeviceButtonId(button), prevValue + float(event.value));
 				}
 			}
 		}
@@ -148,7 +148,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState& state_;
 	InputState& previousState_;
 	int fd_;

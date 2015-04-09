@@ -53,7 +53,7 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 	if (device->dialect_.count(scancode))
 	{
 		const DeviceButtonId buttonId = device->dialect_[scancode];
-		HandleButton(device->device_, device->nextState_, *device->previousState_, device->delta_, buttonId, pressed);
+		HandleButton(device->device_, device->nextState_, device->delta_, buttonId, pressed);
 	}
 #ifdef GAINPUT_DEBUG
 	else
@@ -79,7 +79,7 @@ static void OnDeviceRemoved(void* inContext, IOReturn inResult, void* inSender, 
 
 }
 
-InputDeviceKeyboardImplMac::InputDeviceKeyboardImplMac(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+InputDeviceKeyboardImplMac::InputDeviceKeyboardImplMac(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 	manager_(manager),
 	device_(device),
 	deviceState_(InputDevice::DS_UNAVAILABLE),

@@ -13,7 +13,7 @@ namespace gainput
 class InputDeviceMouseImplLinux : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplLinux(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceMouseImplLinux(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(&state),
@@ -52,7 +52,7 @@ public:
 			if (isWheel_[i] && oldValue)
 			{
 				const bool pressed = false;
-				HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+				HandleButton(device_, nextState_, delta_, buttonId, pressed);
 			}
 		}
 
@@ -73,8 +73,8 @@ public:
 				const XMotionEvent& motionEvent = event.xmotion;
 				const float x = float(motionEvent.x)/float(manager_.GetDisplayWidth());
 				const float y = float(motionEvent.y)/float(manager_.GetDisplayHeight());
-				HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisX, x);
-				HandleAxis(device_, nextState_, *previousState_, delta_, MouseAxisY, y);
+				HandleAxis(device_, nextState_, delta_, MouseAxisX, x);
+				HandleAxis(device_, nextState_, delta_, MouseAxisY, y);
 				break;
 			}
 		case ButtonPress:
@@ -93,7 +93,7 @@ public:
 				}
 				else if (buttonEvent.button < MouseButtonCount)
 				{
-					HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+					HandleButton(device_, nextState_, delta_, buttonId, pressed);
 				}
 
 				if (pressed)
@@ -107,7 +107,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	bool* isWheel_;
 	bool* pressedThisFrame_;
 	InputState* state_;

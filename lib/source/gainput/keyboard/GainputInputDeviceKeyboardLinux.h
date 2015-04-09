@@ -15,7 +15,7 @@ namespace gainput
 class InputDeviceKeyboardImplLinux : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplLinux(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceKeyboardImplLinux(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
@@ -214,7 +214,7 @@ public:
 			if (dialect_.count(keySym))
 			{
 				const DeviceButtonId buttonId = dialect_[keySym];
-				HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+				HandleButton(device_, nextState_, delta_, buttonId, pressed);
 			}
 #ifdef GAINPUT_DEBUG
 			else
@@ -238,7 +238,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;

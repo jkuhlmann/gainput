@@ -13,7 +13,7 @@ namespace gainput
 class InputDeviceKeyboardImplWin : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplWin(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceKeyboardImplWin(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		textInputEnabled_(true),
@@ -254,13 +254,13 @@ public:
 		if (dialect_.count(winKey))
 		{
 			const DeviceButtonId buttonId = dialect_[winKey];
-			HandleButton(device_, nextState_, *previousState_, delta_, buttonId, pressed);
+			HandleButton(device_, nextState_, delta_, buttonId, pressed);
 		}
 	}
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	bool textInputEnabled_;
 	RingBuffer<GAINPUT_TEXT_INPUT_QUEUE_LENGTH, char> textBuffer_;
 	HashMap<unsigned, DeviceButtonId> dialect_;

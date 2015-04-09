@@ -98,7 +98,7 @@ HoldGesture::InternalUpdate(InputDeltaState* delta)
 	{
 		oneShotReset_ = true;
 		firstDownTime_ = 0;
-		HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, false);
+		HandleButton(*this, *state_, delta, HoldTriggered, false);
 		return;
 	}
 
@@ -114,17 +114,17 @@ HoldGesture::InternalUpdate(InputDeltaState* delta)
 	{
 		if (downLongEnough && oneShotReset_)
 		{
-			HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, true);
+			HandleButton(*this, *state_, delta, HoldTriggered, true);
 			oneShotReset_ = false;
 		}
 		else
 		{
-			HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, false);
+			HandleButton(*this, *state_, delta, HoldTriggered, false);
 		}
 	}
 	else
 	{
-		HandleButton(deviceId_, *state_, *previousState_, delta, HoldTriggered, downLongEnough);
+		HandleButton(*this, *state_, delta, HoldTriggered, downLongEnough);
 	}
 }
 

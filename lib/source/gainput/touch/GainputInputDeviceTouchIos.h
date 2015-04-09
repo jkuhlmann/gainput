@@ -14,7 +14,7 @@ namespace gainput
 class InputDeviceTouchImplIos : public InputDeviceTouchImpl
 {
 public:
-	InputDeviceTouchImplIos(InputManager& manager, DeviceId device, InputState& state, InputState& previousState) :
+	InputDeviceTouchImplIos(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(&state),
@@ -109,7 +109,7 @@ public:
 
 private:
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState* state_;
 	InputState* previousState_;
 	InputState nextState_;
@@ -120,12 +120,12 @@ private:
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{
-		HandleButton(device_, nextState_, *previousState_, delta_, buttonId, value);
+		HandleButton(device_, nextState_, delta_, buttonId, value);
 	}
 
 	void HandleFloat(DeviceButtonId buttonId, float value)
 	{
-		HandleAxis(device_, nextState_, *previousState_, delta_, buttonId, value);
+		HandleAxis(device_, nextState_, delta_, buttonId, value);
 	}
 };
 

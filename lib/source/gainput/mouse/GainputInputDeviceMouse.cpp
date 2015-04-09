@@ -35,23 +35,23 @@ InputDeviceMouse::InputDeviceMouse(InputManager& manager, DeviceId device, unsig
 #if defined(GAINPUT_PLATFORM_LINUX)
 	if (variant == DV_STANDARD)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplLinux>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplLinux>(manager, *this, *state_, *previousState_);
 	}
 	else if (variant == DV_RAW)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplEvdev>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplEvdev>(manager, *this, *state_, *previousState_);
 	}
 #elif defined(GAINPUT_PLATFORM_WIN)
 	if (variant == DV_STANDARD)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWin>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWin>(manager, *this, *state_, *previousState_);
 	}
 	else if (variant == DV_RAW)
 	{
-		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, device, *state_, *previousState_);
+		impl_ = manager.GetAllocator().New<InputDeviceMouseImplWinRaw>(manager, *this, *state_, *previousState_);
 	}
 #elif defined(GAINPUT_PLATFORM_MAC)
-	impl_ = manager.GetAllocator().New<InputDeviceMouseImplMac>(manager, device, *state_, *previousState_);
+	impl_ = manager.GetAllocator().New<InputDeviceMouseImplMac>(manager, *this, *state_, *previousState_);
 #endif
 
 	if (!impl_)

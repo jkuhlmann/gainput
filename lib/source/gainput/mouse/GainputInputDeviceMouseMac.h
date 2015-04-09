@@ -10,7 +10,7 @@ namespace gainput
 class InputDeviceMouseImplMac : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplMac(InputManager& manager, DeviceId device, InputState& state, InputState& previousState);
+	InputDeviceMouseImplMac(InputManager& manager, InputDevice& device, InputState& state, InputState& previousState);
 	~InputDeviceMouseImplMac();
 
 	InputDevice::DeviceVariant GetVariant() const
@@ -25,7 +25,7 @@ public:
 	}
 
 	InputManager& manager_;
-	DeviceId device_;
+	InputDevice& device_;
 	InputState* state_;
 	InputState* previousState_;
 	InputState nextState_;
