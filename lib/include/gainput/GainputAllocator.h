@@ -115,9 +115,29 @@ public:
 	 * \return A pointer to an initialized instance of T.
 	 */
 	template <class T, class P0, class P1, class P2, class P3>
+	T* New(P0& p0, P1& p1, P2& p2, P3& p3)
+	{
+		return new (Allocate(sizeof(T))) T(p0, p1, p2, p3);
+	}
+
+	/// An operator new-like function that allocates memory and calls T's constructor with the given parameters.
+	/**
+	 * \return A pointer to an initialized instance of T.
+	 */
+	template <class T, class P0, class P1, class P2, class P3>
 	T* New(P0& p0, const P1& p1, P2& p2, P3& p3)
 	{
 		return new (Allocate(sizeof(T))) T(p0, p1, p2, p3);
+	}
+
+	/// An operator new-like function that allocates memory and calls T's constructor with the given parameters.
+	/**
+	 * \return A pointer to an initialized instance of T.
+	 */
+	template <class T, class P0, class P1, class P2, class P3, class P4>
+	T* New(P0& p0, P1& p1, P2& p2, P3& p3, P4& p4)
+	{
+		return new (Allocate(sizeof(T))) T(p0, p1, p2, p3, p4);
 	}
 
 	/// An operator new-like function that allocates memory and calls T's constructor with the given parameters.
