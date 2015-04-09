@@ -9,11 +9,17 @@ InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index)
 	manager_(manager),
 	deviceId_(device),
 	index_(index),
+	deadZones_(0),
 	debugRenderingEnabled_(false)
 #if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	, synced_(false)
 #endif
 {
+}
+
+InputDevice::~InputDevice()
+{
+	manager_.GetAllocator().Deallocate(deadZones_);
 }
 
 void
@@ -39,6 +45,31 @@ InputDevice::GetState() const
 	}
 #endif
 	return InternalGetState();
+}
+
+float InputDevice::GetDeadZone(DeviceButtonId buttonId) const
+{
+	if (!deadZones_
+		|| !IsValidButtonId(buttonId))
+	{
+		return 0.0f;
+	}
+	GAINPUT_ASSERT(buttonId < state_->GetButtonCount());
+	return deadZones_[buttonId];
+}
+
+void InputDevice::SetDeadZone(DeviceButtonId buttonId, float value)
+{
+	if (!IsValidButtonId(buttonId))
+	{
+		return;
+	}
+	if (!deadZones_)
+	{
+		deadZones_ = reinterpret_cast<float*>(manager_.GetAllocator().Allocate(sizeof(float) * state_->GetButtonCount()));
+	}
+	GAINPUT_ASSERT(buttonId < state_->GetButtonCount());
+	deadZones_[buttonId] = value;
 }
 
 void

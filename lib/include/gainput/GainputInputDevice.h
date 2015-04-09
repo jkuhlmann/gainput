@@ -71,7 +71,7 @@ public:
 	InputDevice(InputManager& manager, DeviceId device, unsigned index);
 
 	/// Empty virtual destructor.
-	virtual ~InputDevice() { }
+	virtual ~InputDevice();
 
 	/// Update this device, internally called by InputManager.
 	/**
@@ -142,6 +142,9 @@ public:
 	/// Returns the device's previous state, probably best if only used internally.
 	InputState* GetPreviousInputState() { return previousState_; }
 
+	float GetDeadZone(DeviceButtonId buttonId) const;
+	void SetDeadZone(DeviceButtonId buttonId, float value);
+
 	/// Enable/disable debug rendering of this device.
 	void SetDebugRenderingEnabled(bool enabled);
 	/// Returns true if debug rendering is enabled, false otherwise.
@@ -172,6 +175,8 @@ protected:
 	InputState* state_;
 	/// The previous state of this device.
 	InputState* previousState_;
+
+	float* deadZones_;
 
 	/// Specifies if this device is currently rendering debug information.
 	bool debugRenderingEnabled_;
