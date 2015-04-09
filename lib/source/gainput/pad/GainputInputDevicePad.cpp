@@ -141,6 +141,11 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	}
 
 	GAINPUT_ASSERT(impl_);
+
+	SetDeadZone(PadButtonLeftStickX, 0.15f);
+	SetDeadZone(PadButtonLeftStickY, 0.15f);
+	SetDeadZone(PadButtonRightStickX, 0.15f);
+	SetDeadZone(PadButtonRightStickY, 0.15f);
 }
 
 InputDevicePad::~InputDevicePad()
