@@ -40,6 +40,7 @@ public:
 		DT_KEYBOARD,		///< A keyboard input device.
 		DT_PAD,			///< A joypad/gamepad input device.
 		DT_TOUCH,		///< A touch-sensitive input device supporting multiple simultaneous pointers.
+		DT_BUILTIN,		///< Any controls directly built into the device that also contains the screen.
 		DT_REMOTE,		///< A generic networked input device.
 		DT_GESTURE,		///< A gesture input device, building on top of other input devices.
 		DT_CUSTOM,		///< A custom, user-created input device.

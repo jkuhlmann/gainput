@@ -1,16 +1,16 @@
 
-#ifndef GAINPUTINPUTDEVICEPADIOS_H_
-#define GAINPUTINPUTDEVICEPADIOS_H_
+#ifndef GAINPUTINPUTDEVICEBUILTINIOS_H_
+#define GAINPUTINPUTDEVICEBUILTINIOS_H_
 
 
 namespace gainput
 {
 
-class InputDevicePadImplIos : public InputDevicePadImpl
+class InputDeviceBuiltInImplIos : public InputDeviceBuiltInImpl
 {
 public:
-	InputDevicePadImplIos(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState);
-	~InputDevicePadImplIos();
+	InputDeviceBuiltInImplIos(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState);
+	~InputDeviceBuiltInImplIos();
 
 	InputDevice::DeviceVariant GetVariant() const
 	{
@@ -42,8 +42,7 @@ private:
 	InputState& previousState_;
 	InputDevice::DeviceState deviceState_;
 
-	bool isExtended_;
-	bool supportsMotion_;
+	void* motionManager_;
 
 };
 

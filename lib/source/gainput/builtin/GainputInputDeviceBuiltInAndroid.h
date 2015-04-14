@@ -1,16 +1,16 @@
 
-#ifndef GAINPUTINPUTDEVICEPADANDROID_H_
-#define GAINPUTINPUTDEVICEPADANDROID_H_
+#ifndef GAINPUTINPUTDEVICEBUILTINANDROID_H_
+#define GAINPUTINPUTDEVICEBUILTINANDROID_H_
 
 #include <android/sensor.h>
 
 namespace gainput
 {
 
-class InputDevicePadImplAndroid : public InputDevicePadImpl
+class InputDeviceBuiltInImplAndroid : public InputDeviceBuiltInImpl
 {
 public:
-	InputDevicePadImplAndroid(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState) :
+	InputDeviceBuiltInImplAndroid(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState) :
 		manager_(manager),
 		device_(device),
 		state_(state),
@@ -69,7 +69,7 @@ public:
 		deviceState_ = InputDevice::DS_OK;
 	}
 
-	~InputDevicePadImplAndroid()
+	~InputDeviceBuiltInImplAndroid()
 	{
 		if (!sensorManager_)
 		{
@@ -113,21 +113,21 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleAxis(device_, state_, delta, PadButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, PadButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, PadButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
-				HandleAxis(device_, state_, delta, PadButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, PadButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, PadButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonGyroscopeX, event.vector.x / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonGyroscopeY, event.vector.y / ASENSOR_STANDARD_GRAVITY);
+				HandleAxis(device_, state_, delta, BuiltInButtonGyroscopeZ, event.vector.z / ASENSOR_STANDARD_GRAVITY);
 			}
 			else if (event.type == ASENSOR_TYPE_MAGNETIC_FIELD)
 			{
-				HandleAxis(device_, state_, delta, PadButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state_, delta, PadButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
-				HandleAxis(device_, state_, delta, PadButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldX, event.magnetic.x / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldY, event.magnetic.y / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
+				HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldZ, event.magnetic.z / ASENSOR_MAGNETIC_FIELD_EARTH_MAX);
 			}
 		}
 	}
@@ -139,26 +139,21 @@ public:
 
 	bool IsValidButton(DeviceButtonId deviceButton) const
 	{
-		if (deviceButton >= PadButtonAccelerationX && deviceButton <= PadButtonAccelerationZ && accelerometerSensor_)
+		if (deviceButton >= BuiltInButtonAccelerationX && deviceButton <= BuiltInButtonAccelerationZ && accelerometerSensor_)
 		{
 			return true;
 		}
 		
-		if (deviceButton >= PadButtonGyroscopeX && deviceButton <= PadButtonGyroscopeZ && gyroscopeSensor_)
+		if (deviceButton >= BuiltInButtonGyroscopeX && deviceButton <= BuiltInButtonGyroscopeZ && gyroscopeSensor_)
 		{
 			return true;
 		}
 
-		if (deviceButton >= PadButtonMagneticFieldX && deviceButton <= PadButtonMagneticFieldZ && magneticFieldSensor_)
+		if (deviceButton >= BuiltInButtonMagneticFieldX && deviceButton <= BuiltInButtonMagneticFieldZ && magneticFieldSensor_)
 		{
 			return true;
 		}
 
-		return false;
-	}
-
-	bool Vibrate(float leftMotor, float rightMotor)
-	{
 		return false;
 	}
 

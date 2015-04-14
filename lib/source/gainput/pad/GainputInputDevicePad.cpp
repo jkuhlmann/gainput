@@ -11,8 +11,6 @@
 	#include "GainputInputDevicePadLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 	#include "GainputInputDevicePadWin.h"
-#elif defined(GAINPUT_PLATFORM_ANDROID)
-	#include "GainputInputDevicePadAndroid.h"
 #elif defined(GAINPUT_PLATFORM_IOS)
 	#include "GainputInputDevicePadIos.h"
 #endif
@@ -129,8 +127,6 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_WIN)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, *this, index_, *state_, *previousState_);
-#elif defined(GAINPUT_PLATFORM_ANDROID)
-	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_IOS)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, *this, index_, *state_, *previousState_);
 #endif

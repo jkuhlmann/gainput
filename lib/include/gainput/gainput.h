@@ -163,6 +163,7 @@ void DevSetHttp(bool enable);
 #include <gainput/GainputInputDeviceKeyboard.h>
 #include <gainput/GainputInputDevicePad.h>
 #include <gainput/GainputInputDeviceTouch.h>
+#include <gainput/GainputInputDeviceBuiltIn.h>
 
 #include <gainput/gestures/GainputGestures.h>
 
