@@ -5,6 +5,7 @@
 #include <android/native_activity.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {

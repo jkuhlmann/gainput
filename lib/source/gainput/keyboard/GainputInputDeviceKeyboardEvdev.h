@@ -3,6 +3,7 @@
 #define GAINPUTINPUTDEVICEKEYBOARDEVDEV_H_
 
 #include "../GainputHelpersEvdev.h"
+#include "../GainputHelpers.h"
 
 namespace gainput
 {
