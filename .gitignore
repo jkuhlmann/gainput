@@ -5,15 +5,11 @@
 .lock-*
 .cproject
 .project
-.waf*/
-waf-*/
-waf3-*/
 build/
 __pycache__/
 .depproj/
 gainput_2008.*
 docs/
-test/Catch/
 gainput.sdf
 gainput.sln
 gainput.unsuccessfulbuild
