@@ -7,11 +7,12 @@ include_directories(../samplefw/)
 file(GLOB_RECURSE sources *.cpp)
 file(GLOB_RECURSE sfwsources ../samplefw/*.cpp)
 
-add_executable(syncsample ${sources} ${sfwsources})
+add_executable(syncsample WIN32 ${sources} ${sfwsources})
 
 target_link_libraries(syncsample gainputstatic)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(syncsample X11 GL rt)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
+elseif(WIN32)
+	target_link_libraries(syncsample xinput ws2_32)
+endif()

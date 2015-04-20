@@ -15,5 +15,7 @@ find_package(OpenGL)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gainputtest X11 GL rt)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+elseif(WIN32)
+	target_link_libraries(gainputtest xinput ws2_32)
+endif()
 
