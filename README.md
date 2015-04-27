@@ -1,7 +1,7 @@
 Gainput
 =======
 
-*Gainput is currently in development and may still have some major issues. However, it's getting there and you should check it out. Feedback is always welcome!*
+*Gainput is in development. You should check it out. Feedback is always welcome!*
 
 Gainput is the new awesome C++ input library for your game:
 
@@ -78,12 +78,12 @@ Features
 Building [![Build Status](https://travis-ci.org/jkuhlmann/gainput.png?branch=master)](https://travis-ci.org/jkuhlmann/gainput)
 --------
 
-By default, Gainput is built using [Waf](http://code.google.com/p/waf/).
+By default, Gainput is built using [CMake](http://www.cmake.org/).
 
-1. Run `waf configure`
-  - For Android NDK, run `waf configure --cross-android --cross-android-ndk=ANDROID_NDK_PATH` instead where `ANDROID_NDK_PATH` is the absolute path to your Android NDK.
-1. Run `waf build_debug` or `waf build_release`
-1. The executables can be found in `build/debug/` or `build/release/` respectively.
+1. Run `mkdir build`
+1. Run `cmake ..`
+1. Run `make`
+1. The library can be found in `lib/`, the executables in `samples/`.
 
 
 Contributing
@@ -95,9 +95,7 @@ Everyone is welcome to contribute to the library. If you find any problems, you 
 Dependencies
 ------------
 
-Gainput has a minimal number of external dependencies to make it as self-contained as possible. It uses the platforms' default ways of getting inputs and doesn't use any STL.
-
-[Python](http://www.python.org/) is required for building.
+Gainput has a minimal number of external dependencies to make it as self-contained as possible. It uses the platforms' default ways of getting inputs and doesn't use the STL.
 
 
 Testing
@@ -105,14 +103,7 @@ Testing
 
 Generally, testing should be done by building and running Gainput on all supported platforms. The samples in the `samples/` folder should be used in order to determine if the library is functional.
 
-The unit tests in the `test/` folder are built and run like this:
-
-1. `cd test/`
-1. `../waf configure`
-1. `../waf build`
-1. `build/gainputtest`
-
-Furthermore, all build configurations and unit tests are built and run by Travis CI whenever something is pushed into the repository.
+The unit tests in the `test/` folder are built by the normal CMake build. The executable can be found in the `test/` folder. All build configurations and unit tests are built and run by Travis CI whenever something is pushed into the repository.
 
 
 Alternatives
