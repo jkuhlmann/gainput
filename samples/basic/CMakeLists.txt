@@ -5,7 +5,11 @@ include_directories(../../lib/include/)
 
 file(GLOB_RECURSE sources *.cpp)
 
-add_executable(basicsample WIN32 ${sources})
+if(ANDROID)
+	add_library(basicsample SHARED ${sources})
+else()
+	add_executable(basicsample WIN32 ${sources})
+endif()
 
 target_link_libraries(basicsample gainputstatic)
 

@@ -7,7 +7,11 @@ include_directories(../samplefw/)
 file(GLOB_RECURSE sources *.cpp)
 file(GLOB_RECURSE sfwsources ../samplefw/*.cpp)
 
-add_executable(listenersample WIN32 ${sources} ${sfwsources})
+if(ANDROID)
+	add_library(listenersample SHARED ${sources} ${sfwsources})
+else()
+	add_executable(listenersample WIN32 ${sources} ${sfwsources})
+endif()
 
 target_link_libraries(listenersample gainputstatic)
 

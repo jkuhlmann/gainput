@@ -1,6 +1,9 @@
 
 find_package(X11)
-find_package(OpenGL)
+
+if(!ANDROID)
+	find_package(OpenGL)
+endif(!ANDROID)
 
 add_subdirectory(basic)
 add_subdirectory(dynamic)

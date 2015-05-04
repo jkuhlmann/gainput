@@ -3,7 +3,7 @@ Gainput
 
 *Gainput is in development. You should check it out. Feedback is always welcome!*
 
-Gainput is the new awesome C++ input library for your game:
+Gainput is the awesome C++ input library for your game:
 
 - handles your input needs from low-level device reading to high-level mapping of user-defined buttons
 - well-documented, clean, lightweight, and easy to use
