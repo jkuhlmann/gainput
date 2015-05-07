@@ -3,10 +3,6 @@ project(gainput)
 
 include_directories (include/)
 
-if(ANDROID)
-	include_directories(${ANDROID_NDK}/platforms/android-9/arch-arm/usr/include/)
-endif()
-
 file(GLOB_RECURSE sources source/*.cpp)
 
 add_library(gainputstatic STATIC ${sources})
