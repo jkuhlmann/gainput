@@ -1,5 +1,5 @@
 
-#include "Catch/single_include/catch.hpp"
+#include "catch.hpp"
 
 #include <gainput/gainput.h>
 
