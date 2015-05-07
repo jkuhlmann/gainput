@@ -85,6 +85,10 @@ By default, Gainput is built using [CMake](http://www.cmake.org/).
 1. Run `make`
 1. The library can be found in `lib/`, the executables in `samples/`.
 
+Android:
+1. Make sure that the environment variable `ANDROID_NDK` is set to point to your copy of the Android NDK.
+1. Run CMake with the following options: `cmake -DCMAKE_TOOLCHAIN_FILE=../extern/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DANDROID_ABI="armeabi-v7a" -DANDROID_NATIVE_API_LEVEL=android-19 -DANDROID_STL="gnustl_static"`
+1. Follow the normal build steps above.
 
 Contributing
 ------------
