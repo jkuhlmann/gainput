@@ -37,6 +37,11 @@ HWND SfwGetHWnd();
 #include <android/log.h>
 #define SFW_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 
+#elif defined(GAINPUT_PLATFORM_MAC)
+
+#include <stdio.h>
+#define SFW_LOG(...) printf(__VA_ARGS__);
+
 #endif
 
 #endif

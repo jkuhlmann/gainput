@@ -19,5 +19,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gesturesample X11 GL rt)
 elseif(WIN32)
 	target_link_libraries(gesturesample xinput ws2_32)
+elseif(APPLE)
+	target_link_libraries(gesturesample ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
 

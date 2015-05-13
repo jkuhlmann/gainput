@@ -324,5 +324,36 @@ void android_main(struct android_app* stateMain)
 	SampleMain();
 }
 
+#elif defined(GAINPUT_PLATFORM_MAC)
+
+void SfwOpenWindow(const char* title)
+{
+}
+
+void SfwCloseWindow()
+{
+}
+
+void SfwUpdate()
+{
+}
+
+bool SfwIsDone()
+{
+	return false;
+}
+
+void SfwSetInputManager(gainput::InputManager* manager)
+{
+}
+
+int main(int argc, char** argv)
+{
+	SampleMain();
+	return 0;
+}
+
+
+
 #endif
 
