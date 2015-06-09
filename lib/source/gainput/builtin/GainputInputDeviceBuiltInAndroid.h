@@ -139,7 +139,7 @@ public:
 
 	bool IsValidButton(DeviceButtonId deviceButton) const
 	{
-		if (deviceButton >= BuiltInButtonAccelerationX && deviceButton <= BuiltInButtonAccelerationZ && accelerometerSensor_)
+		if (deviceButton <= BuiltInButtonAccelerationZ && accelerometerSensor_)
 		{
 			return true;
 		}

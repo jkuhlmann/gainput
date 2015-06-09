@@ -13,6 +13,8 @@
 	#include "GainputInputDevicePadWin.h"
 #elif defined(GAINPUT_PLATFORM_IOS)
 	#include "GainputInputDevicePadIos.h"
+#elif defined(GAINPUT_PLATFORM_MAC)
+	#include "GainputInputDevicePadMac.h"
 #endif
 
 #include "GainputInputDevicePadNull.h"
@@ -129,6 +131,8 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_IOS)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, *this, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_MAC)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplMac>(manager, *this, index_, *state_, *previousState_);
 #endif
 
 	if (!impl_)

@@ -45,9 +45,6 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 		return;
 	}
 
-	GAINPUT_ASSERT(device->state_);
-	GAINPUT_ASSERT(device->previousState_);
-
 	const bool pressed = IOHIDValueGetIntegerValue(value) == 1;
 
 	if (device->dialect_.count(scancode))
