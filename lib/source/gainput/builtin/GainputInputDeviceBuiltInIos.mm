@@ -48,8 +48,6 @@ void InputDeviceBuiltInImplIos::Update(InputDeltaState* delta)
 		return;
 	}
 
-	supportsMotion_ = true;
-
 	HandleAxis(device_, state_, delta, BuiltInButtonAccelerationX, motion.userAcceleration.x);
 	HandleAxis(device_, state_, delta, BuiltInButtonAccelerationY, motion.userAcceleration.y);
 	HandleAxis(device_, state_, delta, BuiltInButtonAccelerationZ, motion.userAcceleration.z);

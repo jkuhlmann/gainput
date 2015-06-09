@@ -35,17 +35,20 @@ public:
 	HashMap<unsigned, DeviceButtonId> axisDialect_;
 	float minAxis_;
 	float maxAxis_;
-
-private:
+    float minTriggerAxis_;
+    float maxTriggerAxis_;
 	InputManager& manager_;
 	InputDevice& device_;
 	unsigned index_;
-	bool padFound_;
 	InputState& state_;
 	InputState& previousState_;
+	InputState nextState_;
+	InputDeltaState* delta_;
 	InputDevice::DeviceState deviceState_;
 
 	void* ioManager_;
+
+private:
 };
 
 }
