@@ -4,7 +4,7 @@ project(gainputtest)
 include_directories(../lib/include/)
 include_directories(../extern/catch/)
 
-file(GLOB_RECURSE sources test.cpp)
+file(GLOB_RECURSE sources *.cpp)
 
 if(ANDROID)
 	add_library(gainputtest SHARED ${sources})
