@@ -184,12 +184,43 @@ public:
 	}
 };
 
-
 /// Returns the default instance of the default allocator.
 /**
  * \sa DefaultAllocator
  */
 GAINPUT_LIBEXPORT DefaultAllocator& GetDefaultAllocator();
+
+template<class K, class V>
+class GAINPUT_LIBEXPORT HashMap;
+
+/// An allocator that tracks an allocations that were done
+/**
+ * Any allocation/deallocation calls are simply forwarded to \c malloc and \c free. Any
+ * requested alignment is ignored.
+ */
+class GAINPUT_LIBEXPORT TrackingAllocator : public Allocator
+{
+public:
+	TrackingAllocator(Allocator& backingAllocator, Allocator& internalAllocator = GetDefaultAllocator());
+	~TrackingAllocator();
+
+	void* Allocate(size_t size, size_t align = DefaultAlign);
+	void Deallocate(void* ptr);
+
+	size_t GetAllocateCount() const { return allocateCount_; }
+	size_t GetDeallocateCount() const { return deallocateCount_; }
+	size_t GetAllocatedMemory() const { return allocatedMemory_; }
+
+private:
+	Allocator& backingAllocator_;
+	Allocator& internalAllocator_;
+	HashMap<void*, size_t>* allocations_;
+	size_t allocateCount_;
+	size_t deallocateCount_;
+	size_t allocatedMemory_;
+};
+
+
 
 }
 

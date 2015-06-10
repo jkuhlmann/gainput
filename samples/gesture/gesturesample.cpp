@@ -137,7 +137,9 @@ void SampleMain()
 {
 	SfwOpenWindow("Gainput: Gesture sample");
 
-	gainput::InputManager manager;
+	gainput::TrackingAllocator allocator(gainput::GetDefaultAllocator());
+
+	gainput::InputManager manager(allocator);
 
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
@@ -152,7 +154,7 @@ void SampleMain()
 
 	SfwSetInputManager(&manager);
 
-	gainput::InputMap map(manager, "testmap");
+	gainput::InputMap map(manager, "testmap", allocator);
 
 	map.MapBool(ButtonConfirm, mouseId, gainput::MouseButtonLeft);
 
@@ -252,6 +254,7 @@ void SampleMain()
 		if (map.GetBoolWasDown(ButtonConfirm))
 		{
 			SFW_LOG("Confirmed!\n");
+			SFW_LOG("Memory: %u allocs, %u deallocs, %u used bytes\n", allocator.GetAllocateCount(), allocator.GetDeallocateCount(), allocator.GetAllocatedMemory());
 		}
 
 		if (map.GetBoolWasDown(ButtonConfirmDouble))
