@@ -62,7 +62,7 @@ Features
 - Two Gainput instances can **sync device states over the network**. It's also possible to receive **multi-touch inputs from a smartphone**'s regular browser.
 - Completely written in portable **C++**.
 - **No STL** is used. **No exceptions** are thrown. **No RTTI** is used. **No C++11**, and **no boost**.
-- **No weird external dependencies** ared used. Relies on the existing platform SDKs.
+- **No weird external dependencies** are used. Relies on the existing platform SDKs.
 - **Easily set up and built** using your favorite IDE/build tool.
 - **Listeners** can be installed both for devices buttons as well as user buttons. That way you are notified when a button state changes.
 - **Gestures** allow for more complex input patterns to be detected, for example double-clicking, pinch/rotation gestures, or holding several buttons simultaneously.

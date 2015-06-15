@@ -102,22 +102,21 @@ After everything has been set up, use gainput::InputMap::GetBool() or gainput::I
 
 
 \page page_building Building
-Gainput is built using Waf which makes it rather easy to build the library.
+Gainput is built using CMake which makes it easy to build the library.
 
 Simply run these commands:
--# <tt>waf configure</tt>
--# <tt>waf build_CONFIGNAME</tt>
+-# `mkdir build`
+-# `cmake ..`
+-# `make`
 
-There are three configurations of which you choose one by substituting CONFIGNAME for one of these:
-- \c debug
-- \c dev
-- \c release
+There are the regular CMake build configurations from which you choose by adding one these to the `cmake` call:
+- `-DCMAKE_BUILD_TYPE=Debug`
+- `-DCMAKE_BUILD_TYPE=Release`
 
-The \c debug configuration supports debugging while the \c release configuration is optimized. The \c dev configuration features a server that external tools can connect to (see \ref page_devprotocol).
+The \c debug configuration supports debugging while the \c release configuration is optimized.
 
-Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/CONFIGNAME/ folder.
+Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/ folder.
 
-It may be necessary to build Gainput as administrator on Windows under certain circumstances. If you encounter a "Permission denied" error message, try this.
 
 \section sect_defines Build Configuration Defines
 There is a number of defines that determine what is included in the library and how it behaves. Normally, most of these are set by the build scripts or in gainput.h, but it may be necessary to set these when doing custom builds or modifying the build process. All defines must be set during compilation of the library itself.
@@ -133,22 +132,12 @@ Name | Description
 \section sect_android_build Android NDK
 In order to cross-compile for Android, the build has to be configured differently.
 
-Naturally, the Android NDK must be installed. Replace \c ANDROID_NDK_PATH with the complete absolute path to your installation.
+Naturally, the Android NDK must be installed. Make sure that \c ANDROID_NDK_PATH is set to the absolute path to your installation. And then follow these steps:
 
--# <tt>waf configure \-\-cross-android \-\-cross-android-ndk=ANDROID_NDK_PATH</tt>
--# <tt>waf build_CONFIGNAME</tt>
+- Run `cmake -DCMAKE_TOOLCHAIN_FILE=../extern/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DANDROID_ABI="armeabi-v7a" -DANDROID_NATIVE_API_LEVEL=android-19 -DANDROID_STL="gnustl_static"`
+- Build as above.
 
-Executing these commands will also yield both a dynamic and static library in the \c build/CONFIGNAME/ folder.
-
-The samples for Android need to be treated a little more to be deployed to a device even though there are some provisions present. For the time being, this is a manual process. If, for example, you want to check out the basic sample, build Gainput as described above and then do:
-
--# <tt>cp build/debug/samples/basic/libbasicsample.so samples/android/libs/armeabi/libgainputsample.so</tt>
--# <tt>cd samples/android/</tt>
--# <tt>ANDROID_SDK_PATH/tools/android update project -p . -s \-\-name GainputSample \-\-target android-17</tt>
--# <tt>ant debug</tt>
--# <tt>ANDROID_SDK_PATH/platform-tools/adb install bin/GainputSample-debug.apk</tt>
-
-Where ANDROID_SDK_PATH is the path to your Android SDK installation.
+Executing these commands will also yield both a dynamic and static library in the \c build/ folder.
 
 
 \page sample_fw Sample Framework
@@ -184,25 +173,38 @@ Shows how to connect two Gainput instances to each other and send the device sta
 \page page_platforms Platform Notes
 \tableofcontents
 
-\section platform_android Android NDK
-Supported devices: keyboard, multi-touch, gamepad.
+\section platform_matrix Device Support Matrix
 
+Platform \\ Device | Built-In | Keyboard | Mouse | Pad | Touch
+-------------------|----------|----------|-------|-----|------
+Android NDK | YES | YES | | | YES
+iOS | YES | | | YES | YES
+Linux | | STD  RAW | STD  RAW | YES | |
+Mac OS X | | YES | YES | YES | |
+Windows | | STD  RAW | STD  RAW | YES | |
+
+What the entries mean:
+- YES: This device is supported on this platform (basically, the same as STD).
+- STD: This device is supported in standard variant on this platform (gainput::InputDevice::DV_STANDARD).
+- RAW: This device is supported in raw variant on this platform (gainput::InputDevice::DV_RAW).
+
+
+\section platform_android Android NDK
 The keyboard support is limited to hardware keyboards, including, for example, hardware home buttons.
 
-The gamepad support is limited to the device-internal sensors, i.e. gyroscope, magnetic field, and acceleration. Externally connected gamepads are not support yet.
-
 \section platform_linux Linux
-Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.
-
 Evdev is used for the raw input variants. Evdev has permission issues on some Linux distributions where the devices (\c /dev/input/event*) are only readable by root or a specific group. If a raw device's state is gainput::InputDevice::DS_UNAVAILABLE this may very well be the cause.
 
 These gamepads have been tested and are explicitly supported:
 - Microsoft X-Box 360 pad
 - Sony PLAYSTATION(R)3 Controller
 
-\section platform_windows Windows
-Supported devices: keyboard (standard and raw variants), mouse (standard and raw variants), gamepad.
+\section platform_osx Mac OS X
+These gamepads have been tested and are explicitly supported:
+- Microsoft X-Box 360 pad
+- Sony PLAYSTATION(R)3 Controller
 
+\section platform_windows Windows
 The gamepad support is implemented using XINPUT which is Microsoft's most current API for such devices. However, that means that only Xbox 360 pads and compatible devices are supported.
 
 
@@ -212,19 +214,27 @@ Gainput has very few external dependencies in order to make it as self-contained
 \section sect_libs Libraries
 Most importantly, Gainput does not depend on the STL or any other unnecessary helper libraries. Input is acquired using the following methods:
 
-Android NDK: All input is acquired through the NDK.
+Android NDK: All input is acquired through the NDK. Native App Glue is used for most inputs.
+
+iOS:
+- CoreMotion framework for built-in device sensors
+- GameController framework for gamepad inputs
+- UIKit for touch inputs
 
 Linux:
 - the X11 message loop is used for keyboard and mouse
 - the kernel's joystick API is used for pads
+
+Mac OS X:
+- AppKit for mouse
+- IOKit's IOHIDManager for keyboard and gamepads
 
 Windows:
 - the Win32 message loop is used for keyboard and mouse
 - XINPUT is used for gamepads
 
 \section sect_building Building
-Gainput is built using <a href="http://code.google.com/p/waf/" target="_blank">Waf</a> which is written in <a href="http://www.python.org/" target="_blank">Python</a>. Therefore you have to have a recent version of Python installed.
-
+Gainput is built using <a href="http://www.cmake.org/" target="_blank">CMake</a> 
 
 
 \page page_faq FAQ
@@ -235,9 +245,6 @@ Gainput is built using <a href="http://code.google.com/p/waf/" target="_blank">W
 There are lots of other ways to acquire input, most are part of more complete engines or more comprehensive libraries. For one, Gainput is meant for those who are using something without input capabilities (for example, pure rendering engines) or those who are developing something themselves and want to skip input handling.
 
 In the long run, Gainput aims to be better and offer more advanced features than built-in input solutions. That's the reason why more advanced features, like input recording/playback, remote syncing, gestures and external tool support, are already part of the library.
-
-\section faq1 Why don't you support OS X or iOS?
-I would love to. However, I don't have the proper hardware at the moment. The plan is to provide implementations for these platforms eventually. If anyone wants to contribute implementations, they are welcome to do so.
 
 
 \page page_devprotocol Development Tool Protocol
