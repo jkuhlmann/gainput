@@ -35,8 +35,8 @@ public:
 	HashMap<unsigned, DeviceButtonId> axisDialect_;
 	float minAxis_;
 	float maxAxis_;
-    float minTriggerAxis_;
-    float maxTriggerAxis_;
+	float minTriggerAxis_;
+	float maxTriggerAxis_;
 	InputManager& manager_;
 	InputDevice& device_;
 	unsigned index_;

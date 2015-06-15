@@ -22,16 +22,19 @@ extern bool MacIsApplicationKey();
 
 namespace {
 
+static const unsigned kMaxPads = 16;
+static bool usedPadIndices_[kMaxPads] = { false };
+
 static inline float FixUpAnalog(float analog, const float minAxis, const float maxAxis, bool symmetric)
 {
 	analog = analog < minAxis ? minAxis : analog > maxAxis ? maxAxis : analog; // clamp
 	analog -= minAxis;
 	analog /= (Abs(minAxis) + Abs(maxAxis))*(symmetric ? 0.5f : 1.0f);
-    if (symmetric)
-    {
-        analog -= 1.0f;
-    }
-    return analog;
+	if (symmetric)
+	{
+		analog -= 1.0f;
+	}
+	return analog;
 }
 
 static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IOHIDValueRef value)
@@ -49,11 +52,11 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 	uint32_t usagePage = IOHIDElementGetUsagePage(elem);
 	uint32_t usage = IOHIDElementGetUsage(elem);
 
-    if (IOHIDElementGetReportCount(elem) > 1
-        || (usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Pointer) )
-    {
-        return;
-    }
+	if (IOHIDElementGetReportCount(elem) > 1
+			|| (usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Pointer) )
+	{
+		return;
+	}
 
 	CFIndex state = (int)IOHIDValueGetIntegerValue(value);
 	float analog = IOHIDValueGetScaledValue(value, kIOHIDValueScaleTypePhysical);
@@ -89,26 +92,26 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 		else if (device->axisDialect_.count(usage))
 		{
 			const DeviceButtonId buttonId = device->axisDialect_[usage];
-            if (buttonId == PadButtonAxis4 || buttonId == PadButtonAxis5)
-            {
-                analog = FixUpAnalog(analog, device->minTriggerAxis_, device->maxTriggerAxis_, false);
-            }
-            else
-            {
-                analog = FixUpAnalog(analog, device->minAxis_, device->maxAxis_, true);
-            }
+			if (buttonId == PadButtonAxis4 || buttonId == PadButtonAxis5)
+			{
+				analog = FixUpAnalog(analog, device->minTriggerAxis_, device->maxTriggerAxis_, false);
+			}
+			else
+			{
+				analog = FixUpAnalog(analog, device->minAxis_, device->maxAxis_, true);
+			}
 			HandleAxis(device->device_, device->nextState_, device->delta_, buttonId, analog);
 		}
-        else if (device->buttonDialect_.count(usage))
-        {
-            const DeviceButtonId buttonId = device->buttonDialect_[usage];
-            HandleButton(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
-        }
+		else if (device->buttonDialect_.count(usage))
+		{
+			const DeviceButtonId buttonId = device->buttonDialect_[usage];
+			HandleButton(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
+		}
 #ifdef GAINPUT_DEBUG
-        else
-        {
-            GAINPUT_LOG("Unmapped button (generic): %d\n", usage);
-        }
+		else
+		{
+			GAINPUT_LOG("Unmapped button (generic): %d\n", usage);
+		}
 #endif
 	}
 #ifdef GAINPUT_DEBUG
@@ -123,25 +126,43 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 {
 	InputDevicePadImplMac* device = reinterpret_cast<InputDevicePadImplMac*>(inContext);
 	GAINPUT_ASSERT(device);
+
+	if (device->deviceState_ != InputDevice::DS_UNAVAILABLE)
+	{
+		return;
+	}
+
+	for (unsigned i = 0; i < device->index_ && i < kMaxPads; ++i)
+	{
+		if (!usedPadIndices_[i])
+		{
+			return;
+		}
+	}
+
+	if (device->index_ < kMaxPads)
+	{
+		usedPadIndices_[device->index_] = true;
+	}
 	device->deviceState_ = InputDevice::DS_OK;
 
 	long vendorId = 0;
 	long productId = 0;
 
-    if (CFTypeRef tCFTypeRef = IOHIDDeviceGetProperty(inIOHIDDeviceRef, CFSTR(kIOHIDVendorIDKey) ))
-    {
-        if (CFNumberGetTypeID() == CFGetTypeID(tCFTypeRef))
-        {
-            CFNumberGetValue((CFNumberRef)tCFTypeRef, kCFNumberSInt32Type, &vendorId);
-        }
-    }
-    if (CFTypeRef tCFTypeRef = IOHIDDeviceGetProperty(inIOHIDDeviceRef, CFSTR(kIOHIDProductIDKey) ))
-    {
-        if (CFNumberGetTypeID() == CFGetTypeID(tCFTypeRef))
-        {
-            CFNumberGetValue((CFNumberRef)tCFTypeRef, kCFNumberSInt32Type, &productId);
-        }
-    }
+	if (CFTypeRef tCFTypeRef = IOHIDDeviceGetProperty(inIOHIDDeviceRef, CFSTR(kIOHIDVendorIDKey) ))
+	{
+		if (CFNumberGetTypeID() == CFGetTypeID(tCFTypeRef))
+		{
+			CFNumberGetValue((CFNumberRef)tCFTypeRef, kCFNumberSInt32Type, &vendorId);
+		}
+	}
+	if (CFTypeRef tCFTypeRef = IOHIDDeviceGetProperty(inIOHIDDeviceRef, CFSTR(kIOHIDProductIDKey) ))
+	{
+		if (CFNumberGetTypeID() == CFGetTypeID(tCFTypeRef))
+		{
+			CFNumberGetValue((CFNumberRef)tCFTypeRef, kCFNumberSInt32Type, &productId);
+		}
+	}
 
 	if (vendorId == 0x054c && productId == 0x5c4) // Sony DualShock 4
 	{
@@ -207,8 +228,8 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 	{
 		device->minAxis_ = -(1<<15);
 		device->maxAxis_ = 1<<15;
-        device->minTriggerAxis_ = 0;
-        device->maxTriggerAxis_ = 255;
+		device->minTriggerAxis_ = 0;
+		device->maxTriggerAxis_ = 255;
 		device->axisDialect_[kHIDUsage_GD_X] = PadButtonLeftStickX;
 		device->axisDialect_[kHIDUsage_GD_Y] = PadButtonLeftStickY;
 		device->axisDialect_[kHIDUsage_GD_Rx] = PadButtonRightStickX;
@@ -238,6 +259,10 @@ static void OnDeviceRemoved(void* inContext, IOReturn inResult, void* inSender, 
 	InputDevicePadImplMac* device = reinterpret_cast<InputDevicePadImplMac*>(inContext);
 	GAINPUT_ASSERT(device);
 	device->deviceState_ = InputDevice::DS_UNAVAILABLE;
+	if (device->index_ < kMaxPads)
+	{
+		usedPadIndices_[device->index_] = true;
+	}
 }
 
 }
@@ -247,11 +272,11 @@ InputDevicePadImplMac::InputDevicePadImplMac(InputManager& manager, InputDevice&
 	axisDialect_(manager.GetAllocator()),
 	minAxis_(-FLT_MAX),
 	maxAxis_(FLT_MAX),
-    minTriggerAxis_(-FLT_MAX),
-    maxTriggerAxis_(FLT_MAX),
+	minTriggerAxis_(-FLT_MAX),
+	maxTriggerAxis_(FLT_MAX),
 	manager_(manager),
 	device_(device),
-    index_(index),
+	index_(index),
 	state_(state),
 	previousState_(previousState),
 	nextState_(manager.GetAllocator(), PadButtonCount_ + PadButtonAxisCount_),
@@ -325,7 +350,6 @@ InputDevicePadImplMac::InputDevicePadImplMac(InputManager& manager, InputDevice&
 	IOHIDManagerOpen(ioManager, kIOHIDOptionsTypeNone);
 
 	IOHIDManagerScheduleWithRunLoop(ioManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-
 }
 
 InputDevicePadImplMac::~InputDevicePadImplMac()

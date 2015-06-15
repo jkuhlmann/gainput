@@ -14,3 +14,5 @@ gainput.sdf
 gainput.sln
 gainput.unsuccessfulbuild
 *.opensdf
+cmakebuild*/
+
