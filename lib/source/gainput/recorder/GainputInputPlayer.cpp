@@ -67,7 +67,7 @@ InputPlayer::Update(InputDeltaState* delta)
 	if (now >= recording_->GetDuration())
 	{
 #ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("Recording is over. Stopping playback.\n");
+		GAINPUT_LOG("GAINPUT: Recording is over. Stopping playback.\n");
 #endif
 		Stop();
 	}

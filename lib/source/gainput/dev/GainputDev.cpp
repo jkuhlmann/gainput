@@ -262,12 +262,10 @@ DevInit(InputManager* manager)
 
 	if (!devListener->Start(false))
 	{
-		GAINPUT_LOG("TOOL: Unable to listen\n");
+		GAINPUT_LOG("GAINPUT: Unable to listen\n");
 		allocator->Delete(devListener);
 		devListener = 0;
 	}
-
-	GAINPUT_LOG("TOOL: Listening...\n");
 }
 
 void
@@ -277,8 +275,6 @@ DevShutdown(const InputManager* manager)
 	{
 		return;
 	}
-
-	GAINPUT_LOG("TOOL: Shutdown\n");
 
 	if (devConnection)
 	{
@@ -322,7 +318,7 @@ DevUpdate(InputDeltaState* delta)
 		devConnection = devListener->Accept();
 		if (!useHttp && devConnection)
 		{
-			GAINPUT_LOG("TOOL: New connection\n");
+			GAINPUT_LOG("GAINPUT: New connection\n");
 			Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
 
 			stream->Write(uint8_t(DevCmdHello));
@@ -396,7 +392,7 @@ DevUpdate(InputDeltaState* delta)
 					SendDevice(device, stream, devConnection);
 					++count;
 				}
-				GAINPUT_LOG("TOOL: Sent %d devices.\n", count);
+				GAINPUT_LOG("GAINPUT: Sent %d devices.\n", count);
 
 				// Send existing maps
 				count = 0;
@@ -408,7 +404,7 @@ DevUpdate(InputDeltaState* delta)
 					SendMap(map, stream, devConnection);
 					++count;
 				}
-				GAINPUT_LOG("TOOL: Sent %d maps.\n", count);
+				GAINPUT_LOG("GAINPUT: Sent %d maps.\n", count);
 			}
 			else if (cmd == DevCmdStartDeviceSync)
 			{
@@ -421,7 +417,7 @@ DevUpdate(InputDeltaState* delta)
 				GAINPUT_ASSERT(device);
 				device->SetSynced(true);
 				devSyncedDevices.push_back(deviceId);
-				GAINPUT_LOG("TOOL: Starting to sync device #%d.\n", deviceId);
+				GAINPUT_LOG("GAINPUT: Starting to sync device #%d.\n", deviceId);
 			}
 			else if (cmd == DevCmdSetDeviceButton)
 			{
@@ -469,7 +465,7 @@ DevUpdate(InputDeltaState* delta)
 
 		if (!devConnection->IsConnected() || pingFailed)
 		{
-			GAINPUT_LOG("TOOL: Disconnected\n");
+			GAINPUT_LOG("GAINPUT: Disconnected\n");
 			devConnection->Close();
 			allocator->Delete(devConnection);
 			devConnection = 0;
@@ -481,7 +477,7 @@ DevUpdate(InputDeltaState* delta)
 				InputDevice* device = inputManager->GetDevice(*it);
 				GAINPUT_ASSERT(device);
 				device->SetSynced(false);
-				GAINPUT_LOG("TOOL: Stopped syncing device #%d.\n", *it);
+				GAINPUT_LOG("GAINPUT: Stopped syncing device #%d.\n", *it);
 			}
 			devSyncedDevices.clear();
 
@@ -628,10 +624,10 @@ DevConnect(InputManager* manager, const char* ip, unsigned port)
 		devConnection->Close();
 		allocator->Delete(devConnection);
 		devConnection = 0;
-		GAINPUT_LOG("TOOL: Unable to connect to %s:%d.\n", ip, port);
+		GAINPUT_LOG("GAINPUT: Unable to connect to %s:%d.\n", ip, port);
 	}
 
-	GAINPUT_LOG("TOOL: Connected to %s:%d.\n", ip, port);
+	GAINPUT_LOG("GAINPUT: Connected to %s:%d.\n", ip, port);
 
 	if (!devDeviceButtonListener)
 	{
