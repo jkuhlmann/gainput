@@ -18,5 +18,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gainputtest X11 GL rt)
 elseif(WIN32)
 	target_link_libraries(gainputtest ${XINPUT} ws2_32)
+elseif(APPLE)
+	target_link_libraries(syncsample ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
 
