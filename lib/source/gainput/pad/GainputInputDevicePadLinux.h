@@ -170,7 +170,7 @@ public:
 		return false;
 	}
 
-	bool Vibrate(float leftMotor, float rightMotor)
+	bool Vibrate(float /*leftMotor*/, float /*rightMotor*/)
 	{
 		return false; // TODO
 	}

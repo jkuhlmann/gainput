@@ -8,7 +8,7 @@ namespace gainput
 class InputDeviceMouseImplNull : public InputDeviceMouseImpl
 {
 public:
-	InputDeviceMouseImplNull(InputManager& manager, DeviceId device)
+	InputDeviceMouseImplNull(InputManager& /*manager*/, DeviceId /*device*/)
 	{
 	}
 
@@ -17,7 +17,7 @@ public:
 		return InputDevice::DV_NULL;
 	}
 
-	void Update(InputDeltaState* delta)
+	void Update(InputDeltaState* /*delta*/)
 	{
 	}
 };

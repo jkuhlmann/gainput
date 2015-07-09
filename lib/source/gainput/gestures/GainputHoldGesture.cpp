@@ -9,7 +9,7 @@
 namespace gainput
 {
 
-HoldGesture::HoldGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+HoldGesture::HoldGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
 	InputGesture(manager, device, index),
 	oneShotReset_(true),
 	firstDownTime_(0)

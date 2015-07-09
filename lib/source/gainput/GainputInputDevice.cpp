@@ -82,7 +82,7 @@ size_t
 InputDevice::CheckAllButtonsDown(DeviceButtonSpec* outButtons, size_t maxButtonCount, unsigned start, unsigned end) const
 {
 	size_t buttonsFound = 0;
-	for (unsigned i = start; i < end; ++i)
+	for (unsigned i = start; i < end && buttonsFound < maxButtonCount; ++i)
 	{
 		DeviceButtonId id(i);
 		if (IsValidButtonId(id) && GetBool(id))

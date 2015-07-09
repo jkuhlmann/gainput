@@ -36,7 +36,7 @@ typedef long BitType;
 
 bool IsBitSet(const BitType* bits, unsigned bit)
 {
-	return bool(bits[bit/GAINPUT_BITCOUNT] & (1ll << (bit % GAINPUT_BITCOUNT)));
+	return bool(bits[bit/GAINPUT_BITCOUNT] & (1ul << (bit % GAINPUT_BITCOUNT)));
 }
 
 bool HasEventType(const BitType* bits, unsigned type)

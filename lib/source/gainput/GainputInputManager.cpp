@@ -262,6 +262,7 @@ InputManager::GetDeviceCountByType(InputDevice::DeviceType type) const
 void
 InputManager::DeviceCreated(InputDevice* device)
 {
+	GAINPUT_UNUSED(device);
 	GAINPUT_DEV_NEW_DEVICE(device);
 }
 
@@ -409,6 +410,7 @@ InputManager::HandleTouchInput(int id, int action, int x, int y)
 void
 InputManager::ConnectForStateSync(const char* ip, unsigned port)
 {
+	GAINPUT_UNUSED(ip); GAINPUT_UNUSED(port);
 	GAINPUT_DEV_CONNECT(this, ip, port);
 }
 

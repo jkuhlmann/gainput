@@ -6,50 +6,50 @@
 namespace gainput {
 
 MemoryStream::MemoryStream(void* data, size_t length, size_t capacity, bool ownership) :
-	data(data),
-	length(length),
-	capacity(capacity),
-	ownership(ownership),
-	position(0)
+	data_(data),
+	length_(length),
+	capacity_(capacity),
+	ownership_(ownership),
+	position_(0)
 {
 	// empty
 }
 
 MemoryStream::MemoryStream(size_t capacity, Allocator& allocator) :
-	allocator(&allocator),
-	length(0),
-	capacity(capacity),
-	ownership(true),
-	position(0)
+	allocator_(&allocator),
+	length_(0),
+	capacity_(capacity),
+	ownership_(true),
+	position_(0)
 {
-	data = this->allocator->Allocate(capacity);
+	data_ = this->allocator_->Allocate(capacity_);
 }
 
 MemoryStream::~MemoryStream()
 {
-	if (ownership)
+	if (ownership_)
 	{
-		assert(allocator);
-		allocator->Deallocate(data);
+		assert(allocator_);
+		allocator_->Deallocate(data_);
 	}
 }
 
 size_t
 MemoryStream::Read(void* dest, size_t readLength)
 {
-	assert(position + readLength <= length);
-	memcpy(dest, (void*)( (uint8_t*)data + position), readLength);
-	position += readLength;
+	assert(position_ + readLength <= length_);
+	memcpy(dest, (void*)( (uint8_t*)data_ + position_), readLength);
+	position_ += readLength;
 	return readLength;
 }
 
 size_t
 MemoryStream::Write(const void* src, size_t writeLength)
 {
-	assert(position + writeLength <= capacity);
-	memcpy((void*)( (uint8_t*)data + position), src, writeLength);
-	position += writeLength;
-	length += writeLength;
+	assert(position_ + writeLength <= capacity_);
+	memcpy((void*)( (uint8_t*)data_ + position_), src, writeLength);
+	position_ += writeLength;
+	length_ += writeLength;
 	return writeLength;
 }
 
@@ -60,18 +60,18 @@ MemoryStream::SeekBegin(int offset)
 	{
 		return false;
 	}
-	position = offset;
+	position_ = offset;
 	return true;
 }
 
 bool
 MemoryStream::SeekCurrent(int offset)
 {
-	if (offset + position > length)
+	if (offset + position_ > length_)
 	{
 		return false;
 	}
-	position += offset;
+	position_ += offset;
 	return true;
 }
 
@@ -82,7 +82,7 @@ MemoryStream::SeekEnd(int offset)
 	{
 		return false;
 	}
-	position = length + offset;
+	position_ = length_ + offset;
 	return true;
 }
 

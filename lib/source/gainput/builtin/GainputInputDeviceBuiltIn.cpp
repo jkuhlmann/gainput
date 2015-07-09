@@ -47,7 +47,7 @@ const unsigned BuiltInButtonCount = BuiltInButtonCount_;
 }
 
 
-InputDeviceBuiltIn::InputDeviceBuiltIn(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+InputDeviceBuiltIn::InputDeviceBuiltIn(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
 	InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_BUILTIN) : 0),
 	impl_(0)
 {

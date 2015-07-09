@@ -10,7 +10,7 @@ namespace gainput
 class InputDeviceKeyboardImplNull : public InputDeviceKeyboardImpl
 {
 public:
-	InputDeviceKeyboardImplNull(InputManager& manager, DeviceId device)
+	InputDeviceKeyboardImplNull(InputManager& /*manager*/, DeviceId /*device*/)
 	{
 	}
 
@@ -19,12 +19,12 @@ public:
 		return InputDevice::DV_NULL;
 	}
 
-	void Update(InputDeltaState* delta)
+	void Update(InputDeltaState* /*delta*/)
 	{
 	}
 
 	bool IsTextInputEnabled() const { return false; }
-	void SetTextInputEnabled(bool enabled) { }
+	void SetTextInputEnabled(bool /*enabled*/) { }
 	char GetNextCharacter() { return 0; }
 };
 

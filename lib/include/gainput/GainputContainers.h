@@ -163,7 +163,7 @@ public:
 	{
 		GAINPUT_ASSERT(&allocator_ == &x.allocator_);
 		
-		const size_t size = size_;
+		const size_t thisSize = size_;
 		const size_t capacity = capacity_;
 		T* data = data_;
 
@@ -171,7 +171,7 @@ public:
 		capacity_ = x.capacity_;
 		data_ = x.data_;
 
-		x.size_ = size;
+		x.size_ = thisSize;
 		x.capacity_ = capacity;
 		x.data_ = data;
 	}

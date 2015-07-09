@@ -9,7 +9,7 @@
 namespace gainput
 {
 
-DoubleClickGesture::DoubleClickGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+DoubleClickGesture::DoubleClickGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
 	InputGesture(manager, device, index),
 	timeSpan_(1000),
 	firstClickTime_(0),

@@ -116,7 +116,7 @@ public:
 	 * \param maxButtonCount The number of fields in outButtons.
 	 * \return The number of device buttons written to outButtons.
 	 */
-	virtual size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const { return 0; }
+	virtual size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const { GAINPUT_UNUSED(outButtons); GAINPUT_UNUSED(maxButtonCount); return 0; }
 
 	/// Gets the name of the given button.
 	/**
@@ -125,7 +125,7 @@ public:
 	 * \param bufferLength Length of the buffer receiving the button name in bytes.
 	 * \return The number of bytes written to buffer (includes the trailing \0).
 	 */
-	virtual size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const { return 0; }
+	virtual size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const { GAINPUT_UNUSED(deviceButton); GAINPUT_UNUSED(buffer); GAINPUT_UNUSED(bufferLength); return 0; }
 	/// Returns the type of the given button.
 	virtual ButtonType GetButtonType(DeviceButtonId deviceButton) const = 0;
 
@@ -134,7 +134,7 @@ public:
 	 * \param name Name of the device button to look for.
 	 * \return The device button ID.
 	 */
-	virtual DeviceButtonId GetButtonByName(const char* name) const { return InvalidDeviceButtonId; }
+	virtual DeviceButtonId GetButtonByName(const char* name) const { GAINPUT_UNUSED(name); return InvalidDeviceButtonId; }
 
 	/// Returns the device's state, probably best if only used internally.
 	InputState* GetInputState() { return state_; }

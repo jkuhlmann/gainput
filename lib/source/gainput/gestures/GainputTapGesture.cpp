@@ -9,7 +9,7 @@
 namespace gainput
 {
 
-TapGesture::TapGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+TapGesture::TapGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
 	InputGesture(manager, device, index),
 	firstDownTime_(0)
 {

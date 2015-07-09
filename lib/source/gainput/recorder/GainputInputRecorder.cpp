@@ -16,7 +16,7 @@ namespace
 			recorder_(recorder)
 		{ }
 
-		bool OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
+		bool OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool /*oldValue*/, bool newValue)
 		{
 			if (!recorder_.IsDeviceToRecord(deviceId))
 			{
@@ -32,7 +32,7 @@ namespace
 			return true;
 		}
 
-		bool OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
+		bool OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float /*oldValue*/, float newValue)
 		{
 			if (!recorder_.IsDeviceToRecord(deviceId))
 			{

@@ -173,7 +173,7 @@ public:
 class GAINPUT_LIBEXPORT DefaultAllocator : public Allocator
 {
 public:
-	void* Allocate(size_t size, size_t align = DefaultAlign)
+	void* Allocate(size_t size, size_t /*align*/)
 	{
 		return malloc(size);
 	}

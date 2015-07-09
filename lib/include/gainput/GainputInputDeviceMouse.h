@@ -39,7 +39,7 @@ enum MouseButton
 	MouseAxisX = MouseButtonCount,
 	MouseAxisY,
 	MouseButtonCount_,
-	MouseAxisCount = MouseButtonCount_ - MouseAxisX,
+	MouseAxisCount = MouseButtonCount_ - MouseAxisX
 };
 
 

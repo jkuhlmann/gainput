@@ -19,7 +19,7 @@ public:
 		return InputDevice::DV_NULL;
 	}
 
-	void Update(InputDeltaState* delta)
+	void Update(InputDeltaState* /*delta*/)
 	{
 	}
 

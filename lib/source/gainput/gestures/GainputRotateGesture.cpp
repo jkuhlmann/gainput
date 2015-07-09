@@ -12,7 +12,7 @@
 namespace gainput
 {
 
-RotateGesture::RotateGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
+RotateGesture::RotateGesture(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
 	InputGesture(manager, device, index),
 	rotating_(false)
 {

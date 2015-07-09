@@ -428,9 +428,9 @@ namespace {
 class ManagerToMapListener : public InputListener
 {
 public:
-	ManagerToMapListener(InputMap& inputMap, Array<MappedInputListener*>& listeners_) :
+	ManagerToMapListener(InputMap& inputMap, Array<MappedInputListener*>& listeners) :
 		inputMap_(inputMap),
-		listeners_(listeners_)
+		listeners_(listeners)
 	{ }
 
 	bool OnDeviceButtonBool(DeviceId device, DeviceButtonId deviceButton, bool oldValue, bool newValue)

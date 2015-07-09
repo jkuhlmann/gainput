@@ -254,7 +254,7 @@ void SampleMain()
 		if (map.GetBoolWasDown(ButtonConfirm))
 		{
 			SFW_LOG("Confirmed!\n");
-			SFW_LOG("Memory: %u allocs, %u deallocs, %u used bytes\n", allocator.GetAllocateCount(), allocator.GetDeallocateCount(), allocator.GetAllocatedMemory());
+			SFW_LOG("Memory: %u allocs, %u deallocs, %u used bytes\n", static_cast<unsigned>(allocator.GetAllocateCount()), static_cast<unsigned>(allocator.GetDeallocateCount()), static_cast<unsigned>(allocator.GetAllocatedMemory()));
 		}
 
 		if (map.GetBoolWasDown(ButtonConfirmDouble))

@@ -15,31 +15,31 @@ public:
 	size_t Read(void* dest, size_t readLength);
 	size_t Write(const void* src, size_t writeLength);
 
-	size_t GetSize() const { return length; }
-	size_t GetLeft() const { return length - position; }
+	size_t GetSize() const { return length_; }
+	size_t GetLeft() const { return length_ - position_; }
 
 	bool SeekBegin(int offset);
 	bool SeekCurrent(int offset);
 	bool SeekEnd(int offset);
 
-	virtual void Reset() { length = 0; position = 0; }
+	virtual void Reset() { length_ = 0; position_ = 0; }
 
 	bool IsEof() const
 	{
-		return position >= length;
+		return position_ >= length_;
 	}
 
-	void* GetData() { return data; }
-	size_t GetPosition() const { return position; }
+	void* GetData() { return data_; }
+	size_t GetPosition() const { return position_; }
 
 private:
-	Allocator* allocator;
-	void* data;
-	size_t length;
-	size_t capacity;
-	bool ownership;
+	Allocator* allocator_;
+	void* data_;
+	size_t length_;
+	size_t capacity_;
+	bool ownership_;
 
-	size_t position;
+	size_t position_;
 
 };
 

@@ -686,7 +686,7 @@ DevStartDeviceSync(DeviceId deviceId)
 namespace gainput
 {
 void
-DevSetHttp(bool enable)
+DevSetHttp(bool /*enable*/)
 { }
 }
 

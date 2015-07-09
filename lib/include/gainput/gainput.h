@@ -49,6 +49,7 @@
 #include <new>
 
 #define GAINPUT_ASSERT assert
+#define GAINPUT_UNUSED(x) (void)(x)
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 
