@@ -1,4 +1,4 @@
-Gainput
+Gainput [![Build Status](https://travis-ci.org/jkuhlmann/gainput.png?branch=master)](https://travis-ci.org/jkuhlmann/gainput) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 =======
 
 *Gainput is in development. You should check it out. Feedback is always welcome!*
@@ -75,7 +75,7 @@ Features
 - **State changes**, i.e. if a button is newly down or just released, can be checked for.
 
 
-Building [![Build Status](https://travis-ci.org/jkuhlmann/gainput.png?branch=master)](https://travis-ci.org/jkuhlmann/gainput)
+Building
 --------
 
 By default, Gainput is built using [CMake](http://www.cmake.org/).
