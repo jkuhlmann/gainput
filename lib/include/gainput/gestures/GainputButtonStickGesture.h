@@ -28,7 +28,7 @@ public:
 
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == ButtonStickAxis; }
 
-	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_FLOAT; }
+	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_UNUSED(deviceButton); GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_FLOAT; }
 
 protected:
 	void InternalUpdate(InputDeltaState* delta);

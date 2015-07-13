@@ -45,7 +45,7 @@ public:
 
 	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton == TapTriggered; }
 
-	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
+	ButtonType GetButtonType(DeviceButtonId deviceButton) const { GAINPUT_UNUSED(deviceButton); GAINPUT_ASSERT(IsValidButtonId(deviceButton)); return BT_BOOL; }
 
 protected:
 	void InternalUpdate(InputDeltaState* delta);
