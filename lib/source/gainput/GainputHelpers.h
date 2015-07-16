@@ -34,9 +34,15 @@ namespace gainput
 		if (deadZone > 0.0f)
 		{
 			const float absValue = Abs(value);
+			const float sign = value < 0.0f ? -1.0f : 1.0f;
 			if (absValue < deadZone)
 			{
 				value = 0.0f;
+			}
+			else
+			{
+				value -= sign*deadZone;
+				value *= 1.0f / (1.0f - deadZone);
 			}
 		}
 #ifdef GAINPUT_DEBUG
