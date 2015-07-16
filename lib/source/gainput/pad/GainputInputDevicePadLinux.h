@@ -110,7 +110,6 @@ public:
 				{
 					DeviceButtonId buttonId = buttonDialect_[event.number];
 					const bool value(event.value);
-					state_.Set(buttonId, value);
 
 					HandleButton(device_, state_, delta, buttonId, value);
 				}
