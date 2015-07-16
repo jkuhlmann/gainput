@@ -6,6 +6,10 @@ include_directories(../extern/catch/)
 
 file(GLOB_RECURSE sources *.cpp)
 
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+
 if(ANDROID)
 	add_library(gainputtest SHARED ${sources})
 else()
