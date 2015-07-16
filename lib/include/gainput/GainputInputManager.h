@@ -44,10 +44,18 @@ public:
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	/// [LINUX ONLY] Lets the InputManager handle the given X event.
+	/**
+	 * Call this function for event types MotionNotify, ButtonPress, 
+	 * ButtonRelease, KeyPress, KeyRelease.
+	 */
 	void HandleEvent(XEvent& event);
 #endif
 #if defined(GAINPUT_PLATFORM_WIN)
 	/// [WINDOWS ONLY] Lets the InputManager handle the given Windows message.
+	/** 
+	 * Call this function for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, 
+	 * WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL.
+	 */
 	void HandleMessage(const MSG& msg);
 #endif
 #if defined(GAINPUT_PLATFORM_ANDROID)

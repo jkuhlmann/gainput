@@ -43,8 +43,7 @@ while (game_running)
 	// Call every frame
 	manager.Update();
 
-	manager.HandleMessage(msg); // on Windows only, for message types WM_CHAR, WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_?BUTTON*, WM_MOUSEMOVE, WM_MOUSEWHEEL
-	manager.HandleEvent(event); // on Linux only, for event types MotionNotify, ButtonPress, ButtonRelease, KeyPress, KeyRelease
+	// May have to call platform-specific event-handling functions here.
 
 	// Check button state
 	if (map.GetBoolWasDown(ButtonConfirm))
@@ -106,14 +105,13 @@ Gainput is built using CMake which makes it easy to build the library.
 
 Simply run these commands:
 -# `mkdir build`
+-# `cd build`
 -# `cmake ..`
 -# `make`
 
-There are the regular CMake build configurations from which you choose by adding one these to the `cmake` call:
+There are the regular CMake build configurations from which you choose by adding one these to the `cmake` call, for example:
 - `-DCMAKE_BUILD_TYPE=Debug`
 - `-DCMAKE_BUILD_TYPE=Release`
-
-The \c debug configuration supports debugging while the \c release configuration is optimized.
 
 Building Gainput as shown above, will build a dynamic-link library, a static-link library, and all samples. The executables can be found in the \c build/ folder.
 
@@ -123,11 +121,12 @@ There is a number of defines that determine what is included in the library and 
 
 Name | Description
 -----|------------
-\c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables a lot of internal console output and checks.
-\c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to. Automatically enabled in the \c debug and \c dev build configuration.
+\c GAINPUT_DEBUG | Enables debugging of the library itself, i.e. enables a lot of internal logs and checks.
+\c GAINPUT_DEV | Enables the built-in development tool server that external tools or other Gainput instances can connect to.
 \c GAINPUT_ENABLE_ALL_GESTURES | Enables all gestures. Note that there is also an individual define for each gesture (see gainput::InputGesture).
 \c GAINPUT_ENABLE_RECORDER | Enables recording of inputs.
-\c GAINPUT_LIB_BUILD | Should be set if Gainput is being built as library.
+\c GAINPUT_LIB_BUILD | Should be set if Gainput is being built as a library.
+
 
 \section sect_android_build Android NDK
 In order to cross-compile for Android, the build has to be configured differently.
@@ -209,7 +208,7 @@ The gamepad support is implemented using XINPUT which is Microsoft's most curren
 
 
 \page page_dependencies Dependencies
-Gainput has very few external dependencies in order to make it as self-contained as possible. Normally, the only extra piece of software you might have to install is Python. Anything else should come with your IDE (or regular platform SDK).
+Gainput has very few external dependencies in order to make it as self-contained as possible. Normally, the only extra piece of software you might have to install is CMake. Anything else should come with your IDE (or regular platform SDK).
 
 \section sect_libs Libraries
 Most importantly, Gainput does not depend on the STL or any other unnecessary helper libraries. Input is acquired using the following methods:
@@ -371,13 +370,13 @@ GetLibName()
 uint32_t
 GetLibVersion()
 {
-	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (9) );
+	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (10) );
 }
 
 const char*
 GetLibVersionString()
 {
-	return "0.9.0-beta";
+	return "0.10.0-beta";
 }
 
 }
