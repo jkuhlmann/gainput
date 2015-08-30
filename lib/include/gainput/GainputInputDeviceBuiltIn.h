@@ -25,7 +25,7 @@ enum BuiltInButton
 
 class InputDeviceBuiltInImpl;
 
-/// An input device for inputs that are directly built into the executing device.
+/// An input device for inputs that are directly built into the executing device (for example, sensors in a phone).
 class GAINPUT_LIBEXPORT InputDeviceBuiltIn : public InputDevice
 {
 public:

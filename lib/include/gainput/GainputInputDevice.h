@@ -143,7 +143,9 @@ public:
 	/// Returns the device's previous state, probably best if only used internally.
 	InputState* GetPreviousInputState() { return previousState_; }
 
+	/// Returns the previously set dead zone for the given button or 0.0f if none was set yet.
 	float GetDeadZone(DeviceButtonId buttonId) const;
+	/// Sets the dead zone for the given button.
 	void SetDeadZone(DeviceButtonId buttonId, float value);
 
 	/// Enable/disable debug rendering of this device.
