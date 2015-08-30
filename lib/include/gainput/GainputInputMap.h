@@ -7,6 +7,9 @@ namespace gainput
 
 class UserButton;
 
+/// Type for filter functions that can be used to filter mapped float inputs.
+typedef float (*FilterFunc_T)(float const value, void* userData);
+
 /// Maps user buttons to device buttons.
 /**
  * This is the interface that should be used to get input. You can have several maps that are used
@@ -59,12 +62,15 @@ public:
 	 * \param userButton The user ID for this mapping.
 	 * \param device The device's ID of the device button to be mapped.
 	 * \param deviceButton The ID of the device button to be mapped.
-	 * \param min The minimum value of the mapped button.
-	 * \param max The maximum value of the mapped button.
+	 * \param min Optional minimum value of the mapped button.
+	 * \param max Optional maximum value of the mapped button.
+	 * \param filterFunc Optional filter functions that modifies the device button value.
+	 * \param filterUserData Optional user data pointer that is passed to filterFunc.
 	 * \return true if the mapping was created.
 	 */
 	bool MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton,
-			float min = 0.0f, float max = 1.0f);
+			float min = 0.0f, float max = 1.0f,
+			FilterFunc_T filterFunc = 0, void* filterUserData = 0);
 	/// Removes all mappings for the given user button.
 	void Unmap(UserButtonId userButton);
 	/// Returns if the given user button has any mappings.

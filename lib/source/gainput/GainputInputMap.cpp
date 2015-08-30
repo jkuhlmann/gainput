@@ -21,6 +21,9 @@ public:
 
 	float rangeMin;
 	float rangeMax;
+
+	FilterFunc_T filterFunc;
+	void* filterUserData;
 };
 
 typedef Array<MappedInput> MappedInputList;
@@ -115,7 +118,7 @@ InputMap::MapBool(UserButtonId userButton, DeviceId device, DeviceButtonId devic
 }
 
 bool
-InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton, float min, float max)
+InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId deviceButton, float min, float max, FilterFunc_T filterFunc, void* filterUserData)
 {
 	UserButton* ub = GetUserButton(userButton);
 
@@ -133,6 +136,8 @@ InputMap::MapFloat(UserButtonId userButton, DeviceId device, DeviceButtonId devi
 	mi.deviceButton = deviceButton;
 	mi.rangeMin = min;
 	mi.rangeMax = max;
+	mi.filterFunc = filterFunc;
+	mi.filterUserData = filterUserData;
 	ub->inputs.push_back(mi);
 
 	GAINPUT_DEV_NEW_USER_BUTTON(this, userButton, device, deviceButton);
@@ -333,6 +338,11 @@ InputMap::GetFloatState(UserButtonId userButton, bool previous) const
 				deviceValue = mi.rangeMin + tmpValue*mi.rangeMax;
 				down = true;
 			}
+		}
+
+		if (mi.filterFunc)
+		{
+			deviceValue = mi.filterFunc(deviceValue, mi.filterUserData);
 		}
 
 		if (down)
