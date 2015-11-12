@@ -15,6 +15,9 @@ namespace gainput
 class GAINPUT_LIBEXPORT DebugRenderer
 {
 public:
+	/// Empty virtual destructor.
+	virtual ~DebugRenderer() { }
+
 	/// Called to draw a circle with the given radius.
 	virtual void DrawCircle(float x, float y, float radius) = 0;
 
