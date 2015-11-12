@@ -66,7 +66,9 @@ void InputDevice::SetDeadZone(DeviceButtonId buttonId, float value)
 	}
 	if (!deadZones_)
 	{
-		deadZones_ = reinterpret_cast<float*>(manager_.GetAllocator().Allocate(sizeof(float) * state_->GetButtonCount()));
+		const size_t size = sizeof(float) * state_->GetButtonCount();
+		deadZones_ = reinterpret_cast<float*>(manager_.GetAllocator().Allocate(size));
+		memset(deadZones_, 0, size);
 	}
 	GAINPUT_ASSERT(buttonId < state_->GetButtonCount());
 	deadZones_[buttonId] = value;
