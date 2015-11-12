@@ -120,13 +120,13 @@ public:
 	iterator end() { return data_ + size_; }
 	const_iterator end() const { return data_ + size_; }
 
-	T& operator[] (unsigned i)
+	T& operator[] (size_t i)
 	{
 		GAINPUT_ASSERT(i < size_);
 		return data_[i];
 	}
 
-	const T& operator[] (unsigned i) const
+	const T& operator[] (size_t i) const
 	{
 		GAINPUT_ASSERT(i < size_);
 		return data_[i];
@@ -147,7 +147,7 @@ public:
 			--size_;
 	}
 
-	void reserve(unsigned capacity)
+	void reserve(size_t capacity)
 	{
 		if (capacity <= capacity_)
 			return;
@@ -262,7 +262,7 @@ public:
 	size_t size() const { return size_; }
 	bool empty() const { return size_ == 0; }
 
-	unsigned count(const K& k)
+	size_t count(const K& k)
 	{
 		return find(k) != end() ? 1 : 0;
 	}
@@ -361,7 +361,7 @@ public:
 		}
 	}
 
-	unsigned erase(const K& k)
+	size_t erase(const K& k)
 	{
 		if (keys_.empty())
 			return 0;
@@ -476,9 +476,9 @@ public:
 		 return nextRead_ < nextWrite_;
 	}
 
-	unsigned GetCount() const
+	size_t GetCount() const
 	{
-		const unsigned d = nextWrite_ - nextRead_;
+		const size_t d = nextWrite_ - nextRead_;
 		return d > N ? N : d;
 	}
 
@@ -496,8 +496,8 @@ public:
 
 private:
 	T buf_[N];
-	unsigned nextRead_;
-	unsigned nextWrite_;
+	size_t nextRead_;
+	size_t nextWrite_;
 };
 
 
