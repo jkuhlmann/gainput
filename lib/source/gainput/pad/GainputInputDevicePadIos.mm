@@ -44,7 +44,7 @@ void InputDevicePadImplIos::Update(InputDeltaState* delta)
 		if (!padFound_ && playerIndex == GCControllerPlayerIndexUnset)
 		{
 			controller = controllers[i];
-			controller.playerIndex = index_ - 1;
+			controller.playerIndex = index_;
 
 			__block InputDevicePadImplIos* block_deviceImpl = this;
 			controller.controllerPausedHandler = ^(GCController* controller)
@@ -54,7 +54,7 @@ void InputDevicePadImplIos::Update(InputDeltaState* delta)
 
 			break;
 		}
-		else if ([controllers[i] playerIndex] == index_ - 1)
+		else if ([controllers[i] playerIndex] == index_)
 		{
 			controller = controllers[i];
 			break;
