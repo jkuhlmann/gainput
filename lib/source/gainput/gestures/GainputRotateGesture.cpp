@@ -114,7 +114,7 @@ RotateGesture::InternalUpdate(InputDeltaState* delta)
 	float currentAngle = angle - initialAngle_;
 	if (currentAngle < 0.0f)
 	{
-		currentAngle += M_PI*2.0f;
+		currentAngle += static_cast<float>(M_PI)*2.0f;
 	}
 
 	HandleAxis(*this, *state_, delta, RotateAngle, currentAngle);

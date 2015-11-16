@@ -52,7 +52,7 @@ InputRecording::InputRecording(InputManager& manager, void* data, size_t size, A
 		{
 			uint8_t value;
 			stream->Read(value);
-			change.b = value;
+			change.b = (value != 0);
 			GAINPUT_ASSERT(sizeof(float) >= sizeof(uint8_t));
 			for (size_t i = 0; i < sizeof(float)-sizeof(uint8_t); ++i)
 			{

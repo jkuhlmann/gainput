@@ -13,7 +13,7 @@ struct DeviceButtonInfo
 	const char* name;
 };
 
-DeviceButtonInfo deviceButtonInfos[] =
+DeviceButtonInfo const deviceButtonInfos[] =
 {
 	{ BT_BOOL, "touch_0_down" },
 	{ BT_FLOAT, "touch_0_x" },

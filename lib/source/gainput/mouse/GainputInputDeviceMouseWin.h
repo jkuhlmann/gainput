@@ -45,7 +45,7 @@ public:
 		GAINPUT_ASSERT(previousState_);
 
 		DeviceButtonId buttonId;
-		bool pressed;
+		bool pressed = false;
 		bool moveMessage = false;
 		int ax = -1;
 		int ay = -1;
