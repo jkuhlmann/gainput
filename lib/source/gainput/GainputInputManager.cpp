@@ -30,7 +30,7 @@
 namespace gainput
 {
 
-InputManager::InputManager(Allocator& allocator) :
+InputManager::InputManager(bool useSystemTime, Allocator& allocator) :
 		allocator_(allocator),
 		devices_(allocator_),
 		nextDeviceId_(0),
@@ -40,8 +40,10 @@ InputManager::InputManager(Allocator& allocator) :
 		modifiers_(allocator_),
 		nextModifierId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_)),
+		currentTime_(0),
 		displayWidth_(-1),
 		displayHeight_(-1),
+		useSystemTime_(useSystemTime),
 		debugRenderingEnabled_(false),
 		debugRenderer_(0)
 {
@@ -103,40 +105,55 @@ InputManager::Update()
 	}
 }
 
+void
+InputManager::Update(uint64_t deltaTime)
+{
+	GAINPUT_ASSERT(useSystemTime_ == false);
+	currentTime_ += deltaTime;
+	Update();
+}
+
 uint64_t
 InputManager::GetTime() const
 {
+	if (useSystemTime_)
+	{
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
-	struct timespec ts;
-	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
-	{
-		return -1;
-	}
+		struct timespec ts;
+		if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
+		{
+			return -1;
+		}
 
-	uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
-	return t;
+		uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
+		return t;
 #elif defined(GAINPUT_PLATFORM_WIN)
-	static LARGE_INTEGER perfFreq = { 0 };
-	if (perfFreq.QuadPart == 0)
-	{
-		QueryPerformanceFrequency(&perfFreq);
-		GAINPUT_ASSERT(perfFreq.QuadPart != 0);
-	}
-	LARGE_INTEGER count;
-	QueryPerformanceCounter(&count);
-	double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
-	return static_cast<uint64_t>(t);
+		static LARGE_INTEGER perfFreq = { 0 };
+		if (perfFreq.QuadPart == 0)
+		{
+			QueryPerformanceFrequency(&perfFreq);
+			GAINPUT_ASSERT(perfFreq.QuadPart != 0);
+		}
+		LARGE_INTEGER count;
+		QueryPerformanceCounter(&count);
+		double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
+		return static_cast<uint64_t>(t);
 #elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
-	clock_serv_t cclock;
-	mach_timespec_t mts;
-	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-	clock_get_time(cclock, &mts);
-	mach_port_deallocate(mach_task_self(), cclock);
-	uint64_t t = mts.tv_sec*1000ul + mts.tv_nsec/1000000ul;
-	return t;
+		clock_serv_t cclock;
+		mach_timespec_t mts;
+		host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+		clock_get_time(cclock, &mts);
+		mach_port_deallocate(mach_task_self(), cclock);
+		uint64_t t = mts.tv_sec*1000ul + mts.tv_nsec/1000000ul;
+		return t;
 #else
 #error Gainput: No time support
 #endif
+	}
+	else
+	{
+		return currentTime_;
+	}
 }
 
 DeviceId

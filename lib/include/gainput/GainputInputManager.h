@@ -27,10 +27,13 @@ public:
 	/// Initializes the manager.
 	/**
 	 * Further initialization is typically necessary.
+	 * \param useSystemTime Specifies if the GetTime() function uses system time or the time
+	 * supplied to Update(uint64_t).
 	 * \param allocator The memory allocator to be used for all allocations.
 	 * \see SetDisplaySize
+	 * \see GetTime
 	 */
-	InputManager(Allocator& allocator = GetDefaultAllocator());
+	InputManager(bool useSystemTime = true, Allocator& allocator = GetDefaultAllocator());
 
 	/// Destructs the manager.
 	~InputManager();
@@ -65,7 +68,23 @@ public:
 #endif
 
 	/// Updates the input state, call this every frame.
+	/**
+	 * If the InputManager was initialized with `useSystemTime` set to `false`, you have to
+	 * call Update(uint64_t) instead.
+	 * \see GetTime
+	 */
 	void Update();
+
+	/// Updates the input state and the manager's time, call this every frame.
+	/**
+	 * Updates the time returned by GetTime() and then calls the regular Update(). This function
+	 * should only be called if the InputManager was initialized with `useSystemTime`
+	 * set to `false`.
+	 * \param deltaTime The provided must be in milliseconds.
+	 * \see Update
+	 * \see GetTime
+	 */
+	void Update(uint64_t deltaTime);
 
 	/// Returns the allocator to be used for memory allocations.
 	Allocator& GetAllocator() const { return allocator_; }
@@ -195,8 +214,10 @@ private:
 
 	InputDeltaState* deltaState_;
 
+	uint64_t currentTime_;
 	int displayWidth_;
 	int displayHeight_;
+	bool useSystemTime_;
 
 	bool debugRenderingEnabled_;
 	DebugRenderer* debugRenderer_;

@@ -139,7 +139,7 @@ void SampleMain()
 
 	gainput::TrackingAllocator allocator(gainput::GetDefaultAllocator());
 
-	gainput::InputManager manager(allocator);
+	gainput::InputManager manager(true, allocator);
 
 	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
 	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
