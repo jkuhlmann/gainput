@@ -27,6 +27,9 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 	gainput::InputDeviceMouseImplMac* device = reinterpret_cast<gainput::InputDeviceMouseImplMac*>(user);
 	GAINPUT_ASSERT(device->previousState_);
 
+	NSApplication* app = [NSApplication sharedApplication];
+	NSWindow* window = app.keyWindow;
+
 	if (type == kCGEventTapDisabledByTimeout
 			|| type == kCGEventTapDisabledByUserInput)
 	{
@@ -34,8 +37,6 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 		CGEventTapEnable(reinterpret_cast<CFMachPortRef>(device->eventTap_), true);
 	}
 
-	NSApplication* app = [NSApplication sharedApplication];
-	NSWindow* window = app.keyWindow;
 	if (window)
 	{
 		CGPoint theLocation = CGEventGetLocation(event);
@@ -69,6 +70,14 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 			gainput::HandleButton(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
 		}
 	}
+    else
+    {
+        // Window was unfocused.
+        for (unsigned i = gainput::MouseButton0; i < gainput::MouseButtonCount; ++ i)
+        {
+            gainput::HandleButton(device->device_, device->nextState_, device->delta_, i, false);
+        }
+    }
 
 	return event;
 }
