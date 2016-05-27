@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
-option(GAINPUT_SAMPLES "Build Samples for Gainput" OFF)
-option(GAINPUT_TESTS "Build Tests for Gainput" OFF)
+option(GAINPUT_SAMPLES "Build Samples for Gainput" ON)
+option(GAINPUT_TESTS "Build Tests for Gainput" ON)
 if(!WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
 else()
