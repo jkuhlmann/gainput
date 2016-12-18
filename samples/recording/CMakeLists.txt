@@ -13,7 +13,7 @@ else()
 	add_executable(recordingsample WIN32 ${sources} ${sfwsources})
 endif()
 
-target_link_libraries(recordingsample gainputstatic)
+target_link_libraries(recordingsample gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(recordingsample X11 GL rt)

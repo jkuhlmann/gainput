@@ -13,7 +13,7 @@ else()
 	add_executable(gesturesample WIN32 ${sources} ${sfwsources})
 endif()
 
-target_link_libraries(gesturesample gainputstatic)
+target_link_libraries(gesturesample gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gesturesample X11 GL rt)

@@ -15,7 +15,7 @@ else()
 	add_executable(basicsample WIN32 ${sources} ${mmsources})
 endif()
 
-target_link_libraries(basicsample gainputstatic)
+target_link_libraries(basicsample gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(basicsample X11 GL rt)
