@@ -1,5 +1,5 @@
-
 project(gainput)
+message(STATUS "GAINPUT version ${GAINPUT_VERSION}")
 
 set(CMAKE_MACOSX_RPATH 1)
 
@@ -15,9 +15,26 @@ if(APPLE)
 	file(GLOB_RECURSE mmsources source/*.mm)
 endif()
 
-add_library(gainputstatic STATIC ${sources} ${mmsources})
+## build STATIC *or* SHARED
+if (GAINPUT_BUILD_SHARED)
+  message(STATUS "..Building shared libraries (-DGAINPUT_BUILD_SHARED=OFF to disable)")
+  add_library(gainput_shared SHARED ${sources} ${mmsources})
+  set_target_properties(gainput_shared PROPERTIES
+    OUTPUT_NAME gainput
+    DEBUG_POSTFIX -d
+    VERSION ${GAINPUT_VERSION}
+    SOVERSION ${GAINPUT_MAJOR_VERSION}
+    FOLDER gainput
+  )
+  set(install_libs ${install_libs} gainput_shared)
+endif (GAINPUT_BUILD_SHARED)
 
-add_library(gainput SHARED ${sources} ${mmsources})
+if (GAINPUT_BUILD_STATIC)
+  message(STATUS "..Building shared libraries (-DGAINPUT_BUILD_STATIC=OFF to disable)")
+  add_library(gainputstatic STATIC ${sources} ${mmsources})
+  set_target_properties(gainputstatic PROPERTIES DEBUG_POSTFIX -d FOLDER gainput)
+  set(install_libs ${install_libs} gainputstatic)
+endif (GAINPUT_BUILD_STATIC)
 
 if(WIN32)
 	target_link_libraries(gainput ${XINPUT} ws2_32)
@@ -33,3 +50,21 @@ elseif(APPLE)
 	target_link_libraries(gainput ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
 
+# Library installation directory
+if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+    set(CMAKE_INSTALL_LIBDIR lib)
+endif(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+
+install(
+    DIRECTORY "include/gainput"
+    DESTINATION "include"
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(
+    TARGETS ${install_libs}
+    LIBRARY DESTINATION "${libdir}"
+    ARCHIVE DESTINATION "${libdir}"
+    RUNTIME DESTINATION "bin"
+)
