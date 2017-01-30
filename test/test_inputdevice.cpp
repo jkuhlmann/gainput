@@ -16,8 +16,6 @@ TEST_CASE("InputDevice/keyboard", "")
 	REQUIRE(device->GetDeviceId() != InvalidDeviceId);
 	REQUIRE(device->GetType() == InputDevice::DT_KEYBOARD);
 	REQUIRE(device->GetTypeName());
-	REQUIRE(device->GetState() == InputDevice::DS_OK);
-	REQUIRE(device->IsAvailable());
 
 	REQUIRE(device->IsValidButtonId(KeyEscape));
 	REQUIRE(device->IsValidButtonId(KeyReturn));
@@ -60,8 +58,6 @@ TEST_CASE("InputDevice/mouse", "")
 	REQUIRE(device->GetDeviceId() != InvalidDeviceId);
 	REQUIRE(device->GetType() == InputDevice::DT_MOUSE);
 	REQUIRE(device->GetTypeName());
-	REQUIRE(device->GetState() == InputDevice::DS_OK);
-	REQUIRE(device->IsAvailable());
 
 	REQUIRE(device->IsValidButtonId(MouseButtonLeft));
 	REQUIRE(device->IsValidButtonId(MouseButtonMiddle));
