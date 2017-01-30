@@ -20,6 +20,34 @@
 		inputManager_ = &inputManager;
 		[self setMultipleTouchEnabled:YES];
 	}
+
+    gainput::DeviceId deviceId = inputManager_->FindDeviceId(gainput::InputDevice::DT_TOUCH, 0);
+	if (deviceId != gainput::InvalidDeviceId)
+	{
+        gainput::InputDeviceTouch* device = static_cast<gainput::InputDeviceTouch*>(inputManager_->GetDevice(deviceId));
+        if (device)
+        {
+            gainput::InputDeviceTouchImplIos* deviceImpl = static_cast<gainput::InputDeviceTouchImplIos*>(device->GetPimpl());
+            if (deviceImpl)
+            {
+                bool supports = false;
+                UIWindow* window = [UIApplication sharedApplication].keyWindow;
+                if (window)
+                {
+                    UIViewController* rvc = [window rootViewController];
+                    if (rvc)
+                    {
+                        UITraitCollection* tc = [rvc traitCollection];
+                        if (tc && [tc respondsToSelector:@selector(forceTouchCapability)])
+                        {
+                            supports = [tc forceTouchCapability] == UIForceTouchCapabilityAvailable;
+                        }
+                    }
+                }
+                deviceImpl->SetSupportsPressure(supports);
+            }
+        }
+	}
 	return self;
 }
 
@@ -46,15 +74,23 @@
 		return;
 	}
 
-
 	for (UITouch *touch in touches)
 	{
 		CGPoint point = [touch locationInView:self];
-
+       
+        CGFloat force = 0.f;
+        CGFloat maxForce = 1.f;
+        if ([touch respondsToSelector:@selector(force)])
+        {
+            maxForce = [touch maximumPossibleForce];
+            force = [touch force];
+        }
+        
 		float x = point.x / self.bounds.size.width;
 		float y = point.y / self.bounds.size.height;
-
-		deviceImpl->HandleTouch(static_cast<void*>(touch), x, y);
+        float z = force / maxForce;
+        
+		deviceImpl->HandleTouch(static_cast<void*>(touch), x, y, z);
 	}
 }
 
@@ -81,10 +117,19 @@
 	{
 		CGPoint point = [touch locationInView:self];
 
+        CGFloat force = 0.f;
+        CGFloat maxForce = 1.f;
+        if ([touch respondsToSelector:@selector(force)])
+        {
+            maxForce = [touch maximumPossibleForce];
+            force = [touch force];
+        }
+
 		float x = point.x / self.bounds.size.width;
 		float y = point.y / self.bounds.size.height;
-
-		deviceImpl->HandleTouch(static_cast<void*>(touch), x, y);
+        float z = force / maxForce;
+        
+		deviceImpl->HandleTouch(static_cast<void*>(touch), x, y, z);
 	}
 }
 
@@ -111,10 +156,19 @@
 	{
 		CGPoint point = [touch locationInView:self];
 
+        CGFloat force = 0.f;
+        CGFloat maxForce = 1.f;
+        if ([touch respondsToSelector:@selector(force)])
+        {
+            maxForce = [touch maximumPossibleForce];
+            force = [touch force];
+        }
+        
 		float x = point.x / self.bounds.size.width;
 		float y = point.y / self.bounds.size.height;
-
-		deviceImpl->HandleTouchEnd(static_cast<void*>(touch), x, y);
+        float z = force / maxForce;
+        
+		deviceImpl->HandleTouchEnd(static_cast<void*>(touch), x, y, z);
 	}
 }
 

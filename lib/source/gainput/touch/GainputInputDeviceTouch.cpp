@@ -54,6 +54,24 @@ InputDeviceTouch::~InputDeviceTouch()
 	manager_.GetAllocator().Delete(impl_);
 }
 
+bool
+InputDeviceTouch::IsValidButtonId(DeviceButtonId deviceButton) const
+{
+    if (deviceButton == Touch0Pressure
+        || deviceButton == Touch1Pressure
+        || deviceButton == Touch2Pressure
+        || deviceButton == Touch3Pressure
+        || deviceButton == Touch4Pressure
+        || deviceButton == Touch5Pressure
+        || deviceButton == Touch6Pressure
+        || deviceButton == Touch7Pressure
+    )
+    {
+        return impl_->SupportsPressure();
+    }
+    return deviceButton < TouchCount_;
+}
+
 void
 InputDeviceTouch::InternalUpdate(InputDeltaState* delta)
 {

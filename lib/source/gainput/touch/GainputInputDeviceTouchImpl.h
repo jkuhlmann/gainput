@@ -12,6 +12,7 @@ public:
 	virtual InputDevice::DeviceVariant GetVariant() const = 0;
 	virtual InputDevice::DeviceState GetState() const = 0;
 	virtual void Update(InputDeltaState* delta) = 0;
+    virtual bool SupportsPressure() const { return false; }
 };
 
 }

@@ -21,7 +21,8 @@ public:
 		previousState_(&previousState),
 		nextState_(manager.GetAllocator(), TouchPointCount*TouchDataElems),
 		delta_(0),
-		touches_(manager.GetAllocator())
+		touches_(manager.GetAllocator()),
+        supportsPressure_(false)
 	{
 	}
 
@@ -38,7 +39,17 @@ public:
 
 	InputDevice::DeviceState GetState() const { return InputDevice::DS_OK; }
 
-	void HandleTouch(void* id, float x, float y)
+    bool SupportsPressure() const
+    {
+        return supportsPressure_;
+    }
+
+    void SetSupportsPressure(bool supports)
+    {
+        supportsPressure_ = supports;
+    }
+
+	void HandleTouch(void* id, float x, float y, float z = 0.f)
 	{
 		GAINPUT_ASSERT(state_);
 		GAINPUT_ASSERT(previousState_);
@@ -75,10 +86,10 @@ public:
 		HandleBool(gainput::Touch0Down + touchIdx*4, true);
 		HandleFloat(gainput::Touch0X + touchIdx*4, x);
 		HandleFloat(gainput::Touch0Y + touchIdx*4, y);
-		HandleFloat(gainput::Touch0Pressure + touchIdx*4, 1.0f);
+		HandleFloat(gainput::Touch0Pressure + touchIdx*4, z);
 	}
 
-	void HandleTouchEnd(void* id, float x, float y)
+	void HandleTouchEnd(void* id, float x, float y, float z = 0.f)
 	{
 		GAINPUT_ASSERT(state_);
 		GAINPUT_ASSERT(previousState_);
@@ -104,7 +115,7 @@ public:
 		HandleBool(gainput::Touch0Down + touchIdx*4, false);
 		HandleFloat(gainput::Touch0X + touchIdx*4, x);
 		HandleFloat(gainput::Touch0Y + touchIdx*4, y);
-		HandleFloat(gainput::Touch0Pressure + touchIdx*4, 0.0f);
+		HandleFloat(gainput::Touch0Pressure + touchIdx*4, z);
 	}
 
 private:
@@ -117,6 +128,8 @@ private:
 
 	typedef gainput::Array< void* > TouchList;
 	TouchList touches_;
+
+    bool supportsPressure_;
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{

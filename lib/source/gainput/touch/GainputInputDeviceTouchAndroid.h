@@ -80,7 +80,7 @@ public:
 		HandleFloat(Touch0Y + id*TouchDataElems, float(y)/float(h));
 		const bool down = (action == 0 || action == 2);
 		HandleBool(Touch0Down + id*TouchDataElems, down);
-		HandleFloat(Touch0Pressure + id*TouchDataElems, down ? 1.0f : 0.0f);
+		HandleFloat(Touch0Pressure + id*TouchDataElems, 0.0f);
 #ifdef GAINPUT_DEBUG
 		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i, action: %d\n", id, x, y, w, h, action);
 #endif

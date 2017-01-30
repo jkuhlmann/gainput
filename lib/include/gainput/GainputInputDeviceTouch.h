@@ -78,7 +78,7 @@ public:
 	DeviceType GetType() const { return DT_TOUCH; }
 	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "touch"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton < TouchCount_; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const;
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
