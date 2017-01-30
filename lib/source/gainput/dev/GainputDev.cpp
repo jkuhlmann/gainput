@@ -37,6 +37,8 @@ static Array<DeviceId> devSyncedDevices(GetDefaultAllocator());
 static size_t devFrame = 0;
 static bool useHttp = false;
 
+static const unsigned kMaxReadTries = 1000000;
+
 static size_t SendMessage(Stream& stream)
 {
 	const uint8_t length = stream.GetSize();
@@ -46,7 +48,7 @@ static size_t SendMessage(Stream& stream)
 	return sent;
 }
 
-static bool ReadMessage(Stream& stream)
+static bool ReadMessage(Stream& stream, bool& outFailed)
 {
 	stream.Reset();
 	size_t received = devConnection->Receive(stream, 1);
@@ -56,11 +58,25 @@ static bool ReadMessage(Stream& stream)
 	stream.Read(length);
 	stream.Reset();
 	received = 0;
+    unsigned tries = 0;
+    bool failed = false;
 	while (received < length)
 	{
 		stream.SeekEnd(0);
 		received += devConnection->Receive(stream, length - received);
+        ++tries;
+        if (tries >= kMaxReadTries)
+        {
+            failed = true;
+            break;
+        }
 	}
+    outFailed = failed;
+    if (failed)
+    {
+        GAINPUT_LOG("GAINPUT: ReadMessage failed.\n");
+        return false;
+    }
 	stream.SeekBegin(0);
 	return true;
 }
@@ -70,7 +86,7 @@ class DevUserButtonListener : public MappedInputListener
 public:
 	DevUserButtonListener(const InputMap* map) : map_(map) { }
 
-	bool OnUserButtonBool(UserButtonId userButton, bool oldValue, bool newValue)
+	bool OnUserButtonBool(UserButtonId userButton, bool, bool newValue)
 	{
 		if (!devConnection || !devSendInfos)
 		{
@@ -90,7 +106,7 @@ public:
 		return true;
 	}
 
-	bool OnUserButtonFloat(UserButtonId userButton, float oldValue, float newValue)
+	bool OnUserButtonFloat(UserButtonId userButton, float, float newValue)
 	{
 		if (!devConnection || !devSendInfos)
 		{
@@ -119,7 +135,7 @@ class DevDeviceButtonListener : public InputListener
 public:
 	DevDeviceButtonListener(const InputManager* inputManager) : inputManager_(inputManager) { }
 
-	bool OnDeviceButtonBool(DeviceId deviceId, DeviceButtonId deviceButton, bool oldValue, bool newValue)
+	bool OnDeviceButtonBool(DeviceId deviceId, DeviceButtonId deviceButton, bool, bool newValue)
 	{
 		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
 			return true;
@@ -137,7 +153,7 @@ public:
 		return true;
 	}
 
-	bool OnDeviceButtonFloat(DeviceId deviceId, DeviceButtonId deviceButton, float oldValue, float newValue)
+	bool OnDeviceButtonFloat(DeviceId deviceId, DeviceButtonId deviceButton, float, float newValue)
 	{
 		if (!devConnection || devSyncedDevices.find(deviceId) == devSyncedDevices.end())
 			return true;
@@ -166,7 +182,7 @@ ListenerId devDeviceButtonListenerId;
 
 
 void
-SendDevice(const InputDevice* device, Stream* stream, NetConnection* devConnection)
+SendDevice(const InputDevice* device, Stream* stream, NetConnection*)
 {
 	const DeviceId deviceId = device->GetDeviceId();
 	stream->Reset();
@@ -200,7 +216,7 @@ SendDevice(const InputDevice* device, Stream* stream, NetConnection* devConnecti
 }
 
 void
-SendMap(const InputMap* map, Stream* stream, NetConnection* devConnection)
+SendMap(const InputMap* map, Stream* stream, NetConnection*)
 {
 	stream->Reset();
 	stream->Write(uint8_t(DevCmdMap));
@@ -260,12 +276,18 @@ DevInit(InputManager* manager)
 	NetAddress address("0.0.0.0", 1211);
 	devListener = allocator->New<NetListener>(address, *allocator);
 
-	if (!devListener->Start(false))
-	{
-		GAINPUT_LOG("GAINPUT: Unable to listen\n");
-		allocator->Delete(devListener);
-		devListener = 0;
-	}
+    if (devListener->Start(false))
+    {
+        GAINPUT_LOG("TOOL: Listening...\n");
+    }
+    else
+    {
+        GAINPUT_LOG("TOOL: Unable to listen\n");
+        allocator->Delete(devListener);
+        devListener = 0;
+    }
+
+	
 }
 
 void
@@ -373,7 +395,8 @@ DevUpdate(InputDeltaState* delta)
 	else
 	{
 		Stream* stream = allocator->New<MemoryStream>(1024, *allocator);
-		while (ReadMessage(*stream))
+        bool readFailed = false;
+		while (ReadMessage(*stream, readFailed))
 		{
 			uint8_t cmd;
 			stream->Read(cmd);
@@ -430,14 +453,13 @@ DevUpdate(InputDeltaState* delta)
 				const DeviceId deviceId = inputManager->FindDeviceId(InputDevice::DeviceType(deviceType), deviceIndex);
 				InputDevice* device = inputManager->GetDevice(deviceId);
 				GAINPUT_ASSERT(device);
-				GAINPUT_ASSERT(device->IsValidButtonId(deviceButtonId));
 				GAINPUT_ASSERT(device->GetInputState());
 				GAINPUT_ASSERT(device->GetPreviousInputState());
 				if (device->GetButtonType(deviceButtonId) == BT_BOOL)
 				{
 					uint8_t value;
 					stream->Read(value);
-					bool boolValue = bool(value);
+					bool boolValue = (0 != value);
 					HandleButton(*device, *device->GetInputState(), delta, deviceButtonId, boolValue);
 				}
 				else
@@ -463,7 +485,7 @@ DevUpdate(InputDeltaState* delta)
 
 		allocator->Delete(stream);
 
-		if (!devConnection->IsConnected() || pingFailed)
+		if (readFailed || !devConnection->IsConnected() || pingFailed)
 		{
 			GAINPUT_LOG("GAINPUT: Disconnected\n");
 			devConnection->Close();
@@ -639,7 +661,8 @@ DevConnect(InputManager* manager, const char* ip, unsigned port)
 void
 DevStartDeviceSync(DeviceId deviceId)
 {
-	if (devSyncedDevices.find(deviceId) != devSyncedDevices.end())
+	if (devSyncedDevices.find(deviceId) != devSyncedDevices.end()
+        || !devConnection)
 		return;
 	devSyncedDevices.push_back(deviceId);
 
