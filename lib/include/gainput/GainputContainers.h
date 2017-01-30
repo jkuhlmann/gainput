@@ -151,7 +151,7 @@ public:
 	{
 		if (capacity <= capacity_)
 			return;
-		capacity = (capacity_*capacity_) < capacity ? capacity : (capacity_*capacity_);
+		capacity = (capacity_*2) < capacity ? capacity : (capacity_*2);
 		T* newData = static_cast<T*>(allocator_.Allocate(sizeof(T)*capacity));
 		memcpy(newData, data_, sizeof(T)*capacity_);
 		allocator_.Deallocate(data_);
@@ -391,7 +391,7 @@ public:
 				}
 				else
 				{
-					uint32_t lastVi = values_.size()-1;
+					size_t lastVi = values_.size()-1;
 					values_[vi] = values_[lastVi];
 					values_.pop_back();
 					
