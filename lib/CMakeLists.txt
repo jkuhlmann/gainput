@@ -18,15 +18,15 @@ endif()
 ## build STATIC *or* SHARED
 if (GAINPUT_BUILD_SHARED)
   message(STATUS "..Building shared libraries (-DGAINPUT_BUILD_SHARED=OFF to disable)")
-  add_library(gainput_shared SHARED ${sources} ${mmsources})
-  set_target_properties(gainput_shared PROPERTIES
+  add_library(gainput SHARED ${sources} ${mmsources})
+  set_target_properties(gainput PROPERTIES
     OUTPUT_NAME gainput
     DEBUG_POSTFIX -d
     VERSION ${GAINPUT_VERSION}
     SOVERSION ${GAINPUT_MAJOR_VERSION}
     FOLDER gainput
   )
-  set(install_libs ${install_libs} gainput_shared)
+  set(install_libs ${install_libs} gainput)
 endif (GAINPUT_BUILD_SHARED)
 
 if (GAINPUT_BUILD_STATIC)
