@@ -26,3 +26,6 @@ elseif(APPLE)
 	target_link_libraries(gainputtest ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
 
+if(MSVC)
+	set_target_properties(gainputtest PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+endif(MSVC)
