@@ -13,6 +13,3 @@ before_build:
 
 build:
   project: build\Project.sln
-
-after_build:
-  - C:\projects\gainput\build\test\Debug\gainputtest.exe
