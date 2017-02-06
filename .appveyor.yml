@@ -15,4 +15,4 @@ build:
   project: build\Project.sln
 
 after_build:
-  - test\gainputtest.exe
+  - build\test\Debug\gainputtest.exe
