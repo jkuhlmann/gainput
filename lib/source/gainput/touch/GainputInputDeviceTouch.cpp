@@ -19,7 +19,7 @@
 namespace gainput
 {
 
-InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, unsigned index, DeviceVariant /*variant*/) :
+InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, unsigned index, DeviceVariant variant) :
 	InputDevice(manager, device, index == InputDevice::AutoIndex ? manager.GetDeviceCountByType(DT_TOUCH) : 0),
 	impl_(0)
 {
