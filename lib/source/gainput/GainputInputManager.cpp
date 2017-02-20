@@ -141,7 +141,7 @@ InputManager::GetTime() const
 #elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
 		clock_serv_t cclock;
 		mach_timespec_t mts;
-		host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+		host_get_clock_service(mach_host_self(), SYSTEM_CLOCK, &cclock);
 		clock_get_time(cclock, &mts);
 		mach_port_deallocate(mach_task_self(), cclock);
 		uint64_t t = mts.tv_sec*1000ul + mts.tv_nsec/1000000ul;
