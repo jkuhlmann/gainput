@@ -123,7 +123,7 @@ InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, InputDev
 		;
 
 	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap,
-			kCGHeadInsertEventTap,   
+			kCGHeadInsertEventTap,
 			kCGEventTapOptionDefault,
 			eventMask,
 			MouseTap,
