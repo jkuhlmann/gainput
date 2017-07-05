@@ -20,7 +20,8 @@ public:
 		sensorManager_(0),
 		accelerometerSensor_(0),
 		gyroscopeSensor_(0),
-		sensorEventQueue_(0)
+		sensorEventQueue_(0),
+		gravityInitialized_(false)
 	{
 		ALooper* looper = ALooper_forThread();
 		if (!looper)
@@ -113,9 +114,32 @@ public:
 		{
 			if (event.type == ASENSOR_TYPE_ACCELEROMETER)
 			{
-				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationX, event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationY, event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
-				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationZ, event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+				// https://developer.android.com/reference/android/hardware/SensorEvent.html#values
+				static const float kAlpha = 0.8f;
+
+				if (!gravityInitialized_)
+				{
+					gravity_[0] = event.acceleration.x / ASENSOR_STANDARD_GRAVITY;
+					gravity_[1] = event.acceleration.y / ASENSOR_STANDARD_GRAVITY;
+					gravity_[2] = event.acceleration.z / ASENSOR_STANDARD_GRAVITY;
+					gravityInitialized_ = true;
+				}
+
+				gravity_[0] = kAlpha * gravity_[0] + (1.0f - kAlpha) * (event.acceleration.x / ASENSOR_STANDARD_GRAVITY);
+				gravity_[1] = kAlpha * gravity_[1] + (1.0f - kAlpha) * (event.acceleration.y / ASENSOR_STANDARD_GRAVITY);
+				gravity_[2] = kAlpha * gravity_[2] + (1.0f - kAlpha) * (event.acceleration.z / ASENSOR_STANDARD_GRAVITY);
+
+				float accel[3];
+				accel[0] = (event.acceleration.x / ASENSOR_STANDARD_GRAVITY) - gravity_[0];
+				accel[1] = (event.acceleration.y / ASENSOR_STANDARD_GRAVITY) - gravity_[1];
+				accel[2] = (event.acceleration.z / ASENSOR_STANDARD_GRAVITY) - gravity_[2];
+
+				HandleAxis(device_, state_, delta, BuiltInButtonGravityX, gravity_[0]);
+				HandleAxis(device_, state_, delta, BuiltInButtonGravityY, gravity_[1]);
+				HandleAxis(device_, state_, delta, BuiltInButtonGravityZ, gravity_[2]);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationX, accel[0]);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationY, accel[1]);
+				HandleAxis(device_, state_, delta, BuiltInButtonAccelerationZ, accel[2]);
 			}
 			else if (event.type == ASENSOR_TYPE_GYROSCOPE)
 			{
@@ -169,6 +193,8 @@ private:
 	const ASensor* gyroscopeSensor_;
 	const ASensor* magneticFieldSensor_;
 	ASensorEventQueue* sensorEventQueue_;
+	float gravity_[3];
+	bool gravityInitialized_;
 };
 
 }
