@@ -8,9 +8,7 @@ namespace gainput
 class InputDeviceTouchImplNull : public InputDeviceTouchImpl
 {
 public:
-	InputDeviceTouchImplNull(InputManager& manager, InputDevice& device) :
-		manager_(manager),
-		device_(device)
+	InputDeviceTouchImplNull(InputManager& manager, InputDevice& device)
 	{
 	}
 
@@ -24,10 +22,6 @@ public:
 	}
 
 	InputDevice::DeviceState GetState() const { return InputDevice::DS_OK; }
-
-private:
-	InputManager& manager_;
-	InputDevice& device_;
 };
 
 }

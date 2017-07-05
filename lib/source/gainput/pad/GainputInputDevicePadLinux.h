@@ -38,7 +38,6 @@ public:
 		manager_(manager),
 		device_(device),
 		state_(state),
-		previousState_(previousState),
 		index_(index),
 		deviceState_(InputDevice::DS_UNAVAILABLE),
 		fd_(-1),
@@ -178,7 +177,6 @@ private:
 	InputManager& manager_;
 	InputDevice& device_;
 	InputState& state_;
-	InputState& previousState_;
 	unsigned index_;
 	InputDevice::DeviceState deviceState_;
 	int fd_;
