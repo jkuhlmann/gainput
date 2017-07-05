@@ -27,7 +27,6 @@ if (GAINPUT_BUILD_SHARED)
     FOLDER gainput
   )
   set(install_libs ${install_libs} gainput)
-  target_include_directories(gainput PUBLIC "include")
 endif (GAINPUT_BUILD_SHARED)
 
 if (GAINPUT_BUILD_STATIC)
@@ -35,7 +34,6 @@ if (GAINPUT_BUILD_STATIC)
   add_library(gainputstatic STATIC ${sources} ${mmsources})
   set_target_properties(gainputstatic PROPERTIES DEBUG_POSTFIX -d FOLDER gainput)
   set(install_libs ${install_libs} gainputstatic)
-  target_include_directories(gainputstatic PUBLIC "include")
 endif (GAINPUT_BUILD_STATIC)
 
 if(WIN32)
