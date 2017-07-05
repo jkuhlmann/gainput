@@ -50,7 +50,8 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 	if (device->dialect_.count(scancode))
 	{
 		const DeviceButtonId buttonId = device->dialect_[scancode];
-		HandleButton(device->device_, device->nextState_, device->delta_, buttonId, pressed);
+        InputManager& manager = device->manager_;
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, pressed);
 	}
 #ifdef GAINPUT_DEBUG
 	else

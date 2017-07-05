@@ -58,13 +58,14 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 		return;
 	}
 
+    InputManager& manager = device->manager_;
 	CFIndex state = (int)IOHIDValueGetIntegerValue(value);
 	float analog = IOHIDValueGetScaledValue(value, kIOHIDValueScaleTypePhysical);
 
 	if (usagePage == kHIDPage_Button && device->buttonDialect_.count(usage))
 	{
 		const DeviceButtonId buttonId = device->buttonDialect_[usage];
-		HandleButton(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
 	}
 	else if (usagePage == kHIDPage_GenericDesktop)
 	{
@@ -84,10 +85,10 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 				case  7: dpadX = -1; dpadY =  1; break;
 				default: dpadX =  0; dpadY =  0; break;
 			}
-			HandleButton(device->device_, device->nextState_, device->delta_, PadButtonLeft, dpadX < 0);
-			HandleButton(device->device_, device->nextState_, device->delta_, PadButtonRight, dpadX > 0);
-			HandleButton(device->device_, device->nextState_, device->delta_, PadButtonUp, dpadY > 0);
-			HandleButton(device->device_, device->nextState_, device->delta_, PadButtonDown, dpadY < 0);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, PadButtonLeft, dpadX < 0);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, PadButtonRight, dpadX > 0);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, PadButtonUp, dpadY > 0);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, PadButtonDown, dpadY < 0);
 		}
 		else if (device->axisDialect_.count(usage))
 		{
@@ -100,12 +101,12 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 			{
 				analog = FixUpAnalog(analog, device->minAxis_, device->maxAxis_, true);
 			}
-			HandleAxis(device->device_, device->nextState_, device->delta_, buttonId, analog);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, analog);
 		}
 		else if (device->buttonDialect_.count(usage))
 		{
 			const DeviceButtonId buttonId = device->buttonDialect_[usage];
-			HandleButton(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, state != 0);
 		}
 #ifdef GAINPUT_DEBUG
 		else

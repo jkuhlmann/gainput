@@ -185,6 +185,9 @@ public:
 	/// De-registers the given modifier.
 	void RemoveDeviceStateModifier(ModifierId modifierId);
 
+    void EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, bool value);
+    void EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, float value);
+
 	/// [IN dev BUILDS ONLY] Connect to a remote host to send device state changes to.
 	void ConnectForStateSync(const char* ip, unsigned port);
 	/// [IN dev BUILDS ONLY] Initiate sending of device state changes to the given device.
@@ -215,6 +218,22 @@ private:
 	InputDeltaState* deltaState_;
 
 	uint64_t currentTime_;
+    struct Change
+    {
+        InputDevice* device;
+        InputState* state;
+        InputDeltaState* delta;
+        DeviceButtonId buttonId;
+		ButtonType type;
+		union
+		{
+			bool b;
+			float f;
+		};
+    };
+    
+    GAINPUT_CONC_QUEUE(Change) concurrentInputs_;
+
 	int displayWidth_;
 	int displayHeight_;
 	bool useSystemTime_;

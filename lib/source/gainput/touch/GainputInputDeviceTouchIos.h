@@ -134,12 +134,12 @@ private:
 
 	void HandleBool(DeviceButtonId buttonId, bool value)
 	{
-		HandleButton(device_, nextState_, delta_, buttonId, value);
+        manager_.EnqueueConcurrentChange(device_, nextState_, delta_, buttonId, value);
 	}
 
 	void HandleFloat(DeviceButtonId buttonId, float value)
 	{
-		HandleAxis(device_, nextState_, delta_, buttonId, value);
+        manager_.EnqueueConcurrentChange(device_, nextState_, delta_, buttonId, value);
 	}
 };
 

@@ -44,6 +44,20 @@
 #define GAINPUT_ENABLE_RECORDER
 #define GAINPUT_TEXT_INPUT_QUEUE_LENGTH 32
 
+#ifdef GAINPUT_ENABLE_CONCURRENCY
+#define MOODYCAMEL_EXCEPTIONS_DISABLED
+#include "concurrentqueue.h"
+#define GAINPUT_CONC_QUEUE(TYPE)            moodycamel::ConcurrentQueue<TYPE>
+#define GAINPUT_CONC_CONSTRUCT(queue)       queue()
+#define GAINPUT_CONC_ENQUEUE(queue, obj)    queue.enqueue(obj)
+#define GAINPUT_CONC_DEQUEUE(queue, obj)    queue.try_dequeue(obj)
+#else
+#define GAINPUT_CONC_QUEUE(TYPE)            gainput::Array<TYPE>
+#define GAINPUT_CONC_CONSTRUCT(queue)       queue(allocator)
+#define GAINPUT_CONC_ENQUEUE(queue, obj)    queue.push_back(obj)
+#define GAINPUT_CONC_DEQUEUE(queue, obj)    (!queue.empty() ? (obj = queue[queue.size()-1], queue.pop_back(), true) : false)
+#endif
+
 #include <cassert>
 #include <cstring>
 #include <new>

@@ -42,6 +42,7 @@ InputManager::InputManager(bool useSystemTime, Allocator& allocator) :
 		nextModifierId_(0),
 		deltaState_(allocator_.New<InputDeltaState>(allocator_)),
 		currentTime_(0),
+        GAINPUT_CONC_CONSTRUCT(concurrentInputs_),
 		displayWidth_(-1),
 		displayHeight_(-1),
 		useSystemTime_(useSystemTime),
@@ -68,6 +69,19 @@ InputManager::~InputManager()
 void
 InputManager::Update()
 {
+    Change change;
+    while (GAINPUT_CONC_DEQUEUE(concurrentInputs_, change))
+    {
+        if (change.type == BT_BOOL)
+        {
+            HandleButton(*change.device, *change.state, change.delta, change.buttonId, change.b);
+        }
+        else if (change.type == BT_FLOAT)
+        {
+            HandleAxis(*change.device, *change.state, change.delta, change.buttonId, change.f);
+        }
+    }
+    
 	InputDeltaState* ds = listeners_.empty() ? 0 : deltaState_;
 
 	for (DeviceMap::iterator it = devices_.begin();
@@ -454,6 +468,32 @@ void
 InputManager::SetDebugRenderer(DebugRenderer* debugRenderer)
 {
 	debugRenderer_ = debugRenderer;
+}
+
+void
+InputManager::EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, bool value)
+{
+    Change change;
+    change.device = &device;
+    change.state = &state;
+    change.delta = delta;
+    change.buttonId = buttonId;
+    change.type = BT_BOOL;
+    change.b = value;
+    GAINPUT_CONC_ENQUEUE(concurrentInputs_, change);
+}
+
+void
+InputManager::EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, float value)
+{
+    Change change;
+    change.device = &device;
+    change.state = &state;
+    change.delta = delta;
+    change.buttonId = buttonId;
+    change.type = BT_FLOAT;
+    change.f = value;
+    GAINPUT_CONC_ENQUEUE(concurrentInputs_, change);
 }
 
 }
