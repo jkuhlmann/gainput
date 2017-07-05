@@ -1,7 +1,7 @@
 
 
 #include <gainput/gainput.h>
-#include "GainputInputDeltaState.h"
+#include <gainput/GainputInputDeltaState.h>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 #include <time.h>
@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include "dev/GainputDev.h"
+#include <gainput/GainputHelpers.h>
 
 
 namespace gainput

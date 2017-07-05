@@ -3,8 +3,8 @@
 #include <gainput/gestures/GainputRotateGesture.h>
 
 #ifdef GAINPUT_ENABLE_ROTATE_GESTURE
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
 
 #define _USE_MATH_DEFINES
 #include <math.h>

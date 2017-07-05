@@ -14,9 +14,9 @@
 #include "GainputNetListener.h"
 #include "GainputNetConnection.h"
 #include "GainputMemoryStream.h"
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #if _MSC_VER
 #define snprintf _snprintf

@@ -15,12 +15,14 @@
 
 #if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
 	#include <stdio.h>
+    #include <Windows.h>
 	#define GAINPUT_LOG(...) { char buf[1024]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
 #endif
 
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 
 #if defined(GAINPUT_DEBUG) || defined(GAINPUT_DEV)
+	#include <android/log.h>
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 

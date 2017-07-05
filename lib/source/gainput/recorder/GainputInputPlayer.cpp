@@ -3,9 +3,9 @@
 
 #ifdef GAINPUT_ENABLE_RECORDER
 
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 
 namespace gainput

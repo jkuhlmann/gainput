@@ -1,6 +1,6 @@
 
 #include <gainput/gainput.h>
-#include "GainputInputDeltaState.h"
+#include <gainput/GainputInputDeltaState.h>
 
 
 namespace gainput

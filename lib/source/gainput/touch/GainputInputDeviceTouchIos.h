@@ -5,8 +5,9 @@
 #include "GainputInputDeviceTouchImpl.h"
 #include "GainputTouchInfo.h"
 
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputInputManager.h>
 
 namespace gainput
 {

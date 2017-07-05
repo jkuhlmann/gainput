@@ -3,8 +3,8 @@
 #include <gainput/gestures/GainputPinchGesture.h>
 
 #ifdef GAINPUT_ENABLE_PINCH_GESTURE
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
 #include <math.h>
 
 namespace gainput

@@ -3,8 +3,8 @@
 #include <gainput/gestures/GainputSimultaneouslyDownGesture.h>
 
 #ifdef GAINPUT_ENABLE_SIMULTANEOUSLY_DOWN_GESTURE
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
 
 namespace gainput
 {
