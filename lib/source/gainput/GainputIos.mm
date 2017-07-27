@@ -1,7 +1,7 @@
 
 #include <gainput/gainput.h>
 
-#ifdef GAINPUT_PLATFORM_IOS
+#if defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_TVOS)
 
 #include <gainput/GainputIos.h>
 
@@ -18,7 +18,10 @@
 	if (self)
 	{
 		inputManager_ = &inputManager;
+        
+#if !defined(GAINPUT_PLATFORM_TVOS)
 		[self setMultipleTouchEnabled:YES];
+#endif
 	}
 
     gainput::DeviceId deviceId = inputManager_->FindDeviceId(gainput::InputDevice::DT_TOUCH, 0);

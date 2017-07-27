@@ -17,7 +17,7 @@
 #include <time.h>
 #include "keyboard/GainputInputDeviceKeyboardAndroid.h"
 #include "touch/GainputInputDeviceTouchAndroid.h"
-#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 #include <mach/mach.h>
 #include <mach/clock.h>
 #endif
@@ -134,37 +134,37 @@ InputManager::GetTime() const
 	if (useSystemTime_)
 	{
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
-		struct timespec ts;
-		if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
-		{
-			return -1;
-		}
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
+	{
+		return -1;
+	}
 
-		uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
-		return t;
+	uint64_t t = ts.tv_sec*1000ul + ts.tv_nsec/1000000ul;
+	return t;
 #elif defined(GAINPUT_PLATFORM_WIN)
-		static LARGE_INTEGER perfFreq = { 0 };
-		if (perfFreq.QuadPart == 0)
-		{
-			QueryPerformanceFrequency(&perfFreq);
-			GAINPUT_ASSERT(perfFreq.QuadPart != 0);
-		}
-		LARGE_INTEGER count;
-		QueryPerformanceCounter(&count);
-		double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
-		return static_cast<uint64_t>(t);
-#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
-		clock_serv_t cclock;
-		mach_timespec_t mts;
+	static LARGE_INTEGER perfFreq = { 0 };
+	if (perfFreq.QuadPart == 0)
+	{
+		QueryPerformanceFrequency(&perfFreq);
+		GAINPUT_ASSERT(perfFreq.QuadPart != 0);
+	}
+	LARGE_INTEGER count;
+	QueryPerformanceCounter(&count);
+	double t = 1000.0 * double(count.QuadPart) / double(perfFreq.QuadPart);
+	return static_cast<uint64_t>(t);
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
+	clock_serv_t cclock;
+	mach_timespec_t mts;
 		host_get_clock_service(mach_host_self(), SYSTEM_CLOCK, &cclock);
-		clock_get_time(cclock, &mts);
-		mach_port_deallocate(mach_task_self(), cclock);
-		uint64_t t = mts.tv_sec*1000ul + mts.tv_nsec/1000000ul;
-		return t;
+	clock_get_time(cclock, &mts);
+	mach_port_deallocate(mach_task_self(), cclock);
+	uint64_t t = mts.tv_sec*1000ul + mts.tv_nsec/1000000ul;
+	return t;
 #else
 #error Gainput: No time support
 #endif
-	}
+}
 	else
 	{
 		return currentTime_;

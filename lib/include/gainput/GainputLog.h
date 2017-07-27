@@ -26,7 +26,7 @@
 	#define GAINPUT_LOG(...) ((void)__android_log_print(ANDROID_LOG_INFO, "gainput", __VA_ARGS__))
 #endif
 
-#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 	#include <stdio.h>
 	#define GAINPUT_LOG(...) printf(__VA_ARGS__);
 #endif

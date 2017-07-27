@@ -26,7 +26,9 @@
 #elif defined(__APPLE__)
 	#define GAINPUT_LIBEXPORT
 	#include <TargetConditionals.h>
-	#if TARGET_OS_IPHONE
+    #if TARGET_OS_TV
+        #define GAINPUT_PLATFORM_TVOS
+	#elif TARGET_OS_IPHONE
 		#define GAINPUT_PLATFORM_IOS
 	#elif TARGET_OS_MAC
 		#define GAINPUT_PLATFORM_MAC

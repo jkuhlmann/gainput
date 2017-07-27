@@ -2,6 +2,7 @@
 #ifndef GAINPUTINPUTDEVICEPADIOS_H_
 #define GAINPUTINPUTDEVICEPADIOS_H_
 
+#include <gainput/GainputContainers.h>
 
 namespace gainput
 {
@@ -11,14 +12,14 @@ class InputDevicePadImplIos : public InputDevicePadImpl
 public:
 	InputDevicePadImplIos(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState);
 	~InputDevicePadImplIos();
-
+    
 	InputDevice::DeviceVariant GetVariant() const
 	{
 		return InputDevice::DV_STANDARD;
 	}
-
-	void Update(InputDeltaState* delta);
-
+    
+    void Update(InputDeltaState* delta);
+    
 	InputDevice::DeviceState GetState() const
 	{
 		return deviceState_;
@@ -26,28 +27,34 @@ public:
 
 	bool IsValidButton(DeviceButtonId deviceButton) const;
 
+    typedef gainput::Array<void *> GlobalControllerList;
+    static GlobalControllerList* mappedControllers_;
+
 	bool Vibrate(float leftMotor, float rightMotor)
 	{
 		return false;
 	}
 
-	bool pausePressed_;
-
 private:
-	InputManager& manager_;
-	InputDevice& device_;
-	unsigned index_;
-	bool padFound_;
-	InputState& state_;
-	InputState& previousState_;
-	InputDevice::DeviceState deviceState_;
+    InputManager& manager_;
+    InputDevice& device_;
+    unsigned index_;
+    InputState& state_;
+    InputState& previousState_;
+    InputDevice::DeviceState deviceState_;
 
-	bool isExtended_;
-	bool supportsMotion_;
+    bool pausePressed_;
+    bool isMicro_;
+    bool isNormal_;
+    bool isExtended_;
+    bool supportsMotion_;
+    bool isRemote_;
+    void* gcController_;
 
+    void UpdateRemote_(InputDeltaState* delta);
+    void UpdateGamepad_(InputDeltaState* delta);
 };
 
 }
 
 #endif
-
