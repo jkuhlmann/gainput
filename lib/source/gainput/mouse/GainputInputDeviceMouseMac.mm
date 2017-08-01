@@ -48,16 +48,16 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
         const float x = rect2.origin.x / window.frame.size.width;
         const float y = 1.0f - (rect2.origin.y / (window.frame.size.height - titleBarHeight));
 
-		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisX, x);
-		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisY, y);
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseAxisX, x);
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseAxisY, y);
 
 		if (type == kCGEventLeftMouseDown || type == kCGEventLeftMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
 		}
 		else if (type == kCGEventRightMouseDown || type == kCGEventRightMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
 		}
 		else if (type == kCGEventOtherMouseDown || type == kCGEventOtherMouseUp)
 		{
@@ -67,14 +67,14 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 			{
 				buttonId = gainput::MouseButton3 + buttonNum - kCGMouseButtonCenter;
 			}
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
 		}
 		else if (type == kCGEventScrollWheel)
 		{
 			int const deltaAxis = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
             if (deltaAxis != 0)
             {
-                gainput::HandleButton(
+                manager.EnqueueConcurrentChange(
                     device->device_,
                     device->nextState_,
                     device->delta_,
