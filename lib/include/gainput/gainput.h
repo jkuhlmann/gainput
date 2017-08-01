@@ -92,6 +92,7 @@ namespace gainput
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 
 #include <stdint.h>
+#include <stdlib.h>
 struct AInputEvent;
 
 #endif

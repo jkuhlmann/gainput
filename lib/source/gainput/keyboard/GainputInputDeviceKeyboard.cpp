@@ -163,6 +163,12 @@ InputDeviceKeyboard::GetButtonByName(const char* name) const
 	return InvalidDeviceButtonId;
 }
 
+InputState*
+InputDeviceKeyboard::GetNextInputState()
+{
+	return impl_->GetNextInputState();
+}
+
 bool
 InputDeviceKeyboard::IsTextInputEnabled() const
 {

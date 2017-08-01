@@ -15,6 +15,8 @@
 	#include "GainputInputDevicePadIos.h"
 #elif defined(GAINPUT_PLATFORM_MAC)
 	#include "GainputInputDevicePadMac.h"
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	#include "GainputInputDevicePadAndroid.h"
 #endif
 
 #include "GainputInputDevicePadNull.h"
@@ -133,6 +135,8 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_MAC)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplMac>(manager, *this, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, *this, index_, *state_, *previousState_);
 #endif
 
 	if (!impl_)
@@ -254,6 +258,12 @@ InputDevicePad::GetButtonByName(const char* name) const
 	return InvalidDeviceButtonId;
 }
 
+InputState*
+InputDevicePad::GetNextInputState()
+{
+	return impl_->GetNextInputState();
+}
+
 bool
 InputDevicePad::Vibrate(float leftMotor, float rightMotor)
 {
@@ -261,4 +271,4 @@ InputDevicePad::Vibrate(float leftMotor, float rightMotor)
 }
 
 }
-
+    

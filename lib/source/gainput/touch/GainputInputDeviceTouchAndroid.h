@@ -69,22 +69,10 @@ public:
 		return 1;
 	}
 
-	void HandleInput(int id, int action, int x, int y)
-	{
-		GAINPUT_ASSERT(state_);
-		GAINPUT_ASSERT(previousState_);
-		GAINPUT_ASSERT(id < TouchPointCount);
-		const int w = manager_.GetDisplayWidth();
-		const int h = manager_.GetDisplayHeight();
-		HandleFloat(Touch0X + id*TouchDataElems, float(x)/float(w));
-		HandleFloat(Touch0Y + id*TouchDataElems, float(y)/float(h));
-		const bool down = (action == 0 || action == 2);
-		HandleBool(Touch0Down + id*TouchDataElems, down);
-		HandleFloat(Touch0Pressure + id*TouchDataElems, 0.0f);
-#ifdef GAINPUT_DEBUG
-		GAINPUT_LOG("Touch %i) x: %f, y: %f, w: %i, h: %i, action: %d\n", id, x, y, w, h, action);
-#endif
-	}
+    InputState* GetNextInputState()
+    {
+        return &nextState_;
+    }
 
 private:
 	InputManager& manager_;

@@ -15,8 +15,11 @@
 #include "mouse/GainputInputDeviceMouseWinRaw.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 #include <time.h>
+#include <jni.h>
 #include "keyboard/GainputInputDeviceKeyboardAndroid.h"
+#include "pad/GainputInputDevicePadAndroid.h"
 #include "touch/GainputInputDeviceTouchAndroid.h"
+static gainput::InputManager* gGainputInputManager;
 #elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 #include <mach/mach.h>
 #include <mach/clock.h>
@@ -50,6 +53,9 @@ InputManager::InputManager(bool useSystemTime, Allocator& allocator) :
 		debugRenderer_(0)
 {
 	GAINPUT_DEV_INIT(this);
+#ifdef GAINPUT_PLATFORM_ANDROID
+	gGainputInputManager = this;
+#endif
 }
 
 InputManager::~InputManager()
@@ -416,27 +422,61 @@ InputManager::HandleInput(AInputEvent* event)
 }
 
 void
-InputManager::HandleTouchInput(int id, int action, int x, int y)
+InputManager::HandleDeviceInput(DeviceInput const& input)
 {
-	for (DeviceMap::const_iterator it = devices_.begin();
-			it != devices_.end();
-			++it)
+	DeviceId devId = FindDeviceId(input.deviceType, input.deviceIndex);
+	if (devId == InvalidDeviceId)
 	{
+		return;
+	}
+
+	InputDevice* device = GetDevice(devId);
+	if (!device)
+	{
+		return;
+	}
+
 #if defined(GAINPUT_DEV)
-		if (it->second->IsSynced())
-		{
-			continue;
-		}
+	if (device->IsSynced())
+	{
+		return;
+	}
 #endif
-		if (it->second->GetType() == InputDevice::DT_TOUCH)
+
+    InputState* state = device->GetNextInputState();
+    if (!state)
+    {
+        state = device->GetInputState();
+    }
+	if (!state)
+	{
+		return;
+	}
+
+	if (input.buttonType == BT_BOOL)
+	{
+		EnqueueConcurrentChange(*device, *state, deltaState_, input.buttonId, input.value.b);
+	}
+	else if (input.buttonType == BT_FLOAT)
+	{
+		EnqueueConcurrentChange(*device, *state, deltaState_, input.buttonId, input.value.f);
+	}
+	else if (input.buttonType == BT_COUNT && input.deviceType == InputDevice::DT_PAD)
+	{
+		InputDevicePad* pad = static_cast<InputDevicePad*>(device);
+		InputDevicePadImplAndroid* impl = static_cast<InputDevicePadImplAndroid*>(pad->GetPimpl());
+		GAINPUT_ASSERT(impl);
+		if (input.value.b)
 		{
-			InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);
-			InputDeviceTouchImplAndroid* touchImpl = static_cast<InputDeviceTouchImplAndroid*>(touch->GetPimpl());
-			GAINPUT_ASSERT(touchImpl);
-			touchImpl->HandleInput(id, action, x, y);
+			impl->SetState(InputDevice::DeviceState::DS_OK);
+		}
+		else
+		{
+			impl->SetState(InputDevice::DeviceState::DS_UNAVAILABLE);
 		}
 	}
 }
+
 #endif
 
 void
@@ -498,3 +538,56 @@ InputManager::EnqueueConcurrentChange(InputDevice& device, InputState& state, In
 
 }
 
+extern "C" {
+JNIEXPORT void JNICALL
+Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputBool(JNIEnv * /*env*/, jobject /*thiz*/,
+                                                           jint deviceType, jint deviceIndex,
+                                                           jint buttonId, jboolean value) {
+	if (!gGainputInputManager)
+	{
+		return;
+	}
+	using namespace gainput;
+    InputManager::DeviceInput input;
+    input.deviceType = static_cast<InputDevice::DeviceType>(deviceType);
+    input.deviceIndex = deviceIndex;
+    input.buttonType = BT_BOOL;
+    input.buttonId = buttonId;
+    input.value.b = value;
+    gGainputInputManager->HandleDeviceInput(input);
+}
+
+JNIEXPORT void JNICALL
+Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputFloat(JNIEnv * /*env*/, jobject /*thiz*/,
+                                                            jint deviceType, jint deviceIndex,
+                                                            jint buttonId, jfloat value) {
+	if (!gGainputInputManager)
+	{
+		return;
+	}
+	using namespace gainput;
+    InputManager::DeviceInput input;
+    input.deviceType = static_cast<InputDevice::DeviceType>(deviceType);
+    input.deviceIndex = deviceIndex;
+    input.buttonType = BT_FLOAT;
+    input.buttonId = buttonId;
+    input.value.f = value;
+    gGainputInputManager->HandleDeviceInput(input);
+}
+
+JNIEXPORT void JNICALL
+Java_de_johanneskuhlmann_gainput_Gainput_nativeOnDeviceChanged(JNIEnv * /*env*/, jobject /*thiz*/,
+                                                               jint deviceId, jboolean value) {
+	if (!gGainputInputManager)
+	{
+		return;
+	}
+    using namespace gainput;
+    InputManager::DeviceInput input;
+    input.deviceType = InputDevice::DT_PAD;
+    input.deviceIndex = deviceId;
+    input.buttonType = BT_COUNT;
+    input.value.b = value;
+    gGainputInputManager->HandleDeviceInput(input);
+}
+}

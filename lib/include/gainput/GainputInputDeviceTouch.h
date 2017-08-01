@@ -86,6 +86,8 @@ public:
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 	DeviceButtonId GetButtonByName(const char* name) const;
 
+    InputState* GetNextInputState();
+
 	/// Returns the platform-specific implementation of this device.
 	InputDeviceTouchImpl* GetPimpl() { return impl_; }
 

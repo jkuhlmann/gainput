@@ -5,7 +5,7 @@
 
 namespace gainput
 {
-
+    
 /// Manages all input devices and some other helpful stuff.
 /**
  * This manager takes care of all device-related things. Normally, you should only need one that contains
@@ -64,7 +64,20 @@ public:
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	/// [ANDROID ONLY] Lets the InputManager handle the given input event.
 	int32_t HandleInput(AInputEvent* event);
-	void HandleTouchInput(int id, int action, int x, int y);
+
+	struct DeviceInput
+	{
+		InputDevice::DeviceType deviceType;
+		unsigned deviceIndex;
+		ButtonType buttonType;
+		DeviceButtonId buttonId;
+		union
+		{
+			float f;
+			bool b;
+		} value;
+	};
+    void HandleDeviceInput(DeviceInput const& input);
 #endif
 
 	/// Updates the input state, call this every frame.
@@ -240,7 +253,7 @@ private:
 
 	bool debugRenderingEnabled_;
 	DebugRenderer* debugRenderer_;
-
+    
 	void DeviceCreated(InputDevice* device);
 
 	// Do not copy.

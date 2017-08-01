@@ -16,3 +16,7 @@ gainput.unsuccessfulbuild
 *.opensdf
 cmakebuild*/
 
+.idea
+.gradle
+.externalNativeBuild
+gradle

@@ -148,5 +148,10 @@ InputDeviceTouch::GetButtonByName(const char* name) const
 	return InvalidDeviceButtonId;
 }
 
+InputState*
+InputDeviceTouch::GetNextInputState()
+{
+	return impl_->GetNextInputState();
 }
 
+}
