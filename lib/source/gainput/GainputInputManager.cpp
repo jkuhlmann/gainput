@@ -538,11 +538,13 @@ InputManager::EnqueueConcurrentChange(InputDevice& device, InputState& state, In
 
 }
 
+#if defined(GAINPUT_PLATFORM_ANDROID)
 extern "C" {
 JNIEXPORT void JNICALL
 Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputBool(JNIEnv * /*env*/, jobject /*thiz*/,
                                                            jint deviceType, jint deviceIndex,
-                                                           jint buttonId, jboolean value) {
+                                                           jint buttonId, jboolean value)
+{
 	if (!gGainputInputManager)
 	{
 		return;
@@ -560,7 +562,8 @@ Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputBool(JNIEnv * /*env*/, job
 JNIEXPORT void JNICALL
 Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputFloat(JNIEnv * /*env*/, jobject /*thiz*/,
                                                             jint deviceType, jint deviceIndex,
-                                                            jint buttonId, jfloat value) {
+                                                            jint buttonId, jfloat value)
+{
 	if (!gGainputInputManager)
 	{
 		return;
@@ -577,7 +580,8 @@ Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputFloat(JNIEnv * /*env*/, jo
 
 JNIEXPORT void JNICALL
 Java_de_johanneskuhlmann_gainput_Gainput_nativeOnDeviceChanged(JNIEnv * /*env*/, jobject /*thiz*/,
-                                                               jint deviceId, jboolean value) {
+                                                               jint deviceId, jboolean value)
+{
 	if (!gGainputInputManager)
 	{
 		return;
@@ -591,3 +595,4 @@ Java_de_johanneskuhlmann_gainput_Gainput_nativeOnDeviceChanged(JNIEnv * /*env*/,
     gGainputInputManager->HandleDeviceInput(input);
 }
 }
+#endif
