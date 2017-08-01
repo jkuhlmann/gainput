@@ -58,6 +58,11 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 		return;
 	}
 
+    if (usagePage >= kHIDPage_VendorDefinedStart)
+    {
+        return;
+    }
+
     InputManager& manager = device->manager_;
 	CFIndex state = (int)IOHIDValueGetIntegerValue(value);
 	float analog = IOHIDValueGetScaledValue(value, kIOHIDValueScaleTypePhysical);
@@ -96,6 +101,10 @@ static void OnDeviceInput(void* inContext, IOReturn inResult, void* inSender, IO
 			if (buttonId == PadButtonAxis4 || buttonId == PadButtonAxis5)
 			{
 				analog = FixUpAnalog(analog, device->minTriggerAxis_, device->maxTriggerAxis_, false);
+			}
+			else if (buttonId == PadButtonLeftStickY || buttonId == PadButtonRightStickY)
+			{
+				analog = -FixUpAnalog(analog, device->minAxis_, device->maxAxis_, true);
 			}
 			else
 			{
@@ -165,7 +174,7 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 		}
 	}
 
-	if (vendorId == 0x054c && productId == 0x5c4) // Sony DualShock 4
+	if (vendorId == 0x054c && (productId == 0x5c4 || productId == 0x9cc)) // Sony DualShock 4
 	{
 		device->minAxis_ = 0;
 		device->maxAxis_ = 256;
@@ -177,23 +186,24 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 		device->axisDialect_[kHIDUsage_GD_Rz] = PadButtonRightStickY;
 		device->axisDialect_[kHIDUsage_GD_Rx] = PadButtonAxis4;
 		device->axisDialect_[kHIDUsage_GD_Ry] = PadButtonAxis5;
-		//device->buttonDialect_[0] = PadButtonSelect;
-		//device->buttonDialect_[1] = PadButtonL3;
-		//device->buttonDialect_[2] = PadButtonR3;
+		device->buttonDialect_[0x09] = PadButtonSelect;
+		device->buttonDialect_[0x0b] = PadButtonL3;
+		device->buttonDialect_[0x0c] = PadButtonR3;
 		device->buttonDialect_[0x0A] = PadButtonStart;
-		//device->buttonDialect_[4] = PadButtonUp;
-		//device->buttonDialect_[5] = PadButtonRight;
-		//device->buttonDialect_[6] = PadButtonDown;
-		//device->buttonDialect_[7] = PadButtonLeft;
+		device->buttonDialect_[0xfffffff0] = PadButtonUp;
+		device->buttonDialect_[0xfffffff1] = PadButtonRight;
+		device->buttonDialect_[0xfffffff2] = PadButtonDown;
+		device->buttonDialect_[0xfffffff3] = PadButtonLeft;
 		device->buttonDialect_[0x05] = PadButtonL1;
-		device->buttonDialect_[0x06] = PadButtonL2;
-		//device->buttonDialect_[] = PadButtonR1;
-		//device->buttonDialect_[] = PadButtonR2;
+        device->buttonDialect_[0x07] = PadButtonL2;
+		device->buttonDialect_[0x06] = PadButtonR1;
+		device->buttonDialect_[0x08] = PadButtonR2;
 		device->buttonDialect_[0x04] = PadButtonY;
 		device->buttonDialect_[0x03] = PadButtonB;
 		device->buttonDialect_[0x02] = PadButtonA;
 		device->buttonDialect_[0x01] = PadButtonX;
-		//device->buttonDialect_[] = PadButtonHome;
+		device->buttonDialect_[0x0d] = PadButtonHome;
+        device->buttonDialect_[0x0e] = PadButton17; // Touch pad
 	}
 	else if (vendorId == 0x054c && productId == 0x268) // Sony DualShock 3
 	{
@@ -225,7 +235,7 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 		device->buttonDialect_[16] = PadButtonX;
 		device->buttonDialect_[17] = PadButtonHome;
 	}
-	else if (vendorId == 0x045e && (productId == 0x028E || productId == 0x028F)) // Microsoft 360 Controller wired/wireless
+	else if (vendorId == 0x045e && (productId == 0x028E || productId == 0x028F || productId == 0x02D1)) // Microsoft 360 Controller wired/wireless, Xbox One Controller
 	{
 		device->minAxis_ = -(1<<15);
 		device->maxAxis_ = 1<<15;
