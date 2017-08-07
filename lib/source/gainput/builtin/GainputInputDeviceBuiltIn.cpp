@@ -3,9 +3,9 @@
 #include <gainput/GainputDebugRenderer.h>
 
 #include "GainputInputDeviceBuiltInImpl.h"
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	#include "GainputInputDeviceBuiltInAndroid.h"

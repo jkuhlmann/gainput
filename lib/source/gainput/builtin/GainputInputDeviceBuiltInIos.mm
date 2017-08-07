@@ -3,9 +3,9 @@
 #ifdef GAINPUT_PLATFORM_IOS
 
 #include "GainputInputDeviceBuiltInImpl.h"
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #include "GainputInputDeviceBuiltInIos.h"
 
@@ -41,6 +41,7 @@ InputDeviceBuiltInImplIos::~InputDeviceBuiltInImplIos()
 void InputDeviceBuiltInImplIos::Update(InputDeltaState* delta)
 {
 	GAINPUT_ASSERT(motionManager_);
+    @autoreleasepool {
 	CMMotionManager* motionManager = reinterpret_cast<CMMotionManager*>(motionManager_);
 	CMDeviceMotion* motion = motionManager.deviceMotion;
 	if (!motion)
@@ -66,6 +67,8 @@ void InputDeviceBuiltInImplIos::Update(InputDeltaState* delta)
 	HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldX, motion.magneticField.field.x);
 	HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldY, motion.magneticField.field.y);
 	HandleAxis(device_, state_, delta, BuiltInButtonMagneticFieldZ, motion.magneticField.field.z);
+
+    }
 }
 
 bool InputDeviceBuiltInImplIos::IsValidButton(DeviceButtonId deviceButton) const

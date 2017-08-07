@@ -9,7 +9,7 @@ endif()
 
 include_directories (include/)
 
-file(GLOB_RECURSE sources source/*.cpp)
+file(GLOB_RECURSE sources source/*.cpp source/*.h include/*.h)
 
 if(APPLE)
 	file(GLOB_RECURSE mmsources source/*.mm)
@@ -46,8 +46,17 @@ elseif(ANDROID)
 elseif(APPLE)
 	find_library(FOUNDATION Foundation)
 	find_library(IOKIT IOKit)
-	find_library(APPKIT AppKit)
-	target_link_libraries(gainput ${FOUNDATION} ${IOKIT} ${APPKIT})
+  find_library(GAME_CONTROLLER GameController)
+	target_link_libraries(gainput ${FOUNDATION} ${IOKIT} ${GAME_CONTROLLER})
+  if(IOS)
+      find_library(UIKIT UIKit)
+      find_library(COREMOTION CoreMotion)
+      find_library(QUARTZCORE QuartzCore)
+      target_link_libraries(gainput ${UIKIT} ${COREMOTION})
+  else()
+      find_library(APPKIT AppKit)
+      target_link_libraries(gainput ${APPKIT})
+  endif()
 endif()
 
 # Library installation directory

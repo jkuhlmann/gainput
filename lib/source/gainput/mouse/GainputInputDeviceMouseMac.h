@@ -18,11 +18,7 @@ public:
 		return InputDevice::DV_STANDARD;
 	}
 
-	void Update(InputDeltaState* delta)
-	{
-		delta_ = delta;
-		*state_ = nextState_;
-	}
+	void Update(InputDeltaState* delta);
 
 	InputManager& manager_;
 	InputDevice& device_;

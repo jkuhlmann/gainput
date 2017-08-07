@@ -151,7 +151,7 @@ public:
 	{
 		if (capacity <= capacity_)
 			return;
-		capacity = (capacity_*capacity_) < capacity ? capacity : (capacity_*capacity_);
+		capacity = (capacity_*2) < capacity ? capacity : (capacity_*2);
 		T* newData = static_cast<T*>(allocator_.Allocate(sizeof(T)*capacity));
 		memcpy(newData, data_, sizeof(T)*capacity_);
 		allocator_.Deallocate(data_);
@@ -262,7 +262,7 @@ public:
 	size_t size() const { return size_; }
 	bool empty() const { return size_ == 0; }
 
-	size_t count(const K& k)
+	size_t count(const K& k) const
 	{
 		return find(k) != end() ? 1 : 0;
 	}
@@ -391,7 +391,7 @@ public:
 				}
 				else
 				{
-					uint32_t lastVi = values_.size()-1;
+					size_t lastVi = values_.size()-1;
 					values_[vi] = values_[lastVi];
 					values_.pop_back();
 					

@@ -13,6 +13,7 @@ namespace gainput
 
 const float MaxTriggerValue = 255.0f;
 const float MaxAxisValue = 32767.0f;
+const float MaxNegativeAxisValue = 32768.0f;
 const float MaxMotorSpeed = 65535.0f;
 
 
@@ -102,13 +103,15 @@ public:
 		HandleButton(device_, state_, delta, PadButtonR3, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) != 0);
 		HandleButton(device_, state_, delta, PadButtonL1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0);
 		HandleButton(device_, state_, delta, PadButtonR1, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
+        HandleButton(device_, state_, delta, PadButtonL2, xstate.Gamepad.bLeftTrigger != 0);
+        HandleButton(device_, state_, delta, PadButtonR2, xstate.Gamepad.bRightTrigger != 0);
 
-		HandleAxis(device_, state_, delta, PadButtonL2, float(xstate.Gamepad.bLeftTrigger)/MaxTriggerValue);
-		HandleAxis(device_, state_, delta, PadButtonR2, float(xstate.Gamepad.bRightTrigger)/MaxTriggerValue);
-		HandleAxis(device_, state_, delta, PadButtonLeftStickX, float(xstate.Gamepad.sThumbLX)/MaxAxisValue);
-		HandleAxis(device_, state_, delta, PadButtonLeftStickY, float(xstate.Gamepad.sThumbLY)/MaxAxisValue);
-		HandleAxis(device_, state_, delta, PadButtonRightStickX, float(xstate.Gamepad.sThumbRX)/MaxAxisValue);
-		HandleAxis(device_, state_, delta, PadButtonRightStickY, float(xstate.Gamepad.sThumbRY)/MaxAxisValue);
+		HandleAxis(device_, state_, delta, PadButtonAxis4, float(xstate.Gamepad.bLeftTrigger)/MaxTriggerValue);
+		HandleAxis(device_, state_, delta, PadButtonAxis5, float(xstate.Gamepad.bRightTrigger)/MaxTriggerValue);
+		HandleAxis(device_, state_, delta, PadButtonLeftStickX, GetAxisValue(xstate.Gamepad.sThumbLX));
+		HandleAxis(device_, state_, delta, PadButtonLeftStickY, GetAxisValue(xstate.Gamepad.sThumbLY));
+		HandleAxis(device_, state_, delta, PadButtonRightStickX, GetAxisValue(xstate.Gamepad.sThumbRX));
+		HandleAxis(device_, state_, delta, PadButtonRightStickY, GetAxisValue(xstate.Gamepad.sThumbRY));
 	}
 
 	InputDevice::DeviceState GetState() const
@@ -141,6 +144,18 @@ private:
 	unsigned padIndex_;
 	DWORD lastPacketNumber_;
 	bool hasBattery_;
+
+    static float GetAxisValue(SHORT value)
+    {
+        if (value < 0)
+        {
+            return float(value) / MaxNegativeAxisValue;
+        }
+        else
+        {
+            return float(value) / MaxAxisValue;
+        }
+    }
 
 };
 

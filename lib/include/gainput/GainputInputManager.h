@@ -5,7 +5,7 @@
 
 namespace gainput
 {
-
+    
 /// Manages all input devices and some other helpful stuff.
 /**
  * This manager takes care of all device-related things. Normally, you should only need one that contains
@@ -64,7 +64,20 @@ public:
 #if defined(GAINPUT_PLATFORM_ANDROID)
 	/// [ANDROID ONLY] Lets the InputManager handle the given input event.
 	int32_t HandleInput(AInputEvent* event);
-	void HandleTouchInput(int id, int action, int x, int y);
+
+	struct DeviceInput
+	{
+		InputDevice::DeviceType deviceType;
+		unsigned deviceIndex;
+		ButtonType buttonType;
+		DeviceButtonId buttonId;
+		union
+		{
+			float f;
+			bool b;
+		} value;
+	};
+    void HandleDeviceInput(DeviceInput const& input);
 #endif
 
 	/// Updates the input state, call this every frame.
@@ -185,6 +198,9 @@ public:
 	/// De-registers the given modifier.
 	void RemoveDeviceStateModifier(ModifierId modifierId);
 
+    void EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, bool value);
+    void EnqueueConcurrentChange(InputDevice& device, InputState& state, InputDeltaState* delta, DeviceButtonId buttonId, float value);
+
 	/// [IN dev BUILDS ONLY] Connect to a remote host to send device state changes to.
 	void ConnectForStateSync(const char* ip, unsigned port);
 	/// [IN dev BUILDS ONLY] Initiate sending of device state changes to the given device.
@@ -215,13 +231,29 @@ private:
 	InputDeltaState* deltaState_;
 
 	uint64_t currentTime_;
+    struct Change
+    {
+        InputDevice* device;
+        InputState* state;
+        InputDeltaState* delta;
+        DeviceButtonId buttonId;
+		ButtonType type;
+		union
+		{
+			bool b;
+			float f;
+		};
+    };
+    
+    GAINPUT_CONC_QUEUE(Change) concurrentInputs_;
+
 	int displayWidth_;
 	int displayHeight_;
 	bool useSystemTime_;
 
 	bool debugRenderingEnabled_;
 	DebugRenderer* debugRenderer_;
-
+    
 	void DeviceCreated(InputDevice* device);
 
 	// Do not copy.

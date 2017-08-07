@@ -3,18 +3,20 @@
 #include <gainput/GainputDebugRenderer.h>
 
 #include "GainputInputDevicePadImpl.h"
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	#include "GainputInputDevicePadLinux.h"
 #elif defined(GAINPUT_PLATFORM_WIN)
 	#include "GainputInputDevicePadWin.h"
-#elif defined(GAINPUT_PLATFORM_IOS)
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_TVOS)
 	#include "GainputInputDevicePadIos.h"
 #elif defined(GAINPUT_PLATFORM_MAC)
 	#include "GainputInputDevicePadMac.h"
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	#include "GainputInputDevicePadAndroid.h"
 #endif
 
 #include "GainputInputDevicePadNull.h"
@@ -129,10 +131,12 @@ InputDevicePad::InputDevicePad(InputManager& manager, DeviceId device, unsigned 
 	impl_ = manager.GetAllocator().New<InputDevicePadImplLinux>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_WIN)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplWin>(manager, *this, index_, *state_, *previousState_);
-#elif defined(GAINPUT_PLATFORM_IOS)
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_TVOS)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplIos>(manager, *this, index_, *state_, *previousState_);
 #elif defined(GAINPUT_PLATFORM_MAC)
 	impl_ = manager.GetAllocator().New<InputDevicePadImplMac>(manager, *this, index_, *state_, *previousState_);
+#elif defined(GAINPUT_PLATFORM_ANDROID)
+	impl_ = manager.GetAllocator().New<InputDevicePadImplAndroid>(manager, *this, index_, *state_, *previousState_);
 #endif
 
 	if (!impl_)
@@ -254,6 +258,12 @@ InputDevicePad::GetButtonByName(const char* name) const
 	return InvalidDeviceButtonId;
 }
 
+InputState*
+InputDevicePad::GetNextInputState()
+{
+	return impl_->GetNextInputState();
+}
+
 bool
 InputDevicePad::Vibrate(float leftMotor, float rightMotor)
 {
@@ -261,4 +271,4 @@ InputDevicePad::Vibrate(float leftMotor, float rightMotor)
 }
 
 }
-
+    

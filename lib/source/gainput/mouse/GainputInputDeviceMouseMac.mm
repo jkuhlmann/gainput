@@ -5,16 +5,16 @@
 
 #include "GainputInputDeviceMouseMac.h"
 
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #import <AppKit/AppKit.h>
 #import <Carbon/Carbon.h>
 
 namespace {
 
-static float titleBarHeight()
+static float theoreticalTitleBarHeight()
 {
 	NSRect frame = NSMakeRect (0, 0, 100, 100);
 	NSRect contentRect = [NSWindow contentRectForFrameRect:frame
@@ -27,9 +27,6 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 	gainput::InputDeviceMouseImplMac* device = reinterpret_cast<gainput::InputDeviceMouseImplMac*>(user);
 	GAINPUT_ASSERT(device->previousState_);
 
-	NSApplication* app = [NSApplication sharedApplication];
-	NSWindow* window = app.keyWindow;
-
 	if (type == kCGEventTapDisabledByTimeout
 			|| type == kCGEventTapDisabledByUserInput)
 	{
@@ -37,27 +34,30 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 		CGEventTapEnable(reinterpret_cast<CFMachPortRef>(device->eventTap_), true);
 	}
 
+    gainput::InputManager& manager = device->manager_;
+	NSApplication* app = [NSApplication sharedApplication];
+	NSWindow* window = app.keyWindow;
 	if (window)
 	{
-		CGPoint theLocation = CGEventGetLocation(event);
+		CGPoint theLocation = CGEventGetUnflippedLocation(event);
+        
 		NSRect rect = NSMakeRect(theLocation.x, theLocation.y, 0, 0);
 		NSRect rect2 = [window convertRectFromScreen:rect];
-		NSScreen* screen = window.screen;
-		rect2.origin.y = screen.frame.size.height - rect.origin.y - window.frame.origin.y + screen.frame.origin.y;
-		rect2.origin.y = window.frame.size.height - rect2.origin.y - titleBarHeight();
-		const float x = rect2.origin.x / window.frame.size.width;
-		const float y = rect2.origin.y / window.frame.size.height;
+        
+        float titleBarHeight = (window.styleMask & NSFullScreenWindowMask) ? 0.0f : theoreticalTitleBarHeight();
+        const float x = rect2.origin.x / window.frame.size.width;
+        const float y = 1.0f - (rect2.origin.y / (window.frame.size.height - titleBarHeight));
 
-		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisX, x);
-		gainput::HandleAxis(device->device_, device->nextState_, device->delta_, gainput::MouseAxisY, y);
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseAxisX, x);
+		manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseAxisY, y);
 
 		if (type == kCGEventLeftMouseDown || type == kCGEventLeftMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseButton0, type == kCGEventLeftMouseDown);
 		}
 		else if (type == kCGEventRightMouseDown || type == kCGEventRightMouseUp)
 		{
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, gainput::MouseButton2, type == kCGEventRightMouseDown);
 		}
 		else if (type == kCGEventOtherMouseDown || type == kCGEventOtherMouseUp)
 		{
@@ -67,7 +67,20 @@ CGEventRef MouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, v
 			{
 				buttonId = gainput::MouseButton3 + buttonNum - kCGMouseButtonCenter;
 			}
-			gainput::HandleButton(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
+			manager.EnqueueConcurrentChange(device->device_, device->nextState_, device->delta_, buttonId, type == kCGEventOtherMouseDown);
+		}
+		else if (type == kCGEventScrollWheel)
+		{
+			int const deltaAxis = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+            if (deltaAxis != 0)
+            {
+                manager.EnqueueConcurrentChange(
+                    device->device_,
+                    device->nextState_,
+                    device->delta_,
+                    deltaAxis > 0 ? gainput::MouseButtonWheelDown : gainput::MouseButtonWheelUp,
+                    true);
+            }
 		}
 	}
     else
@@ -105,6 +118,8 @@ InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, InputDev
 		| CGEventMaskBit(kCGEventMouseMoved)
 		| CGEventMaskBit(kCGEventLeftMouseDragged)
 		| CGEventMaskBit(kCGEventRightMouseDragged)
+        | CGEventMaskBit(kCGEventOtherMouseDragged)
+        | CGEventMaskBit(kCGEventScrollWheel)
 		;
 
 	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap,
@@ -131,6 +146,18 @@ InputDeviceMouseImplMac::InputDeviceMouseImplMac(InputManager& manager, InputDev
 InputDeviceMouseImplMac::~InputDeviceMouseImplMac()
 {
 	CFRelease(reinterpret_cast<CFMachPortRef>(eventTap_));
+}
+
+
+void InputDeviceMouseImplMac::Update(InputDeltaState* delta)
+{
+    delta_ = delta;
+    
+    // Reset mouse wheel buttons
+    HandleButton(device_, nextState_, delta_, MouseButtonWheelUp, false);
+    HandleButton(device_, nextState_, delta_, MouseButtonWheelDown, false);
+
+    *state_ = nextState_;
 }
 
 }

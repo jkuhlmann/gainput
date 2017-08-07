@@ -78,13 +78,15 @@ public:
 	DeviceType GetType() const { return DT_TOUCH; }
 	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "touch"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const { return deviceButton < TouchCount_; }
+	bool IsValidButtonId(DeviceButtonId deviceButton) const;
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 	DeviceButtonId GetButtonByName(const char* name) const;
+
+    InputState* GetNextInputState();
 
 	/// Returns the platform-specific implementation of this device.
 	InputDeviceTouchImpl* GetPimpl() { return impl_; }

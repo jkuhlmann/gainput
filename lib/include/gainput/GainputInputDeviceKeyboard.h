@@ -239,6 +239,8 @@ public:
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 	DeviceButtonId GetButtonByName(const char* name) const;
 
+	InputState* GetNextInputState();
+
 	/// Returns if text input is enabled.
 	bool IsTextInputEnabled() const;
 	/// Sets if text input is enabled and therefore if calling GetNextCharacter() make sense.

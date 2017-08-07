@@ -16,6 +16,12 @@ else()
 	add_executable(gainputtest WIN32 ${sources})
 endif()
 
+if(APPLE AND NOT IOS)
+	find_library(APPKIT AppKit)
+else()
+	set(APPKIT "")
+endif()
+
 target_link_libraries(gainputtest gainputstatic)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

@@ -5,7 +5,7 @@
 #include <X11/Xlib.h>
 
 #include "GainputInputDeviceMouseImpl.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputHelpers.h>
 
 namespace gainput
 {

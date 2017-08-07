@@ -7,7 +7,7 @@
 #include <X11/Xutil.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputHelpers.h>
 
 namespace gainput
 {

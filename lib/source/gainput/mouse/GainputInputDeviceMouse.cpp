@@ -5,9 +5,9 @@
 #include "GainputInputDeviceMouseImpl.h"
 #include "GainputInputDeviceMouseNull.h"
 #include "GainputMouseInfo.h"
-#include "../GainputInputDeltaState.h"
-#include "../GainputHelpers.h"
-#include "../GainputLog.h"
+#include <gainput/GainputInputDeltaState.h>
+#include <gainput/GainputHelpers.h>
+#include <gainput/GainputLog.h>
 
 #if defined(GAINPUT_PLATFORM_LINUX)
 	#include "GainputInputDeviceMouseLinux.h"

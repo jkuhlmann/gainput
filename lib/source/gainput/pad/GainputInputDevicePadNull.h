@@ -9,9 +9,7 @@ namespace gainput
 class InputDevicePadImplNull : public InputDevicePadImpl
 {
 public:
-	InputDevicePadImplNull(InputManager& manager, InputDevice& device, unsigned /*index*/, InputState& /*state*/, InputState& /*previousState*/) :
-		manager_(manager),
-		device_(device)
+	InputDevicePadImplNull(InputManager& manager, InputDevice& device, unsigned index, InputState& state, InputState& previousState)
 	{
 	}
 
@@ -38,11 +36,6 @@ public:
 	{
 		return false;
 	}
-
-private:
-	InputManager& manager_;
-	InputDevice& device_;
-
 };
 
 }

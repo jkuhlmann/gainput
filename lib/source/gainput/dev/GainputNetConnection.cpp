@@ -6,9 +6,9 @@
 
 #include "GainputStream.h"
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_WIN) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 #include <cassert>
 #include <fcntl.h>
 #include <errno.h>
@@ -19,7 +19,7 @@
 
 namespace gainput {
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 NetConnection::NetConnection(const NetAddress& address, Allocator& allocator) :
 	allocator(allocator),
 	address(address),
@@ -200,19 +200,19 @@ NetConnection::Send(const void* buf, size_t length)
 	}
 	assert(IsConnected());
 #if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID)
-	const int result = send(fd, buf, length, MSG_NOSIGNAL);
+	std::ptrdiff_t const result = send(fd, buf, length, MSG_NOSIGNAL);
 	if (result == -1 && errno == EPIPE)
-#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
-	const int result = send(fd, buf, length, 0);
+#elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)|| defined(GAINPUT_PLATFORM_TVOS)
+	std::ptrdiff_t const result = send(fd, buf, length, 0);
 	if (result == -1 && errno == EPIPE)
 #elif defined(GAINPUT_PLATFORM_WIN)
-	const int result = send(fd, (const char*)buf, length, 0);
+	std::ptrdiff_t const result = send(fd, (const char*)buf, length, 0);
 	if (result == -1)
 #endif
 	{
 		Close();
 	}
-	return result >= 0 ? result : 0;
+	return result >= 0 ? static_cast<std::size_t>(result) : 0;
 }
 
 size_t
@@ -230,7 +230,7 @@ size_t
 NetConnection::Receive(void* buffer, size_t length)
 {
 	assert(IsConnected());
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC)
+#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_ANDROID) || defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_MAC) || defined(GAINPUT_PLATFORM_TVOS)
 	ssize_t receivedLength = recv(fd, (char*)buffer, length, 0);
 	if (receivedLength == -1)
 #elif defined(GAINPUT_PLATFORM_WIN)

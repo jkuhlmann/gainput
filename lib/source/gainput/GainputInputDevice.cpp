@@ -60,10 +60,6 @@ float InputDevice::GetDeadZone(DeviceButtonId buttonId) const
 
 void InputDevice::SetDeadZone(DeviceButtonId buttonId, float value)
 {
-	if (!IsValidButtonId(buttonId))
-	{
-		return;
-	}
 	if (!deadZones_)
 	{
 		const size_t size = sizeof(float) * state_->GetButtonCount();

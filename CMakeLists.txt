@@ -8,6 +8,7 @@ option(GAINPUT_SAMPLES "Build Samples for Gainput" ON)
 option(GAINPUT_TESTS "Build Tests for Gainput" ON)
 option(GAINPUT_BUILD_SHARED "BUILD_SHARED" ON)
 option(GAINPUT_BUILD_STATIC "BUILD_STATIC" ON)
+
 if(!WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
 else()
@@ -23,10 +24,12 @@ if(ANDROID)
 endif()
 
 add_subdirectory(lib)
+
 if(GAINPUT_SAMPLES)
-add_subdirectory(samples)
+	add_subdirectory(samples)
 endif()
+
 if(GAINPUT_TESTS)
-add_subdirectory(test)
+	add_subdirectory(test)
 endif()
 

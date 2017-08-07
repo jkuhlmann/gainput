@@ -3,7 +3,7 @@
 #define GAINPUTINPUTDEVICEKEYBOARDEVDEV_H_
 
 #include "../GainputHelpersEvdev.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputHelpers.h>
 
 namespace gainput
 {
@@ -17,9 +17,7 @@ public:
 		textInputEnabled_(true),
 		dialect_(manager_.GetAllocator()),
 		fd_(-1),
-		state_(&state),
-		previousState_(&previousState),
-		delta_(0)
+		state_(&state)
 	{
 		unsigned matchingDeviceCount = 0;
 		for (unsigned i = 0; i < EvdevDeviceCount; ++i)
@@ -236,8 +234,6 @@ private:
 	HashMap<unsigned, DeviceButtonId> dialect_;
 	int fd_;
 	InputState* state_;
-	InputState* previousState_;
-	InputDeltaState* delta_;
 };
 
 

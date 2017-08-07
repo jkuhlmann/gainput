@@ -5,7 +5,7 @@
 #include <android/native_activity.h>
 
 #include "GainputInputDeviceKeyboardImpl.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputHelpers.h>
 
 namespace gainput
 {
@@ -20,6 +20,7 @@ public:
 		dialect_(manager_.GetAllocator()),
 		state_(&state),
 		previousState_(&previousState),
+		nextState_(manager.GetAllocator(), KeyCount_),
 		delta_(0)
 	{
 		dialect_[AKEYCODE_SPACE] = KeySpace;
@@ -134,6 +135,7 @@ public:
 	void Update(InputDeltaState* delta)
 	{
 		delta_ = delta;
+		*state_ = nextState_;
 	}
 
 	bool IsTextInputEnabled() const { return textInputEnabled_; }
@@ -146,6 +148,11 @@ public:
 			return 0;
 		}
 		return textBuffer_.Get();
+	}
+
+	InputState* GetNextInputState()
+	{
+		return &nextState_;
 	}
 
 	int32_t HandleInput(AInputEvent* event)
@@ -163,11 +170,21 @@ public:
 		if (dialect_.count(keyCode))
 		{
 			const DeviceButtonId buttonId = dialect_[keyCode];
-			HandleButton(device_, *state_, delta_, buttonId, pressed);
+			HandleButton(device_, nextState_, delta_, buttonId, pressed);
 			return 1;
 		}
 
 		return 0;
+	}
+
+	DeviceButtonId Translate(int keyCode) const
+	{
+		HashMap<unsigned, DeviceButtonId>::const_iterator  it = dialect_.find(keyCode);
+		if (it != dialect_.end())
+		{
+			return it->second;
+		}
+		return InvalidDeviceButtonId;
 	}
 
 private:
@@ -178,6 +195,7 @@ private:
 	HashMap<unsigned, DeviceButtonId> dialect_;
 	InputState* state_;
 	InputState* previousState_;
+	InputState nextState_;
 	InputDeltaState* delta_;
 };
 

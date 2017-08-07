@@ -14,6 +14,7 @@ public:
 	virtual void Update(InputDeltaState* delta) = 0;
 	virtual bool IsValidButton(DeviceButtonId deviceButton) const = 0;
 	virtual bool Vibrate(float leftMotor, float rightMotor) = 0;
+	virtual InputState* GetNextInputState() { return 0; }
 };
 
 }

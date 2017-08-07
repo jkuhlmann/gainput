@@ -5,7 +5,7 @@
 #include "../GainputWindows.h"
 
 #include "GainputInputDeviceKeyboardImpl.h"
-#include "../GainputHelpers.h"
+#include <gainput/GainputHelpers.h>
 
 #ifndef HID_USAGE_PAGE_GENERIC
 #define HID_USAGE_PAGE_GENERIC         ((USHORT) 0x01)

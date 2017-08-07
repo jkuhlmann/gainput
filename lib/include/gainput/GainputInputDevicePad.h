@@ -126,13 +126,15 @@ public:
 	DeviceType GetType() const { return DT_PAD; }
 	DeviceVariant GetVariant() const;
 	const char* GetTypeName() const { return "pad"; }
-	bool IsValidButtonId(DeviceButtonId deviceButton) const;
+    bool IsValidButtonId(DeviceButtonId deviceButton) const;
 
 	size_t GetAnyButtonDown(DeviceButtonSpec* outButtons, size_t maxButtonCount) const;
 
 	size_t GetButtonName(DeviceButtonId deviceButton, char* buffer, size_t bufferLength) const;
 	ButtonType GetButtonType(DeviceButtonId deviceButton) const;
 	DeviceButtonId GetButtonByName(const char* name) const;
+
+	InputState* GetNextInputState();
 
 	/// Enables the rumble feature of the pad.
 	/**
@@ -141,6 +143,9 @@ public:
 	 * \return true if rumble was enabled successfully, false otherwise.
 	 */
 	bool Vibrate(float leftMotor, float rightMotor);
+
+	/// Returns the platform-specific implementation of this device.
+	InputDevicePadImpl* GetPimpl() { return impl_; }
 
 protected:
 	void InternalUpdate(InputDeltaState* delta);

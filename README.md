@@ -1,14 +1,12 @@
 Gainput [![Build Status](https://travis-ci.org/jkuhlmann/gainput.png?branch=master)](https://travis-ci.org/jkuhlmann/gainput) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 =======
 
-*Gainput is in development. You should check it out. Feedback is always welcome!*
-
 Gainput is the awesome C++ input library for your game:
 
 - handles your input needs from low-level device reading to high-level mapping of user-defined buttons
 - well-documented, clean, lightweight, and easy to use
-- a unified interface on all supported platforms: **Windows, Linux, Android NDK, iOS, OS X**
-- supported devices: keyboard, mouse, pad, multi-touch
+- a unified interface on all supported platforms: **Android NDK, iOS/tvOS, Linux, macOS, Windows**
+- supported devices: keyboard, mouse, gamepad, multi-touch, device built-in sensors
 - [Open Source (MIT license)](https://github.com/jkuhlmann/gainput/blob/master/LICENSE)
 - [complete list of features](#features)
 - [API documentation](http://gainput.johanneskuhlmann.de/api/)
@@ -85,11 +83,6 @@ By default, Gainput is built using [CMake](http://www.cmake.org/).
 1. Run `make`
 1. The library can be found in `lib/`, the executables in `samples/`.
 
-Android:
-
-1. Make sure that the environment variable `ANDROID_NDK` is set to point to your copy of the Android NDK.
-1. Run CMake with the following options: `cmake -DCMAKE_TOOLCHAIN_FILE=../extern/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DANDROID_ABI="armeabi-v7a" -DANDROID_NATIVE_API_LEVEL=android-19 -DANDROID_STL="gnustl_static"`
-1. Follow the normal build steps above.
 
 Contributing
 ------------
