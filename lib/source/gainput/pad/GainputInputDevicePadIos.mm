@@ -14,6 +14,8 @@
 namespace gainput
 {
 
+InputDevicePadImplIos::GlobalControllerList* InputDevicePadImplIos::mappedControllers_;
+
 namespace
 {
 static bool isAppleTvRemote(GCController* controller)
