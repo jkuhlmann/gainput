@@ -177,6 +177,16 @@ public:
 		return 0;
 	}
 
+	DeviceButtonId Translate(int keyCode) const
+	{
+		HashMap<unsigned, DeviceButtonId>::const_iterator  it = dialect_.find(keyCode);
+		if (it != dialect_.end())
+		{
+			return it->second;
+		}
+		return InvalidDeviceButtonId;
+	}
+
 private:
 	InputManager& manager_;
 	InputDevice& device_;

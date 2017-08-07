@@ -554,6 +554,25 @@ Java_de_johanneskuhlmann_gainput_Gainput_nativeOnInputBool(JNIEnv * /*env*/, job
     input.deviceType = static_cast<InputDevice::DeviceType>(deviceType);
     input.deviceIndex = deviceIndex;
     input.buttonType = BT_BOOL;
+	if (input.deviceType == InputDevice::DT_KEYBOARD)
+	{
+		DeviceId deviceId = gGainputInputManager->FindDeviceId(input.deviceType, deviceIndex);
+		if (deviceId != InvalidDeviceId)
+		{
+			InputDevice* device = gGainputInputManager->GetDevice(deviceId);
+			if (device)
+			{
+				InputDeviceKeyboard* keyboard = static_cast<InputDeviceKeyboard*>(device);
+				InputDeviceKeyboardImplAndroid* keyboardImpl = static_cast<InputDeviceKeyboardImplAndroid*>(keyboard->GetPimpl());
+				GAINPUT_ASSERT(keyboardImpl);
+				DeviceButtonId newId = keyboardImpl->Translate(buttonId);
+				if (newId != InvalidDeviceButtonId)
+				{
+					buttonId = newId;
+				}
+			}
+		}
+	}
     input.buttonId = buttonId;
     input.value.b = value;
     gGainputInputManager->HandleDeviceInput(input);

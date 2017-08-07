@@ -262,7 +262,7 @@ public:
 	size_t size() const { return size_; }
 	bool empty() const { return size_ == 0; }
 
-	size_t count(const K& k)
+	size_t count(const K& k) const
 	{
 		return find(k) != end() ? 1 : 0;
 	}
