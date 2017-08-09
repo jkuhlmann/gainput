@@ -25,6 +25,8 @@ namespace gainput
 			}
 		}
 
+		device.ApplyBufferedButton(buttonId, value);
+		
 		state.Set(buttonId, value);
 	}
 
