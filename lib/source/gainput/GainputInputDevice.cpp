@@ -10,7 +10,8 @@ InputDevice::InputDevice(InputManager& manager, DeviceId device, unsigned index)
 	deviceId_(device),
 	index_(index),
 	deadZones_(0),
-	debugRenderingEnabled_(false)
+	debugRenderingEnabled_(false),
+	bufferedButtonInputs_(manager.GetAllocator())
 #if defined(GAINPUT_DEV) || defined(GAINPUT_ENABLE_RECORDER)
 	, synced_(false)
 #endif
@@ -26,6 +27,16 @@ void
 InputDevice::Update(InputDeltaState* delta)
 {
 	*previousState_ = *state_;
+	
+	// Apply button downs to previousState_ if both "down" and "up" messages were handled before this update occured
+	for(size_t i = 0;
+			i < bufferedButtonInputs_.size();
+			++i)
+	{
+		previousState_->Set(bufferedButtonInputs_[i], true);
+	}
+	bufferedButtonInputs_.clear();
+	
 #if defined(GAINPUT_DEV)
 	if (synced_)
 	{
@@ -74,6 +85,13 @@ void
 InputDevice::SetDebugRenderingEnabled(bool enabled)
 {
 	debugRenderingEnabled_ = enabled;
+}
+
+void
+InputDevice::ApplyBufferedButton(DeviceButtonId buttonId, bool pressed)
+{
+	if(pressed == false && previousState_->GetBool(buttonId) == false)
+		bufferedButtonInputs_.push_back(buttonId);
 }
 
 size_t
