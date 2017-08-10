@@ -19,7 +19,7 @@ public:
 		nextState_(manager.GetAllocator(), PadButtonMax_),
 		delta_(0),
 		index_(index),
-		deviceState_(InputDevice::DS_OK)
+		deviceState_(InputDevice::DS_UNAVAILABLE)
 	{
 		(void)previousState;
 		GAINPUT_ASSERT(index_ < MaxPadCount);

@@ -143,8 +143,7 @@ public class Gainput implements InputManager.InputDeviceListener
 					|| ((sources & InputDevice.SOURCE_JOYSTICK)
 					== InputDevice.SOURCE_JOYSTICK))
 			{
-				int devId = translateDeviceIdToIndex(deviceId);
-				onInputDeviceAdded(devId);
+				onInputDeviceAdded(deviceId);
 			}
 		}
 	}
