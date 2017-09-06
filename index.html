@@ -9,6 +9,7 @@
 
 		<!-- Le styles -->
 
+		<link rel="shortcut icon" href="favicon.png" />
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<style type="text/css">
 			body {
@@ -16,7 +17,6 @@
 				padding-bottom: 40px;
 			}
 
-			/* Custom container */
 			.container-narrow {
 				margin: 0 auto;
 				max-width: 700px;
@@ -25,16 +25,19 @@
 				margin: 30px 0;
 			}
 
-			/* Main marketing message and sign up button */
 			.jumbotron {
 				margin: 60px 0;
 				margin-top: 10px;
 				margin-bottom: 10px;
 				text-align: center;
+				background-color: transparent;
 			}
 			.jumbotron h1 {
 				font-size: 72px;
 				line-height: 1;
+			}
+			.jumbotron h1 img {
+				max-width: 100%;
 			}
 			.jumbotron .btn {
 				font-size: 21px;
@@ -57,54 +60,53 @@
 	</head>
 
 	<body>
-
 		<div class="container-narrow">
 
-
-
-			<div class="jumbotron">
+			<div class="jumbotron" style="margin-top:-50px">
 				<h1><img src="img/gainput_logo.png" alt ="Gainput"></h1>
-				<hr>
+			<!--hr-->
 				<p class="lead">Gainput is the awesome C++ input library for your game. It's easy to use, open source and cross-platform.</p>
-				<a class="btn btn-large btn-success" href="https://github.com/jkuhlmann/gainput/releases/tag/v0.10.0-beta">Download v0.10.0-beta</a>
+				<a class="btn btn-large btn-success" href="https://github.com/jkuhlmann/gainput/releases/tag/v1.0.0">Download v1.0.0</a>
 				<a class="btn btn-large btn-info" href="https://github.com/jkuhlmann/gainput">Browse Source</a>
 				<a class="btn btn-large btn-warning" href="api/">API Docs</a>
 
 			</div>
 
-			<hr>
-
-			<div class="row-fluid marketing">
-				<div class="span6">
+			<div class="row" style="margin-top: -30px; margin-bottom:-30px; font-style: italic;">
+				<div class="col-lg-10">
+					By the way, it's pronounced: <i>gain-put</i>, IPA: geɪn-pʊt. As in <i>gain input</i>. Or as in <i>game input</i>.
+				</div>
+			</div>
+		
+			<div class="row marketing">
+				<div class="col-lg-6">
 					<h4>Nice Code</h4>
 					<p>Gainput's code is clean, easy to understand and lightweight. It's also easy to use and might make you a happier person.</p>
 
 					<h4>Cross-Platform</h4>
-					<p>Gainput provides the same interface (more or less) on all supported platforms. Currently, implementations are provided for: Android NDK, iOS, Linux, Mac OS X, and Windows.</p>
+					<p>Gainput provides the same interface (more or less) on all supported platforms. Currently, implementations are provided for: Android NDK, iOS/tvOS, Linux, macOS, and Windows.</p>
 
 					<h4>Basic Features</h4>
 					<p>Gainput provides low-level and high-level interfaces. Query the state of devices buttons directly or map device buttons to a user button.</p>
-
 				</div>
 
-				<div class="span6">
+				<div class="col-lg-6">
 
 					<h4>Open Source</h4>
-					<p>Gainput is Open Source and licensed under the <a href="https://github.com/jkuhlmann/gainput/blob/master/LICENSE">MIT license</a>. So feel free to use it, share it, change it however you like.</p>
+					<p>Gainput is Open Source and licensed under the <a href="https://github.com/jkuhlmann/gainput/blob/master/LICENSE">MIT license</a>. So feel free to use it, share it, change it. Whatever you like.</p>
 
 					<h4>All the Devices</h4>
 					<p>Gainput aims to support all available input devices. Implementations are provided for keyboard, mouse, gamepad, multi-touch surfaces and built-in sensors.</p>
 
 					<h4>Advanced Features</h4>
 					<p>Recording/playback of input sequences, syncing of inputs across the network, helpers to support remapping of buttons by the player, and more. Most features can be disabled if not needed.</p>
-
 				</div>
 			</div>
 
 			<hr>
 
 			<div class="footer">
-				<p>Copyright &copy; Johannes Kuhlmann, 2013-2015.</p>
+				<p>Copyright &copy; Johannes Kuhlmann, 2013-2017.</p>
 			</div>
 
 		</div>
@@ -112,20 +114,6 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 
-		<!-- Piwik -->
-		<script type="text/javascript">
-			var pkBaseURL = (("https:" == document.location.protocol) ? "https://johanneskuhlmann.de/_stats/" : "http://johanneskuhlmann.de/_stats/");
-			document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-			</script><script type="text/javascript">
-			try {
-				var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
-				piwikTracker.trackPageView();
-				piwikTracker.enableLinkTracking();
-			} catch( err ) {}
-		</script><noscript><p><img src="http://johanneskuhlmann.de/_stats/piwik.php?idsite=3" style="border:0" alt="" /></p></noscript>
-		<!-- End Piwik Tracking Code -->
-
 	</body>
-
 </html>
 

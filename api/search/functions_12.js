@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['_7edebugrenderer',['~DebugRenderer',['../classgainput_1_1DebugRenderer.html#a20df3a6ce553e6c56269abf9f89cf8ee',1,'gainput::DebugRenderer']]],
   ['_7edoubleclickgesture',['~DoubleClickGesture',['../classgainput_1_1DoubleClickGesture.html#a45412003f6ad19e2cd3bde1d35faf29b',1,'gainput::DoubleClickGesture']]],
   ['_7eholdgesture',['~HoldGesture',['../classgainput_1_1HoldGesture.html#a0aa42b84ed4fec555783b63bc86dfff5',1,'gainput::HoldGesture']]],
   ['_7einputdevice',['~InputDevice',['../classgainput_1_1InputDevice.html#a68983ffa017c57053fe2900244e255e4',1,'gainput::InputDevice']]],

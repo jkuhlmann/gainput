@@ -1,7 +1,7 @@
 var searchData=
 [
   ['b',['b',['../structgainput_1_1RecordedDeviceButtonChange.html#a0fe2e0f923df03a51b598883f5dbeaaa',1,'gainput::RecordedDeviceButtonChange']]],
-  ['begin',['begin',['../classgainput_1_1InputManager.html#aa885e9ac14e0cc54399ec1190fa555f5',1,'gainput::InputManager::begin()'],['../classgainput_1_1InputManager.html#a70c2b9b38baad3d4e5e0ab1199f45958',1,'gainput::InputManager::begin() const ']]],
+  ['begin',['begin',['../classgainput_1_1InputManager.html#aa885e9ac14e0cc54399ec1190fa555f5',1,'gainput::InputManager::begin()'],['../classgainput_1_1InputManager.html#a27fe10a2a35b4466761139328128019e',1,'gainput::InputManager::begin() const']]],
   ['bt_5fbool',['BT_BOOL',['../namespacegainput.html#ac936962c0275954961d45e1d2c3222edaf27ecb25022e1e454cf9f185993e5705',1,'gainput']]],
   ['bt_5fcount',['BT_COUNT',['../namespacegainput.html#ac936962c0275954961d45e1d2c3222edaf7ec46ad29a32fdacb4c38ec1fda90a7',1,'gainput']]],
   ['bt_5ffloat',['BT_FLOAT',['../namespacegainput.html#ac936962c0275954961d45e1d2c3222eda265d18d6df1cb1b14aef0568f4ac7db9',1,'gainput']]],
