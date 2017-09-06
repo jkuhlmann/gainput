@@ -370,13 +370,13 @@ GetLibName()
 uint32_t
 GetLibVersion()
 {
-	return ((0 << GAINPUT_VER_MAJOR_SHIFT) | (10) );
+	return ((1 << GAINPUT_VER_MAJOR_SHIFT) | (0) );
 }
 
 const char*
 GetLibVersionString()
 {
-	return "0.10.0-beta";
+	return "1.0.0";
 }
 
 }
