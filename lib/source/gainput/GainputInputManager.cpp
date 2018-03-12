@@ -13,6 +13,7 @@
 #include "keyboard/GainputInputDeviceKeyboardWinRaw.h"
 #include "mouse/GainputInputDeviceMouseWin.h"
 #include "mouse/GainputInputDeviceMouseWinRaw.h"
+#include "GainputWindows.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 #include <time.h>
 #include <jni.h>
@@ -29,7 +30,6 @@ static gainput::InputManager* gGainputInputManager;
 
 #include "dev/GainputDev.h"
 #include <gainput/GainputHelpers.h>
-
 
 namespace gainput
 {
@@ -58,6 +58,123 @@ InputManager::InputManager(bool useSystemTime, Allocator& allocator) :
 #endif
 }
 
+//==========================================================================
+#if defined (GAINPUT_PLATFORM_WIN)
+typedef LRESULT(*WndProcPtr)(HWND, UINT, WPARAM, LPARAM);
+// Container of our manager pointers to get around static wndproc function.
+// Capped at 128 instances per process
+#define MAX_INSTANCES 128
+static InputManager* sMgrMap[MAX_INSTANCES];
+// Corresponding Hwnds
+static HWND sMgrMapHwnds[MAX_INSTANCES];
+static WNDPROC sMgrMapOldWndProcs[MAX_INSTANCES];
+static int sMgrMapIdx = 0;
+// Mutex workaround for non-atomic construction
+static void* sWinHookLock = NULL;
+
+static InputManager* HwndToInputManager(HWND hwnd) {
+	for (int i = 0; i < MAX_INSTANCES; i++) {
+		if (sMgrMapHwnds[i] == hwnd)
+			return sMgrMap[i];
+	}
+	return NULL;
+}
+
+static WNDPROC HwndToOldWndProc(HWND hwnd) {
+	for (int i = 0; i < MAX_INSTANCES; i++) {
+		if (sMgrMapHwnds[i] == hwnd)
+			return sMgrMapOldWndProcs[i];
+	}
+	return NULL;
+}
+
+static LRESULT WindowProcHook(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	// Pass msg to input manager
+	InputManager* mgr = HwndToInputManager(hwnd);
+	if (!mgr)
+		return LRESULT();
+	// Construct MSG
+
+	MSG msg;
+	msg.hwnd = hwnd;
+	msg.message = uMsg;
+	msg.wParam = wParam;
+	msg.lParam = lParam;
+
+	mgr->HandleMessage(msg);
+
+	// Pass to old WndProc
+	WNDPROC fptr = HwndToOldWndProc(hwnd);
+	if (!fptr)
+		return LRESULT();
+	return CallWindowProc(fptr, hwnd, uMsg, wParam, lParam);
+}
+
+static void InputManagerWinHook(HWND hwnd, InputManager* input_manager)
+{
+
+	// Just to make this a little more thread safe -- simple, portable mutex 
+
+	while (sWinHookLock != NULL) _sleep(1);
+	// Grab lock
+	sWinHookLock = hwnd;
+
+	// Check for race grab
+	_sleep(rand() % 3);
+	if (sWinHookLock != hwnd)
+		return;
+
+	if (!hwnd) return;
+
+	// Get old WNDPROC, assign new one
+	WNDPROC old_wndproc = (WNDPROC)SetWindowLongPtr((HWND)hwnd, GWLP_WNDPROC, (LONG_PTR)&WindowProcHook);
+
+	if (sMgrMapIdx == 0) {
+		memset(sMgrMap, NULL, sizeof(sMgrMap));
+		memset(sMgrMapHwnds, NULL, sizeof(sMgrMapHwnds));
+		memset(sMgrMapOldWndProcs, NULL, sizeof(sMgrMapOldWndProcs));
+	}
+
+	sMgrMap[sMgrMapIdx] = input_manager;
+	sMgrMapHwnds[sMgrMapIdx] = hwnd;
+	sMgrMapOldWndProcs[sMgrMapIdx] = old_wndproc;
+
+	++sMgrMapIdx;
+
+	// Release lock
+	sWinHookLock = NULL;
+}
+
+
+InputManager::InputManager(void* hWnd, bool useSystemTime/* = true*/, Allocator& allocator/* = GetDefaultAllocator()*/) :
+	allocator_(allocator),
+	devices_(allocator_),
+	nextDeviceId_(0),
+	listeners_(allocator_),
+	nextListenerId_(0),
+	sortedListeners_(allocator_),
+	modifiers_(allocator_),
+	nextModifierId_(0),
+	deltaState_(allocator_.New<InputDeltaState>(allocator_)),
+	currentTime_(0),
+	GAINPUT_CONC_CONSTRUCT(concurrentInputs_),
+	displayWidth_(-1),
+	displayHeight_(-1),
+	useSystemTime_(useSystemTime),
+	debugRenderingEnabled_(false),
+	debugRenderer_(0)
+{
+	GAINPUT_DEV_INIT(this);
+	
+	// Hook our custom WNDPROC to dispatch messages automatically to InputManager::HandleMessage()
+	if (hWnd && (IsWindow((HWND)hWnd) == TRUE) ? true : false) {
+		InputManagerWinHook((HWND)hWnd, this);
+	}
+
+}
+#endif
+
 InputManager::~InputManager()
 {
 	allocator_.Delete(deltaState_);
@@ -68,7 +185,6 @@ InputManager::~InputManager()
 	{
 		allocator_.Delete(it->second);
 	}
-
 	GAINPUT_DEV_SHUTDOWN(this);
 }
 
