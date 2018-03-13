@@ -13,6 +13,7 @@
 #include "keyboard/GainputInputDeviceKeyboardWinRaw.h"
 #include "mouse/GainputInputDeviceMouseWin.h"
 #include "mouse/GainputInputDeviceMouseWinRaw.h"
+#include "touch/GainputInputDeviceTouchWin.h"
 #include "GainputWindows.h"
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 #include <time.h>
@@ -30,6 +31,7 @@ static gainput::InputManager* gGainputInputManager;
 
 #include "dev/GainputDev.h"
 #include <gainput/GainputHelpers.h>
+
 
 namespace gainput
 {
@@ -60,18 +62,40 @@ InputManager::InputManager(bool useSystemTime, Allocator& allocator) :
 
 //==========================================================================
 #if defined (GAINPUT_PLATFORM_WIN)
-typedef LRESULT(*WndProcPtr)(HWND, UINT, WPARAM, LPARAM);
-// Container of our manager pointers to get around static wndproc function.
 // Capped at 128 instances per process
 #define MAX_INSTANCES 128
+// Container of our manager pointers and old WNDPROC callbacks to get provide context to new static WNDPROC callback.
 static InputManager* sMgrMap[MAX_INSTANCES];
+static WNDPROC sMgrMapOldWndProcs[MAX_INSTANCES];
 // Corresponding Hwnds
 static HWND sMgrMapHwnds[MAX_INSTANCES];
-static WNDPROC sMgrMapOldWndProcs[MAX_INSTANCES];
 static int sMgrMapIdx = 0;
-// Mutex workaround for non-atomic construction
-static void* sWinHookLock = NULL;
 
+// Simple mutex, Windows-only, which is okay as this is a Windows-only segment
+class SimpleSemaphore
+{
+	LONG m_counter;
+	HANDLE m_semaphore;
+
+public:
+	SimpleSemaphore() { m_counter = 0;	m_semaphore = CreateSemaphore(NULL, 0, 1, NULL); }
+	~SimpleSemaphore() { CloseHandle(m_semaphore);	}
+
+	void Lock()	{
+		if (_InterlockedIncrement(&m_counter) > 1) // x86/64 guarantees acquire semantics
+			WaitForSingleObject(m_semaphore, INFINITE);
+	}
+
+	void Unlock() {
+		if (_InterlockedDecrement(&m_counter) > 0) // x86/64 guarantees release semantics
+			ReleaseSemaphore(m_semaphore, 1, NULL);
+	}
+};
+
+// Make it thread safe
+static SimpleSemaphore sWindProcHookMtx;
+
+// Retrieves InputManager ptr from table using HWND ptr as key
 static InputManager* HwndToInputManager(HWND hwnd) {
 	for (int i = 0; i < MAX_INSTANCES; i++) {
 		if (sMgrMapHwnds[i] == hwnd)
@@ -80,6 +104,7 @@ static InputManager* HwndToInputManager(HWND hwnd) {
 	return NULL;
 }
 
+// Retrieves WNDPROC ptr from table using HWND ptr as key
 static WNDPROC HwndToOldWndProc(HWND hwnd) {
 	for (int i = 0; i < MAX_INSTANCES; i++) {
 		if (sMgrMapHwnds[i] == hwnd)
@@ -90,44 +115,44 @@ static WNDPROC HwndToOldWndProc(HWND hwnd) {
 
 static LRESULT WindowProcHook(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	// Pass msg to input manager
-	InputManager* mgr = HwndToInputManager(hwnd);
-	if (!mgr)
+	// Get old WNDPROC
+	WNDPROC fptr = HwndToOldWndProc(hwnd);
+	if (!fptr) {
+		GAINPUT_LOG("%s (%d): Old WNDPROC ptr == NULL", __FILE__, __LINE__);
 		return LRESULT();
-	// Construct MSG
+	}
 
+	// Get corresponding input manager
+	InputManager* mgr = HwndToInputManager(hwnd);
+
+	// If none exists, just pass to old WNDPROC
+	if (!mgr) {
+		GAINPUT_LOG("%s (%d): InputManager ptr == NULL", __FILE__, __LINE__);
+		return CallWindowProc(fptr, hwnd, uMsg, wParam, lParam);
+	}
+
+	// Construct MSG, timestamp not needed
 	MSG msg;
 	msg.hwnd = hwnd;
 	msg.message = uMsg;
 	msg.wParam = wParam;
 	msg.lParam = lParam;
 
+	// Pass to manager
 	mgr->HandleMessage(msg);
 
-	// Pass to old WndProc
-	WNDPROC fptr = HwndToOldWndProc(hwnd);
-	if (!fptr)
-		return LRESULT();
+	// Pass back to old WNDPROC
 	return CallWindowProc(fptr, hwnd, uMsg, wParam, lParam);
 }
 
 static void InputManagerWinHook(HWND hwnd, InputManager* input_manager)
 {
+	// Enter critical section
+	sWindProcHookMtx.Lock();
 
-	// Just to make this a little more thread safe -- simple, portable mutex 
+	if (!hwnd) { GAINPUT_LOG("%s (%d): Window handle == NULL", __FILE__, __LINE__); sWindProcHookMtx.Unlock(); return; }
 
-	while (sWinHookLock != NULL) _sleep(1);
-	// Grab lock
-	sWinHookLock = hwnd;
-
-	// Check for race grab
-	_sleep(rand() % 3);
-	if (sWinHookLock != hwnd)
-		return;
-
-	if (!hwnd) return;
-
-	// Get old WNDPROC, assign new one
+	// Get old WNDPROC, assign new callback
 	WNDPROC old_wndproc = (WNDPROC)SetWindowLongPtr((HWND)hwnd, GWLP_WNDPROC, (LONG_PTR)&WindowProcHook);
 
 	if (sMgrMapIdx == 0) {
@@ -142,8 +167,8 @@ static void InputManagerWinHook(HWND hwnd, InputManager* input_manager)
 
 	++sMgrMapIdx;
 
-	// Release lock
-	sWinHookLock = NULL;
+	// Exit critical section
+	sWindProcHookMtx.Unlock();
 }
 
 
@@ -500,6 +525,24 @@ InputManager::HandleMessage(const MSG& msg)
 				mouseImpl->HandleMessage(msg);
 			}
 		}
+#if defined(GAINPUT_PLATFORM_WIN)
+		// Process touch messages for Windows for multi-touch support.
+		//
+		// Either pass messages directly from your own message handler, or pass an HWND window handle on the construction of
+		// the InputManager to automatically hook a message pump. This latter solution is especially helpful for situations
+		// where you (a) don't feel like cluttering your native-side code with extra hooks to Gainput, or (b) instances where
+		// you may not have access to the native message handler but _do_ have access to the window handle, e.g., with GLFW.
+		else if (it->second->GetType() == InputDevice::DT_TOUCH)
+		{
+			if (it->second->GetVariant() == InputDevice::DV_STANDARD)
+			{
+				InputDeviceTouch* touch = static_cast<InputDeviceTouch*>(it->second);
+				InputDeviceTouchImplWin* touchImpl = static_cast<InputDeviceTouchImplWin*>(touch->GetPimpl());
+				GAINPUT_ASSERT(touchImpl);
+				touchImpl->HandleMessage(msg);
+			}
+		}
+#endif
 	}
 }
 #endif
