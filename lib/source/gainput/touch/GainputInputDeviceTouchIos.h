@@ -84,10 +84,10 @@ public:
 			touches_.push_back(static_cast<void*>(id));
 		}
 
-		HandleBool(gainput::Touch0Down + touchIdx*4, true);
-		HandleFloat(gainput::Touch0X + touchIdx*4, x);
-		HandleFloat(gainput::Touch0Y + touchIdx*4, y);
-		HandleFloat(gainput::Touch0Pressure + touchIdx*4, z);
+		HandleBool(gainput::Touch0Down + touchIdx*TouchDataElems, true);
+		HandleFloat(gainput::Touch0X + touchIdx*TouchDataElems, x);
+		HandleFloat(gainput::Touch0Y + touchIdx*TouchDataElems, y);
+		HandleFloat(gainput::Touch0Pressure + touchIdx*TouchDataElems, z);
 	}
 
 	void HandleTouchEnd(void* id, float x, float y, float z = 0.f)
@@ -113,10 +113,10 @@ public:
 
 		touches_[touchIdx] = 0;
 
-		HandleBool(gainput::Touch0Down + touchIdx*4, false);
-		HandleFloat(gainput::Touch0X + touchIdx*4, x);
-		HandleFloat(gainput::Touch0Y + touchIdx*4, y);
-		HandleFloat(gainput::Touch0Pressure + touchIdx*4, z);
+		HandleBool(gainput::Touch0Down + touchIdx*TouchDataElems, false);
+		HandleFloat(gainput::Touch0X + touchIdx*TouchDataElems, x);
+		HandleFloat(gainput::Touch0Y + touchIdx*TouchDataElems, y);
+		HandleFloat(gainput::Touch0Pressure + touchIdx*TouchDataElems, z);
 	}
 
 private:
