@@ -33,8 +33,15 @@ public:
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
-		HandleButton(device_, nextState_, delta_, MouseButton3, false);
-		HandleButton(device_, nextState_, delta_, MouseButton4, false);
+		if (previousState_->GetBool(MouseButton3))
+		{
+			HandleButton(device_, nextState_, delta_, MouseButton3, false);
+		}
+
+		if (previousState_->GetBool(MouseButton4))
+		{
+			HandleButton(device_, nextState_, delta_, MouseButton4, false);
+		}
 
 		*state_ = nextState_;
 	}
