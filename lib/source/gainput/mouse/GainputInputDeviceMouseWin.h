@@ -101,6 +101,10 @@ public:
 					buttonId = MouseButton3;
 					pressed = true;
 				}
+				else
+				{
+					return;
+				}
 				break;
 			}
 		default: // Non-mouse message
