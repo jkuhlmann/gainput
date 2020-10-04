@@ -15,6 +15,7 @@ gainput.sln
 gainput.unsuccessfulbuild
 *.opensdf
 cmakebuild*/
+gainput.pro.user*
 
 .idea
 .gradle
