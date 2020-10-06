@@ -1,9 +1,6 @@
 
 project(gainputtest)
 
-include_directories(../lib/include/)
-include_directories(../extern/catch/)
-
 file(GLOB_RECURSE sources *.cpp)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -13,7 +10,7 @@ endif()
 if(ANDROID)
 	add_library(gainputtest SHARED ${sources})
 else()
-	add_executable(gainputtest WIN32 ${sources})
+	add_executable(gainputtest ${sources})
 endif()
 
 if(APPLE AND NOT IOS)
@@ -22,16 +19,17 @@ else()
 	set(APPKIT "")
 endif()
 
-target_link_libraries(gainputtest gainputstatic)
+target_include_directories(gainputtest PRIVATE ../extern/catch/)
+target_link_libraries(gainputtest gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gainputtest X11 GL rt)
-elseif(WIN32)
-	target_link_libraries(gainputtest ${XINPUT} ws2_32)
-elseif(APPLE)
-	target_link_libraries(gainputtest ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
 
-if(MSVC)
-	set_target_properties(gainputtest PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
-endif(MSVC)
+if(BUILD_SHARED_LIBS)
+  # Copy the output of gainput shared library to output folder.
+  add_custom_command( TARGET gainputtest 
+    POST_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:gainput> $<TARGET_FILE_DIR:gainputtest>
+  )
+endif(BUILD_SHARED_LIBS)

@@ -1,7 +1,6 @@
 
 project(dynamicsample)
 
-include_directories(../../lib/include/)
 include_directories(../samplefw/)
 
 file(GLOB_RECURSE sources *.cpp)
@@ -13,13 +12,18 @@ else()
 	add_executable(dynamicsample WIN32 ${sources} ${sfwsources})
 endif()
 
-target_link_libraries(dynamicsample gainputstatic)
+target_include_directories(dynamicsample PRIVATE ../samplefw/)
+target_link_libraries(dynamicsample gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(dynamicsample X11 GL rt)
-elseif(WIN32)
-	target_link_libraries(dynamicsample ${XINPUT} ws2_32)
-elseif(APPLE)
-	target_link_libraries(dynamicsample ${FOUNDATION} ${IOKIT} ${APPKIT})
 endif()
+
+if(BUILD_SHARED_LIBS)
+  # Copy the output of gainput shared library to output folder.
+  add_custom_command( TARGET dynamicsample 
+    POST_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:gainput> $<TARGET_FILE_DIR:dynamicsample>
+  )
+endif(BUILD_SHARED_LIBS)
 

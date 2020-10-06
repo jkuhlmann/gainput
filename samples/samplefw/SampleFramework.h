@@ -30,7 +30,7 @@ Display* SfwGetXDisplay();
 HWND SfwGetHWnd();
 
 #include <stdio.h>
-#define SFW_LOG(...) { char buf[1024]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
+#define SFW_LOG(...) { char buf[1024]; sprintf_s(buf, 1024, __VA_ARGS__); OutputDebugStringA(buf); }
 
 #elif defined(GAINPUT_PLATFORM_ANDROID)
 

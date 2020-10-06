@@ -130,7 +130,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		case WM_PAINT:
 			hdc = BeginPaint(hWnd, &ps);
-			TextOut(hdc, 5, 5, greeting, strlen(greeting));
+			TextOut(hdc, 5, 5, greeting, (int)strlen(greeting));
 			EndPaint(hWnd, &ps);
 			break;
 		case WM_DESTROY:

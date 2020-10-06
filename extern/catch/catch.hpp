@@ -5728,7 +5728,7 @@ namespace Catch {
             bool operator() (TestCase i,TestCase j) const { return (i<j);}
         };
         struct RandomNumberGenerator {
-            int operator()( int n ) const { return std::rand() % n; }
+            size_t operator()( size_t n ) const { return static_cast<size_t>( std::rand() ) % n; }
         };
 
     public:
