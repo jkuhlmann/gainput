@@ -161,7 +161,7 @@ template <class T> T Abs(T a) { return a < T() ? -a : a; }
  * The pages can also be found hosted here:
  * http://gainput.johanneskuhlmann.de/html5client/
  */
-void DevSetHttp(bool enable);
+void GAINPUT_LIBEXPORT DevSetHttp(bool enable);
 }
 
 #define GAINPUT_VER_MAJOR_SHIFT		16

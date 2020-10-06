@@ -22,7 +22,7 @@ else()
 	set(APPKIT "")
 endif()
 
-target_link_libraries(gainputtest gainputstatic)
+target_link_libraries(gainputtest gainput)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	target_link_libraries(gainputtest X11 GL rt)
