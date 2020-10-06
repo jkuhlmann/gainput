@@ -132,7 +132,7 @@ void SampleMain()
 
 			SFW_LOG("Serializing recording\n");
 			const size_t dataSize = inputRecorder.GetRecording()->GetSerializedSize();
-			SFW_LOG("Size: %lu\n", dataSize);
+			SFW_LOG("Size: %zu\n", dataSize);
 			void* serializedRecordingData = malloc(dataSize);
 			inputRecorder.GetRecording()->GetSerialized(manager, serializedRecordingData);
 
