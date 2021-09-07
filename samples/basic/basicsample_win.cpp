@@ -8,7 +8,7 @@
 #include <windows.h>
 
 #include <stdio.h>
-#define LOG(...) {char buf[256]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
+#define LOG(...) {char buf[256]; sprintf_s(buf, 256, __VA_ARGS__); OutputDebugStringA(buf); }
 
 
 // Define your user buttons
@@ -38,7 +38,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		case WM_PAINT:
 			hdc = BeginPaint(hWnd, &ps);
-			TextOut(hdc, 5, 5, greeting, strlen(greeting));
+			TextOut(hdc, 5, 5, greeting, (int)strlen(greeting));
 			EndPaint(hWnd, &ps);
 			break;
 		case WM_DESTROY:

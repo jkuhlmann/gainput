@@ -53,7 +53,8 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 	listeners_(allocator_),
 	sortedListeners_(allocator_),
 	nextListenerId_(0),
-	managerListener_(0)
+	managerListener_(0),
+	managerListenerId_(0)
 {
 	static unsigned nextId = 0;
 	id_ = nextId++;
@@ -61,7 +62,7 @@ InputMap::InputMap(InputManager& manager, const char* name, Allocator& allocator
 	if (name)
 	{
 		name_ = static_cast<char*>(allocator_.Allocate(strlen(name) + 1));
-		strcpy(name_, name);
+		strcpy_s(name_, strlen(name) + 1, name);
 	}
 	GAINPUT_DEV_NEW_MAP(this);
 }

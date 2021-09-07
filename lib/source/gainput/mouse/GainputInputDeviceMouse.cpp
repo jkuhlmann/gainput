@@ -118,7 +118,7 @@ InputDeviceMouse::GetButtonName(DeviceButtonId deviceButton, char* buffer, size_
 	GAINPUT_ASSERT(IsValidButtonId(deviceButton));
 	GAINPUT_ASSERT(buffer);
 	GAINPUT_ASSERT(bufferLength > 0);
-	strncpy(buffer, deviceButtonInfos[deviceButton].name, bufferLength);
+	strncpy_s(buffer, bufferLength, deviceButtonInfos[deviceButton].name, bufferLength);
 	buffer[bufferLength-1] = 0;
 	const size_t nameLen = strlen(deviceButtonInfos[deviceButton].name);
 	return nameLen >= bufferLength ? bufferLength : nameLen+1;

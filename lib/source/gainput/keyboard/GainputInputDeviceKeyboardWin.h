@@ -164,7 +164,7 @@ public:
 				return;
 			}
 
-			const int key = msg.wParam;
+			const int key = (int)msg.wParam;
 			if (key == 0x08 // backspace 
 				|| key == 0x0A // linefeed 
 				|| key == 0x1B // escape 
@@ -189,12 +189,12 @@ public:
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 			pressed = true;
-			winKey = msg.wParam;
+			winKey = (unsigned)msg.wParam;
 			break;
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
 			pressed = false;
-			winKey = msg.wParam;
+			winKey = (unsigned)msg.wParam;
 			break;
 		default: // Non-keyboard message
 			return;
