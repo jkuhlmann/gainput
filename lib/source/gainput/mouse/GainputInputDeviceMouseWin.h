@@ -33,8 +33,16 @@ public:
 		delta_ = delta;
 
 		// Reset mouse wheel buttons
-		HandleButton(device_, nextState_, delta_, MouseButton3, false);
-		HandleButton(device_, nextState_, delta_, MouseButton4, false);
+		auto resetWheel = [&](const DeviceButtonId buttonId) {
+			const bool oldValue = previousState_->GetBool(buttonId);
+			if (oldValue)
+			{
+				const bool pressed = false;
+				HandleButton(device_, nextState_, delta_, buttonId, pressed);
+			}
+		};
+		resetWheel(MouseButton3);
+		resetWheel(MouseButton4);
 
 		*state_ = nextState_;
 	}
@@ -100,6 +108,10 @@ public:
 				{
 					buttonId = MouseButton3;
 					pressed = true;
+				}
+				else
+				{
+					return;
 				}
 				break;
 			}
