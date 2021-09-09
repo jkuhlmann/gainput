@@ -14,7 +14,10 @@
 	#include "GainputInputDeviceTouchAndroid.h"
 #elif defined(GAINPUT_PLATFORM_IOS) || defined(GAINPUT_PLATFORM_TVOS)
 	#include "GainputInputDeviceTouchIos.h"
+#elif defined (GAINPUT_PLATFORM_WIN)
+	#include "GainputInputDeviceTouchWin.h"
 #endif
+
 
 namespace gainput
 {
@@ -38,8 +41,12 @@ InputDeviceTouch::InputDeviceTouch(InputManager& manager, DeviceId device, unsig
 	{
 		impl_ = manager.GetAllocator().New<InputDeviceTouchImplIos>(manager, *this, *state_, *previousState_);
 	}
+#elif defined (GAINPUT_PLATFORM_WIN)
+	if (variant != DV_NULL)
+	{
+		impl_ = manager.GetAllocator().New<InputDeviceTouchImplWin>(manager, *this, *state_, *previousState_);
+	}
 #endif
-
 	if (!impl_)
 	{
 		impl_ = manager.GetAllocator().New<InputDeviceTouchImplNull>(manager, *this);

@@ -35,6 +35,18 @@ public:
 	 */
 	InputManager(bool useSystemTime = true, Allocator& allocator = GetDefaultAllocator());
 
+#if defined(GAINPUT_PLATFORM_WIN)
+	/**
+	* \param useSystemTime Specifies if the GetTime() function uses system time or the time
+	* supplied to Update(uint64_t).
+	* \param hWnd Pass a pointer (HWND) to the window handle to hook the message pump to have HandleMessage() automatically invoked.
+	* \param allocator The memory allocator to be used for all allocations.
+	* \see SetDisplaySize
+	* \see GetTime
+	*/
+	InputManager(void* hWnd, bool useSystemTime = true, Allocator& allocator = GetDefaultAllocator());
+#endif
+
 	/// Destructs the manager.
 	~InputManager();
 
